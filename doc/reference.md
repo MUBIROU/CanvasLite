@@ -1,5 +1,5 @@
-# toile.js
-Version 0.1 Build 128  
+# Reference Manual （リファレンスマニュアル）
+toile.js （version 0.1 build 128）  
 © 2017 Takashi Nishimura
 
 #### Classes（クラス一覧）
