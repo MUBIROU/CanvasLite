@@ -2,7 +2,7 @@
 Version 0.1 Build 128  
 © 2017 Takashi Nishimura
 
-* toile.js は ECMAScript 6 （ES2015） で書かれた HTML Canvas 制御用のライブラリです。
+* toile.js は ECMAScript 6 （ES2015） で書かれた HTML Canvas （CanvasRenderingContext2D） 制御用のライブラリです。
 
 #### Classes（クラス一覧）
 * [Bitmap class](#Bitmap): 画像を表示するためのクラス
