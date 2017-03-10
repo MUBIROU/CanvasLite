@@ -1,7 +1,5 @@
-# CanvasliteTS
-アルファ版 ( build 181 )  
-
-## CanvasliteTS について
+# canvaslite.ts
+アルファ版 ( build 181 )  
 
 * [toile.js](https://github.com/TakashiNishimura/toile.js) の原型（2013-2014年に開発）
 * TypeScript で記述した HTML5 Canvas （CanvasRenderingContext2D） 制御用のライブラリ
