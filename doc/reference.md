@@ -1,4 +1,4 @@
-# toile.js Reference Manual （リファレンスマニュアル）
+# Reference Manual （リファレンスマニュアル）
 for toile.js （version 0.1 build 128）  
 © 2017 Takashi Nishimura
 
