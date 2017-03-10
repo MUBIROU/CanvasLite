@@ -1,4 +1,4 @@
-# toile.js
+# ToileJS
 
 * トワール（発音記号 twɑ'ːl） ＝ フランス語でキャンバスの意
 * HTML Canvas 2D 制御用の ECMAScript 6 ライブラリ
