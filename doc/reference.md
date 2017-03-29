@@ -2,7 +2,7 @@
 Version 0.1 Build 128 対応  
 © 2017 Takashi Nishimura
 
-#### Classes（クラス一覧）
+### <b>INDEX</b>（クラス一覧）
 * [Bitmap class](#Bitmap): 画像を表示するためのクラス
 * [Canvas class](#Canvas): 表示オブジェクトの頂点となるクラス
 * [Circle class](#Circle): 正円を描くためのクラス
