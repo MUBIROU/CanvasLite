@@ -1,5 +1,5 @@
 # Reference Manual （リファレンスマニュアル）
-Version 0.1 Build 128 対応  
+Version 0.1 Build 131 対応  
 © 2017 Takashi Nishimura
 
 ### <b>INDEX</b>（クラス一覧）
