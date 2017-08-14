@@ -925,6 +925,7 @@ Bitmap.x
 * [Canvas.addEventListener()](#CanvasaddEventListener): 指定したイベントのリスナーを追加する
 * [Canvas.deleteChild()](#CanvasdeleteChild): Canvas上の表示オブジェクトを削除
 * [Canvas.drawScreen()](#CanvasdrawScreen): Canvasの画面描画を更新
+* [Canvas.enabledContextMenu()](#CanvasenabledContextMenu): Canvas上で右クリックの処理を有効にするか否か
 * [Canvas.enabledMouseMove()](#CanvasenabledMouseMove): mousemove（touchmove）を有効にする
 * [Canvas.exitFullscreen()](#CanvasexitFullscreen): Canvasの全画面表示を解除する
 * [Canvas.getDepthElement()](#CanvasgetDepthElement): 任意の深度の表示オブジェクトを調べる
@@ -1244,6 +1245,40 @@ enterframe_canvas = (_canvas) => {
 
 ### See Also（参照）
 Canvas.addEventListener()、Canvas.ENTER_FRAME
+
+
+<a name="CanvasenabledContextMenu"></a>
+# Canvas.enabledContextMenu()
+
+### Syntax（構文）
+canvasObject.enabledContextMenu(arg)
+
+### Arguments（引数）
+arg: Canvas上で右クリックの処理を有効にしたい場合true（初期値）。
+無効にしたい場合はfalse。
+
+### Returns（戻り値）
+なし。
+
+### Description（説明）
+メソッド。mousemoveイベント（モバイルの場合touchmove）を利用できるようにするか指定します。  
+このイベントはパフォーマンスへの影響が大きい為、デフォルトでは利用不可になっています。
+
+### Example（例）
+```
+// main.js
+window.addEventListener("load", load_window, false);
+
+function load_window() {
+	_canvas = new toile.Canvas("myCanvas");
+	_canvas.addEventListener("enterframe", enterframe_canvas);
+	_canvas.enabledContextMenu(false);
+}
+
+enterframe_canvas = (_canvas) => {
+	_canvas.drawScreen();
+}
+```
 
 
 <a name="CanvasenabledMouseMove"></a>
