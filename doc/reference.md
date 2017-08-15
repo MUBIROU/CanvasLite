@@ -1,5 +1,5 @@
 # Reference Manual （リファレンスマニュアル）
-Version 0.1 Build 131 対応  
+Version 0.1 Build 132 対応  
 © 2017 Takashi Nishimura
 
 ### <b>INDEX</b>（クラス一覧）
@@ -945,6 +945,7 @@ Bitmap.x
 * [Canvas.borderColor](#CanvasborderColor): Canmvasの外枠の色
 * [Canvas.borderWidth](#CanvasborderWidth): Canmvasの外枠の線の太さ
 * [Canvas.correctFPS](#CanvascorrectFPS): 内部的なフレームレート値
+* [Canvas.cursor](#Canvascursor): マウスカーソルの形状
 * [Canvas.fps](#Canvasfps): フレームレート
 * [Canvas.height](#Canvasheight): Canvasの高さ
 * [Canvas.mouseX](#CanvasmouseX): マウスポインタの水平座標
@@ -1127,6 +1128,7 @@ _canvas.borderColor = "#ff0000"; //赤の場合
 ### See Also（参照）
 Canvas.borderColor、Canvas.isBorder()
 
+
 <a name="CanvascorrectFPS"></a>
 # Canvas.correctFPS
 
@@ -1162,6 +1164,35 @@ enterframe_canvas = (_canvas) => {
 
 ### See Also（参照）
 Canvas.fps
+
+
+<a name="Canvascursor"></a>
+# Canvas.cursor
+
+### Syntax（構文）
+canvasObject.cursor
+
+### Description（説明）`
+HTML Canvas上でのマウスカーソルの形状（初期設定は"default"）。 
+.pngまたは.jpgファイルを指定するとオリジナルのカーソルに変更できる。
+不透明度が0％の画像は黒色で表現されてしまうが、1％（ほぼ透明）の画像であればそのまま表示される。
+したがって、カーソルを消したい場合は、1x1pxの不透明度1％の.pngファイルを用意するとよい。
+
+### Example（例）
+```
+// main.js
+window.addEventListener("load", load_window, false);
+
+function load_window() {
+	_canvas = new toile.Canvas("myCanvas");
+	_canvas.addEventListener("enterframe", enterframe_canvas);
+	_canvas.cursor = "dummy.png";
+}
+
+enterframe_canvas = (_canvas) => {
+	_canvas.drawScreen();
+}
+```
 
 
 <a name="CanvasdeleteChild"></a>
