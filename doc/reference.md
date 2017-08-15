@@ -1172,7 +1172,7 @@ Canvas.fps
 ### Syntax（構文）
 canvasObject.cursor
 
-### Description（説明）`
+### Description（説明）
 HTML Canvas上でのマウスカーソルの形状（初期設定は"default"）。 
 .pngまたは.jpgファイルを指定するとオリジナルのカーソルに変更できる。
 不透明度が0％の画像は黒色で表現されてしまうが、1％（ほぼ透明）の画像であればそのまま表示される。
