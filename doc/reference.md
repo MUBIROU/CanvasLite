@@ -2063,7 +2063,7 @@ canvasObject.screenShot()
 なし。
 
 ### Returns（戻り値）
-Bitmapのインスタンス。
+Bitmapクラスのインスタンス。
 
 ### Description（説明）
 メソッド。HTML Canvas全体のスクリーンショットを取り、Bitmapクラスのインスタンスを返します。
