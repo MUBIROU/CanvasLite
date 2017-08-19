@@ -936,6 +936,7 @@ Bitmap.x
 * [Canvas.removeEventListener()](#CanvasremoveEventListener): 指定したイベントのリスナーを解除する
 * [Canvas.reload()](#Canvasreload): 問題回避（残像）用
 * [Canvas.requestFullscreen()](#CanvasrequestFullscreen): Canvasを全画面表示する
+* [Canvas.screenShot()](#CanvasscreenShot): Canvas全体のスクリーンショット
 * [Canvas.setDepthIndex()](#CanvassetDepthIndex): 任意の表示オブジェクトの深度変更
 * [Canvas.stopMouseDownEvent()](#CanvasstopMouseDownEvent): MouseDownイベント発生の伝達を防ぐ
 * [Canvas.stopMouseUpEvent()](#CanvasstopMouseUpEvent): MouseUpイベント発生の伝達を防ぐ
@@ -2050,6 +2051,69 @@ mousedown_canvas = (_canvas) => {
 
 ### See Also（参照）
 Canvas.exitFullscreen()、Canvas.isFitWindow()
+
+
+<a name="CanvasscreenShot"></a>
+# Canvas.screenShot()
+
+### Syntax（構文）
+canvasObject.screenShot()
+
+### Arguments（引数）
+なし。
+
+### Returns（戻り値）
+Bitmapのインスタンス。
+
+### Description（説明）
+メソッド。HTML Canvas全体のスクリーンショットを取り、Bitmapクラスのインスタンスを返します。
+
+### Example（例）
+```
+// main.js
+
+// HTMLのロードが完了した際のイベントリスナーの定義
+window.addEventListener("load", load_window, false);
+
+// HTMLのロードが完了したら…
+function load_window() {
+	//Canvasの生成
+	_canvas = new toile.Canvas("myCanvas");
+	_canvas.addEventListener("enterframe", enterframe_canvas);
+	_canvas.addEventListener("mousedown", mousedown_canavas);
+
+	//1つ目の画像
+	_image1 = new toile.Bitmap("image1.jpg");
+	_canvas.addChild(_image1);
+
+	//２つ目の画像
+	_image2 = new toile.Bitmap("image2.png");
+	_canvas.addChild(_image2);
+}
+
+// Canvasの再描画（30fps毎）の際に実行したい処理…
+function enterframe_canvas(_canvas) {
+	if (window._screenShot != undefined) {
+		window._screenShot.y += 10;
+	}
+
+	_canvas.drawScreen("#ffffff");
+}
+
+function mousedown_canavas(_canvas) {
+	_screenShot = _canvas.screenShot(); //Canvas全体をスナップショット
+	_canvas.addChild(_screenShot); //スナップショットした画像をCanvasに配置
+
+	//元の画像を全て削除（オプション）
+	_canvas.deleteChild(_image1);
+	_canvas.deleteChild(_image2);
+	_image1 = _image2 = undefined;
+}
+```
+
+### See Also（参照）
+Bitmap()クラス
+
 
 
 <a name="CanvassetDepthIndex"></a>
