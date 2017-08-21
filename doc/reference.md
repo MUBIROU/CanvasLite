@@ -1,5 +1,5 @@
 # Reference Manual （リファレンスマニュアル）
-Version 0.1 Build 133 対応  
+Version 0.1 Build 134 対応  
 © 2017 Takashi Nishimura
 
 ### <b>INDEX</b>（クラス一覧）
@@ -57,14 +57,19 @@ Bitmap -> SuperDisplay
 * [Bitmap.MOUSE_UP_OUTSIDE](#BitmapMOUSE_UP_OUTSIDE): マウスダウン後に外でマウスボタンを離したら
 
 ### Constructor（コンストラクタ）
-new toile.Bitmap(arg)
+new toile.Bitmap(arg1 [,arg2,arg3,arg4,arg5])
 
 ### Arguments（引数）
-arg: PNG/JPEGファイルのパス（URL）を文字列で指定。
+arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。
+arg2: 元画像中の表示させたい水平座標の開始位置。省略可能（初期値は0）。
+arg3: 元画像中の表示させたい垂直座標の開始位置。省略可能（初期値は0）。
+arg4: 元画像中の表示させたい水平座標の終了位置。省略可能。
+arg5: 元画像中の表示させたい垂直座標の終了位置。省略可能。
 
 ### Description（説明）
 HTML Canvas上に画像（PNG/JPEG）を表示するためのクラス。  
 指定したPNG/JPEGファイルを使った、Bitmapクラスを生成します。  
+第2～5引数を使って、クロップ（トリミング）することも可能。
 toile.jsを読み込む前、\<head>タグ内などに
 ```
 <script>var toile = window;</script>
@@ -2057,16 +2062,20 @@ Canvas.exitFullscreen()、Canvas.isFitWindow()
 # Canvas.screenShot()
 
 ### Syntax（構文）
-canvasObject.screenShot()
+canvasObject.screenShot([arg1,arg2,arg3,arg4])
 
 ### Arguments（引数）
-なし。
+arg1: 元画像中の表示させたい水平座標の開始位置。省略可能（初期値は0）。
+arg2: 元画像中の表示させたい垂直座標の開始位置。省略可能（初期値は0）。
+arg3: 元画像中の表示させたい水平座標の終了位置。省略可能。
+arg4: 元画像中の表示させたい垂直座標の終了位置。省略可能。
 
 ### Returns（戻り値）
 Bitmapクラスのインスタンス。
 
 ### Description（説明）
 メソッド。HTML Canvas全体のスクリーンショットを取り、Bitmapクラスのインスタンスを返します。
+第1～4引数を使って、クロップ（トリミング）することも可能。
 
 ### Example（例）
 ```

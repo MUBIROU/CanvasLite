@@ -1,6 +1,6 @@
 /***************************************************************************
- * toile.js (ver.0.1 build 134 RC2)
- * 2017-08-21T15:44
+ * toile.js (ver.0.1 build 134)
+ * 2017-08-21T17:20
  * © 2017 Takashi Nishimura
 ***************************************************************************/
 
@@ -27,7 +27,7 @@ if (toile != window) { //名前空間を省略可能にするために
  * 		removeEventListener(_event)
  * 		reload()
  * 		requestFullscreen()
- * 		screenShot()
+ * 		screenShot([_startX, _startY, _endX, _endY])
  * 		setDepthIndex(_superDisplay, _depth)
  * 		stopMouseDownEvent()
  * 		stopMouseUpEvent()
