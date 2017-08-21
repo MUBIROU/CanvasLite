@@ -370,7 +370,6 @@ class Canvas extends toile.AbstractCanvas { //Contener（委譲）を利用
 
 	screenShot(_startX=0, _startY=0, _endX=undefined, _endY=undefined) {
 		var _dataURL = _canvas.__canvas.toDataURL("imgage/png");
-		//console.log(_startX, _startY, _endX, _endY);
 		return new toile.Bitmap(_dataURL, _startX, _startY, _endX, _endY);
 	}
 
@@ -1313,7 +1312,6 @@ class Bitmap extends toile.SuperDisplay { //observer pattern
 		if (this.__endX < _e.currentTarget.width) {
 			this.__originWidth = _e.currentTarget.width;
 			this.__width = this.__endX - this.__startX;
-			console.log(this.__originWidth, this.__width);
 		} else {
 			this.__originWidth = this.__width = _e.currentTarget.width;
 		}
