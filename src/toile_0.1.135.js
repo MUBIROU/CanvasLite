@@ -1,6 +1,6 @@
 /***************************************************************************
- * toile.js (ver.0.1 build 135 RC1)
- * 2017-08-22T10:22
+ * toile.js (ver.0.1 build 135)
+ * 2017-08-22T14:00
  * © 2017 Takashi Nishimura
 ***************************************************************************/
 
@@ -422,14 +422,14 @@ class Canvas extends toile.AbstractCanvas { //Contener（委譲）を利用
 			case "Bitmap":
 				this.__context2D.drawImage(
 					_theData.image, //元イメージ
-					_theData.startX, //2017-08-21 //元イメージをcanavsにコピーする開始点としての元イメージ中の「ソース位置」
-					_theData.startY,  //2017-08-21 //同上
-					_theData.width / _theData.scaleX, //上記の「ソース位置」を基準点とする矩形領域の幅
-					_theData.height / _theData.scaleY, //同高さ
+					_theData.startX, //元イメージをcanavsにコピーする開始点としての元イメージ中の「ソース位置」
+					_theData.startY,  //同上
+					_theData.width, //上記の「ソース位置」を基準点とする矩形領域の幅
+					_theData.height, //同高さ
 					- _theData.regX, //上記の矩形領域をコピーするcanvas中の位置
 					- _theData.regY, //同上
-					_theData.width, //originWidth * _theData.scaleX, //イメージの伸縮後の新たな幅
-					_theData.height //originHeight * _theData.scaleY //同高さ
+					_theData.width * _theData.scaleX, //イメージの伸縮後の新たな幅
+					_theData.height * _theData.scaleY //同高さ
 				);
 				break;
 
@@ -1095,7 +1095,7 @@ class Bitmap extends toile.SuperDisplay { //observer pattern
 	constructor(_path, _startX=0, _startY=0, _endX=undefined, _endY=undefined) {
 		super();
 
-		console.log(_startX, _startY, _endX, _endY); //DEBUG
+		//console.log(_startX, _startY, _endX, _endY); //DEBUG
 
 		//private variables (There are defaults)
 		this.__isMouseDown = false;
@@ -1161,10 +1161,8 @@ class Bitmap extends toile.SuperDisplay { //observer pattern
 	getData() {
 		var _obj = {};
 		_obj.type = "Bitmap";
-		_obj.width = this.__width; //this.__originWidth;
-		_obj.height = this.__height; //this.__originHeight;
-		//_obj.originWidth = this.__originWidth; //DEBUG
-		//_obj.originHeight = this.__originHeight; //DEBUG
+		_obj.width = this.__originWidth;
+		_obj.height = this.__originHeight;
 		_obj.image = this.__image;
 		_obj.regX = this.regX;
 		_obj.regY = this.regY;
