@@ -1,6 +1,6 @@
 /***************************************************************************
- * toile.js (ver.0.2 build 137 RC1)
- * 2017-08-24T13:03
+ * toile.js (ver.0.2 build 137 RC2)
+ * 2017-08-25T10:12
  * © 2017 Takashi Nishimura
 ***************************************************************************/
 
@@ -27,7 +27,7 @@ if (toile != window) { //名前空間を省略可能にするために
  * 		removeEventListener(_event)
  * 		reload()
  * 		requestFullscreen()
- * 		screenShot([_startX, _startY, _endX, _endY])
+ * 		screenShot(_startX=0, _startY=0, _endX=undefined, _endY=undefined)
  * 		setDepthIndex(_superDisplay, _depth)
  * 		stopMouseDownEvent()
  * 		stopMouseUpEvent()
@@ -107,7 +107,7 @@ class Canvas extends toile.AbstractCanvas { //Contener（委譲）を利用
 			this.__canvas = document.getElementById(_id_or_width);
 			this.__width = this.__canvas.width;
 			this.__height = this.__canvas.height;
-		} else if (typeof _id_or_width == "number") { //ex.Canvas(720,1280)
+		} else if (typeof _id_or_width == "number") { //ex.Canvas(550,400)
 			this.__canvas = document.createElement("canvas");
 			this.__canvas.width = this.__width = _id_or_width;
 			this.__canvas.height = this.__height = _height;
@@ -653,8 +653,10 @@ class Canvas extends toile.AbstractCanvas { //Contener（委譲）を利用
 	set cursor(_newValue) {
 		if ((_newValue.lastIndexOf(".png") != -1) || (_newValue.lastIndexOf(".jpg") != -1)) {
 			this.__canvas.style.cursor = "url('" + _newValue + "'),text";
-		} else if (_newValue == "default") { //必要に応じて今後"pointer""wait"にも対応予定
+		} else if (_newValue == "default") { //必要に応じて今後"pointer"等にも対応予定
 			this.__canvas.style.cursor = "default";
+		} else if (_newValue == "wait") {
+			this.__canvas.style.cursor = "wait";
 		}
 	}
 

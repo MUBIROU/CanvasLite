@@ -1,5 +1,5 @@
 # Reference Manual （リファレンスマニュアル）
-Version 0.1 Build 136 対応  
+Version 0.2 Build 137 RC2 対応  
 © 2017 Takashi Nishimura
 
 ### <b>INDEX</b>（クラス一覧）
@@ -1179,7 +1179,7 @@ Canvas.fps
 canvasObject.cursor
 
 ### Description（説明）
-HTML Canvas上でのマウスカーソルの形状（初期設定は"default"）。  
+HTML Canvas上でのマウスカーソルの形状（初期設定は"default"）。"wait"で待機･処理中カーソル。  
 .pngまたは.jpgファイルを指定するとオリジナルのカーソルに変更できます。  
 不透明度が0％の画像は黒色で表現されてしまいますが、1％（ほぼ透明）以上の画像であればそのまま表示されます。  
 したがってカーソルを消したい場合は、1x1pxの不透明度1％の.pngファイルを用意するとよいでしょう。
