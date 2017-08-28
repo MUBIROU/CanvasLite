@@ -2,7 +2,7 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>RECT時計</title>
+        <title>時計</title>
         <script src="https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/toile_test.js"></script>
         <script>
             window.addEventListener("load", load_window, false);
@@ -42,15 +42,15 @@
                 _canvas.isBorder(true);
             }
 
-            function enterframe_canvas(_canvas) {
+            enterframe_canvas = (_canvas) => {
                 var _date = new Date();
                 var _h = _date.getHours()*30 + _date.getMinutes()*0.5;
                 var _m = _date.getMinutes()*6 + _date.getSeconds()/60*6;
                 var _s = _date.getSeconds()*6;
 
-                window._shortHand.rotate = _h;
-                window._longHand.rotate = _m;
-                window._secondHand.rotate = _s;
+                _shortHand.rotate = _h;
+                _longHand.rotate = _m;
+                _secondHand.rotate = _s;
 
                 _canvas.drawScreen("#ffffff");
             }
