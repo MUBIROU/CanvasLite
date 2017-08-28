@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>RECT時計</title>
+        <script src="https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/toile_test.js"></script>
+        <script>
+            window.addEventListener("load", load_window, false);
+
+            function load_window() {
+                _shortHand = new toile.Rect(188,100,212,212);
+                _longHand = new toile.Rect(192,30,208,208);
+                _secondHand = new toile.Rect(197,25,203,203);
+
+                _shortHand.isFill(true);
+                _longHand.isFill(true);
+                _secondHand.isFill(true);
+                _shortHand.fillColor = "0,0,255";
+                _longHand.fillColor = "255,196,0";
+                _secondHand.fillColor = "255,0,0";
+
+                _shortHand.lineWidth = 3;
+                _longHand.lineWidth = 3;
+                _secondHand.lineWidth = 3;
+
+                _secondHand.lineColor = "204,0,0";
+                _longHand.lineColor = "204,153,0";
+                _shortHand.lineColor = "0,0,51";
+
+                _shortHand.regX = 12;
+                _shortHand.regY = 100;
+                _longHand.regX = 8;
+                _longHand.regY = 170;
+                _secondHand.regX = 3;
+                _secondHand.regY = 175;
+
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addChild(_shortHand);
+                _canvas.addChild(_longHand);
+                _canvas.addChild(_secondHand);
+                _canvas.addEventListener("enterframe", enterframe_canvas);
+                _canvas.isBorder(true);
+            }
+
+            function enterframe_canvas(_canvas) {
+                var _date = new Date();
+                var _h = _date.getHours()*30 + _date.getMinutes()*0.5;
+                var _m = _date.getMinutes()*6 + _date.getSeconds()/60*6;
+                var _s = _date.getSeconds()*6;
+
+                window._shortHand.rotate = _h;
+                window._longHand.rotate = _m;
+                window._secondHand.rotate = _s;
+
+                _canvas.drawScreen("#ffffff");
+            }
+        </script>
+        <style>
+            body {
+              background:#ffffff;
+              margin:0;
+              padding:0;
+              overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="400" height="400"></canvas>
+    </body>
+</html>
