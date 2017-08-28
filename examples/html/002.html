@@ -24,6 +24,7 @@
             }
 
             enterframe_canvas = (_canvas) => {
+                console.log(this);
                 var _disX = (_mouseX - _eyeR.width/2) - _eyeR.x;
                 var _disY = (_mouseY - _eyeR.height/2) - _eyeR.y;
                 var _radian = Math.atan2(_disY, _disX);
