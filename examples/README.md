@@ -5,5 +5,5 @@ ToileJS を使った動作確認
 
 |No.|タイトル|内容|
 |:--:|:--:|:--:|
-|001|[RECT時計](https://takashinishimura.github.io/ToileJS/examples/html/001.html)|Rectクラスだけで作る時計|
+|001|[RECT時計](https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/examples/html/001.html)|Rectクラスだけで作る時計|
 |002|[XXXX](http://xxx)|XXXXXXXXXXXXXXXXXXXX|
