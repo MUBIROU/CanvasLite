@@ -8,23 +8,24 @@
             addEventListener("load", load_window, false);
 
             function load_window() {
-                this._eyeR = new toile.Bitmap("../png/eye.png");
-                this._eyeR.addEventListener("load", load_eyeR, false);
+                _eyeR = new toile.Bitmap("../png/eye.png");
+                _eyeR.addEventListener("load", load_eyeR, false);
 
-                this._eyeL = new toile.Bitmap("../png/eye.png");
-                this._eyeL.addEventListener("load", load_eyeL, false);
+                _eyeL = new toile.Bitmap("../png/eye.png");
+                _eyeL.addEventListener("load", load_eyeL, false);
 
                 _canvas = new toile.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas); 	
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.enabledMouseMove(true);
-                _canvas.addChild(this._eyeR);
-                _canvas.addChild(this._eyeL);
+                _canvas.addChild(_eyeR);
+                _canvas.addChild(_eyeL);
                 _canvas.isBorder(true);
+
+                _mouseX = _mouseY = 0;
             }
 
             enterframe_canvas = (_canvas) => {
-                /*
                 var _disX = (_mouseX - _eyeR.width/2) - _eyeR.x;
                 var _disY = (_mouseY - _eyeR.height/2) - _eyeR.y;
                 var _radian = Math.atan2(_disY, _disX);
@@ -36,7 +37,6 @@
                 var _radian = Math.atan2(_disY, _disX);
                 var _kakudo = 180 * _radian / Math.PI;
                 _eyeL.rotate = _kakudo;
-                */
 
                 _canvas.drawScreen("#ffffff");
             }
