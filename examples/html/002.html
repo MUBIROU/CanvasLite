@@ -8,6 +8,8 @@
             addEventListener("load", load_window, false);
 
             function load_window() {
+                _mouseX = _mouseY = 0;
+
                 _eyeR = new toile.Bitmap("../png/eye.png");
                 _eyeR.addEventListener("load", load_eyeR, false);
 
@@ -21,8 +23,6 @@
                 _canvas.addChild(_eyeR);
                 _canvas.addChild(_eyeL);
                 _canvas.isBorder(true);
-
-                _mouseX = _mouseY = 0;
             }
 
             enterframe_canvas = (_canvas) => {
