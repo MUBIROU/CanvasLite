@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -40,6 +39,7 @@
                 _canvas.addChild(_longHand);
                 _canvas.addChild(_secondHand);
                 _canvas.addEventListener("enterframe", enterframe_canvas);
+                _canvas.isBorder(true);
             }
 
             function enterframe_canvas(_canvas) {
@@ -55,6 +55,14 @@
                 _canvas.drawScreen("#ffffff");
             }
         </script>
+        <style>
+            body {
+              background:#ffffff;
+              margin:0;
+              padding:0;
+              overflow:hidden;
+            }
+        </style>
     </head>
     <body>
         <canvas id="myCanvas" width="400" height="400"></canvas>
