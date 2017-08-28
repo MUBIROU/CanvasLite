@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!--script>var toile = window;</script-->
+        <script src="https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/toile_test.js"></script>
+        <script>
+            window.addEventListener("load", load_window, false);
+
+            function load_window() {
+                window._shortHand = new toile.Rect(188,100,212,212);
+                window._longHand = new toile.Rect(192,30,208,208);
+                window._secondHand = new toile.Rect(197,25,203,203);
+
+                window._shortHand.isFill(true);
+                window._longHand.isFill(true);
+                window._secondHand.isFill(true);
+                window._shortHand.fillColor = "0,0,255";
+                window._longHand.fillColor = "255,196,0";
+                window._secondHand.fillColor = "255,0,0";
+
+                window._shortHand.lineWidth = 3;
+                window._longHand.lineWidth = 3;
+                window._secondHand.lineWidth = 3;
+
+                window._secondHand.lineColor = "204,0,0";
+                window._longHand.lineColor = "204,153,0";
+                window._shortHand.lineColor = "0,0,51";
+
+                window._shortHand.regX = 12;
+                window._shortHand.regY = 100;
+                window._longHand.regX = 8;
+                window._longHand.regY = 170;
+                window._secondHand.regX = 3;
+                window._secondHand.regY = 175;
+
+                window._canvas = new toile.Canvas("myCanvas");
+                window._canvas.addChild(window._shortHand);
+                window._canvas.addChild(window._longHand);
+                window._canvas.addChild(window._secondHand);
+                window._canvas.addEventListener("enterframe", enterframe_canvas);
+            }
+
+            function enterframe_canvas(_canvas) {
+                var _date = new Date();
+                var _h = _date.getHours()*30 + _date.getMinutes()*0.5;
+                var _m = _date.getMinutes()*6 + _date.getSeconds()/60*6;
+                var _s = _date.getSeconds()*6;
+
+                window._shortHand.rotate = _h;
+                window._longHand.rotate = _m;
+                window._secondHand.rotate = _s;
+
+                _canvas.drawScreen("#ffffff");
+            }
+        </script>
+        <style>
+            body {
+                background:#000000;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="400" height="400"></canvas>
+    </body>
+</html>
