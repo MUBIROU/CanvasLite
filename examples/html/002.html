@@ -24,6 +24,7 @@
             }
 
             enterframe_canvas = (_canvas) => {
+                /*
                 var _disX = (_mouseX - _eyeR.width/2) - _eyeR.x;
                 var _disY = (_mouseY - _eyeR.height/2) - _eyeR.y;
                 var _radian = Math.atan2(_disY, _disX);
@@ -35,11 +36,13 @@
                 var _radian = Math.atan2(_disY, _disX);
                 var _kakudo = 180 * _radian / Math.PI;
                 _eyeL.rotate = _kakudo;
+                */
 
                 _canvas.drawScreen("#ffffff");
             }
 
             load_eyeR = (_bitmap) => {
+                console.log(this);
                 _bitmap.x = 200;
                 _bitmap.y = 100;
                 _bitmap.regX = _bitmap.width / 2;
@@ -54,6 +57,7 @@
             }
 
             mousemove_canvas = (_canvas, _mouseEvent) => {
+                console.log(this);
                 _mouseX = _canvas.mouseX;
                 _mouseY = _canvas.mouseY;
             }
