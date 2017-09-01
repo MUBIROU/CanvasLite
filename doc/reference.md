@@ -1099,7 +1099,7 @@ canvaObject.borderColor
 ### Description（説明）
 HTML Canvasの外枠（border）の色。  
 初期値は、"rgb(0, 0, 0)"（黒）。  
-設定は、RGB各色を0～255で指定する方法（例えば赤の場合 "rgb(255, 0, 0)"）か、16進数で指定する方法（赤の場合 "#ff0000"）どちらも有効です。
+設定は、RGB各色を0～255で指定する方法（例えば赤の場合 "rgb(255, 0, 0)"）か、16進数で指定する方法（赤の場合 "#ff0000"）どちらも有効です。  
 
 ### Example（例）
 ```
@@ -1618,7 +1618,8 @@ arg: Canvasの外枠を有効にするか否かを示すブール値。
 ### Description（説明）
 メソッド。HTML Canvasの外枠（border）を有効にするか否かの設定。  
 初期値はfalse状態（CSSで言えばcanvas.style.border = "none"）。  
-trueの場合の初期値は、線幅1pxの黒（CSSで言えばcanvas.style.border = "solid 1px #000000"）。
+trueの場合の初期値は、線幅1pxの黒（CSSで言えばcanvas.style.border = "solid 1px #000000"）。  
+描画する位置は、水平方向はCanvasの領域の右側、垂直方向はCanvasの領域の下側になります。そのため、右および下の外枠は、Canvasの領域の外に表示されることになります。
 
 ### Example（例）
 ```
