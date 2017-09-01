@@ -1121,7 +1121,8 @@ canvaObject.borderWidth
 
 ### Description（説明）
 HTML Canvasの外枠（border）の線の太さ。  
-初期値は"1px"。
+初期値は"1px"。  
+外枠が描画される位置は、外枠の左側および上側はCanvas領域のすぐ内側ですが、右側および下側はCanvas領域に外枠の幅（Canvas.borderWidth）を加えた位置のすぐ外側になるので、注意が必要です。
 
 ### Example（例）
 ```
@@ -1619,7 +1620,7 @@ arg: Canvasの外枠を有効にするか否かを示すブール値。
 メソッド。HTML Canvasの外枠（border）を有効にするか否かの設定。  
 初期値はfalse状態（CSSで言えばcanvas.style.border = "none"）。  
 trueの場合の初期値は、線幅1pxの黒（CSSで言えばcanvas.style.border = "solid 1px #000000"）。  
-外枠が描画される位置は、Canvas領域の外側になります。そのためCanvasが表示される位置は、外枠のサイズ分、右下にスライドされます。
+外枠が描画される位置は、外枠の左側および上側はCanvas領域のすぐ内側ですが、右側および下側はCanvas領域に外枠の幅（Canvas.borderWidth）を加えた位置のすぐ外側になるので、注意が必要です。
 
 ### Example（例）
 ```
