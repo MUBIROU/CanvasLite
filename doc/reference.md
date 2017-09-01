@@ -1619,7 +1619,7 @@ arg: Canvasの外枠を有効にするか否かを示すブール値。
 メソッド。HTML Canvasの外枠（border）を有効にするか否かの設定。  
 初期値はfalse状態（CSSで言えばcanvas.style.border = "none"）。  
 trueの場合の初期値は、線幅1pxの黒（CSSで言えばcanvas.style.border = "solid 1px #000000"）。  
-描画する位置は、Canvas領域の外側になります。そのためCanvasが表示される位置は、外枠のサイズ分、右下にスライドします。
+外枠が描画される位置は、Canvas領域の外側になります。そのためCanvasが表示される位置は、外枠のサイズ分、右下にスライドされます。
 
 ### Example（例）
 ```
