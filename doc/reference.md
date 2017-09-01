@@ -1881,7 +1881,8 @@ Canvas.addEventListener()、Canvas.MOUSE_DOWN
 canvasObject.mouseX
 
 ### Description（説明）
-プロパティ（読み取り専用）。マウスポインタの水平座標。
+プロパティ（読み取り専用）。マウスポインタの水平座標。  
+取得できる値は、Canvas左端が0。右端がCanvas.width-1になります。
 
 ### Example（例）
 ```
@@ -1915,7 +1916,8 @@ Canvas.mouseY
 canvasObject.mouseY
 
 ### Description（説明）
-プロパティ（読み取り専用）。マウスポインタの垂直座標。
+プロパティ（読み取り専用）。マウスポインタの垂直座標。  
+取得できる値は、Canvas上端が0。下端がCanvas.height-1になります。
 
 ### Example（例）
 ```
