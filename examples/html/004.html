@@ -21,7 +21,6 @@
                 _canvas = new toile.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas); 
                 _canvas.addEventListener("mousemove", mousemove_canvas);
-                //_canvas.enabledMouseMove(true);
                 _canvas.isBorder(true);
 
                 //=====================
@@ -156,6 +155,7 @@
             mousemove_canvas = (_canvas) => {
                 _mouseX = _canvas.mouseX;
                 _mouseY = _canvas.mouseY;
+                console.log(_mouseX, _mouseY);
             }
 
             mousedown_handle = (_bitmap) => {
