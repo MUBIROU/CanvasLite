@@ -12,7 +12,7 @@
                 _r10 = 255;
                 _g10 = 255;
                 _b10 = 255;
-                _mouseX = _mouseY = 0; 
+                _mouseX = _mouseY = 0;
                 _webfont = "../ttf/LCDPHONE.TTF";
 
                 //=====================
@@ -21,7 +21,6 @@
                 _canvas = new toile.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas); 
                 _canvas.addEventListener("mousemove", mousemove_canvas);
-                //_canvas.enabledMouseMove(true);
                 _canvas.isBorder(true);
 
                 //=====================
@@ -159,6 +158,8 @@
             }
 
             mousedown_handle = (_bitmap) => {
+                console.log(_bitmap.name);
+                /*
                 _canvas.enabledMouseMove(true);
                 _mouseX = _canvas.mouseX;
                 _mouseY = _canvas.mouseY;
@@ -167,6 +168,7 @@
                     case "G": _isMoveHandleG = true; break;
                     case "B": _isMoveHandleB = true; break;
                 }
+                */
             }
 
             mouseup_handle = (_bitmap) => {
