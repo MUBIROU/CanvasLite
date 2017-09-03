@@ -19,13 +19,13 @@
 
             _bitmapArray = [];
 
-            var _bitmap0 = new toile.Bitmap("box.png");
+            var _bitmap0 = new toile.Bitmap("../png/box.png");
             _bitmap0.alpha = 0;
             _bitmapArray.push(_bitmap0);
             _canvas.addChild(_bitmap0);
 
             for (let i = 1; i < 1000; i++) {
-                let _bitmap = new toile.Bitmap("box.png");
+                let _bitmap = new toile.Bitmap("../png/box.png");
                 _bitmapArray.push(_bitmap);
                 _canvas.addChild(_bitmap);
             }
