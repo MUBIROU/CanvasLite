@@ -997,7 +997,7 @@ toile.jsを読み込む前、\<head>タグ内などに
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<script src="../toile/toile_0.1.127.js"></script>
+		<script src="toile.js"></script>
 		<script src="main.js"></script>
 	</head>
 	<body>
