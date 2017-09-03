@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>006 Chaser</title>
+    <script src="https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/toile_test.js"></script>
+    <script>
+        addEventListener("load", load_window, false);
+
+        function load_window() {
+            _mouseX = _mouseY = 0;
+
+            _canvas = new toile.Canvas("myCanvas");
+            _canvas.addEventListener("enterframe", enterframe_canvas);
+            _canvas.addEventListener("mousemove", mousemove_canvas);
+            _canvas.enabledMouseMove(true);
+            _canvas.isBorder(true);
+            _canvas.fps = 120;
+
+            _bitmapArray = [];
+
+            var _bitmap0 = new toile.Bitmap("box.png");
+            _bitmap0.alpha = 0;
+            _bitmapArray.push(_bitmap0);
+            _canvas.addChild(_bitmap0);
+
+            for (let i = 1; i < 1000; i++) {
+                let _bitmap = new toile.Bitmap("box.png");
+                _bitmapArray.push(_bitmap);
+                _canvas.addChild(_bitmap);
+            }
+        }
+
+        enterframe_canvas = (_canvas) => {
+            var _bitmap1 = _bitmapArray[0];
+            _bitmap1.x += (_mouseX - _bitmap1.x) / 3;
+            _bitmap1.y += (_mouseY - 20 - _bitmap1.y) / 3;
+
+            for (let i=1; i<_bitmapArray.length; i++) {
+                let _theBitmap = _bitmapArray[i];
+                let _leftBitmap = _bitmapArray[i - 1];
+                _theBitmap.x += (_leftBitmap.x + 2 - _theBitmap.x) / 5;
+                _theBitmap.y += (_leftBitmap.y - _theBitmap.y) / 5;
+
+                let _disX = _leftBitmap.x - _theBitmap.x;
+                let _disY = _leftBitmap.y - _theBitmap.y;
+                let _radian = Math.atan2(_disY, _disX);
+                _theBitmap.rotateRadian = _radian + Math.PI;
+            }
+
+            _canvas.drawScreen();
+        }
+
+        mousemove_canvas = (_canvas) => {
+            _mouseX = _canvas.mouseX;
+            _mouseY = _canvas.mouseY;
+        }
+    </script>
+    <style>
+        body {
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="1920" height="1920"></canvas>
+</body>
+
+</html>
