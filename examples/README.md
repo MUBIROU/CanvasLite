@@ -1,5 +1,3 @@
-#### この項目は書きかけ（実験中）の項目です
-
 # ToileJS examples（動作確認）
 ToileJS の開発（アップデート）時に動作確認をするためのサンプル
 
@@ -11,4 +9,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |004|[Canvas Color V](https://takashinishimura.github.io/ToileJS/examples/html/004.html)|HTML Canvasの背景色を変更（垂直スライダー版）Webフォント使用|
 |005|[Canvas Color H](https://takashinishimura.github.io/ToileJS/examples/html/005.html)|HTML Canvasの背景色を変更（水平スライダー版）Webフォント使用|
 |006|[Chaser](https://takashinishimura.github.io/ToileJS/examples/html/006.html)|1000個のBitmapがマウスカーソルを追跡|
-|007|[Nested Nested...](https://takashinishimura.github.io/ToileJS/examples/html/007.html)|無限の入れ子とグローバル座標位置の取得を可能にした|
+|007|[Nested Nested...](https://takashinishimura.github.io/ToileJS/examples/html/007.html)|無限の入れ子とグローバル座標位置の取得が可能|
