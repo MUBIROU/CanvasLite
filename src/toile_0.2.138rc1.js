@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 138 RC1)
- * 2017-09-05T14:36
+ * 2017-09-05T14:54
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -367,7 +367,7 @@ toile.Canvas =
         }
 
         screenShot(_startX = 0, _startY = 0, _endX = undefined, _endY = undefined, _type = "jpeg") {
-            if ((_type != "png") || (_type != "jpeg")) {
+            if ((_type != "png") && (_type != "jpeg")) {
                 throw new Error('only "jpeg" or "png"');
             }
             var _dataURL = _canvas.__canvas.toDataURL("imgage/" + _type);
