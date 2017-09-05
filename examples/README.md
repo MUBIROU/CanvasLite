@@ -11,3 +11,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |006|[Chaser](https://takashinishimura.github.io/ToileJS/examples/html/006.html)|1000個のBitmapがマウスカーソルを追跡|
 |007|[Nested Nested...](https://takashinishimura.github.io/ToileJS/examples/html/007.html)|無限の入れ子とグローバル座標位置の取得が可能（非インタラクティブ）|
 |008|[Scaling](https://takashinishimura.github.io/ToileJS/examples/html/008.html)|Bitmapの拡大縮小（非インタラクティブ）|
+|009|[3D Menu](https://takashinishimura.github.io/ToileJS/examples/html/009.html)|透視投影変換と深度制御を使った3D風メニュー（非インタラクティブ）|
