@@ -8,7 +8,7 @@
             window.addEventListener("load", load_window, false);
 
             function load_window() {
-                _canvas = new toile.Canvas("canvas");
+                _canvas = new toile.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.isBorder(true);
 
@@ -82,6 +82,6 @@
         </style>
     </head>
     <body>
-        <canvas id="canvas" width="750" height="640"></canvas>
+        <canvas id="myCanvas" width="750" height="640"></canvas>
     </body>
 </html>
