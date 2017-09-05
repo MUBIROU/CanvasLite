@@ -1,5 +1,5 @@
 # Reference Manual （リファレンスマニュアル）
-Version 0.2 Build 137 対応  
+Version 0.2 Build 138 RC1 対応  
 © 2017 Takashi Nishimura
 
 ### <b>INDEX</b>（クラス一覧）
@@ -2066,13 +2066,14 @@ Canvas.exitFullscreen()、Canvas.isFitWindow()
 # Canvas.screenShot()
 
 ### Syntax（構文）
-canvasObject.screenShot([arg1,arg2,arg3,arg4])
+canvasObject.screenShot([arg1,arg2,arg3,arg4,arg5])
 
 ### Arguments（引数）
 arg1: 元画像中の表示させたい水平座標の開始位置。省略可能（初期値は0）。  
 arg2: 元画像中の表示させたい垂直座標の開始位置。省略可能（初期値は0）。  
 arg3: 元画像中の表示させたい水平座標の終了位置。省略可能。  
-arg4: 元画像中の表示させたい垂直座標の終了位置。省略可能。
+arg4: 元画像中の表示させたい垂直座標の終了位置。省略可能。  
+arg5: "jpeg"または"png"。省略可能（初期値は"jpeg"）。
 
 ### Returns（戻り値）
 Bitmapクラスのインスタンス。
