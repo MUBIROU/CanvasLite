@@ -3,7 +3,7 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 
 |No.|タイトル|内容|
 |:--:|:--|:--|
-|001|[RECT時計](https://takashinishimura.github.io/ToileJS/examples/html/001.html)|Rectクラスだけで作る時計|
+|001|[RECT時計](https://takashinishimura.github.io/ToileJS/examples/html/001.html)|Rectクラスだけで作る時計（非インタラクティブ）|
 |002|[キョロキョロ](https://takashinishimura.github.io/ToileJS/examples/html/002.html)|Math.atan2()使用|
 |003|[出前](https://takashinishimura.github.io/ToileJS/examples/html/003.html)|絶対に落ちないそば|
 |004|[Canvas Color V](https://takashinishimura.github.io/ToileJS/examples/html/004.html)|HTML Canvasの背景色を変更（垂直スライダー版）Webフォント使用|
