@@ -8,6 +8,8 @@
             addEventListener("load", load_window, false);
 
             function load_window() {
+                _mouseX = _mouseY = 0;
+
                 //ball Speed
                 _ballSpeedX = Math.round(Math.random()*3);
                 _ballSpeedY = -10;
@@ -38,7 +40,7 @@
                 for (let i=0; i<13; i++) {
                     for (let j=0; j<4; j++) {
                         let _x = 40 + i * 60;
-                        let _y = 40 + j * 60;
+                        let _y = 70 + j * 60;
                         let _block = new toile.Circle(_x-30, _y-30, 30);
                         _block.isFill(true);
                         _block.lineWidth = 3;
@@ -171,6 +173,6 @@
         </style>
     </head>
     <body>
-        <canvas id="myCanvas" width="800" height="650"></canvas>
+        <canvas id="myCanvas" width="800" height="800"></canvas>
     </body>
 </html>
