@@ -55,7 +55,7 @@
             constructor() {
                 super();
 
-                radius = __originRadius = 20;
+                radius = this.__originRadius = 20;
                 isFill(true);
                 //lineWidth = 1;
                 var _r, _g, _b;
@@ -66,18 +66,18 @@
                 lineAlpha = 0;
 
                 //3D座標空間位置
-                __x3D = Math.random() * 3000 - 1500; //-5000〜+5000
-                __y3D = Math.random() * 3000 - 1500;
-                __z3D = Math.random() * 10000; //0〜10000
+                this.__x3D = Math.random() * 3000 - 1500; //-5000〜+5000
+                this.__y3D = Math.random() * 3000 - 1500;
+                this.__z3D = Math.random() * 10000; //0〜10000
 
                 return this;
             }
 
-            get originRadius() { return __originRadius; }
-            get x3D() { return __x3D; }
-            get y3D() { return __y3D; }
-            get z3D() { return __z3D; }
-            set z3D(_newValue) { __z3D = _newValue; }
+            get originRadius() { return this.__originRadius; }
+            get x3D() { return this.__x3D; }
+            get y3D() { return this.__y3D; }
+            get z3D() { return this.__z3D; }
+            set z3D(_newValue) { this.__z3D = _newValue; }
         }
     </script>
     <style>
@@ -90,6 +90,6 @@
     </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="1360" height="700"></canvas>
+    <canvas id="myCanvas" width="800" height="800"></canvas>
   </body>
 </html>
