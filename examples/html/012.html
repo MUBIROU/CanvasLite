@@ -52,32 +52,31 @@
         }
 
         class Star extends toile.Circle {
-            constructor() {
-                super();
-
-                radius = this.__originRadius = 20;
-                isFill(true);
-                //lineWidth = 1;
-                var _r, _g, _b;
-                _r = _g =  Math.round(200 + Math.random()*55);
-                _b = Math.round(30 + Math.random()*170);
-                fillColor = lineColor = _r + "," + _g + "," + _b;
-                fillAlpha = 1.0;
-                lineAlpha = 0;
-
-                //3D座標空間位置
-                this.__x3D = Math.random() * 3000 - 1500; //-5000〜+5000
-                this.__y3D = Math.random() * 3000 - 1500;
-                this.__z3D = Math.random() * 10000; //0〜10000
-
-                return this;
-            }
-
-            get originRadius() { return this.__originRadius; }
-            get x3D() { return this.__x3D; }
-            get y3D() { return this.__y3D; }
-            get z3D() { return this.__z3D; }
-            set z3D(_newValue) { this.__z3D = _newValue; }
+          constructor() {
+            super();
+        
+            this.radius = this.__originRadius = 20;
+            this.isFill(true);
+            var _r, _g, _b;
+            _r = _g =  Math.round(200 + Math.random()*55);
+            _b = Math.round(30 + Math.random()*170);
+            this.fillColor = this.lineColor = _r + "," + _g + "," + _b;
+            this.fillAlpha = 1.0;
+            this.lineAlpha = 0;
+        
+            //3D座標空間位置
+            this.__x3D = Math.random() * 3000 - 1500; //-5000〜+5000
+            this.__y3D = Math.random() * 3000 - 1500;
+            this.__z3D = Math.random() * 10000; //0〜10000
+        
+            return this;
+          }
+        
+          get originRadius() { return this.__originRadius; }
+          get x3D() { return this.__x3D; }
+          get y3D() { return this.__y3D; }
+          get z3D() { return this.__z3D; }
+          set z3D(_newValue) { this.__z3D = _newValue; }
         }
     </script>
     <style>
