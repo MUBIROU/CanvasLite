@@ -42,6 +42,8 @@
 
         enterframe_canvas = (_canvas) => {
             if (_isMove) {
+                _mouseX = _canvas.mouseX; //DEBUG
+                _mouseY = _canvas.mouseY; //DEBUG
                 _choiceBitmap.x = _mouseX - _disX;
                 _choiceBitmap.y = _mouseY - _disY;
             }
