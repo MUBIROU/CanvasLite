@@ -17,7 +17,7 @@
             _canvas = new toile.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
             _canvas.addEventListener("mousemove", mousemove_canvas);
-            //_canvas.enabledMouseMove(true);
+            _canvas.enabledMouseMove(true);
             _canvas.isBorder(true)
             _canvas.fps = 30;
 
@@ -35,39 +35,39 @@
                 _bitmap.addEventListener("mousedown", mousedown_bitmap);
                 _bitmap.addEventListener("mouseup", mouseup_bitmap);
                 _bitmap.addEventListener("mouseupoutside", mouseup_bitmap);
+
             }
         }
 
         enterframe_canvas = (_canvas) => {
             if (_isMove) {
-                _choiceBitmap.x = _mouseX - _disX;
-                _choiceBitmap.y = _mouseY - _disY;
+                if (_mouseX != 0) {
+                    _choiceBitmap.x = _mouseX - _disX;
+                    _choiceBitmap.y = _mouseY - _disY;
+                }
             }
             _canvas.drawScreen();
         }
 
         mousedown_bitmap = (_bitmap) => {
-            console.log("mouseDown: " + _bitmap.name + "");
+            console.log("mouseDown: " + _bitmap.name);
             _canvas.setDepthIndex(_bitmap, _canvas.getDepthMax());
             _canvas.stopMouseDownEvent();
-            //_isMove = true;
+            _isMove = true;
             _choiceBitmap = _bitmap;
 
             _disX = _canvas.mouseX - _bitmap.x;
             _disY = _canvas.mouseY - _bitmap.y;
-            _canvas.enabledMouseMove(true);
         }
 
         mouseup_bitmap = (_bitmap) => {
-            console.log("mouseUp: " + _bitmap.name + "");
+            console.log("mouseUp: " + _bitmap.name);
             _canvas.stopMouseUpEvent();
             _isMove = false;
             _choiceBitmap = undefined;
-            _canvas.enabledMouseMove(false);
         }
 
         mousemove_canvas = (_canvas) => {
-            _isMove = true;
             _mouseX = _canvas.mouseX;
             _mouseY = _canvas.mouseY;
         }
