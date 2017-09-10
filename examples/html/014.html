@@ -41,8 +41,8 @@
 
         enterframe_canvas = (_canvas) => {
             if (_isMove) {
-                _choiceBitmap.x = _mouseX + 50; // - _disX;
-                _choiceBitmap.y = _mouseY + 75; // - _disY;
+                _choiceBitmap.x = _mouseX - 50; // - _disX;
+                _choiceBitmap.y = _mouseY - 75; // - _disY;
             }
             _canvas.drawScreen();
         }
