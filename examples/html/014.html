@@ -12,6 +12,7 @@
             _choiceBitmap = undefined;
             _disX = _disY = 0;
             _mouseX = _mouseY = 0;
+            _webfont = "../ttf/LCDPHONE.TTF";
 
             //Canvas
             _canvas = new toile.Canvas("myCanvas");
@@ -37,6 +38,32 @@
                 _bitmap.addEventListener("mouseupoutside", mouseup_bitmap);
 
             }
+
+            //DEBUG
+            _textMouseX = new toile.Text("0");
+            _textMouseY = new toile.Text("0");
+            _textDisX = new toile.Text("0");
+            _textDisY = new toile.Text("0");
+
+            _textMouseX = _textMouseY = _textDisX = _textDisY = 50;
+
+            _textMouseX.y = 50;
+            _textMouseY.y = 100;
+            _textDisX.y = 150;
+            _textDisY.y = 200;
+
+            _textMouseX.addWebFont("font01", _webfont, "truetype");
+            _textMouseY.addWebFont("font01", _webfont, "truetype");
+            _textDisX.addWebFont("font01", _webfont, "truetype");
+            _textDisY.addWebFont("font01", _webfont, "truetype");
+
+            _textMouseX.font = _textMouseY.font = _textDisX.font = _textDisY.font = "font01";
+            _textMouseX.size = _textMouseY.size = _textDisX.size = _textDisY.size = 30;
+
+            _canvas.addChild(_textMouseX);
+            _canvas.addChild(_textMouseY);
+            _canvas.addChild(_textDisX);
+            _canvas.addChild(_textDisY);
         }
 
         enterframe_canvas = (_canvas) => {
@@ -44,6 +71,13 @@
                 _choiceBitmap.x = _mouseX - _disX;
                 _choiceBitmap.y = _mouseY - _disY;
             }
+
+            //DEBUG
+            _textMouseX.text = _mouseX;
+            _textMouseY.text = _mouseY;
+            _textDisX.text = _disX;
+            _textDisY.text = _disY;
+
             _canvas.drawScreen();
         }
 
