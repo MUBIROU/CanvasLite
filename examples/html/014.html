@@ -17,7 +17,7 @@
             _canvas = new toile.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
             _canvas.addEventListener("mousemove", mousemove_canvas);
-            _canvas.enabledMouseMove(true);
+            //_canvas.enabledMouseMove(true);
             _canvas.isBorder(true)
             _canvas.fps = 30;
 
@@ -55,6 +55,7 @@
 
             _disX = _canvas.mouseX - _bitmap.x;
             _disY = _canvas.mouseY - _bitmap.y;
+            _canvas.enabledMouseMove(true);
         }
 
         mouseup_bitmap = (_bitmap) => {
@@ -62,6 +63,7 @@
             _canvas.stopMouseUpEvent();
             _isMove = false;
             _choiceBitmap = undefined;
+            _canvas.enabledMouseMove(false);
         }
 
         mousemove_canvas = (_canvas) => {
