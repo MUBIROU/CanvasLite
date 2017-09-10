@@ -35,7 +35,6 @@
                 _bitmap.addEventListener("mousedown", mousedown_bitmap);
                 _bitmap.addEventListener("mouseup", mouseup_bitmap);
                 _bitmap.addEventListener("mouseupoutside", mouseup_bitmap);
-
             }
         }
 
@@ -54,7 +53,6 @@
             _isMove = true;
             _choiceBitmap = _bitmap;
 
-            consolelog(this);
             _disX = _canvas.mouseX - _bitmap.x;
             _disY = _canvas.mouseY - _bitmap.y;
         }
