@@ -50,7 +50,7 @@
             console.log("mouseDown: " + _bitmap.name + "");
             _canvas.setDepthIndex(_bitmap, _canvas.getDepthMax());
             _canvas.stopMouseDownEvent();
-            _isMove = true;
+            //_isMove = true;
             _choiceBitmap = _bitmap;
 
             _disX = _canvas.mouseX - _bitmap.x;
@@ -65,6 +65,7 @@
         }
 
         mousemove_canvas = (_canvas) => {
+            _isMove = true;
             _mouseX = _canvas.mouseX;
             _mouseY = _canvas.mouseY;
         }
