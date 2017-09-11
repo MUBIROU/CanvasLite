@@ -118,7 +118,6 @@
                 //for 3D画面遷移
                 _count3D -= 2;
                 _canvas.rotateY = _count3D;
-
                 var _theCount = Math.abs(_count3D) % 360;
                 if ((90 < _theCount ) && (_theCount < 270)) { //裏
                     _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
@@ -126,7 +125,7 @@
                     _canvas.__context2D.fillRect(0,0,_canvas.width,_canvas.height);
                     return;
                 }
-                
+
                 _count += 0.03;
                 _container1.rotate = 80 * Math.cos(_count*1.01);
                 _container2.rotate = 30 * Math.cos(-_count*1.52);
