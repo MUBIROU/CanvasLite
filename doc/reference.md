@@ -956,6 +956,9 @@ Bitmap.x
 * [Canvas.height](#Canvasheight): Canvasの高さ
 * [Canvas.mouseX](#CanvasmouseX): マウスポインタの水平座標
 * [Canvas.mouseY](#CanvasmouseY): マウスポインタの垂直座標
+* [Canvas.perspective](#Canvasperspective): Canvasの回転時のパースの度合い
+* [Canvas.rotateX](#CanvasrotateX): X軸を中心にCanvas全体を回転
+* [Canvas.rotateY](#CanvasrotateY): Y軸を中心にCanvas全体を回転
 * [Canvas.width](#Canvaswidth): Canvasの幅
 
 ### Events（イベント）
@@ -2272,6 +2275,129 @@ Canvas.addEventListener()、Bitmap.addEventListener()、SpriteSheet.addEventList
 Bitmap.MOUSE_UP、SpriteSheet.MOUSE_UP
 
 
+<a name="Canvasperspective"></a>
+# Canvas.perspective
+
+### Syntax（構文）
+canvasObject.perspective
+
+### Description（説明）
+Canvasの回転時のパースの度合い。初期値は5000。  
+値が小さいと遠近感が強調されます（1000〜10000程度が適切）。
+
+### Example（例）
+```
+// main.js
+window.addEventListener("load", load_window, false);
+
+function load_window() {
+    _canvas = new toile.Canvas("canvas");
+    _canvas.addEventListener("enterframe", enterframe_canvas);
+    _canvas.perspective = 1000;
+    _count3D = 0;
+}
+
+enterframe_canvas = (_canvas) => {
+    _count3D -= 2;
+    _canvas.rotateY = _count3D;
+    _canvas.drawScreen();
+}
+```
+
+### See Also（参照）
+Canvas.rotateX、Canvas.rotateY
+
+
+<a name="CanvasrotateX"></a>
+# Canvas.rotateX
+
+### Syntax（構文）
+canvasObject.rotateX
+
+### Description（説明）
+X軸を中心にCanvas全体を回転。設定専用（参照不可）。  
+360（度）で1回転。マイナス値や360以上の値も扱えます。  
+裏面処理をするには例文のような工夫が必要です。
+
+### Example（例）
+```
+// main.js
+window.addEventListener("load", load_window, false);
+
+function load_window() {
+    _canvas = new toile.Canvas("canvas");
+    _canvas.addEventListener("enterframe", enterframe_canvas);
+    _canvas.fps = 60;
+    _canvas.perspective = 1000;
+    _count3D = 0;
+}
+
+enterframe_canvas = (_canvas) => {
+    _count3D -= 2;
+    _canvas.rotateX = _count3D;
+
+    //裏面処理用（オプション）
+    var _theCount = Math.abs(_count3D) % 360;
+    if ((90 < _theCount ) && (_theCount < 270)) {
+        _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
+        _canvas.__context2D.fillStyle = "rgba(86,82,82,1.0)";
+        _canvas.__context2D.fillRect(0,0,_canvas.width,_canvas.height);
+        return;
+    }
+
+    _canvas.drawScreen();
+}
+```
+
+### See Also（参照）
+Canvas.rotateY、Canvas.perspective
+
+
+<a name="CanvasrotateY"></a>
+# Canvas.rotateY
+
+### Syntax（構文）
+canvasObject.rotateY
+
+### Description（説明）
+Y軸を中心にCanvas全体を回転。設定専用（参照不可）。  
+360（度）で1回転。マイナス値や360以上の値も扱えます。  
+裏面処理をするには例文のような工夫が必要です。
+
+### Example（例）
+```
+// main.js
+window.addEventListener("load", load_window, false);
+
+function load_window() {
+    _canvas = new toile.Canvas("canvas");
+    _canvas.addEventListener("enterframe", enterframe_canvas);
+    _canvas.fps = 60;
+    _canvas.perspective = 1000;
+    _count3D = 0;
+}
+
+enterframe_canvas = (_canvas) => {
+    _count3D -= 2;
+    _canvas.rotateY = _count3D;
+
+    //裏面処理用（オプション）
+    var _theCount = Math.abs(_count3D) % 360;
+    if ((90 < _theCount ) && (_theCount < 270)) {
+        _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
+        _canvas.__context2D.fillStyle = "rgba(86,82,82,1.0)";
+        _canvas.__context2D.fillRect(0,0,_canvas.width,_canvas.height);
+        return;
+    }
+
+    _canvas.drawScreen();
+}
+```
+
+### See Also（参照）
+Canvas.rotateX、Canvas.perspective
+
+
 <a name="Canvaswidth"></a>
 # Canvas.width
 
@@ -2282,6 +2408,7 @@ canvasObject.width
 プロパティ（読み取り専用）。Canvasの幅（ピクセル）。
 
 ### Example（例）
+```
 // main.js
 window.addEventListener("load", load_window, false);
 
@@ -2294,6 +2421,7 @@ function load_window() {
 enterframe_canvas = (_canvas) => {
 	_canvas.drawScreen();
 }
+```
 
 ### See Also（参照）
 Canvas.height
