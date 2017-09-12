@@ -232,7 +232,7 @@ Bitmap.heightの値を変更すると、Bitmap.scaleの値はnullになります
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("canvas");
+	var _canvas = new toile.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
 	var _bitmap = new toile.Bitmap("sample.png");
@@ -855,7 +855,7 @@ Bitmap.widthの値を変更すると、Bitmap.scaleの値はnullになります�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("canvas");
+	var _canvas = new toile.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
 	var _bitmap = new toile.Bitmap("sample.png");
@@ -2308,15 +2308,14 @@ Canvasの回転時のパースの度合い。初期値は5000。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-    _canvas = new toile.Canvas("canvas");
+    _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
+    _canvas.isBorder(true);
     _canvas.perspective = 1000;
-    _count3D = 0;
 }
 
 enterframe_canvas = (_canvas) => {
-    _count3D -= 2;
-    _canvas.rotateY = _count3D;
+    _canvas.rotateY -=2;
     _canvas.drawScreen();
 }
 ```
@@ -2342,19 +2341,17 @@ X軸を中心にCanvas全体を回転。初期値は0（度）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-    _canvas = new toile.Canvas("canvas");
+    _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
-    _canvas.fps = 60;
+    _canvas.isBorder(true);
     _canvas.perspective = 1000;
-    _count3D = 0;
 }
 
 enterframe_canvas = (_canvas) => {
-    _count3D -= 2;
-    _canvas.rotateX = _count3D;
+    _canvas.rotateX -= 2;
 
     //裏面処理用（オプション）
-    var _theCount = Math.abs(_count3D) % 360;
+    var _theCount = Math.abs(_canvas.rotateX) % 360;
     if ((90 < _theCount ) && (_theCount < 270)) {
         _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
         _canvas.__context2D.fillStyle = "rgba(86,82,82,1.0)";
@@ -2387,19 +2384,17 @@ Y軸を中心にCanvas全体を回転。初期値は0（度）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-    _canvas = new toile.Canvas("canvas");
+    _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
-    _canvas.fps = 60;
+    _canvas.isBorder(true);
     _canvas.perspective = 1000;
-    _count3D = 0;
 }
 
 enterframe_canvas = (_canvas) => {
-    _count3D -= 2;
-    _canvas.rotateY = _count3D;
+    _canvas.rotateY -= 2;
 
     //裏面処理用（オプション）
-    var _theCount = Math.abs(_count3D) % 360;
+    var _theCount = Math.abs(_canvas.rotateX) % 360;
     if ((90 < _theCount ) && (_theCount < 270)) {
         _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
         _canvas.__context2D.fillStyle = "rgba(86,82,82,1.0)";
@@ -6753,7 +6748,7 @@ Webフォント（サーバ上のフォント）を利用するためのメソ�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("canvas");
+	var _canvas = new toile.Canvas("myCanvas");
 
 	var _text = new toile.Text("toile.js by ECMAScript 6");
 	//http://jp.ffonts.net/CabinSketch-Bold.font
