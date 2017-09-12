@@ -2332,7 +2332,7 @@ Canvas.rotateX、Canvas.rotateY
 canvasObject.rotateX
 
 ### Description（説明）
-X軸を中心にCanvas全体を回転。設定専用（参照不可）。  
+X軸を中心にCanvas全体を回転。初期値は0（度）。  
 360（度）で1回転。マイナス値や360以上の値も扱えます。  
 裏面処理をするには例文のような工夫が必要です。
 
@@ -2377,7 +2377,7 @@ Canvas.rotateY、Canvas.perspective
 canvasObject.rotateY
 
 ### Description（説明）
-Y軸を中心にCanvas全体を回転。設定専用（参照不可）。  
+Y軸を中心にCanvas全体を回転。初期値は0（度）。  
 360（度）で1回転。マイナス値や360以上の値も扱えます。  
 裏面処理をするには例文のような工夫が必要です。
 
