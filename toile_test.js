@@ -1,5 +1,5 @@
 /***************************************************************************
- * toile.js (ver.0.2 build 139 RC1)
+ * toile.js (ver.0.2 build 139 RC2)
  * 2017-09-12TXX:XX
  * © 2017 Takashi Nishimura
  ***************************************************************************/
@@ -92,6 +92,8 @@ toile.Canvas =
             this.__millisecPerFrame = Math.round(1000 / 30); //30.3030…fps（フレームレートの設定）
             this.__mouseX = this.__mouseY = 0;
             this.__perspective = 5000; //1000～10000
+            this.__rotateX = 0;
+            this.__rotateY = 0;
 
             //private variables（初期値無）
             this.__canvas = undefined;
@@ -689,18 +691,16 @@ toile.Canvas =
             this.__perspective = _newValue;
         }
 
-        get rotateX() { 
-            throw new Error("can't be used");
-        }
+        get rotateX() { return this.__rotateX; }
         set rotateX(_newValue) { //ex. 1000～10000
+            this.__rotateX = _newValue;
             this.__canvas.style.transform 
             = "perspective(" + this.__perspective + "px)" + " rotateX(" + _newValue + "deg)";
         }
 
-        get rotateY() { 
-            throw new Error("can't be used");
-        }
+        get rotateY() { return this.__rotateY; }
         set rotateY(_newValue) { //ex. 1000～10000
+            this.__rotateY = _newValue;
             this.__canvas.style.transform 
             = "perspective(" + this.__perspective + "px)" + " rotateY(" + _newValue + "deg)";
         }
