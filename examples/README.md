@@ -18,4 +18,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |013|[あやつり人形](https://takashinishimura.github.io/ToileJS/examples/html/013.html)|三平方の定理や三角関数を利用|
 |014|[トランプ](https://takashinishimura.github.io/ToileJS/examples/html/014.html)|マウスイベントと重なり順のテスト（移動可能／ゲームではない）|
 |015|[3D画面遷移](https://takashinishimura.github.io/ToileJS/examples/html/015.html)|Canvas全体をパースをかけながら回転（非インタラクティブ）|
-|016|[パーティクル](https://takashinishimura.github.io/ToileJS/examples/html/016.html)|Canvas上をタッチするとパーティクルが発生（Canvasの拡大機能付）|
+|016|[パーティクル](https://takashinishimura.github.io/ToileJS/examples/html/016.html)|Canvasをタッチするとパーティクルが発生（Canvasの拡大機能付）|
