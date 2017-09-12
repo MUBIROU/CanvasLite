@@ -11,7 +11,7 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |006|[Chaser](https://takashinishimura.github.io/ToileJS/examples/html/006.html)|1000個のBitmapがマウスカーソルを追跡|
 |007|[Nested Nested...](https://takashinishimura.github.io/ToileJS/examples/html/007.html)|無限の入れ子とグローバル座標位置の取得が可能（非インタラクティブ）|
 |008|[Scaling](https://takashinishimura.github.io/ToileJS/examples/html/008.html)|Bitmapの拡大縮小（非インタラクティブ）|
-|009|[3D Cards](https://takashinishimura.github.io/ToileJS/examples/html/009.html)|透視投影変換と深度制御を使った3Dメニュー（非インタラクティブ）|
+|009|[3D Cards](https://takashinishimura.github.io/ToileJS/examples/html/009.html)|透視投影変換と深度制御を使った3Dカード（非インタラクティブ）|
 |010|[ブロック崩し](https://takashinishimura.github.io/ToileJS/examples/html/010.html)|衝突判定のテストとしてRectクラスだけで作成|
 |011|[ブロック崩し2](https://takashinishimura.github.io/ToileJS/examples/html/011.html)|円形の衝突判定のテスト|
 |012|[宇宙飛行](https://takashinishimura.github.io/ToileJS/examples/html/012.html)|透視投影変換による3D表現（非インタラクティブ）|
