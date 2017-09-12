@@ -15,7 +15,7 @@
                 //for 3D画面遷移
                 _canvas.perspective = 1000;
                 _canvas.fps = 60;
-                _deg = 0;
+                _degree = 0;
 
                 //BackGround
                 _bg1 = new toile.Bitmap("../png/blueBox.png");
@@ -116,9 +116,9 @@
 
             enterframe_canvas = (_canvas) => {
                 //for 3D画面遷移
-                _deg -= 2;
-                _canvas.rotateY = _deg;
-                var _theCount = Math.abs(_deg) % 360;
+                _degree -= 2;
+                _canvas.rotateY = _degree;
+                var _theCount = Math.abs(_degree) % 360;
                 if ((90 < _theCount ) && (_theCount < 270)) { //裏
                     _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
                     _canvas.__context2D.fillStyle = "rgba(86,82,82,1.0)";
