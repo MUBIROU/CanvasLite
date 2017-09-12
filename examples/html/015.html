@@ -116,7 +116,7 @@
             enterframe_canvas = (_canvas) => {
                 //for 3D画面遷移
                 _canvas.rotateY -= 2;
-                var _theCount = Math.abs(_degree) % 360;
+                var _theCount = Math.abs(_canvas.rotateY) % 360;
                 if ((90 < _theCount ) && (_theCount < 270)) { //裏
                     _canvas.context2D.clearRect(0,0,_canvas.width,_canvas.height);
                     _canvas.context2D.fillStyle = "rgba(86,82,82,1.0)";
