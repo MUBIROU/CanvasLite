@@ -948,8 +948,9 @@ Bitmap.x
 
 ### Properties（プロパティ）
 
-* [Canvas.borderColor](#CanvasborderColor): Canmvasの外枠の色
-* [Canvas.borderWidth](#CanvasborderWidth): Canmvasの外枠の線の太さ
+* [Canvas.borderColor](#CanvasborderColor): Canvasの外枠の色
+* [Canvas.borderWidth](#CanvasborderWidth): Canvasの外枠の線の太さ
+* [Canvas.context2D](#Canvascontext2D): Canvasの2Dコンテキスト
 * [Canvas.correctFPS](#CanvascorrectFPS): 内部的なフレームレート値
 * [Canvas.cursor](#Canvascursor): マウスカーソルの形状
 * [Canvas.fps](#Canvasfps): フレームレート
@@ -1137,6 +1138,22 @@ _canvas.borderColor = "#ff0000"; //赤の場合
 
 ### See Also（参照）
 Canvas.borderColor、Canvas.isBorder()
+
+
+<a name="Canvascontext2D"></a>
+# Canvas.context2D
+
+### Syntax（構文）
+canvasObject.context2D
+
+### Description（説明）
+プロパティ（読み取り専用）。  
+HTML Canvasの2Dコンテキスト（CanvasRenderingContext2Dオブジェクト）。  
+2Dコンテキストを参照したい場合に使用します。
+
+### Example（例）
+```
+```
 
 
 <a name="CanvascorrectFPS"></a>
