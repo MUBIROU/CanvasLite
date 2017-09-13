@@ -998,10 +998,10 @@ toile.jsを読み込む前、\<head>タグ内などに
 【html】
 ```
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<script src="toile.js"></script>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://takashinishimura.github.io/ToileJS/toile.js"></script>
 		<script src="main.js"></script>
 	</head>
 	<body>
