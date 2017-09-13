@@ -20,7 +20,6 @@
                 _spriteSheet1.x = 10;
                 _spriteSheet1.y = 30;
                 _spriteSheet1.fps = 2;
-                _canvas.addChild(_spriteSheet1);
 
                 //SpriteSheet2
                 _spriteSheet2 = new toile.SpriteSheet("../png/run.png");
@@ -28,8 +27,7 @@
                 _spriteSheet2.y = 20;
                 _spriteSheet2.scale = 1.2;
                 _spriteSheet2.fps = 10;
-                _canvas.addChild(_spriteSheet2);
-                _canvas.reload();
+                
 
                 //Button
                 _minusBtn = new toile.Bitmap("../png/minus.png");
@@ -51,6 +49,8 @@
                 _canvas.addChild(_pauseBtn);
                 _canvas.addChild(_playBtn);
                 _canvas.addChild(_plusBtn);
+                _canvas.addChild(_spriteSheet1);
+                _canvas.addChild(_spriteSheet2);
             }
 
             enterframe_canvas = (_canvas) => {
