@@ -21,3 +21,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |016|[パーティクル](https://takashinishimura.github.io/ToileJS/examples/html/016.html)|Canvasをタッチするとパーティクルが発生（Canvasの拡大機能付）|
 |017|[Movie](https://takashinishimura.github.io/ToileJS/examples/html/017.html)|映像ファイルの制御|
 |018|[Digital Clock](https://takashinishimura.github.io/ToileJS/examples/html/018.html)|Webフォントを使用したデジタル時計（1000分の1秒対応）|
+|019|[捕縛](https://takashinishimura.github.io/ToileJS/examples/html/018.html)|Lineクラスを使用|

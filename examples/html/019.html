@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>019 捕縛</title>
+    <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+    <script>
+        addEventListener("load", load_window, false);
+        function load_window() {
+            //Canvasクラス
+            _canvas = new toile.Canvas("myCanvas");
+            _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+            _canvas.addEventListener("mousemove", mousemove_canvas);
+            _canvas.enabledMouseMove(true);
+            _canvas.fps = 60;
+            _canvas.isBorder(true);
+
+            //Lineクラス
+            _line1 = new toile.Line(0,0,0,0);
+            _line2 = new toile.Line(480,0,480,0);
+            _line3 = new toile.Line(480,480,480,480);
+            _line4 = new toile.Line(0,480,0,480);
+            _line1.lineWidth = 2;
+            _line2.lineWidth = 2;
+            _line3.lineWidth = 2;
+            _line4.lineWidth = 2;
+            _canvas.addChild(_line1);
+            _canvas.addChild(_line2);
+            _canvas.addChild(_line3);
+            _canvas.addChild(_line4);
+
+            //Bitmapクラス
+            _bitmap = new toile.Bitmap("../png/flash.png");
+            _canvas.addChild(_bitmap);
+        }
+
+        enterframe_canvas = (_canvas) => {
+            //Bitmap
+            _bitmap.x = _mouseX - 30;
+            _bitmap.y = _mouseY - 30;
+
+            //Line
+            _line1.endX =
+            _line2.endX =
+            _line3.endX =
+            _line4.endX = _bitmap.x + 30;
+
+            _line1.endY =
+            _line2.endY =
+            _line3.endY =
+            _line4.endY = _bitmap.y + 30;
+
+            //描画
+            _canvas.drawScreen();
+        }
+
+        mousemove_canvas = (_canvas) => {
+            _mouseX = _canvas.mouseX;
+            _mouseY = _canvas.mouseY;
+        }
+    </script>
+    <style>
+        body {
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+</body>
+
+</html>
