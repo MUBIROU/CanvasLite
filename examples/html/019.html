@@ -7,6 +7,8 @@
     <script>
         addEventListener("load", load_window, false);
         function load_window() {
+            _mouseX = _mouseY = 0;
+
             //Canvasクラス
             _canvas = new toile.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
@@ -72,7 +74,7 @@
 </head>
 
 <body>
-    <canvas id="myCanvas" width="640" height="480"></canvas>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
 </body>
 
 </html>
