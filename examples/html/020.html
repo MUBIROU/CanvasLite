@@ -43,9 +43,11 @@
                 _playBtn.x = 450;
                 _plusBtn.x = 530;
 
-                _minusBtn.alpha = _pauseBtn.alpha = _plusBtn.alpha = 0.1;
+                _pauseBtn.alpha = 0.1;
 
+                _minusBtn.addEventListener("mousedown", mousedown_minusBtn);
                 _playBtn.addEventListener("mousedown", mousedown_playBtn);
+                _plusBtn.addEventListener("mousedown",mousedown_plusBtn);
 
                 _canvas.addChild(_minusBtn);
                 _canvas.addChild(_pauseBtn);
