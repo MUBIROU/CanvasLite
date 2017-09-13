@@ -30,8 +30,8 @@
             _text.color = "#333333";
             _text.align = "right";
             _text.baseline = "top";
-            _text.x = 365;
-            _text.y = 370;
+            _text.x = 400;
+            _text.y = 365;
             _canvas.addChild(_text);
 
             //Bitmapクラス
@@ -78,7 +78,7 @@
             _text.text = _currentTime + "/" + _duration + " SEC";
 
             //Rect
-            //_rect2.endX = 640 * (_currentTime / _duration);
+            _rect2.endX = 640 * (_currentTime / _duration);
 
             //描画
             _canvas.drawScreen("#ffffff");
