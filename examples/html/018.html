@@ -11,8 +11,7 @@
             //Canvasの生成
             var _canvas = new toile.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
-            _canvas.fps = 240;
-            _canvas.isBorder(true);
+            _canvas.fps = 1000;
 
             //Textの生成
             _webfont = "../ttf/LCDPHONE.TTF";
@@ -31,7 +30,7 @@
             _text2.baseline = "top";
 
             _text1.size = 100;
-            _text2.size = 220;
+            _text2.size = 225;
 
             _text1.x = _text2.x = 300;
             _text1.y = 260;
