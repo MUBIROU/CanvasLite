@@ -22,3 +22,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |017|[Movie](https://takashinishimura.github.io/ToileJS/examples/html/017.html)|映像ファイルの制御|
 |018|[Digital Clock](https://takashinishimura.github.io/ToileJS/examples/html/018.html)|Webフォントを使用したデジタル時計（1000分の1秒対応）|
 |019|[捕縛](https://takashinishimura.github.io/ToileJS/examples/html/019.html)|Lineクラスを使用（マウスカーソルは非表示）|
+|020|[SpriteSheet](https://takashinishimura.github.io/ToileJS/examples/html/020.html)|SpriteSheetアニメーションの制御|
