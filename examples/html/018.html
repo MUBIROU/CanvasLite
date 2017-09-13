@@ -10,22 +10,23 @@
         function load_window() { // HTMLのロードが完了したら…
             //Textの生成
             _webfont = "../ttf/LCDPHONE.TTF";
-            _clock = new toile.Text("00:00:00:00");
-            _clock.addWebFont("font01", _webfont, "truetype");
-            _clock.font = "font01";
-            _clock.align = "center"; //"center","right","start"
-            _clock.baseline = "middle"; //"middle","bottom"
-            _clock.color = "#ffcc00";
-            _clock.name = "clock";
-            _clock.scale = 5;
-            _clock.size = 70;
-            _clock.x = 300;
-            _clock.y = 300;
+            _text1 = new toile.Text("");
+            _text1.addWebFont("font01", _webfont, "truetype");
+            _text1.font = "font01";
+            _text1.align = "center"; //"center","right","start"
+            _text1.baseline = "bottom"; //"top""middle","bottom"
+            _text1.color = "#ffcc00";
+            //_text1.scale = 5;
+            _text1.size = 100;
+            _text1.x = 300;
+            _text1.y = 300;
+
+            
 
             //Canvasの生成
             var _canvas = new toile.Canvas("myCanvas");
             _canvas.isBorder(true);
-            _canvas.addChild(_clock);
+            _canvas.addChild(_text1);
             _canvas.addEventListener("enterframe", enterframe_canvas);
         }
 
@@ -70,7 +71,7 @@
                 _ms = String(_theMilliseconds);
             } 
 
-            window._clock.text = _h + ":" + _m + ":" + _s + ":" + _ms;
+            window._text1.text = _h + ":" + _m + ":" + _s + ":" + _ms;
 
             _canvas.drawScreen("#333333");
         }
