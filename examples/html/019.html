@@ -16,10 +16,12 @@
             _canvas.isBorder(true);
 
             //Lineクラス
+            _w = _canavs.width;
+            _h = _canvas.height;
             _line1 = new toile.Line(0,0,0,0);
-            _line2 = new toile.Line(480,0,480,0);
-            _line3 = new toile.Line(480,480,480,480);
-            _line4 = new toile.Line(0,480,0,480);
+            _line2 = new toile.Line(_w,0,_w,0);
+            _line3 = new toile.Line(_w,_h,_w,_h);
+            _line4 = new toile.Line(0,_h,0,_h);
             _line1.lineWidth = 2;
             _line2.lineWidth = 2;
             _line3.lineWidth = 2;
@@ -70,7 +72,7 @@
 </head>
 
 <body>
-    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <canvas id="myCanvas" width="640" height="480"></canvas>
 </body>
 
 </html>
