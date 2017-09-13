@@ -8,31 +8,19 @@
         window.addEventListener("load", load_window, false);
 
         function load_window() { // HTMLのロードが完了したら…
-            /*
-            //Textクラス
-            _webfont = "../ttf/LCDPHONE.TTF";
-            _text = new toile.Text("");
-            _text.addWebFont("font01", _webfont, "truetype");
-            _text.font = "font01";
-            _text.size = 28;
-            _text.color = "#333333";
-            _text.align = "center";
-            _text.baseline = "top";
-            _text.x = 320;
-            _text.y = 370;
-            _canvas.addChild(_text);
-            */
             //Textの生成
+            _webfont = "../ttf/LCDPHONE.TTF";
             _clock = new toile.Text("00:00:00:00");
-            _clock.align = "left"; //"center","right","start"
-            _clock.baseline = "top"; //"middle","bottom"
+            _clock.addWebFont("font01", _webfont, "truetype");
+            _clock.font = "font01";
+            _clock.align = "center"; //"center","right","start"
+            _clock.baseline = "middle"; //"middle","bottom"
             _clock.color = "#333366";
-            _clock.font = "Ubuntu Mono"; //"san-serif"...
             _clock.name = "clock";
             _clock.scale = 5;
-            _clock.size = 100; //これでText.scaleは1にリセット
-            _clock.x = 10;
-            _clock.y = 0;
+            _clock.size = 100;
+            _clock.x = 300;
+            _clock.y = 300;
 
             //Canvasの生成
             var _canvas = new toile.Canvas("myCanvas");
@@ -87,7 +75,7 @@
 </head>
 
 <body>
-    <canvas id="myCanvas" width="640" height="480"></canvas>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
 </body>
 
 </html>
