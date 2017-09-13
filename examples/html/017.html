@@ -22,15 +22,16 @@
             _canvas.addChild(_video);
 
             //Textクラス
+            _webfont = "../ttf/LCDPHONE.TTF";
             _text = new toile.Text("");
+            _text.addWebFont("font01", _webfont, "truetype");
+            _text.font = _textG.font = _textB.font = "font01";
             _text.size = 24;
-            _text.font = "Ubuntu Mono";
             _text.color = "#333333";
-            _text.align = "right";
+            _text.align = "center";
             _text.baseline = "top";
-            _text.x = 190;
-            _text.y = 333;
-            _text.name = "TEXT!";
+            _text.x = 320;
+            _text.y = 350;
             _canvas.addChild(_text);
 
             //Bitmapクラス
