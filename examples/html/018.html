@@ -8,6 +8,12 @@
         addEventListener("load", load_window, false);
 
         function load_window() { // HTMLのロードが完了したら…
+            //Canvasの生成
+            var _canvas = new toile.Canvas("myCanvas");
+            _canvas.addEventListener("enterframe", enterframe_canvas);
+            _cavas.fps = 120;
+            _canvas.isBorder(true);
+
             //Textの生成
             _webfont = "../ttf/LCDPHONE.TTF";
 
@@ -29,11 +35,8 @@
             _text1.x = _text2.x = 300;
             _text1.y = _text2.y = 300;
 
-            //Canvasの生成
-            var _canvas = new toile.Canvas("myCanvas");
-            _canvas.isBorder(true);
             _canvas.addChild(_text1);
-            _canvas.addEventListener("enterframe", enterframe_canvas);
+            _canvas.addChild(_text2);
         }
 
         enterframe_canvas = (_canvas) => {
