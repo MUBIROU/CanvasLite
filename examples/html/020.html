@@ -16,14 +16,14 @@
                 _canvas.fps = 30;
 
                 //SpriteSheet1
-                _spriteSheet1 = new toile.SpriteSheet("run.png");
+                _spriteSheet1 = new toile.SpriteSheet("../png/run.png");
                 _spriteSheet1.x = 10;
                 _spriteSheet1.y = 30;
                 _spriteSheet1.fps = 1;
                 _canvas.addChild(_spriteSheet1);
 
                 //SpriteSheet2
-                _spriteSheet2 = new toile.SpriteSheet("run.png");
+                _spriteSheet2 = new toile.SpriteSheet("../png/run.png");
                 _spriteSheet2.x = 290; 
                 _spriteSheet2.y = 20;
                 _spriteSheet2.scale = 1.2;
@@ -31,10 +31,10 @@
                 _canvas.addChild(_spriteSheet2);
 
                 //Button
-                _minusBtn = new toile.Bitmap("minus.png");
-                _pauseBtn = new toile.Bitmap("pause.png");
-                _playBtn = new toile.Bitmap("play.png");
-                _plusBtn = new toile.Bitmap("plus.png");
+                _minusBtn = new toile.Bitmap("../png/minus.png");
+                _pauseBtn = new toile.Bitmap("../png/pause.png");
+                _playBtn = new toile.Bitmap("../png/play.png");
+                _plusBtn = new toile.Bitmap("../png/plus.png");
 
                 _minusBtn.y = _pauseBtn.y = _playBtn.y = _plusBtn.y = 535;
                 _minusBtn.x = 290;
