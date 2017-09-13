@@ -1153,6 +1153,29 @@ HTML Canvasの2Dコンテキスト（CanvasRenderingContext2Dオブジェクト�
 
 ### Example（例）
 ```
+// main.js
+window.addEventListener("load", load_window, false);
+
+function load_window() {
+    _canvas = new toile.Canvas("myCanvas");
+    _canvas.addEventListener("enterframe", enterframe_canvas);
+    _canvas.isBorder(true);
+}
+
+enterframe_canvas = (_canvas) => {
+    _canvas.rotateY -= 2;
+
+    //裏面処理用
+    var _theCount = Math.abs(_canvas.rotateY) % 360;
+    if ((90 < _theCount ) && (_theCount < 270)) {
+        _canvas.context2D.clearRect(0,0,_canvas.width,_canvas.height);
+        _canvas.context2D.fillStyle = "rgba(86,82,82,1.0)";
+        _canvas.context2D.fillRect(0,0,_canvas.width,_canvas.height);
+        return;
+    }
+
+    _canvas.drawScreen();
+}
 ```
 
 
@@ -2353,9 +2376,9 @@ enterframe_canvas = (_canvas) => {
     //裏面処理用（オプション）
     var _theCount = Math.abs(_canvas.rotateX) % 360;
     if ((90 < _theCount ) && (_theCount < 270)) {
-        _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
-        _canvas.__context2D.fillStyle = "rgba(86,82,82,1.0)";
-        _canvas.__context2D.fillRect(0,0,_canvas.width,_canvas.height);
+        _canvas.context2D.clearRect(0,0,_canvas.width,_canvas.height);
+        _canvas.context2D.fillStyle = "rgba(86,82,82,1.0)";
+        _canvas.context2D.fillRect(0,0,_canvas.width,_canvas.height);
         return;
     }
 
@@ -2394,11 +2417,11 @@ enterframe_canvas = (_canvas) => {
     _canvas.rotateY -= 2;
 
     //裏面処理用（オプション）
-    var _theCount = Math.abs(_canvas.rotateX) % 360;
+    var _theCount = Math.abs(_canvas.rotateY) % 360;
     if ((90 < _theCount ) && (_theCount < 270)) {
-        _canvas.__context2D.clearRect(0,0,_canvas.width,_canvas.height);
-        _canvas.__context2D.fillStyle = "rgba(86,82,82,1.0)";
-        _canvas.__context2D.fillRect(0,0,_canvas.width,_canvas.height);
+        _canvas.context2D.clearRect(0,0,_canvas.width,_canvas.height);
+        _canvas.context2D.fillStyle = "rgba(86,82,82,1.0)";
+        _canvas.context2D.fillRect(0,0,_canvas.width,_canvas.height);
         return;
     }
 
