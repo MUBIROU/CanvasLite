@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>018 Digital Clock</title>
+    <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+    <script>
+        window.addEventListener("load", load_window, false);
+
+        function load_window() { // HTMLのロードが完了したら…
+            /*
+            //Textクラス
+            _webfont = "../ttf/LCDPHONE.TTF";
+            _text = new toile.Text("");
+            _text.addWebFont("font01", _webfont, "truetype");
+            _text.font = "font01";
+            _text.size = 28;
+            _text.color = "#333333";
+            _text.align = "center";
+            _text.baseline = "top";
+            _text.x = 320;
+            _text.y = 370;
+            _canvas.addChild(_text);
+            */
+            //Textの生成
+            _clock = new toile.Text("00:00:00:00");
+            _clock.align = "left"; //"center","right","start"
+            _clock.baseline = "top"; //"middle","bottom"
+            _clock.color = "#333366";
+            _clock.font = "Ubuntu Mono"; //"san-serif"...
+            _clock.name = "clock";
+            _clock.scale = 5;
+            _clock.size = 100; //これでText.scaleは1にリセット
+            _clock.x = 10;
+            _clock.y = 0;
+
+            //Canvasの生成
+            var _canvas = new toile.Canvas("myCanvas");
+            _canvas.isBorder(true);
+            _canvas.addChild(_clock);
+            _canvas.addEventListener("enterframe", enterframe_canvas);
+        }
+
+        enterframe_canvas = (_canvas) => {
+            var _date = new Date();
+            
+            //時
+            var _h = "";
+            var _theHours = _date.getHours();
+            if (_theHours < 10) {
+                _h = "0" + _theHours;
+            } else {
+                _h = String(_theHours);
+            }
+
+            //分
+            var _m = "";
+            var _theMinutes = _date.getMinutes();
+            if (_theMinutes < 10) {
+                _m = "0" + _theMinutes;
+            } else {
+                _m = String(_theMinutes);
+            }
+
+            //秒
+            var _s = "";
+            var _theSeconds = _date.getSeconds();
+            if (_theSeconds < 10) {
+                _s = "0" + _theSeconds;
+            } else {
+                _s = String(_theSeconds);
+            }
+
+            window._clock.text = _h + ":" + _m + ":" + _s;
+
+            _canvas.drawScreen("#fff");
+        }
+    </script>
+    <style>
+        body {
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="640" height="480"></canvas>
+</body>
+
+</html>
