@@ -5,23 +5,29 @@
     <title>018 Digital Clock</title>
     <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
     <script>
-        window.addEventListener("load", load_window, false);
+        _text1addEventListener("load", load_window, false);
 
         function load_window() { // HTMLのロードが完了したら…
             //Textの生成
             _webfont = "../ttf/LCDPHONE.TTF";
-            _text1 = new toile.Text("");
-            _text1.addWebFont("font01", _webfont, "truetype");
-            _text1.font = "font01";
-            _text1.align = "center"; //"center","right","start"
-            _text1.baseline = "bottom"; //"top""middle","bottom"
-            _text1.color = "#ffcc00";
-            //_text1.scale = 5;
-            _text1.size = 100;
-            _text1.x = 300;
-            _text1.y = 300;
 
+            _text1 = new toile.Text("");
+            _text2 = new toile.Text("");
+
+            _text1.addWebFont("font01", _webfont, "truetype");
+            _text2.addWebFont("font01", _webfont, "truetype");
+
+            _text1.font = _text2.font = "font01";
+            _text1.align = _text2.align = "center"; //"center","right","start"
+            _text1.color = _text2.color = "#ffcc00";
             
+            _text1.baseline = "bottom"; //"top""middle","bottom"
+            _text2.baseline = "top";
+
+            _text1.size = _text2.size = 100;
+
+            _text1.x = _text2.x = 300;
+            _text1.y = _text2.y = 300;
 
             //Canvasの生成
             var _canvas = new toile.Canvas("myCanvas");
@@ -71,7 +77,8 @@
                 _ms = String(_theMilliseconds);
             } 
 
-            window._text1.text = _h + ":" + _m + ":" + _s;
+            _text1.text = _h + ":" + _m + ":" + _s;
+            _text2.text = _ms;
 
             _canvas.drawScreen("#333333");
         }
