@@ -5715,7 +5715,7 @@ spriteSheetObject.currentframe
 
 ### Description（説明）
 プロパティ（読み取り専用）。  
-スプライトシートの現在表示しているフレーム数を調べる。
+スプライトシートの現在表示しているフレーム数（1～）を調べる。
 
 ### Example（例）
 ```
@@ -5843,7 +5843,7 @@ Bitmapクラスから継承するプロパティ（読取り専用）。
 spriteSheetObject.gotoAndPlay(arg)
 
 ### Arguments（引数）
-arg: スプライトシートの、フレームに移動＆再生したいフレーム番号を指定。
+arg: スプライトシートの、フレームに移動＆再生したいフレーム番号（1～）を指定。
 
 ### Description（説明）
 メソッド。スプライトシートの再生ヘッドを指定したフレームに移動して再生。
@@ -5885,7 +5885,7 @@ SpriteSheet.currentframe、SpriteSheet.gotoAndStop()
 spriteSheetObject.gotoAndStop(arg)
 
 ### Arguments（引数）
-arg: スプライトシートの、フレームに移動＆停止したいフレーム番号を指定。
+arg: スプライトシートの、フレームに移動＆停止したいフレーム番号（1～）を指定。
 
 ### Description（説明）
 メソッド。  
