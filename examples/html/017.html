@@ -8,13 +8,18 @@
         addEventListener("load", load_window, false);
 
         function load_window() {
+            //Canvasクラス
+            _canvas = new toile.Canvas("myCanvas");
+            _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+            _canvas.isBorder(true);
+
             //Videoクラス
             _video = new toile.Video("../mp4/Countdown - 2637.mp4", 640, 360); //オリジナルのサイズ
             _video.x = 0;
             _video.y = 60;
             _video.width = 640; //実際に表示する幅
             _video.height = 360; //実際に表示する高さ
-            //_video.alpha = 0.3;
+            _canvas.addChild(_video);
 
             //Textクラス
             _text = new toile.Text("");
@@ -26,6 +31,7 @@
             _text.x = 190;
             _text.y = 333;
             _text.name = "TEXT!";
+            _canvas.addChild(_text);
 
             //Bitmapクラス
             _playBtn = new toile.Bitmap("../png/play.png");
@@ -43,6 +49,9 @@
             _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
             _pauseBtn.addEventListener("mousedown", mousedown_pauseBtn, "true");
             _stopBtn.addEventListener("mousedown", mousedown_stopBtn, "true");
+            _canvas.addChild(_playBtn);
+            _canvas.addChild(_pauseBtn);
+            _canvas.addChild(_stopBtn);
 
             //Rectクラス
             _rect1 = new toile.Rect(10,310,190,330);
@@ -50,22 +59,13 @@
             _rect1.fillColor = "51,51,51";
             _rect1.fillAlpha = 0.5;
             _rect1.lineAlpha = 0;
+            _canvas.addChild(_rect1);
 
             _rect2 = new toile.Rect(10,310,20,330);
             _rect2.isFill(true);
             _rect2.fillColor = "255,0,0";
             _rect2.fillAlpha = 0.6;
             _rect2.lineAlpha = 0;
-
-            //Canvasクラス
-            _canvas = new toile.Canvas("myCanvas");
-            _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
-            _canvas.addChild(_video);
-            _canvas.addChild(_text);
-            _canvas.addChild(_playBtn);
-            _canvas.addChild(_pauseBtn);
-            _canvas.addChild(_stopBtn);
-            _canvas.addChild(_rect1);
             _canvas.addChild(_rect2);
         }
 
@@ -82,7 +82,7 @@
             _rect2.endX = 10 + 180 * (_currentTime / _duration);
 
             //描画
-            _canvas.drawScreen("#dddddd");
+            _canvas.drawScreen("#525252");
         }
 
         mousedown_playBtn = (_bitmap) => {
