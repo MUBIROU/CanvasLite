@@ -18,7 +18,7 @@
             _clock.color = "#ffcc00";
             _clock.name = "clock";
             _clock.scale = 5;
-            _clock.size = 100;
+            _clock.size = 70;
             _clock.x = 300;
             _clock.y = 300;
 
@@ -59,7 +59,18 @@
                 _s = String(_theSeconds);
             }
 
-            window._clock.text = _h + ":" + _m + ":" + _s;
+            //ミリ秒
+            var _ms = "";
+            var _theMilliseconds = _date.getMilliseconds();
+            if (_theMilliseconds < 10) {
+                _ms = "00" + _theMilliseconds;
+            } else if (_theMilliseconds < 100) {
+                _ms = "0" + _theMilliseconds;
+            } else {
+                _ms = String(_theMilliseconds);
+            } 
+
+            window._clock.text = _h + ":" + _m + ":" + _s + ":" + _ms;
 
             _canvas.drawScreen("#333333");
         }
