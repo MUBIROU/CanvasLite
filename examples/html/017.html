@@ -26,12 +26,12 @@
             _text = new toile.Text("");
             _text.addWebFont("font01", _webfont, "truetype");
             _text.font = "font01";
-            _text.size = 24;
+            _text.size = 32;
             _text.color = "#333333";
-            _text.align = "center";
+            _text.align = "right";
             _text.baseline = "top";
-            _text.x = 320;
-            _text.y = 350;
+            _text.x = 365;
+            _text.y = 370;
             _canvas.addChild(_text);
 
             //Bitmapクラス
@@ -75,7 +75,7 @@
                 _currentTime = _currentTime + ".0";
             }
             var _duration = Math.round(_video.duration * 10) / 10;
-            _text.text = _currentTime + "/" + _duration + "sec";
+            _text.text = _currentTime + "/" + _duration + " SEC";
 
             //Rect
             //_rect2.endX = 640 * (_currentTime / _duration);
