@@ -1903,7 +1903,7 @@ toile.Rect =
 
 toile.SpriteSheet =
     class SpriteSheet extends toile.Bitmap { //observer pattern
-        constructor(_path, _jsonPath="") {
+        constructor(_path, _jsonPath = "") {
             super(_path);
 
             //private variables (There are defaults)
