@@ -10,7 +10,8 @@
         function load_window() {
             //Canvas
             _canvas = new toile.Canvas("myCanvas");
-            _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+            _canvas.addEventListener("enterframe", enterframe_canvas);
+            _canvas.enabledContextMenu(false);
             _canvas.addEventListener("keydown", keydown_canvas);
             _canvas.addEventListener("keyup", keyup_canvas);
             _canvas.isBorder(true);
