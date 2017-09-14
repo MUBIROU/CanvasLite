@@ -23,7 +23,7 @@
             _text.align = "center"; //"center","right","start"
             _text.baseline = "middle"; //"top","middle","bottom"
             _text.color = "#333366";
-            _text.size = 90;
+            _text.size = 60;
             _text.x = _canvas.width / 2;
             _text.y = _canvas.height / 2;
             _canvas.addChild(_text);
@@ -34,8 +34,9 @@
         }
 
         keydown_canvas = (_canvas, _keyEvent) => {
+            _text.size = 200;
             console.log(_keyEvent.keyCode, _keyEvent.key);
-            _text.text = _keyEvent.keyCode + "(" + _keyEvent.key + ")";
+            _text.text = _keyEvent.keyCode + " <" + _keyEvent.key + ">";
         }
 
         keyup_canvas = (_canvas, _keyEvent) => {
