@@ -5591,15 +5591,18 @@ SpriteSheet -> Bitmap -> SuperDisplay
 * [SpriteSheet.MOUSE_UP_OUTSIDE](#SpriteSheetMOUSE_UP_OUTSIDE): マウスダウン後に外でマウスボタンを離したら  
 
 ### Constructor（コンストラクタ）
-new toile.SpriteSheet(arg)
+new toile.SpriteSheet(arg1[, arg2])
 
 ### Arguments（引数）
-arg: PNG/JPEGファイルのパス（URL）を文字列で指定。
+arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。
+arg2: JSONファイル（メタデータ）のパス（URL）を文字列で指定（オプション）。
 
 ### Description（説明）
 HTML Canvas上にスプライトシート（アニメーション）を表示するためのクラス。  
 指定したPNG/JPEGファイル（XX.png/XX.jpg）とそのメタデータのjsonファイル（XX.json）を使った、SpriteSheetクラスを生成します。  
 スプライトシートアニメの各フレーム情報（位置、サイズ）を収めたJSONデータが必須です。  
+JSONファイル（XX.PNG）をXX.PNGと同階層に置く場合は、第2引数は不要です。  
+JSONファイルを任意のフォルダに置く場合は、第2引数でJSONファイルのパスを指定する必要があります。  
 toile.jsを読み込む前、\<head>タグ内などに
 ```
 <script>var toile = window;</script>
