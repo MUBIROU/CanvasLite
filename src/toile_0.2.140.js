@@ -1,6 +1,6 @@
 /***************************************************************************
- * toile.js (ver.0.2 build 140 RC3)
- * 2017-09-13T17:10
+ * toile.js (ver.0.2 build 140)
+ * 2017-09-14T10:35
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -1903,7 +1903,7 @@ toile.Rect =
 
 toile.SpriteSheet =
     class SpriteSheet extends toile.Bitmap { //observer pattern
-        constructor(_path) {
+        constructor(_path, _jsonPath = "") {
             super(_path);
 
             //private variables (There are defaults)
@@ -1924,14 +1924,17 @@ toile.SpriteSheet =
             this.__timerID = undefined; //for clearInterval()
             this.__totalframes = undefined;
 
-            if (_path.lastIndexOf(".png") != -1) { //xx.pngの場合…
-                this.__imageURL = _path;
-                this.__jsonURL = _path.substr(0, _path.lastIndexOf(".png")) + ".json";
-            } else if (_path.lastIndexOf(".jpg") != -1) { //xx.jpgの場合…
-                this.__imageURL = _path;
-                this.__jsonURL = _path.substr(0, _path.lastIndexOf(".jpg")) + ".json";
+            this.__imageURL = _path;
+            if (_jsonPath == "") {
+                if (_path.lastIndexOf(".png") != -1) { //xx.pngの場合…
+                    this.__jsonURL = _path.substr(0, _path.lastIndexOf(".png")) + ".json";
+                } else if (_path.lastIndexOf(".jpg") != -1) { //xx.jpgの場合…
+                    this.__jsonURL = _path.substr(0, _path.lastIndexOf(".jpg")) + ".json";
+                } else {
+                    throw new Error("Only .png or .jpg is being supported");
+                }
             } else {
-                throw new Error("Only .png or .jpg is being supported");
+                this.__jsonURL = _jsonPath;
             }
 
             //イベントハンドラメソッド内でthis＝Bitmapオブジェクトを取得するため
