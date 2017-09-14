@@ -9,6 +9,7 @@
 
             function load_window() {
                 _mouseX = _mouseY = 0;
+                _saraNum = 60;
 
                 //Canvas Class
                 _canvas = new toile.Canvas("myCanvas");
@@ -33,7 +34,7 @@
                 _canvas.addChild(_soba1);
 
                 //soba2...
-                for (let i=1; i<42; i++) {
+                for (let i=1; i<_saraNum; i++) {
                     let _theSoba = new toile.Bitmap("../png/soba.png");
                     _theSoba.x = 330;
                     _theSoba.y = _soba1.y - (10 * i);
@@ -48,7 +49,7 @@
                 //1枚目
                 _soba1.x += (_demae.x - _soba1.x) * 3/4;
 
-                for (let i=1; i<60; i++) { //2枚目以降…
+                for (let i=1; i<_saraNum; i++) { //2枚目以降…
                     let _theSoba = _sobaArray[i];
                     let _upSoba = _sobaArray[i-1];
                     _theSoba.x += (_upSoba.x - _theSoba.x) * 3/4;
