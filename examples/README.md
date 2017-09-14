@@ -25,3 +25,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |020|[SpriteSheet](https://takashinishimura.github.io/ToileJS/examples/html/020.html)|SpriteSheetアニメーションの制御|
 |021|[SpriteSheet JPG](https://takashinishimura.github.io/ToileJS/examples/html/021.html)|「020 SpriteSheet」のJPEG版（低画質）|
 |022|[KeyCode](https://takashinishimura.github.io/ToileJS/examples/html/022.html)|押したキーのキーコードを取得|
+|023|[ScreenShot](https://takashinishimura.github.io/ToileJS/examples/html/023.html)|スクリーンショットを撮り分割してアニメーション|

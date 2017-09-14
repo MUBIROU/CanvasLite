@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>038</title>
+        <script src="https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/toile_test.js"></script>
+        <script>
+            window.addEventListener("load", load_window, false);
+
+            function load_window() {
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas);
+                _canvas.addEventListener("mousedown", mousedown_canavas);
+                _canvas.isBorder(true);
+                _canvas.borderWidth = 1; //線幅5pxの場合
+                _canvas.borderColor = "#ff0000";
+                _canvas.fps = 60;
+                _screenShot = undefined;
+
+                //Background
+                _background = new toile.Bitmap("../png/img063_01.jpg");
+                _canvas.addChild(_background);
+
+                //Eye
+                _eye = new toile.Bitmap("../png/eye.png");
+                _canvas.addChild(_eye);
+
+                _blockArray = [];
+                _countX = Math.random();
+                _countY = Math.random();
+            }
+
+            enterframe_canvas = (_canvas) => {
+                if (_eye != undefined) {
+                    _countX += 0.05;
+                    _eye.x = 325 + 300*Math.sin(_countX);
+                    _countY += 0.04;
+                    _eye.y = 225 + 200*Math.cos(_countY);
+                }
+
+                if (_blockArray.length != 0) {
+                    _blockArray.forEach(function(_bitmap) {
+                        _bitmap.speedX *= 1.03;
+                        _bitmap.x += _bitmap.speedX;
+                        _bitmap.rotate += _bitmap.speedR; //回転をかける場合
+                    });
+                }
+
+                _canvas.drawScreen("#565252");
+            }
+
+            mousedown_canavas = (_canvas) => {
+                _pieceX = 1;
+                _pieceY = 4; //分割する個数
+
+                _blockW = _canvas.width/_pieceX;
+                _blockH = _canvas.height/_pieceY;
+
+                for (let i=0; i<_pieceX; i++) {
+                    for (let j=0; j<_pieceY; j++) {
+                        let _startX = i*_blockW;
+                        let _startY = j*_blockH;
+
+                        //POINT!!
+                        let _theBitmap = _canvas.screenShot(_startX, _startY, _startX+_blockW, _startY+_blockH, "jpeg");
+                        
+                        _theBitmap.x = _startX;
+                        _theBitmap.y = _startY;
+                        _theBitmap.regX = _blockW / 2;
+                        _theBitmap.regY = _blockH / 2;
+
+                        _theBitmap.speedX = j+1;
+                        _theBitmap.speedR = j+2;
+                        _canvas.addChild(_theBitmap);
+                        _blockArray.push(_theBitmap);
+                    }
+                }
+
+                //元の画像を全て削除（オプション）
+                _canvas.deleteChild(_background);
+                _canvas.deleteChild(_eye);
+                _background = _eye = undefined;
+            }
+        </script>
+        </script>
+        <style>
+            body {
+                background:#fff;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="800" height="600"></canvas>
+    </body>
+</html>
