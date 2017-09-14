@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>021 SpriteSheet JPG</title>
+        <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+        <script>
+            window.addEventListener("load", load_window, false);
+
+            function load_window() {
+                //Canvas Class
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas);
+                _canvas.enabledContextMenu(false);
+                _canvas.isBorder(true);
+                _canvas.fps = 30;
+
+                //SpriteSheet1
+                _spriteSheet1 = new toile.SpriteSheet("../jpg/run.jpg", "../json/run.json");
+                _spriteSheet1.x = 10;
+                _spriteSheet1.y = 30;
+                _spriteSheet1.fps = 2;
+                _canvas.addChild(_spriteSheet1);
+
+                //SpriteSheet2
+                _spriteSheet2 = new toile.SpriteSheet("../jpg/run.jpg", "../json/run.json");
+                _spriteSheet2.x = 290; 
+                _spriteSheet2.y = 20;
+                _spriteSheet2.scale = 1.2;
+                _spriteSheet2.fps = 10;
+                _spriteSheet2.stop();
+                _canvas.addChild(_spriteSheet2);
+
+                //Button
+                _minusBtn = new toile.Bitmap("../png/minus.png");
+                _pauseBtn = new toile.Bitmap("../png/pause.png");
+                _playBtn = new toile.Bitmap("../png/play.png");
+                _plusBtn = new toile.Bitmap("../png/plus.png");
+
+                _minusBtn.y = _pauseBtn.y = _playBtn.y = _plusBtn.y = 535;
+                _minusBtn.x = 290;
+                _pauseBtn.x = 370;
+                _playBtn.x = 450;
+                _plusBtn.x = 530;
+
+                _pauseBtn.alpha = 0.1;
+
+                _minusBtn.addEventListener("mousedown", mousedown_minusBtn);
+                _playBtn.addEventListener("mousedown", mousedown_playBtn);
+                _plusBtn.addEventListener("mousedown",mousedown_plusBtn);
+
+                _canvas.addChild(_minusBtn);
+                _canvas.addChild(_pauseBtn);
+                _canvas.addChild(_playBtn);
+                _canvas.addChild(_plusBtn);
+            }
+
+            enterframe_canvas = (_canvas) => {
+                _canvas.drawScreen("#cccccc");
+            }
+
+            mousedown_minusBtn = (_canvas) => {
+                var _nextframe = _spriteSheet2.currentframe - 1;
+                if (_nextframe > 0) {
+                    _spriteSheet2.gotoAndStop(_nextframe);
+                } else {
+                    _spriteSheet2.gotoAndStop(_spriteSheet2.totalframes);
+                }
+            }
+
+            mousedown_pauseBtn = (_canvas) => {
+                _spriteSheet2.stop();
+
+                _pauseBtn.alpha = 0.1;
+                _pauseBtn.removeEventListener("mousedown");
+
+                _minusBtn.alpha = _playBtn.alpha = _plusBtn.alpha = 1;
+                _minusBtn.addEventListener("mousedown", mousedown_minusBtn);
+                _playBtn.addEventListener("mousedown", mousedown_playBtn);
+                _plusBtn.addEventListener("mousedown",mousedown_plusBtn);
+
+                _minusBtn.alpha 
+            }
+
+            mousedown_playBtn = (_canvas) => {
+                _spriteSheet2.play();
+
+                _minusBtn.alpha = _playBtn.alpha = _plusBtn.alpha = 0.1;
+                _minusBtn.removeEventListener("mousedown");
+                _playBtn.removeEventListener("mousedown");
+                _plusBtn.removeEventListener("mousedown");
+
+                _pauseBtn.alpha = 1;
+                _pauseBtn.addEventListener("mousedown", mousedown_pauseBtn);
+            }
+
+            mousedown_plusBtn = (_canvas) => {
+                var _currentframe = _spriteSheet2.currentframe;
+                if (_currentframe < _spriteSheet2.totalframes) {
+                    _spriteSheet2.gotoAndStop(++ _currentframe);
+                } else {
+                    _spriteSheet2.gotoAndStop(1);
+                }
+            }
+        </script>
+        <style>
+            body {
+                background:#fff;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="640" height="640"></canvas>
+    </body>
+</html>
