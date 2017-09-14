@@ -5,15 +5,14 @@
         <title>023 ScreenShot</title>
         <script src="https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/toile_test.js"></script>
         <script>
-            window.addEventListener("load", load_window, false);
+            addEventListener("load", load_window, false);
 
             function load_window() {
                 _canvas = new toile.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousedown", mousedown_canavas);
                 _canvas.isBorder(true);
-                _canvas.borderWidth = 1; //線幅5pxの場合
-                _canvas.borderColor = "#ff0000";
+                _canvas.borderWidth = 1;
                 _canvas.fps = 60;
                 _screenShot = undefined;
 
