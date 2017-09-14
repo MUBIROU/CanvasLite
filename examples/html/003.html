@@ -21,7 +21,7 @@
                 //demae
                 _demae = new toile.Bitmap("../png/demae.png");
                 _demae.x = 330;
-                _demae.y = 600;
+                _demae.y = 400;
                 _canvas.addChild(_demae);
 
                 //soba1
@@ -48,7 +48,7 @@
                 //1枚目
                 _soba1.x += (_demae.x - _soba1.x) * 3/4;
 
-                for (let i=1; i<62; i++) { //2枚目以降…
+                for (let i=1; i<42; i++) { //2枚目以降…
                     let _theSoba = _sobaArray[i];
                     let _upSoba = _sobaArray[i-1];
                     _theSoba.x += (_upSoba.x - _theSoba.x) * 3/4;
