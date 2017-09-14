@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>018 Digital Clock</title>
+    <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+    <script>
+        addEventListener("load", load_window, false);
+
+        function load_window() {
+            //Textの生成
+            _webfont = "../ttf/LCDPHONE.TTF";
+            _text = new toile.Text("please key down");
+            _text.addWebFont("font01", _webfont, "truetype");
+            _text.font =  "font01";
+            _text.align = "center"; //"center","right","start"
+            _text.baseline = "middle"; //"top","middle","bottom"
+            //_text.color = "#333366";
+            _text.size = 90;
+            _text.x = _canvas.width / 2;
+            _text.y = _canvas.height / 2;
+
+            //Canvas
+            _canvas = new toile.Canvas("myCanvas");
+            _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+            _canvas.addEventListener("keydown", keydown_canvas);
+            _canvas.addEventListener("keyup", keyup_canvas);
+            _canvas.addChild(_text);
+        }
+
+        enterframe_canvas = (_canvas) => {
+            _canvas.drawScreen("#ffffff");
+        }
+
+        keydown_canvas = (_canvas, _keyEvent) => {
+            //console.log(_keyEvent.keyCode, _keyEvent.key);
+            _text.text = _keyEvent.keyCode + "(" + _keyEvent.key + ")";
+        }
+
+        keyup_canvas = (_canvas, _keyEvent) => {
+            console.log(_keyEvent.keyCode, _keyEvent.key);
+        }
+    </script>
+    <style>
+        body {
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+</body>
+
+</html>
