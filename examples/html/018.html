@@ -11,6 +11,7 @@
             //Canvasの生成
             var _canvas = new toile.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
+            _canvas.enabledContextMenu(false);
             _canvas.fps = 1000;
 
             //Textの生成
