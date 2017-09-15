@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>024 SOUND with ToileJS</title>
+        <script src="https://cdn.rawgit.com/TakashiNishimura/ToileJS/master/toile_test.js"></script>
+        <script>
+            addEventListener("load", load_window, false);
+
+            function load_window() {
+                //Bitmap
+                var _seButton = new toile.Bitmap("../png/se_button.png");
+                _seButton.name = "setButton";
+                _seButton.addEventListener("mousedown", mousedown_seButton, true);
+                _seButton.scale = 0.5;
+                _seButton.x = 30;
+                _seButton.y = 30;
+
+                var _meButton = new toile.Bitmap("../png/me_button.png");
+                _meButton.name = "meButton";
+                _meButton.addEventListener("mousedown", mousedown_meButton, true);
+                _meButton.scaleX = _meButton.scaleY = 0.5;
+                _meButton.x = 150;
+                _meButton.y = 30;
+
+                //Canvas
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+                _canvas.addChild(_seButton);
+                _canvas.addChild(_meButton);
+                _canvas.enabledContextMenu(false);
+            }
+
+            enterframe_canvas = (_canvas) => {
+                _canvas.drawScreen();
+            }
+
+            mousedown_seButton = (_bitmap) => { //効果音用ボタン
+                var _se = new toile.Sound("../mp3/decision3.mp3");
+                _se.play();
+            }
+
+            mousedown_meButton = (_bitmap) => { //ループサウンド用ボタン
+                if (_me == undefined) { //初めての再生の場合…
+                    console.log("初めてのME再生");
+                    _me = new toile.Sound("../mp3/loop002.mp3");
+                    _me.play();
+                
+                } else { //既に再生開始済みの場合…
+                    var _location = Math.round(100 * _me.currentTime / _me.duration);
+                    console.log(_location + "％を再生");
+                    if (_me.currentTime == _me.duration) { //再生を終了していたら…
+                        _me.currentTime = 0; //再生ヘッドを最初に戻して…
+                        _me.play(); //再び再生
+                    }
+                }
+            }
+        </script>
+        </script>
+        <style>
+            body {
+                background:#fff;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="800" height="600"></canvas>
+    </body>
+</html>
