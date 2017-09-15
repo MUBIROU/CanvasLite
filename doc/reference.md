@@ -1,5 +1,5 @@
 # Reference Manual （リファレンスマニュアル）
-Version 0.2 Build 140 対応  
+Version 0.2 Build 141 RC1 対応  
 © 2017 Takashi Nishimura
 
 ### <b>INDEX</b>（クラス一覧）
@@ -5173,7 +5173,7 @@ Rect.x
 
 
 <a name="Sound"></a>
-# Sound class
+# Sound classSound class
 
 ### Inheritance（継承）
 なし。
@@ -5182,6 +5182,7 @@ Rect.x
 
 * [Sound.fadeOut()](#SoundfadeOut): 任意の時間をかけてフェードアウトさせる  
 * [Sound.isLoaded()](#SoundisLoaded): ロードし終えているかを調べる  
+* [Sound.isPaused()](#SoundisPaused): 停止中か調べる  
 * [Sound.pause()](#Soundpause): 一時停止させる  
 * [Sound.play()](#Soundplay): 再生する  
 * [Sound.stop()](#Soundstop): 停止させる  
@@ -5350,6 +5351,50 @@ enterframe_canvas = (_canvas) => {
 
 ### See Also（参照）
 Sound.play()
+
+
+<a name="SoundisPaused"></a>
+# Sound.isPaused()
+
+### Syntax（構文）
+soundObject.isPaused()
+
+### Arguments（引数）
+なし。
+
+### Returns（戻り値）
+サウンドが停止中であればtrue。そうでなければfalse。
+Soundオブジェクトを生成直後はtrue。
+
+### Description（説明）
+メソッド。サウンドがpause()によって停止中か調べる。  
+
+### Example（例）
+```
+//main.js
+window.addEventListener("load", load_window, false);
+
+function load_window() {
+	var _canvas = new toile.Canvas("myCanvas");
+	_canvas.addEventListener("enterframe", enterframe_canvas);
+
+	_se = new toile.Sound("me.wav");
+	console.log(_se.isPaused()); //=> true（注意）
+	_se.play();
+	console.log(_se.isPaused()); //=> false
+	_se.pause();
+	console.log(_se.isPaused()); //=> true <= pause()によって停止中
+	_se.play();
+	console.log(_se.isPaused()); //=> false
+}
+
+enterframe_canvas = (_canvas) => {
+	_canvas.drawScreen();
+}
+```
+
+### See Also（参照）
+Sound.play()、Sound.pause()
 
 
 <a name="Soundloop"></a>

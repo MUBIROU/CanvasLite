@@ -8,54 +8,113 @@
             addEventListener("load", load_window, false);
 
             function load_window() {
-                //Bitmap
-                var _seButton = new toile.Bitmap("../png/se_button.png");
-                _seButton.name = "setButton";
-                _seButton.addEventListener("mousedown", mousedown_seButton, true);
-                _seButton.scale = 0.5;
-                _seButton.x = 30;
-                _seButton.y = 30;
-
-                var _meButton = new toile.Bitmap("../png/me_button.png");
-                _meButton.name = "meButton";
-                _meButton.addEventListener("mousedown", mousedown_meButton, true);
-                _meButton.scaleX = _meButton.scaleY = 0.5;
-                _meButton.x = 150;
-                _meButton.y = 30;
-
-                _me = undefined;
-
                 //Canvas
                 _canvas = new toile.Canvas("myCanvas");
-                _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
-                _canvas.addChild(_seButton);
-                _canvas.addChild(_meButton);
+                _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
+
+                //Bitmap
+                var _seButton = new toile.Bitmap("../png/se_button.png");
+                _seButton.addEventListener("mousedown", mousedown_seButton, true);
+                _seButton.scale = 0.5;
+                _seButton.x = 100;
+                _seButton.y = 30;
+                _canvas.addChild(_seButton);
+
+                _playBtn = new toile.Bitmap("../png/play.png");
+                _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
+                _pauseBtn = new toile.Bitmap("../png/pause.png");
+                _stopBtn = new toile.Bitmap("../png/stop.png");
+                _playBtn.y = _pauseBtn.y = _stopBtn.y = 150;
+                _playBtn.x = 35;
+                _pauseBtn.x = 115;
+                _stopBtn.x = 195;
+                _canvas.addChild(_playBtn);
+                _canvas.addChild(_pauseBtn);
+                _canvas.addChild(_stopBtn);
+
+                _pauseBtn.alpha = _stopBtn.alpha = 0.1;
+
+                //Rectクラス
+                _rect1 = new toile.Rect(0,240,300,260);
+                _rect1.isFill(true);
+                _rect1.fillColor = "51,51,51";
+                _rect1.fillAlpha = 0.5;
+                _rect1.lineAlpha = 0;
+                _canvas.addChild(_rect1);
+
+                _rect2 = new toile.Rect(0,240,0,260);
+                _rect2.isFill(true);
+                _rect2.fillColor = "255,0,0";
+                _rect2.fillAlpha = 0.6;
+                _rect2.lineAlpha = 0;
+                _canvas.addChild(_rect2);
+
+                _me = undefined;
             }
 
             enterframe_canvas = (_canvas) => {
+                if (_me != undefined) {
+                    _rect2.endX = 300 * (_me.currentTime / _me.duration);
+                }
                 _canvas.drawScreen();
             }
 
             mousedown_seButton = (_bitmap) => { //効果音用ボタン
-                var _se = new toile.Sound("../mp3/decision3.mp3");
+                _se = new toile.Sound("../mp3/decision3.mp3");
                 _se.play();
             }
 
-            mousedown_meButton = (_bitmap) => { //ループサウンド用ボタン
+            mousedown_playBtn = (_bitmap) => {
                 if (_me == undefined) { //初めての再生の場合…
-                    console.log("初めてのME再生");
                     _me = new toile.Sound("../mp3/loop002.mp3");
+                    _me.loop = true;
                     _me.play();
-                
-                } else { //既に再生開始済みの場合…
-                    var _location = Math.round(100 * _me.currentTime / _me.duration);
-                    console.log(_location + "％を再生");
-                    if (_me.currentTime == _me.duration) { //再生を終了していたら…
-                        _me.currentTime = 0; //再生ヘッドを最初に戻して…
-                        _me.play(); //再び再生
+                    
+                    _pauseBtn.alpha = _stopBtn.alpha = 1;
+                    _pauseBtn.addEventListener("mousedown", mousedown_pauseBtn, "true");
+                    _stopBtn.addEventListener("mousedown", mousedown_stopBtn, "true");
+                    
+                    _playBtn.alpha = 0.1;
+                    _playBtn.removeEventListener("mousedown");
+                } else {
+                    if (_me.isPaused()) {
+                        _me.play();
+
+                        _playBtn.alpha = 0.1;
+                        _playBtn.removeEventListener("mousedown");
+
+                        _pauseBtn.alpha = 1;
+                        _pauseBtn.addEventListener("mousedown", mousedown_pauseBtn, "true");
                     }
+                }
+            }
+
+            mousedown_pauseBtn = (_bitmap) => {
+                if (_me != undefined) {
+                    _me.pause();
+                    
+                    _pauseBtn.alpha = 0.1;
+                    _pauseBtn.removeEventListener("mousedown");
+
+                    _playBtn.alpha = 1;
+                    _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
+                }
+            }
+
+            mousedown_stopBtn = (_bitmap) => {
+                if (_me != undefined) {
+                    _me.stop();
+                    _me = undefined;
+                    _rect2.endX = 0;
+
+                    _pauseBtn.alpha = _stopBtn.alpha = 0.1;
+                    _pauseBtn.removeEventListener("mousedown");
+                    _stopBtn.removeEventListener("mousedown");
+
+                    _playBtn.alpha = 1;
+                    _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
                 }
             }
         </script>
@@ -70,6 +129,6 @@
         </style>
     </head>
     <body>
-        <canvas id="myCanvas" width="800" height="600"></canvas>
+        <canvas id="myCanvas" width="300" height="300"></canvas>
     </body>
 </html>
