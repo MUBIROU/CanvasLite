@@ -16,6 +16,7 @@
 
                 //Bitmap
                 var _seButton = new toile.Bitmap("../png/se_button.png");
+                _seButton.name = "setButton";
                 _seButton.addEventListener("mousedown", mousedown_seButton, true);
                 _seButton.scale = 0.5;
                 _seButton.x = 100;
@@ -51,7 +52,10 @@
                 _rect2.lineAlpha = 0;
                 _canvas.addChild(_rect2);
 
-                _me = undefined;
+                //Sound
+                _me = new toile.Sound("../mp3/loop002.mp3");
+                _me.loop = true;
+                _se = new toile.Sound("../mp3/decision3.mp3");
             }
 
             enterframe_canvas = (_canvas) => {
@@ -62,60 +66,46 @@
             }
 
             mousedown_seButton = (_bitmap) => { //効果音用ボタン
-                _se = new toile.Sound("../mp3/decision3.mp3");
+                //再生中の場合、再生ヘッドを最初に移動して停止（注意）
+                if (!_se.isPaused()) {
+                    _se.stop();
+                }
                 _se.play();
             }
 
             mousedown_playBtn = (_bitmap) => {
-                if (_me == undefined) { //初めての再生の場合…
-                    _me = new toile.Sound("../mp3/loop002.mp3");
-                    _me.loop = true;
+                if (_me.isPaused()) {
                     _me.play();
-                    
+
+                    _playBtn.alpha = 0.1;
+                    _playBtn.removeEventListener("mousedown");
+
                     _pauseBtn.alpha = _stopBtn.alpha = 1;
                     _pauseBtn.addEventListener("mousedown", mousedown_pauseBtn, "true");
                     _stopBtn.addEventListener("mousedown", mousedown_stopBtn, "true");
-                    
-                    _playBtn.alpha = 0.1;
-                    _playBtn.removeEventListener("mousedown");
-                } else {
-                    if (_me.isPaused()) {
-                        _me.play();
-
-                        _playBtn.alpha = 0.1;
-                        _playBtn.removeEventListener("mousedown");
-
-                        _pauseBtn.alpha = 1;
-                        _pauseBtn.addEventListener("mousedown", mousedown_pauseBtn, "true");
-                    }
                 }
             }
 
             mousedown_pauseBtn = (_bitmap) => {
-                if (_me != undefined) {
-                    _me.pause();
-                    
-                    _pauseBtn.alpha = 0.1;
-                    _pauseBtn.removeEventListener("mousedown");
+                _me.pause();
+                
+                _pauseBtn.alpha = 0.1;
+                _pauseBtn.removeEventListener("mousedown");
 
-                    _playBtn.alpha = 1;
-                    _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
-                }
+                _playBtn.alpha = 1;
+                _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
             }
 
             mousedown_stopBtn = (_bitmap) => {
-                if (_me != undefined) {
-                    _me.stop();
-                    _me = undefined;
-                    _rect2.endX = 0;
+                _me.stop();
+                _rect2.endX = 0;
 
-                    _pauseBtn.alpha = _stopBtn.alpha = 0.1;
-                    _pauseBtn.removeEventListener("mousedown");
-                    _stopBtn.removeEventListener("mousedown");
+                _pauseBtn.alpha = _stopBtn.alpha = 0.1;
+                _pauseBtn.removeEventListener("mousedown");
+                _stopBtn.removeEventListener("mousedown");
 
-                    _playBtn.alpha = 1;
-                    _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
-                }
+                _playBtn.alpha = 1;
+                _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
             }
         </script>
         </script>
