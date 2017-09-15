@@ -5364,10 +5364,10 @@ soundObject.isPaused()
 
 ### Returns（戻り値）
 サウンドが停止中であればtrue。そうでなければfalse。  
-Soundオブジェクトを生成直後はtrue。
 
 ### Description（説明）
-メソッド。サウンドがpause()によって停止中か調べる。  
+メソッド。サウンドが停止中か調べる。  
+Soundオブジェクト生成直後はtrue。
 
 ### Example（例）
 ```
