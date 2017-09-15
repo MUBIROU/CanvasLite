@@ -16,6 +16,13 @@
             _canvas.enabledContextMenu(false);
             _canvas.isBorder(true);
 
+            //bitmap
+            _hhkb = new toile.Bitmap("../jpg/hhkb.jpg");
+            _hhkb.y = 200;
+            _hhkb.rotate = -30;
+            _hhkb.alpha = 0.5;
+            _hhkb.addChild(_hhkb);
+
             //Text
             _webfont = "../ttf/RictyDiminishedDiscord-Regular.ttf";
             _text = new toile.Text("please key down");
