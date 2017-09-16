@@ -27,4 +27,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |022|[KeyCode](https://takashinishimura.github.io/ToileJS/examples/html/022.html)|押したキーのキーコードを取得（デスクトップ用）|
 |023|[ScreenShot](https://takashinishimura.github.io/ToileJS/examples/html/023.html)|スクリーンショットを撮り分割してアニメーション|
 |024|[Sound](https://takashinishimura.github.io/ToileJS/examples/html/024.html)|サウンドファイルの制御|
-|024|[Button](https://takashinishimura.github.io/ToileJS/examples/html/025.html)|ボタンを使ったマウスイベントの検証（ただ今調整中...）|
+|025|[Button](https://takashinishimura.github.io/ToileJS/examples/html/025.html)|ボタンを使ったマウスイベントの検証（ただ今調整中...）|
