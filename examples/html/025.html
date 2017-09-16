@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>025 Button</title>
+        <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+        <script>
+            //main.js
+            window.addEventListener("load", load_window, false);
+
+            function load_window() {
+                //Canvas
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas);
+                _canvas.enabledContextMenu(false);
+                _canvas.isBorder(true);
+
+                //BG
+                _BG = new toile.Bitmap("../jpg/img063_01.jpg");
+                _BG.x = 400;
+                _BG.y = -220;
+                _BG.rotate = -90;
+                _BG.regX = _canvas.width / 2;
+                _BG.regY = _canvas.height / 2;
+                _canvas.addChild(_BG);
+
+                //G1
+                _G1 = new toile.Bitmap("../png/btnG1.png");
+                _G1.name = "G1";
+                _G1.x = 40;
+                _G1.y = 40;
+                _G1.addEventListener("mousedown", onMouseDown, true);
+                _G1.addEventListener("mouseup", onMouseUp);
+                _G1.addEventListener("mouseupoutside", onMouseUpOutside);
+                _canvas.addChild(_G1);
+
+                //G2
+                _G2 = new toile.Bitmap("../png/btnG2.png");
+                _G2.name = "G2";
+                _G2.x = 230;
+                _G2.y = 40;
+                _G2.addEventListener("mousedown", onMouseDown);
+                _G2.addEventListener("mouseup", onMouseUp);
+                _G2.addEventListener("mouseupoutside", onMouseUpOutside);
+                _canvas.addChild(_G2);
+
+                //G3
+                _G3 = new toile.Bitmap("../png/btnG3.png");
+                _G3.name = "G3";
+                _G3.x = 440;
+                _G3.y = 40;
+                _G3.addEventListener("mousedown", onMouseDown);
+                _G3.addEventListener("mouseup", onMouseUp);
+                _G3.addEventListener("mouseupoutside", onMouseUpOutside);
+                _canvas.addChild(_G3);
+
+                //Y1
+                _Y1 = new toile.Bitmap("../png/btnY1.png");
+                _Y1.name = "Y1";
+                _Y1.x = 37;
+                _Y1.y = 200;
+                _Y1.addEventListener("mousedown", onMouseDown); //trueはあっても同じ
+                _Y1.addEventListener("mouseup", onMouseUp); //trueはあっても同じ
+                _Y1.addEventListener("mouseupoutside", onMouseUpOutside); //trueはあっても同じ
+                _canvas.addChild(_Y1);
+
+                //Y2
+                _Y2 = new toile.Bitmap("../png/btnY2.png");
+                _Y2.name = "Y2";
+                _Y2.x = 227;
+                _Y2.y = 200;
+                _Y2.addEventListener("mousedown", onMouseDown);
+                _Y2.addEventListener("mouseup", onMouseUp);
+                _Y2.addEventListener("mouseupoutside", onMouseUpOutside);
+                _canvas.addChild(_Y2);
+
+                //Y3
+                _Y3 = new toile.Bitmap("../png/btnY3.png");
+                _Y3.name = "Y3";
+                _Y3.x = 437;
+                _Y3.y = 200;
+                _Y3.addEventListener("mousedown", onMouseDown, true);
+                _Y3.addEventListener("mouseup", onMouseUp, true);
+                _Y3.addEventListener("mouseupoutside", onMouseUpOutside,true);
+                _canvas.addChild(_Y3);
+
+                //R1
+                _R1 = new toile.Bitmap("../png/btnR1.png");
+                _R1.name = "R1";
+                _R1.x = 17; //370;
+                _R1.y = 390; //120;
+                _R1.addEventListener("mousedown", onMouseDown);
+                _R1.addEventListener("mouseup", onMouseUp);
+                _R1.addEventListener("mouseupoutside", onMouseUpOutside);
+                _canvas.addChild(_R1);
+
+                //R2
+                _R2 = new toile.Bitmap("../png/btnR2.png");
+                _R2.name = "R2";
+                _R2.x = 310; //370;
+                _R2.y = 430; //120;
+                _R2.addEventListener("mousedown", onMouseDown);
+                _R2.addEventListener("mouseup", onMouseUp);
+                _R2.addEventListener("mouseupoutside", onMouseUpOutside);
+                _canvas.addChild(_R2);
+
+                //B
+                _B = new toile.Bitmap("../png/btnB.png");
+                _B.name = "B";
+                _B.x = _R2.x + 131;
+                _B.y = _R2.y - 24;
+                _B.addEventListener("mousedown", onMouseDown);
+                _B.addEventListener("mouseup", onMouseUp);
+                _B.addEventListener("mouseupoutside", onMouseUpOutside);
+                _canvas.addChild(_B);
+
+                //danger
+                _danger = new toile.Bitmap("../png/danger.png");
+                _danger.scale = 0.8;
+                _danger.x = 265;
+                _danger.y = 500;
+                _canvas.addChild(_danger);
+            }
+
+            enterframe_canvas = (_canvas) => {
+                _canvas.drawScreen("#cccccc"); //背景色が重要
+            }
+
+            onMouseDown = (_bitmap) => {
+                console.log("MouseDown: " + _bitmap.name);
+            }
+
+            onMouseUp = (_bitmap) => {
+                console.log("MouseUp: " + _bitmap.name);
+            }
+
+            onMouseUpOutside = (_bitmap) => {
+                console.log("MouseUpOutside: " + _bitmap.name);
+            }
+        </script>
+        <style>
+            body {
+                background:#fff;
+                margin:0;
+                padding:0;
+                border: 0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="600" height="600"></canvas>
+    </body>
+</html>
