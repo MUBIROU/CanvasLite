@@ -16,7 +16,7 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |011|[ブロック崩し2](https://takashinishimura.github.io/ToileJS/examples/html/011.html)|円形の衝突判定のテスト|
 |012|[宇宙飛行](https://takashinishimura.github.io/ToileJS/examples/html/012.html)|透視投影変換による3D表現（非インタラクティブ）|
 |013|[あやつり人形](https://takashinishimura.github.io/ToileJS/examples/html/013.html)|三平方の定理や三角関数を利用|
-|014|[トランプ](https://takashinishimura.github.io/ToileJS/examples/html/014.html)|マウスイベントと重なり順のテスト（移動可能／ゲームではない）|
+|014|[トランプ](https://takashinishimura.github.io/ToileJS/examples/html/014.html)|マウスイベントと重なり順のテスト（Consoleに出力）|
 |015|[3D画面遷移](https://takashinishimura.github.io/ToileJS/examples/html/015.html)|Canvas全体をパースをかけながら回転（非インタラクティブ）|
 |016|[パーティクル](https://takashinishimura.github.io/ToileJS/examples/html/016.html)|Canvasをタッチするとパーティクルが発生（Canvasの拡大機能付）|
 |017|[Movie](https://takashinishimura.github.io/ToileJS/examples/html/017.html)|映像ファイルの制御|
