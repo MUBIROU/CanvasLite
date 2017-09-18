@@ -6201,7 +6201,8 @@ SpriteSheet.MOUSE_DOWN
 ### Description（説明）
 Bitmapクラスから継承するクラス変数。  
 SpriteSheetインスタンスをマウスダウンした際に何かの処理を実行したい場合に使用します。  
-toile.SpriteSheet.MOUSE_DOWNの代わりに"mousedown"と指定しても同じ処理が行われます。
+toile.SpriteSheet.MOUSE_DOWNの代わりに"mousedown"と指定しても同じ処理が行われます。  
+複雑な形状の矩形領域が重なると予期せぬ動作をしますので工夫が必要です。
 
 ### Example（例）
 ```
@@ -6250,7 +6251,8 @@ SpriteSheet.MOUSE_UP
 ### Description（説明）
 Bitmapクラスから継承するクラス変数。  
 SpriteSheetインスタンスをマウスダウン後に、同じSpriteSheet上でマウスアップした際に、何かの処理を実行したい場合に使用します。  
-toile.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。
+toile.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。  
+複雑な形状の矩形領域が重なると予期せぬ動作をしますので工夫が必要です。
 
 ### Example（例）
 SpriteSheet.MOUSE_DOWN参照。
@@ -6268,7 +6270,8 @@ SpriteSheet.MOUSE_UP_OUTSIDE
 ### Description（説明）
 Bitmapクラスから継承するクラス変数。  
 SpriteSheetインスタンスをマウスダウン後に、同じSpriteSheetの外でマウスアップした際に、何かの処理を実行したい場合に使用します。  
-toile.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。
+toile.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。  
+複雑な形状の矩形領域が重なると予期せぬ動作をしますので工夫が必要です。
 
 ### Example（例）
 SpriteSheet.MOUSE_DOWN参照。
