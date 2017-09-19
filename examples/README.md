@@ -28,5 +28,5 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |023|[ScreenShot](https://takashinishimura.github.io/ToileJS/examples/html/023.html)|スクリーンショットを撮り分割してアニメーション|
 |024|[Sound](https://takashinishimura.github.io/ToileJS/examples/html/024.html)|サウンドファイルの制御|
 |025|[Button](https://takashinishimura.github.io/ToileJS/examples/html/025.html)|ボタンを使ったマウスイベントの検証（Consoleに出力）|
-|026|[RectとBitmap/SpriteSheetの接触](https://takashinishimura.github.io/ToileJS/examples/html/026.html)|RectとBitmap/SpriteSheetの接触の検証（Consoleに出力）|
+|026|[RectとBitmap/SpriteSheet/Rectの接触](https://takashinishimura.github.io/ToileJS/examples/html/026.html)|RectとBitmap/SpriteSheet/Rectの接触の検証（Consoleに出力）|
 |027|[正円と正円の接触](https://takashinishimura.github.io/ToileJS/examples/html/027.html)|正円（Bitmap/Circle）と正円の接触の検証（Consoleに出力）|
