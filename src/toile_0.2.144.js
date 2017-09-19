@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 144)
- * 2017-09-19T16:42
+ * 2017-09-20T08:53
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -2159,7 +2159,7 @@ toile.Text =
             this.__align = "left"; //"start","center","left","right"
             this.__baseline = "top"; //"top","middle","bottom"
             this.__color = "0,0,0";
-            this.__font = "san-serif"; //serif,san-serif,cursive,fantasy,monospace
+            this.__font = "san-serif"; //serif,san-serif,cursive,fantasy,monospace...
             this.__scale = 1;
             this.__size = 10;
         }
@@ -2221,7 +2221,7 @@ toile.Text =
             this.__color = _rColor + "," + _gColor + "," + _bColor;
         }
 
-        //serif,san-serif,cursive,fantasy,monospace
+        //serif,san-serif,cursive,fantasy,monospace...
         get font() { return this.__font; }
         set font(_newValue) { this.__font = _newValue; }
 
@@ -2355,7 +2355,6 @@ toile.Video =
             throw new Error("duration can't be changed");
         }
 
-        //get height() { return this.__height; }
         get height() { return this.__height; }
         set height(_newValue) {
             this.__height = _newValue;
