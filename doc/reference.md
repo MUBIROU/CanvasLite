@@ -2796,7 +2796,7 @@ circleObject.hitTestCircle(arg)
 arg: Circleオブジェクトと重なっているかを調べる「正円形」の表示オブジェクト。
 
 ### Returns（戻り値）
-「正円形」同士の衝突判定の結果を示すブール値。
+「正円形」同士（重要）の衝突判定の結果を示すブール値。
 
 ### Description（説明）
 メソッド。SuperDisplayクラスからの継承。  
