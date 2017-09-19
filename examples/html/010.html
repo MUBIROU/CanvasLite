@@ -8,9 +8,7 @@
         <script>
             addEventListener("load", load_window, false);
 
-            function load_window() {
-                _mouseX = _mouseY = 0;
-                
+            function load_window() {                
                 _ballSpeedX = Math.round(Math.random()*3);
                 _ballSpeedY = -10;
 
@@ -23,6 +21,9 @@
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
                 _canvas.fps = 60;
+
+                _mouseX = _canvas.width / 2 - 10;
+                _mouseY = 0;
 
                 _blockArray = [];
 
