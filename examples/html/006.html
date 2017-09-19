@@ -8,7 +8,8 @@
         addEventListener("load", load_window, false);
 
         function load_window() {
-            _mouseX = _mouseY = 0;
+            _mouseX = _canvas.width / 2;
+            _mouseY = _canvas.height / 2;
 
             _canvas = new toile.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
