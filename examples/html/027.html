@@ -9,7 +9,7 @@
             addEventListener("load", load_window, false);
 
             function load_window() {
-                _mouseX = _mouseY = 0;
+                _mouseX = _mouseY = -9e9;
                 
                 //Canvasクラス
                 var _canvas = new toile.Canvas("myCanvas");
@@ -21,7 +21,7 @@
                 _canvas.isBorder(true);
 
                 //Circle1
-                _circle1 = new toile.Circle(500,500,40);
+                _circle1 = new toile.Circle(0,0,40);
                 _circle1.isFill(true);
                 _canvas.addChild(_circle1);
 
