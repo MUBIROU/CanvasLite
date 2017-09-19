@@ -8,9 +8,20 @@
             window.addEventListener("load", load_window, false);
 
             function load_window() {
-                _shortHand = new toile.Rect(188,100,212,212);
-                _longHand = new toile.Rect(192,30,208,208);
-                _secondHand = new toile.Rect(197,25,203,203);
+                _shortHand = new toile.Rect(0,0,24,112);
+                _longHand = new toile.Rect(0,0,16,178);
+                _secondHand = new toile.Rect(0,25,6,178);
+
+                _shortHand.x = 188;
+                _shortHand.y = 100;
+                _longHand.x = 192;
+                _longHand.y = 30;
+                _secondHand.x = 197;
+                _secondHand.y = 25;
+
+                //_shortHand = new toile.Rect(188,100,212,212);
+                //_longHand = new toile.Rect(192,30,208,208);
+                //_secondHand = new toile.Rect(197,25,203,203);
 
                 _shortHand.isFill(true);
                 _longHand.isFill(true);
