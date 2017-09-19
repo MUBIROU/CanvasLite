@@ -8,50 +8,47 @@
             window.addEventListener("load", load_window, false);
 
             function load_window() {
-                _shortHand = new toile.Rect(0,0,24,112);
-                _longHand = new toile.Rect(0,0,16,178);
-                _secondHand = new toile.Rect(0,0,6,178);
-
-                _shortHand.x = 188;
-                _shortHand.y = 100;
-                _longHand.x = 192;
-                _longHand.y = 30;
-                _secondHand.x = 197;
-                _secondHand.y = 25;
-
-                //_shortHand = new toile.Rect(188,100,212,212);
-                //_longHand = new toile.Rect(192,30,208,208);
-                //_secondHand = new toile.Rect(197,25,203,203);
-
-                _shortHand.isFill(true);
-                _longHand.isFill(true);
-                _secondHand.isFill(true);
-                _shortHand.fillColor = "0,0,255";
-                _longHand.fillColor = "255,196,0";
-                _secondHand.fillColor = "255,0,0";
-
-                _shortHand.lineWidth = 3;
-                _longHand.lineWidth = 3;
-                _secondHand.lineWidth = 3;
-
-                _secondHand.lineColor = "204,0,0";
-                _longHand.lineColor = "204,153,0";
-                _shortHand.lineColor = "0,0,51";
-
-                _shortHand.regX = 12;
-                _shortHand.regY = 100;
-                _longHand.regX = 8;
-                _longHand.regY = 170;
-                _secondHand.regX = 3;
-                _secondHand.regY = 175;
-
+                //canvas
                 _canvas = new toile.Canvas("myCanvas");
-                _canvas.addChild(_shortHand);
-                _canvas.addChild(_longHand);
-                _canvas.addChild(_secondHand);
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
+
+                //shortHand
+                _shortHand = new toile.Rect(0,0,24,112);
+                _shortHand.x = _canvas.width / 2 - 12;
+                _shortHand.y = _canvas.height / 2 - 100;
+                _shortHand.isFill(true);
+                _shortHand.fillColor = "0,0,255";
+                _shortHand.lineWidth = 3;
+                _secondHand.lineColor = "204,0,0";
+                _shortHand.regX = 12;
+                _shortHand.regY = 100;
+                _canvas.addChild(_shortHand);
+
+                //longHand
+                _longHand = new toile.Rect(0,0,16,178);
+                _longHand.x = _canvas.width / 2 - 8;
+                _longHand.y = _canvas.height / 2 - 170;
+                _longHand.isFill(true);
+                _longHand.fillColor = "255,196,0";
+                _longHand.lineWidth = 3;
+                _longHand.lineColor = "204,153,0";
+                _longHand.regX = 8;
+                _longHand.regY = 170;
+                _canvas.addChild(_longHand);
+
+                //secondHand
+                _secondHand = new toile.Rect(0,0,6,178);
+                _secondHand.x = _canvas.width / 2 - 3;
+                _secondHand.y = _canvas.height / 2 - 175;
+                _secondHand.isFill(true);
+                _secondHand.fillColor = "255,0,0";
+                _secondHand.lineWidth = 3;
+                _shortHand.lineColor = "0,0,51";
+                _secondHand.regX = 3;
+                _secondHand.regY = 175;
+                _canvas.addChild(_secondHand);
             }
 
             enterframe_canvas = (_canvas) => {
