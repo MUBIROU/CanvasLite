@@ -2,7 +2,7 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>026 Circle/RectとBitmap/SpriteSheetの接触 with ToileJS</title>
+        <title>026 RectとBitmap/SpriteSheetの接触 with ToileJS</title>
         <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
         <script>
             addEventListener("load", load_window, false);
@@ -25,7 +25,7 @@
                 _canvas.addChild(_bitmap);
 
                 //SpriteSheet
-                _spriteSheet = new toile.SpriteSheet("../jpg/run.jpg"); //("run.png");
+                _spriteSheet = new toile.SpriteSheet("../jpg/run.jpg", "../json/run.json"); //("run.png");
                 _spriteSheet.x = 491;
                 _spriteSheet.y = 194;
                 _spriteSheet.scale = 0.5;
