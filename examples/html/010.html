@@ -17,9 +17,10 @@
                 _currentRacketX = undefined;
 
                 var _canvas = new toile.Canvas("myCanvas");
-                _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+                _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.enabledMouseMove(true);
+                _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
                 _canvas.fps = 60;
 
