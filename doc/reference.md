@@ -26,7 +26,7 @@ Bitmap -> SuperDisplay
 
 * [Bitmap.addEventListener()](#BitmapaddEventListener): 指定したイベントのリスナーを追加する
 * [Bitmap.hitTest()](#BitmaphitTest): 指定したオブジェクトと重なっているか（矩形）
-* [Bitmap.hitTestCircle()](#BitmaphitTestCircle): 指定したオブジェクトと重なっているか（円形）
+* [Bitmap.hitTestCircle()](#BitmaphitTestCircle): 指定したオブジェクトと重なっているか（正円）
 * [Bitmap.removeEventListener()](#BitmapremoveEventListener): 指定したイベントのイベントリスナーを解除
 
 ### Properties（プロパティ）
@@ -2474,7 +2474,7 @@ Circle -> SuperDisplay
 ### Methods（メソッド）
 
 * [Circle.hitTest()](#CirclehitTest): 指定したオブジェクトと重なっているか（矩形）
-* [Circle.hitTestCircle()](#CirclehitTestCircle): 指定したオブジェクトと重なっているか（円形）
+* [Circle.hitTestCircle()](#CirclehitTestCircle): 指定したオブジェクトと重なっているか（正円）
 * [Circle.isFill()](#CircleisFill): 矩形の塗りを有効にするか否か
 
 ### Properties（プロパティ）
@@ -5602,7 +5602,7 @@ SpriteSheet -> Bitmap -> SuperDisplay
 * [SpriteSheet.gotoAndPlay()](#SpriteSheetgotoAndPlay): 再生ヘッドを指定したフレームに移動して再生
 * [SpriteSheet.gotoAndStop()](#SpriteSheetgotoAndStop): 再生ヘッドを指定したフレームに移動して停止
 * [SpriteSheet.hitTest()](#SpriteSheethitTest): 指定したオブジェクトと重なっているか（矩形）
-* [SpriteSheet.hitTestCircle()](#SpriteSheethitTestCircle): 指定したオブジェクトと重なっているか（円形）
+* [SpriteSheet.hitTestCircle()](#SpriteSheethitTestCircle): 指定したオブジェクトと重なっているか（正円）
 * [SpriteSheet.isPlay()](#SpriteSheetisPlay): スタイルシートが再生中か否かを調べる
 * [SpriteSheet.play()](#SpriteSheetplay): 停止しているフレームから再生
 * [SpriteSheet.removeEventListener()](#SpriteSheetremoveEventListener): 指定したイベントのイベントリスナーを解除
