@@ -980,10 +980,10 @@ Bitmap.x
 ②new toile.Canvas(arg1, arg2)
 
 ### Arguments（引数）
-①の場合..
+①の場合..  
 arg: HTMLドキュメントの\<canvas>要素のid属性を文字列で指定。
 
-②の場合..
+②の場合..  
 arg1: Canvasの幅（ピクセル）  
 arg2: Canvasの高さ（ピクセル）
 
