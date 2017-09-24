@@ -530,7 +530,7 @@ Bitmapインスタンスをドラッグ＆ドロップしたい場合、Bitmap�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -547,7 +547,7 @@ function load_window() {
 	_bitmap.addEventListener("mouseup", mouseup_bitmap);
 	_bitmap.addEventListener(toile.Bitmap.MOUSE_UP_OUTSIDE, mouseup_bitmap);
 	//_bitmap.addEventListener("mouseupoutside", mouseup_bitmap); //上記と同じ処理
-	_canvas.addChild(window._bitmap);
+	_canvas.addChild(_bitmap);
 
 }
 
@@ -1073,7 +1073,7 @@ arg2: イベントが発生した際に呼び出す関数。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1156,7 +1156,7 @@ HTML Canvasの2Dコンテキスト（CanvasRenderingContext2Dオブジェクト�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1199,7 +1199,7 @@ Canvas.fpsで設定した値は、パフォーマンスを維持するために�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1233,7 +1233,7 @@ HTML Canvas上でのマウスカーソルの形状（初期設定は"default"）
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1270,7 +1270,7 @@ Videoオブジェクトは、Container.deleteChilde()およびundefinedの代入
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1314,7 +1314,7 @@ HTML Canvasを扱う上で必須のメソッドです。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1349,7 +1349,7 @@ arg: Canvas上で右クリックの処理を有効にしたい場合true（初�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1383,7 +1383,7 @@ arg: mousemoveイベント（モバイルの場合touchmove）を有効にした
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1420,7 +1420,7 @@ toile.Canvas.ENTER_FRAMEの代わりに文字列で"enterframe"と指定して�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1478,7 +1478,7 @@ Canvas.addEventListener("enterframe",...で呼び出されるリスナー関数�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1516,7 +1516,7 @@ arg: 調べたい深度（数値）。最下位層は0。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1560,7 +1560,7 @@ arg: 深度を調べたい表示オブジェクト。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1601,7 +1601,7 @@ canvasObject.getDepthMax()
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1636,7 +1636,7 @@ canvasObject.height
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1744,7 +1744,7 @@ toile.Canvas.KEY_DOWNの代わりに文字列で"keydown"と指定しても同�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1781,7 +1781,7 @@ toile.Canvas.KEY_UPの代わりに文字列で"keyup"と指定しても同じ処
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1819,7 +1819,7 @@ Canvas.MOUSE_DOWNの代わりに文字列で"mousedown"と指定しても同じ�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1858,7 +1858,7 @@ Canvas.MOUSE_MOVEの代わりに文字列で"mousemove"と指定しても同じ�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1897,7 +1897,7 @@ Canvas.MOUSE_UPの代わりに文字列で"mouseup"と指定しても同じ処�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1932,7 +1932,7 @@ canvasObject.mouseX
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -1967,7 +1967,7 @@ canvasObject.mouseY
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2008,7 +2008,7 @@ Canvas.ENTER_FRAME、Canvas.KEY_DOWN、Canvas.KEY_UP、Canvas.MOUSE_DOWN、Canva
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2079,7 +2079,7 @@ iOS、Androidには非対応。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2130,7 +2130,7 @@ Bitmapクラスのインスタンス。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 
 // HTMLのロードが完了した際のイベントリスナーの定義
 window.addEventListener("load", load_window, false);
@@ -2152,15 +2152,15 @@ function load_window() {
 }
 
 // Canvasの再描画（30fps毎）の際に実行したい処理…
-function enterframe_canvas(_canvas) {
-	if (window._screenShot != undefined) {
-		window._screenShot.y += 10;
+enterframe_canvas = (_canvas) => {
+	if (_screenShot != undefined) {
+		_screenShot.y += 10;
 	}
 
 	_canvas.drawScreen("#ffffff");
 }
 
-function mousedown_canavas(_canvas) {
+mousedown_canavas = (_canvas) => {
 	_screenShot = _canvas.screenShot(); //Canvas全体をスナップショット
 	_canvas.addChild(_screenShot); //スナップショットした画像をCanvasに配置
 
@@ -2226,7 +2226,7 @@ canvasObject.stopMouseDownEvent()
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2281,7 +2281,7 @@ canvasObject.stopMouseUpEvent()
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2330,7 +2330,7 @@ Canvasの回転時のパースの度合い。初期値は5000。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2363,7 +2363,7 @@ X軸を中心にCanvas全体を回転。初期値は0（度）。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2406,7 +2406,7 @@ Y軸を中心にCanvas全体を回転。初期値は0（度）。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2447,7 +2447,7 @@ canvasObject.width
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2516,7 +2516,7 @@ toile.jsを読み込む前、\<head>タグ内などに
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2550,7 +2550,7 @@ Circle.fillAlphaやCircle.fillAlphaの値に加えて適用されます。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2717,7 +2717,7 @@ Circle.Alphaの値は、このCircle.fillAlphaの値に加えて適用されま�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2753,7 +2753,7 @@ RGB各色を0〜255で指定。例えば、赤の場合は"255,0,0"とします�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2804,7 +2804,7 @@ arg: Circleオブジェクトと重なっているかを調べる「正円形」
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2869,7 +2869,7 @@ trueにした場合の初期値の色は、"255,255,255"（白）。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2905,7 +2905,7 @@ Circle.Alphaの値は、このCircle.lineAlphaの値に加えて適用されま�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2942,7 +2942,7 @@ RGB各色を0〜255で指定。例えば、赤の場合は"255,0,0"とします�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -2978,7 +2978,7 @@ Circleオブジェクトの線の太さ（1.0〜）。初期値は1。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 addEventListener("load", load_window, false);
 
 function load_window() {
@@ -3313,7 +3313,7 @@ Container内の全ての表示オブジェクトに影響します。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -3402,7 +3402,7 @@ arg: コンテナ内の表示オブジェクトの調べたい深度（数値）
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -3453,7 +3453,7 @@ arg: コンテナ内で、深度を調べたい表示オブジェクト。
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
@@ -4251,7 +4251,7 @@ function load_window() {
 }
 
 enterframe_canvas = (_canvas) => {
-	window._line.rotate += 5;
+	_line.rotate += 5;
 	_canvas.drawScreen();
 }
 ```
@@ -4732,7 +4732,7 @@ Rectインスタンスの他、BitmapやSpriteSheetインスタンスにも対�
 
 ### Example（例）
 ```
-// main.js
+//main.js
 window.addEventListener("load", load_window, false);
 
 function load_window() {
