@@ -1458,7 +1458,7 @@ iOS、Androidには非対応。
 Canvas.requestFullscreen()参照。
 
 ### See Also（参照）
-Canvas.requestFullscreen ()、Canvas.isFitWindow()
+Canvas.requestFullscreen()、Canvas.isFitWindow()
 
 
 <a name="Canvasfps"></a>
