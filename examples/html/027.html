@@ -23,24 +23,25 @@
                 //Circle1
                 _circle1 = new toile.Circle(0,0,40);
                 _circle1.isFill(true);
-                _canvas.addChild(_circle1);
 
                 //Circle2
                 _circle2 = new toile.Circle(466,200,100);
                 _circle2.isFill(true);
-                _canvas.addChild(_circle2);
 
                 //Bitmap1
                 _bitmap1 = new toile.Bitmap("../png/circleSample.png");
                 _bitmap1.x = _bitmap1.y = 0;
                 _bitmap1.scaleX = _bitmap1.scaleY = 0.4;
-                _canvas.addChild(_bitmap1);
 
                 //Bitmap2
                 _bitmap2 = new toile.Bitmap("../png/circleSample.png");
                 _bitmap2.x = 133;
                 _bitmap2.y = 200;
+
+                _canvas.addChild(_circle2);
                 _canvas.addChild(_bitmap2);
+                _canvas.addChild(_circle1);
+                _canvas.addChild(_bitmap1);
             }
 
             enterframe_canvas = (_canvas) => {
