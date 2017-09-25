@@ -1338,7 +1338,7 @@ Canvas.addEventListener()、Canvas.ENTER_FRAME
 canvasObject.enabledContextMenu(arg)
 
 ### Arguments（引数）
-arg: Canvas上で右クリックの処理を有効にしたい場合true（初期値）。
+arg: Canvas上で右クリックの処理を有効にしたい場合true（初期値）。  
 無効にしたい場合はfalse。
 
 ### Returns（戻り値）
