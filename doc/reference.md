@@ -5176,7 +5176,7 @@ Rect.x
 
 
 <a name="Sound"></a>
-# Sound classSound class
+# Sound class
 
 ### Inheritance（継承）
 なし。
