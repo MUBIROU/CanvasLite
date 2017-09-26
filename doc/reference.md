@@ -7275,8 +7275,8 @@ arg2: 読み込むビデオの元サイズ（横、単位はピクセル）。
 arg3: 読み込むビデオの元サイズ（縦、単位はピクセル）。
 
 ### Description（説明）
-HTML Canvas上に動画（MPEG4）を表示するためのクラス。
-指定したMPEG4ファイルを使った、Videoクラスを生成します。
+HTML Canvas上に動画（MPEG4）を表示するためのクラス。  
+指定したMPEG4ファイルを使った、Videoクラスを生成します。  
 toile.jsを読み込む前、\<head>タグ内などに
 ```
 <script>var toile = window;</script>
