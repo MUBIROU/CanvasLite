@@ -5642,7 +5642,7 @@ SpriteSheet -> Bitmap -> SuperDisplay
 new toile.SpriteSheet(arg1[, arg2])
 
 ### Arguments（引数）
-arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。
+arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。  
 arg2: JSONファイル（メタデータ）のパス（URL）を文字列で指定（オプション）。
 
 ### Description（説明）
