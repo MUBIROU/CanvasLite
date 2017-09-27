@@ -5176,7 +5176,7 @@ Rect.x
 
 
 <a name="Sound"></a>
-# Sound classSound class
+# Sound class
 
 ### Inheritance（継承）
 なし。
@@ -5642,7 +5642,7 @@ SpriteSheet -> Bitmap -> SuperDisplay
 new toile.SpriteSheet(arg1[, arg2])
 
 ### Arguments（引数）
-arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。
+arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。  
 arg2: JSONファイル（メタデータ）のパス（URL）を文字列で指定（オプション）。
 
 ### Description（説明）
@@ -7275,8 +7275,8 @@ arg2: 読み込むビデオの元サイズ（横、単位はピクセル）。
 arg3: 読み込むビデオの元サイズ（縦、単位はピクセル）。
 
 ### Description（説明）
-HTML Canvas上に動画（MPEG4）を表示するためのクラス。
-指定したMPEG4ファイルを使った、Videoクラスを生成します。
+HTML Canvas上に動画（MPEG4）を表示するためのクラス。  
+指定したMPEG4ファイルを使った、Videoクラスを生成します。  
 toile.jsを読み込む前、\<head>タグ内などに
 ```
 <script>var toile = window;</script>
