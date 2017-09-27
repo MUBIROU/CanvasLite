@@ -5633,7 +5633,7 @@ SpriteSheet -> Bitmap -> SuperDisplay
 
 ### Events（イベント）
 
-* [SpriteSheet.LOAD](#SpriteSheetLOAD): PNGファイルがロードされたら
+* [SpriteSheet.LOAD](#SpriteSheetLOAD): PNG/JPEGファイルがロードされたら
 * [SpriteSheet.MOUSE_DOWN](#SpriteSheetMOUSE_DOWN): SpriteSheetインスタンスをマウスダウンしたら
 * [SpriteSheet.MOUSE_UP](#SpriteSheetMOUSE_UP): SpriteSheetをマウスダウン後にマウスボタンを離したら
 * [SpriteSheet.MOUSE_UP_OUTSIDE](#SpriteSheetMOUSE_UP_OUTSIDE): マウスダウン後に外でマウスボタンを離したら  
