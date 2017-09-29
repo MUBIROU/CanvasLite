@@ -3672,8 +3672,8 @@ Conteiner.regY、Conteiner.rotate、Conteiner.rotateRadian
 containerObject.regY
 
 ### Description（説明）
-SuperDisplayクラスから継承するプロパティ（読取り専用）。  
-Containerを回転させる際の中心座標（垂直座標）。初期値は0。  
+SuperDisplayクラスから継承するプロパティ。  
+Containerを回転させる際の中心座標（垂直座標）。初期値は0。
 その他は、containerObject.regXと同じです。
 
 
@@ -3797,8 +3797,8 @@ Container.y
 containerObject.y
 
 ### Description（説明）
-SuperDisplayクラスから継承するプロパティ（読取り専用）。
-Containerを回転させる際の中心座標（水平座標）。初期値は0。
+SuperDisplayクラスから継承するプロパティ。  
+垂直座標位置（単位はピクセル）。
 その他は、containerObject.xと同じです。
 
 
