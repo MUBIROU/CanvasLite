@@ -1128,7 +1128,7 @@ canvaObject.borderWidth
 
 ### Description（説明）
 HTML Canvasの外枠（border）の線の太さ。  
-初期値は"1px"。  
+初期値は1（px）。  
 外枠が描画される位置は、外枠の左側および上側はCanvas領域のすぐ内側ですが、右側および下側はCanvas領域に外枠の幅（Canvas.borderWidth）を加えた位置のすぐ外側になるので、注意が必要です。
 
 ### Example（例）
