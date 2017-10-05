@@ -1005,11 +1005,11 @@ toile.jsを読み込む前、\<head>タグ内などに
     <head>
         <meta charset="UTF-8">
         <script src="https://takashinishimura.github.io/ToileJS/toile.js"></script>
-		<script src="main.js"></script>
-	</head>
-	<body>
-		<canvas id="myCanvas" width="550" height="400"></canvas>
-	</body>
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="550" height="400"></canvas>
+    </body>
 </html>
 ```
 
