@@ -3,7 +3,7 @@ window.addEventListener("load", load_window, false);
 function load_window() {
     _canvas = new Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
-    //_canvas.isBorder(true);
+    _canvas.isBorder(true);
     _canvas.borderWidth = 2;
     _canvas.borderColor = "#ff0000";
     _canvas.enabledContextMenu(false);
