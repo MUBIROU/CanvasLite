@@ -7,4 +7,4 @@
 * [Reference Manual （リファレンスマニュアル）](https://github.com/TakashiNishimura/toile.js/blob/master/doc/reference.md)
 * [Examples（動作確認）](https://github.com/TakashiNishimura/ToileJS/tree/master/examples)
 
-© 2017 Takashi Nishimura
+© 2017 Takashi Nishimura[.](https://takashinishimura.github.io/ToileJS/test)
