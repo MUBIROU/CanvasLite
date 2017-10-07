@@ -8,44 +8,21 @@ function load_window() {
     _canvas.borderColor = "#ff0000";
     _canvas.enabledContextMenu(false);
 
-    test(_canvas,17,9); //Canvasを横13,縦7に分割
-    
+    _grid = new Grid(_canvas,17,9); //Canvasを横13,縦7に分割
+    _grid.exec();
+
+    makeButton(_canvas,17,9);
 }
 
 enterframe_canvas = (_canvas) => {
     _canvas.drawScreen();
 }
 
-test = (_canvas, _numH, _numV) => {
+makeButton = (_canvas, _numH, _numV) => {
     _blockNumH = _numH; //分割する数（横方向）
     _blockNumV = _numV; //分割する数（縦方向）
     _blockWidth = _canvas.width / _blockNumH;
     _blockHeight = _canvas.height / _blockNumV;
-
-    //===============
-    //Line Horizontal
-    //===============
-    _lineHlist = [];
-    for (let i=1; i<_numH; i++) {
-        _theLine = new Line(_blockWidth*i,0,_blockWidth*i,_canvas.height);
-        //_theLine.lineWidth = 6;
-        _theLine.lineAlpha = 0.2;
-        _canvas.addChild(_theLine);
-        _lineHlist.push(_theLine);
-    }
-
-    //=============
-    //Line Vertical
-    //=============
-    _lineVlist = [];
-    for (let i=1; i<_numV; i++) {
-        _theLine = new Line(0,_blockHeight*i,_canvas.width,_blockHeight*i);
-        //_theLine.lineWidth = 6;
-        //_theLine.lineColor = ""
-        _theLine.lineAlpha = 0.2;
-        _canvas.addChild(_theLine);
-        _lineVlist.push(_theLine);
-    }
 
     _rect1 = new Rect(_blockWidth*2, _blockHeight*3, _blockWidth*2 + _blockWidth*3, _blockHeight*6);
     _rect1.lineWidth = 5;
