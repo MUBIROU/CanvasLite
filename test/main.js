@@ -24,7 +24,7 @@ makeButton = (_canvas, _numH, _numV) => {
     _blockWidth = _canvas.width / _blockNumH;
     _blockHeight = _canvas.height / _blockNumV;
 
-    _button1 = new Button(_canvas, _blockWidth*2, _blockHeight*3, _blockWidth*3, _blockHeight*3);
-    _button2 = new Button(_canvas, _blockWidth*7, _blockHeight*3, _blockWidth*3, _blockHeight*3);
-    _button3 = new Button(_canvas, _blockWidth*12, _blockHeight*3, _blockWidth*3, _blockHeight*3);
+    _button1 = new RectButton(_canvas, _blockWidth*2, _blockHeight*3, _blockWidth*3, _blockHeight*3);
+    _button2 = new RectButton(_canvas, _blockWidth*7, _blockHeight*3, _blockWidth*3, _blockHeight*3);
+    _button3 = new RectButton(_canvas, _blockWidth*12, _blockHeight*3, _blockWidth*3, _blockHeight*3);
 }
