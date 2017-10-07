@@ -1,3 +1,9 @@
+/******************************************
+ * <Public Method>
+ *      exec()
+ *      
+******************************************/
+
 class Grid {
     constructor(_canvas, _numH, _numV) {
         this.__blockNumH = _numH; //分割する数（横方向）
