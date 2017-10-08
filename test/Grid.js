@@ -27,7 +27,7 @@ class Grid {
             this.__lineHlist.push(_theLine);
         }
 
-        //Line Vertical        
+        //Line Vertical
         for (let i=1; i<this.__blockNumV; i++) {
             let _theLine = new Line(0, this.__blockHeight*i, this.__canvas.width, this.__blockHeight*i);
             //_theLine.lineWidth = 6;

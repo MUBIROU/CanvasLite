@@ -24,7 +24,18 @@ makeButton = (_canvas, _numH, _numV) => {
     _blockWidth = _canvas.width / _blockNumH;
     _blockHeight = _canvas.height / _blockNumV;
 
-    _button1 = new RectButton(_canvas, _blockWidth*2, _blockHeight*3, _blockWidth*3, _blockHeight*3);
-    _button2 = new RectButton(_canvas, _blockWidth*7, _blockHeight*3, _blockWidth*3, _blockHeight*3);
-    _button3 = new RectButton(_canvas, _blockWidth*12, _blockHeight*3, _blockWidth*3, _blockHeight*3);
+    _button1 = new BitmapButton("red.png");
+    _button1.x = _blockWidth*2;
+    _button1.y = _blockHeight*3;
+    _canvas.addChild(_button1);
+
+    _button2 = new BitmapButton("red.png");
+    _button2.x = _blockWidth*7;
+    _button2.y = _blockHeight*3;
+    _canvas.addChild(_button2);
+
+    _button3 = new BitmapButton("red.png");
+    _button3.x = _blockWidth*12;
+    _button3.y = _blockHeight*3;
+    _canvas.addChild(_button3);
 }
