@@ -1,4 +1,4 @@
-window.addEventListener("load", load_window, false);
+addEventListener("load", load_window, false);
 
 function load_window() {
     _canvas = new Canvas("myCanvas");
