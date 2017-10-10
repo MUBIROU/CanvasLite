@@ -3,14 +3,16 @@ addEventListener("load", load_window, false);
 function load_window() {
     _canvas = new Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
+    
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
     _canvas.borderColor = "#ff0000";
     _canvas.enabledContextMenu(false);
+    _canvas.fps = 60;
 
     //（1）グリッドの登場
     _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
-    _grid.animateIn(5000);
+    _grid.animateIn(2.5); //初期値2（秒）
     _grid.addEventListener("animateInEnd", animateInEnd_grid);
     //_grid.exec();
 
