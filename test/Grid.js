@@ -1,7 +1,9 @@
 /******************************************
  * <Public Method>
  *      exec()
- *      
+ *      animateIn(_millsec=5000)
+ *      addEventListener(_event, _function)
+ *      removeEventListener(_event)
 ******************************************/
 
 class Grid {
@@ -14,8 +16,12 @@ class Grid {
         this.__canvas = _canvas;
         this.__lineHlist = [];
         this.__lineVlist = [];
+        this.__animateInEndHandler = undefined;
     }
 
+    //=============
+    //public method
+    //=============
     exec() {
         //Line Horizontal
         for (let i=1; i<this.__blockNumH; i++) {
@@ -36,5 +42,36 @@ class Grid {
             this.__canvas.addChild(_theLine);
             this.__lineVlist.push(_theLine);
         }
+    }
+
+    animateIn(_millsec=5000) {
+        this.__timerID = setInterval(this.__animateInLoop, 17, this); //≒58.8fps
+    }
+
+    addEventListener(_event, _function) {
+        switch (_event) {
+            case "animateInEnd":
+                this.__animateInEndHandler = _function;
+                break;
+            default: throw new Error("Grid.addEventListener()");
+        }
+    }
+
+    removeEventListener(_event) {
+        switch (_event) {
+            case "animateInEnd":
+                this.__animateInEndHandler = undefined;
+                clearInterval(this.__timerID);
+                break;
+            default: throw new Error("Grid.removeEventListener()");
+        }
+    }
+
+    //==============
+    //private method
+    //==============
+    __animateInLoop(_this) { //≒animateIn()の実行で58.8fps繰返される
+        console.log("animateIn()で繰り返す処理");
+        _this.__animateInEndHandler(_this);
     }
 }
