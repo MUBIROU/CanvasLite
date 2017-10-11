@@ -9,7 +9,7 @@ class BitmapButton extends Bitmap {
         super(_path);
 
         this.__rect = undefined;
-        //this.alpha = 0.1;
+        this.alpha = 0.1;
         this.addEventListener("load", this.load_this);
     }
 

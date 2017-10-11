@@ -1,6 +1,5 @@
 /******************************************
  * <Public Method>
- *      exec()
  *      animateIn(_sec=2)
  *      addEventListener(_event, _function)
  *      removeEventListener(_event)
@@ -18,18 +17,14 @@ class Grid {
         this.__lineVlist = [];
         this.__animateInEndHandler = undefined;
 
-        this.init();
+        this.__init();
     }
 
-    //=============
-    //public method
-    //=============
-    init() {
+    __init() { //privete method
         //Line Horizontal
         for (let i=1; i<this.__blockNumV; i++) {
             let _theObject = new Object();
             let _theLine = new Line(0, this.__blockHeight*i, this.__canvas.width, this.__blockHeight*i);
-            //_theLine.lineWidth = 2;
             _theObject.line = _theLine;
             _theObject.count = 0;
             this.__lineHlist.push(_theObject);
@@ -40,9 +35,9 @@ class Grid {
         for (let i=this.__blockNumH-1; i>0; i--) {
             let _theObject = new Object();
             let _theLine = new Line(this.__blockWidth*i, 0, this.__blockWidth*i, this.__canvas.height);
-            //_theLine.lineWidth = 2;
             _theObject.line = _theLine;
             _theObject.count = 0;
+            _theObject.name = "v" + i; //__animateInLoop()で利用
             this.__lineVlist.push(_theObject);
             this.__canvas.addChild(_theLine);
         }
@@ -102,7 +97,7 @@ class Grid {
             if (_theObject.line.endX < _this.__canvas.width - 1) {
                 _theObject.line.endX = _this.__canvas.width * Math.cos(_theObject.count);
             } else {
-                _theObject.line.endX = _this.__canvas.width;
+                _theObject.line.endX = _this.__canvas.width; 
             }
         });
 
@@ -113,9 +108,11 @@ class Grid {
                 _theObject.line.startY = _this.__canvas.height - _this.__canvas.height * Math.cos(_theObject.count)
             } else {
                 _theObject.line.startY = 0;
+                //最後の縦の線が表示し終わったら...
+                if (_theObject.name == "v" + _this.__lineVlist.length) {
+                    _this.__animateInEndHandler(_this); //animateIn()の終了イベント発生
+                }
             }
         });
-
-        //_this.__animateInEndHandler(_this);
     }
 }

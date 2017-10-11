@@ -4,7 +4,7 @@ function load_window() {
     _canvas = new Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     
-    _canvas.isBorder(true);
+    //_canvas.isBorder(true);
     _canvas.borderWidth = 2;
     _canvas.borderColor = "#ff0000";
     _canvas.enabledContextMenu(false);
@@ -12,22 +12,20 @@ function load_window() {
 
     //（1）グリッドの登場
     _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
-    _grid.animateIn(2.5); //初期値2（秒）
+    _grid.animateIn(2); //初期値2（秒）
     _grid.addEventListener("animateInEnd", animateInEnd_grid);
-    //_grid.exec();
 
-    /*
-    makeButton(_canvas,17,9);
-    _button1.addEventListener("mouseup", mouseup_button);
-    _button2.addEventListener("mouseup", mouseup_button);
-    _button3.addEventListener("mouseup", mouseup_button);
-    */
 }
 
 animateInEnd_grid = (_grid) => {
     console.log("animateIn()終了");
     _grid.removeEventListener("animateInEnd");
+
     //animateIn()のアニメーションが終了後に行いたい処理をここに記述
+    makeButton(_canvas,17,9);
+    _button1.addEventListener("mouseup", mouseup_button);
+    _button2.addEventListener("mouseup", mouseup_button);
+    _button3.addEventListener("mouseup", mouseup_button);
 }
 
 enterframe_canvas = (_canvas) => {
