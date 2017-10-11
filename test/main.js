@@ -12,9 +12,23 @@ function load_window() {
 
     //（1）グリッドの登場
     _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
-    _grid.animateIn(2); //初期値2（秒）
+    _grid.animateIn(2.5); //初期値2（秒）
     _grid.addEventListener("animateInEnd", animateInEnd_grid);
 
+}
+
+enterframe_canvas = (_canvas) => {
+    _canvas.drawScreen("#ffffff");
+}
+
+mouseup_button = (_bitmap) => {
+    //console.log(_bitmap.name);
+    _grid.animateOut(2.5); //初期値2（秒）
+    _grid.addEventListener("animateOutEnd", animateOutEnd_grid);
+
+    //_canvas.deleteChild(_button1);
+    //_canvas.deleteChild(_button2);
+    //_canvas.deleteChild(_button3);
 }
 
 animateInEnd_grid = (_grid) => {
@@ -22,14 +36,13 @@ animateInEnd_grid = (_grid) => {
     _grid.removeEventListener("animateInEnd");
 
     //animateIn()のアニメーションが終了後に行いたい処理をここに記述
-    makeButton(_canvas,17,9);
-    _button1.addEventListener("mouseup", mouseup_button);
-    _button2.addEventListener("mouseup", mouseup_button);
-    _button3.addEventListener("mouseup", mouseup_button);
-}
 
-enterframe_canvas = (_canvas) => {
-    _canvas.drawScreen("#ffffff");
+    //3つのボタン生成
+    //makeButton(_canvas,17,9);
+    _canvas.addEventListener("mouseup", mouseup_button);
+    //_button1.addEventListener("mouseup", mouseup_button);
+    //_button2.addEventListener("mouseup", mouseup_button);
+    //_button3.addEventListener("mouseup", mouseup_button);
 }
 
 makeButton = (_canvas, _numH, _numV) => {
@@ -57,6 +70,7 @@ makeButton = (_canvas, _numH, _numV) => {
     _canvas.addChild(_button3);
 }
 
-mouseup_button = (_bitmap) => {
-    console.log(_bitmap.name);
+animateOutEnd_grid = (_grid) => {
+    console.log("animateOut()終了");
+    _grid.removeEventListener("animateOutEnd");
 }

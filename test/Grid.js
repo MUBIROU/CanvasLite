@@ -9,18 +9,22 @@ class Grid {
     constructor(_canvas, _numH, _numV) {
         this.__blockNumH = _numH; //分割する数（横方向）
         this.__blockNumV = _numV; //分割する数（縦方向）
-        this.__blockWidth = _canvas.width / this.__blockNumH;
-        this.__blockHeight = _canvas.height / this.__blockNumV;
+        this.__blockWidth = _canvas.width / _numH;
+        this.__blockHeight = _canvas.height / _numV;
 
         this.__canvas = _canvas;
         this.__lineHlist = [];
         this.__lineVlist = [];
         this.__animateInEndHandler = undefined;
+        this.__animateOutEndHandler = undefined;
 
         this.__init();
     }
 
-    __init() { //privete method
+    //======================================
+    // privete method : 縦横のグリッドの生成
+    //======================================
+    __init() {
         //Line Horizontal
         for (let i=1; i<this.__blockNumV; i++) {
             let _theObject = new Object();
@@ -43,7 +47,9 @@ class Grid {
         }
     }
 
-    //animateIn()開始
+    //=============
+    // animateIn()
+    //=============
     animateIn(_sec=2) {
         //横線の長さを0にする（左辺基準）
         var __lineHlistLength = this.__lineHlist.length;
@@ -65,13 +71,41 @@ class Grid {
         let _lastCount = - Math.PI/2 - (__lineHlistLength-1)*(Math.PI/2)/__lineHlistLength;
         this.__speed = - _lastCount/_sec/(1000/17);
 
-        this.__timerID = setInterval(this.__animateInLoop, 17, this); //≒58.8fps
+        this.__animateInLoopID = setInterval(this.__animateInLoop, 17, this); //≒58.8fps
+    }
+
+    //==============
+    // animateOut()
+    //==============
+    animateOut(_sec=2) {
+        //横線の長さを0にする（左辺基準）
+        var __lineHlistLength = this.__lineHlist.length;
+        for (let i=0; i<__lineHlistLength; i++) {
+            let _theObject = this.__lineHlist[i];
+            _theObject.count = - i*(Math.PI/2)/__lineHlistLength;
+        }
+
+        //縦の長さを0にする（底辺基準）
+        var __lineVlistLength = this.__lineVlist.length;
+        for (let i=0; i<__lineVlistLength; i++) {
+            let _theObject = this.__lineVlist[i];
+            _theObject.count = 3*Math.PI/2 + i*(Math.PI/2)/__lineVlistLength;
+        }
+
+        //アニメーション速度（初期値2秒）
+        let _lastCount = - (__lineHlistLength-1)*(Math.PI/2)/__lineHlistLength;
+        this.__speed = - _lastCount/_sec/(1000/17) * 2;
+
+        this.__animateOutLoopID = setInterval(this.__animateOutLoop, 17, this); //≒58.8fps
     }
 
     addEventListener(_event, _function) {
         switch (_event) {
             case "animateInEnd":
                 this.__animateInEndHandler = _function;
+                break;
+            case "animateOutEnd":
+                this.__animateOutEndHandler = _function;
                 break;
             default: throw new Error("Grid.addEventListener()");
         }
@@ -81,19 +115,23 @@ class Grid {
         switch (_event) {
             case "animateInEnd":
                 this.__animateInEndHandler = undefined;
-                clearInterval(this.__timerID);
+                clearInterval(this.__animateInLoopID);
+                break;
+            case "animateOutEnd":
+                this.__animateOutEndHandler = undefined;
+                clearInterval(this.__animateOutLoopID);
                 break;
             default: throw new Error("Grid.removeEventListener()");
         }
     }
 
-    //==============
-    //private method
-    //==============
-    __animateInLoop(_this) { //≒animateIn()の実行で58.8fps繰返される処理
+    //=========================================================
+    //private method : animateIn()の実行で58.8fps繰返される処理
+    //=========================================================
+    __animateInLoop(_this) {
         //横線の長さを伸ばす
         _this.__lineHlist.forEach(function(_theObject) {
-            _theObject.count += _this.__speed; //値が大きいと横方向に高速化（初期値0.03）
+            _theObject.count += _this.__speed; //値が大きいと横方向に高速化（初期値約0.025）
             if (_theObject.line.endX < _this.__canvas.width - 1) {
                 _theObject.line.endX = _this.__canvas.width * Math.cos(_theObject.count);
             } else {
@@ -103,7 +141,7 @@ class Grid {
 
         //縦線の長さを伸ばす
         _this.__lineVlist.forEach(function(_theObject) {
-            _theObject.count += _this.__speed; //値が大きいと縦方向に高速化（初期値0.03）
+            _theObject.count += _this.__speed; //値が大きいと縦方向に高速化（初期値約0.025）
             if (_theObject.line.startY > 1) {
                 _theObject.line.startY = _this.__canvas.height - _this.__canvas.height * Math.cos(_theObject.count)
             } else {
@@ -111,6 +149,32 @@ class Grid {
                 //最後の縦の線が表示し終わったら...
                 if (_theObject.name == "v" + _this.__lineVlist.length) {
                     _this.__animateInEndHandler(_this); //animateIn()の終了イベント発生
+                }
+            }
+        });
+    }
+
+    __animateOutLoop(_this) {
+        //横線の長さを縮める
+        _this.__lineHlist.forEach(function(_theObject) {
+            _theObject.count += _this.__speed; //値が大きいと横方向に高速化（初期値約0.024）
+            if (_theObject.line.startX < _this.__canvas.width - 1) {
+                    _theObject.line.startX = _this.__canvas.width * Math.sin(_theObject.count);
+            } else {
+                _theObject.line.startX = _this.__canvas.width; 
+            }
+        });
+
+        //縦線の長さを縮める
+        _this.__lineVlist.forEach(function(_theObject) {
+            _theObject.count += _this.__speed; //値が大きいと縦方向に高速化（初期値約0.024）
+            if (_theObject.line.endY > 1) {
+                _theObject.line.endY = _this.__canvas.height - _this.__canvas.height * Math.sin(_theObject.count)
+            } else {
+                _theObject.line.endY = 0;
+                //最後の縦の線が表示し終わったら...
+                if (_theObject.name == "v" + _this.__lineVlist.length) {
+                    _this.__animateOutEndHandler(_this); //animateIn()の終了イベント発生
                 }
             }
         });
