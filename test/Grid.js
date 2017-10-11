@@ -1,9 +1,11 @@
-/******************************************
- * <Public Method>
- *      animateIn(_sec=2)
- *      addEventListener(_event, _function)
- *      removeEventListener(_event)
-******************************************/
+/**********************************************
+ * Grid class
+ *      <Public Method>
+ *          animateIn(_sec=2)
+ *          animateOut(_sec=2)
+ *          addEventListener(_event, _function)
+ *          removeEventListener(_event)
+**********************************************/
 
 class Grid {
     constructor(_canvas, _numH, _numV) {
@@ -20,35 +22,9 @@ class Grid {
 
         this.__init();
     }
-
-    //======================================
-    // privete method : 縦横のグリッドの生成
-    //======================================
-    __init() {
-        //Line Horizontal
-        for (let i=1; i<this.__blockNumV; i++) {
-            let _theObject = new Object();
-            let _theLine = new Line(0, this.__blockHeight*i, this.__canvas.width, this.__blockHeight*i);
-            _theObject.line = _theLine;
-            _theObject.count = 0;
-            this.__lineHlist.push(_theObject);
-            this.__canvas.addChild(_theLine);
-        }
-
-        //Line Vertical
-        for (let i=this.__blockNumH-1; i>0; i--) {
-            let _theObject = new Object();
-            let _theLine = new Line(this.__blockWidth*i, 0, this.__blockWidth*i, this.__canvas.height);
-            _theObject.line = _theLine;
-            _theObject.count = 0;
-            _theObject.name = "v" + i; //__animateInLoop()で利用
-            this.__lineVlist.push(_theObject);
-            this.__canvas.addChild(_theLine);
-        }
-    }
-
+    
     //=============
-    // animateIn()
+    //public method
     //=============
     animateIn(_sec=2) {
         //横線の長さを0にする（左辺基準）
@@ -74,9 +50,6 @@ class Grid {
         this.__animateInLoopID = setInterval(this.__animateInLoop, 17, this); //≒58.8fps
     }
 
-    //==============
-    // animateOut()
-    //==============
     animateOut(_sec=2) {
         //横線の長さを0にする（左辺基準）
         var __lineHlistLength = this.__lineHlist.length;
@@ -125,9 +98,32 @@ class Grid {
         }
     }
 
-    //=========================================================
-    //private method : animateIn()の実行で58.8fps繰返される処理
-    //=========================================================
+    //==============
+    //private method
+    //==============
+    __init() {
+        //Line Horizontal
+        for (let i=1; i<this.__blockNumV; i++) {
+            let _theObject = new Object();
+            let _theLine = new Line(0, this.__blockHeight*i, this.__canvas.width, this.__blockHeight*i);
+            _theObject.line = _theLine;
+            _theObject.count = 0;
+            this.__lineHlist.push(_theObject);
+            this.__canvas.addChild(_theLine);
+        }
+
+        //Line Vertical
+        for (let i=this.__blockNumH-1; i>0; i--) {
+            let _theObject = new Object();
+            let _theLine = new Line(this.__blockWidth*i, 0, this.__blockWidth*i, this.__canvas.height);
+            _theObject.line = _theLine;
+            _theObject.count = 0;
+            _theObject.name = "v" + i; //__animateInLoop()で利用
+            this.__lineVlist.push(_theObject);
+            this.__canvas.addChild(_theLine);
+        }
+    }
+
     __animateInLoop(_this) {
         //横線の長さを伸ばす
         _this.__lineHlist.forEach(function(_theObject) {
