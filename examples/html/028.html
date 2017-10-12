@@ -32,7 +32,7 @@
 
             mousedown_canvas = (_canvas) => {
                 if (_gridStatus == "off") {
-                    _grid = new Grid(_canvas,10,6); //Canvasを横10,縦6に分割
+                    _grid = new Grid(_canvas,10,10); //Canvasを横10,縦6に分割
                     //_grid.create(); //アニメーション無しで表示したい場合
                     _grid.lineAlpha = 0.3; //初期値1
                     _grid.lineColor = "0,0,0"; //初期値"0,0,0"
@@ -78,6 +78,6 @@
         </style>
     </head>
     <body>
-        <canvas id="myCanvas" width="800" height="600"></canvas>
+        <canvas id="myCanvas" width="800" height="800"></canvas>
     </body>
 </html>
