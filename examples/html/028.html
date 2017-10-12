@@ -34,9 +34,9 @@
                 if (_gridStatus == "off") {
                     _grid = new Grid(_canvas,10,10); //Canvasを横10,縦6に分割
                     //_grid.create(); //アニメーション無しで表示したい場合
-                    _grid.lineAlpha = 0.3; //初期値1
+                    _grid.lineAlpha = 0.5; //初期値1
                     _grid.lineColor = "0,0,0"; //初期値"0,0,0"
-                    _grid.lineWidth = 12; //初期値1
+                    _grid.lineWidth = 3; //初期値1
                     _grid.animateIn(2); //初期値2（秒）
                     _grid.addEventListener("animateInEnd", animateInEnd_grid);
                     _gridStatus = "animate"; //Gridの表示状態
