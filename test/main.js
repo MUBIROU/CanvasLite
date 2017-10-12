@@ -25,17 +25,17 @@ mouseup_canvas = (_canvas) => {
     if (_gridStatus == "off") {
         _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
         //_grid.create(); //アニメーション無しで表示したい場合
-        _grid.lineAlpha = 1; //初期値1
-        _grid.lineColor = "0,0,0"; //初期値"0,0,0"
+        //_grid.lineAlpha = 0.5; //初期値1
+        _grid.lineColor = "187,187,187"; //"204,204,204"; //初期値"0,0,0"
         _grid.lineWidth = 4; //初期値1
         _grid.animateIn(2); //初期値2（秒）
         _grid.addEventListener("animateInEnd", animateInEnd_grid);
         _gridStatus = "animate"; //Gridの表示状態
     } else if (_gridStatus == "on") {
         //_grid.delete(); //アニメーション無しで消去したい場合
-        _grid.lineAlpha = 1; //初期値1
-        _grid.lineColor = "51,102,204"; //初期値"0,0,0"
-        _grid.lineWidth = 4; //初期値1
+        //_grid.lineAlpha = 0.5; //初期値1
+        //_grid.lineColor = "51,102,204"; //初期値"0,0,0"
+        //_grid.lineWidth = 4; //初期値1
         _grid.animateOut(2); //初期値2（秒）
         _grid.addEventListener("animateOutEnd", animateOutEnd_grid);
         _gridStatus = "animate"; //Gridの表示状態
@@ -49,9 +49,9 @@ animateInEnd_grid = (_grid) => {
     _grid.removeEventListener("animateInEnd");
     
     //アニメーション完了直後に設定変更したい場合...
-    _grid.lineAlpha = 1; //初期値1
-    _grid.lineColor = "0,0,0"; //初期値"0,0,0"
-    _grid.lineWidth = 4; //初期値1
+    //_grid.lineAlpha = 1; //初期値1
+    //_grid.lineColor = "0,0,0"; //初期値"0,0,0"
+    //_grid.lineWidth = 4; //初期値1
 }
 
 animateOutEnd_grid = (_grid) => {
