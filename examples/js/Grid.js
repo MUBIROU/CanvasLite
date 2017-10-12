@@ -1,5 +1,5 @@
 /**********************************************
- * Grid Class (ver.2017-10-12T10:17)
+ * Grid Class (ver.2017-10-12T14:23)
  * 
  *      <Public Method>
  *          addEventListener(_event, _function)
@@ -13,9 +13,17 @@
  *          lineAlpha
  *          lineColor
  *          lineWidth
+ * 
+ *      <Event>
+ *          ANIMATE_IN_END
+ *          ANIMATE_OUT_END
+ * 
 **********************************************/
 
 class Grid {
+    static get ANIMATE_IN_END() { return "animateInEnd"; }
+    static get ANIMATE_OUT_END() { return "animateOutEnd"; }
+
     constructor(_canvas, _numH, _numV) {
         this.__blockNumH = _numH; //分割する数（横方向）
         this.__blockNumV = _numV; //分割する数（縦方向）
