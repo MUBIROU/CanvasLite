@@ -8,6 +8,7 @@ function load_window() {
     _canvas.enabledContextMenu(false);
     //_canvas.cursor = "png/dummy.png";
     _canvas.isBorder(true);
+    _canvas.borderWidth = 2;
 
     _bitmap = new toile.Bitmap("../examples/png/yubi.png");
     _bitmap.alpha = 0.2;
@@ -47,11 +48,17 @@ mouseup_canvas = (_canvas) => {
 animateInEnd_grid = (_grid) => {
     _gridStatus = "on"; //Gridの表示状態
     _grid.removeEventListener("animateInEnd");
-    
-    //アニメーション完了直後に設定変更したい場合...
-    //_grid.lineAlpha = 1; //初期値1
-    //_grid.lineColor = "0,0,0"; //初期値"0,0,0"
-    //_grid.lineWidth = 4; //初期値1
+
+    //ボタンの表示準備
+    _blockWidth = _canvas.width / 17;
+    _blockHeight = _canvas.height / 9;
+    _button1 = new BitmapPlus("red.png", true, "255,204,0"); //, "27,27,27", 4);
+    //_button1.name = "button1";
+    _button1.x = _blockWidth*2;
+    _button1.y = _blockHeight*3;
+    //_button1.addEventListener("mouseup", mouseup_button);
+    _canvas.addChild(_button1);
+    _button1.animateIn(1); //ボタンの表示開始
 }
 
 animateOutEnd_grid = (_grid) => {
