@@ -52,7 +52,7 @@ animateInEnd_grid = (_grid) => {
     //ボタンの表示準備
     _blockWidth = _canvas.width / 17;
     _blockHeight = _canvas.height / 9;
-    _button1 = new BitmapPlus("red.png", true, "255,204,0"); //, "27,27,27", 4);
+    _button1 = new BitmapPlus("red.png", true); //, "255,204,0"); //, "27,27,27", 4);
     //_button1.name = "button1";
     _button1.x = _blockWidth*2;
     _button1.y = _blockHeight*3;
