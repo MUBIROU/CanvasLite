@@ -1,5 +1,5 @@
 /**********************************************
- * Grid Class (ver.2017-10-12T14:23)
+ * Grid Class (ver.2017-10-16T11:34)
  * 
  *      <Public Method>
  *          addEventListener(_event, _function)
@@ -15,14 +15,14 @@
  *          lineWidth
  * 
  *      <Event>
- *          ANIMATE_IN_END
- *          ANIMATE_OUT_END
+ *          ANIMATE_IN
+ *          ANIMATE_OUT
  * 
 **********************************************/
 
 class Grid {
-    static get ANIMATE_IN_END() { return "animateInEnd"; }
-    static get ANIMATE_OUT_END() { return "animateOutEnd"; }
+    static get ANIMATE_IN() { return "animateIn"; }
+    static get ANIMATE_OUT() { return "animateOut"; }
 
     constructor(_canvas, _numH, _numV) {
         this.__blockNumH = _numH; //分割する数（横方向）
@@ -33,8 +33,8 @@ class Grid {
         this.__canvas = _canvas;
         this.__lineHlist = [];
         this.__lineVlist = [];
-        this.__animateInEndHandler = undefined;
-        this.__animateOutEndHandler = undefined;
+        this.__animateInHandler = undefined;
+        this.__animateOutHandler = undefined;
 
         this.__lineAlpha = 1;
         this.__lineColor = "0,0,0";
@@ -46,11 +46,11 @@ class Grid {
     //=============
     addEventListener(_event, _function) {
         switch (_event) {
-            case "animateInEnd":
-                this.__animateInEndHandler = _function;
+            case "animateIn":
+                this.__animateInHandler = _function;
                 break;
-            case "animateOutEnd":
-                this.__animateOutEndHandler = _function;
+            case "animateOut":
+                this.__animateOutHandler = _function;
                 break;
             default: throw new Error("Grid.addEventListener()");
         }
@@ -148,12 +148,12 @@ class Grid {
 
     removeEventListener(_event) {
         switch (_event) {
-            case "animateInEnd":
-                this.__animateInEndHandler = undefined;
+            case "animateIn":
+                this.__animateInHandler = undefined;
                 clearInterval(this.__animateInLoopID);
                 break;
-            case "animateOutEnd":
-                this.__animateOutEndHandler = undefined;
+            case "animateOut":
+                this.__animateOutHandler = undefined;
                 clearInterval(this.__animateOutLoopID);
                 break;
             default: throw new Error("Grid.removeEventListener()");
@@ -219,7 +219,7 @@ class Grid {
                 _theObject.line.startY = 0;
                 //最後の縦の線が表示し終わったら...
                 if (_theObject.name == "v" + _this.__lineVlist.length) {
-                    _this.__animateInEndHandler(_this); //animateIn()の終了イベント発生
+                    _this.__animateInHandler(_this); //animateIn()の終了イベント発生
                 }
             }
         });
@@ -245,7 +245,7 @@ class Grid {
                 _theObject.line.endY = 0;
                 //最後の縦の線が表示し終わったら...
                 if (_theObject.name == "v" + _this.__lineVlist.length) {
-                    _this.__animateOutEndHandler(_this); //animateIn()の終了イベント発生
+                    _this.__animateOutHandler(_this); //animateIn()の終了イベント発生
                     _this.delete(); //全てのLineインスタンスを削除
                 }
             }

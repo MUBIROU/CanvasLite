@@ -10,7 +10,7 @@ function load_window() {
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
-    _bitmap = new toile.Bitmap("../examples/png/yubi.png");
+    _bitmap = new toile.Bitmap("yubi.png");
     _bitmap.alpha = 0.2;
     _bitmap.x = _canvas.width/2 - 50;
     _bitmap.y = _canvas.height/2 - 80;
@@ -25,45 +25,55 @@ enterframe_canvas = (_canvas) => {
 mouseup_canvas = (_canvas) => {
     if (_gridStatus == "off") {
         _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
-        //_grid.create(); //アニメーション無しで表示したい場合
-        //_grid.lineAlpha = 0.5; //初期値1
         _grid.lineColor = "187,187,187"; //"204,204,204"; //初期値"0,0,0"
         _grid.lineWidth = 4; //初期値1
         _grid.animateIn(2); //初期値2（秒）
-        _grid.addEventListener("animateInEnd", animateInEnd_grid);
+        _grid.addEventListener("animateIn", animateInEnd_grid);
         _gridStatus = "animate"; //Gridの表示状態
+    }
+    /*
     } else if (_gridStatus == "on") {
-        //_grid.delete(); //アニメーション無しで消去したい場合
-        //_grid.lineAlpha = 0.5; //初期値1
-        //_grid.lineColor = "51,102,204"; //初期値"0,0,0"
-        //_grid.lineWidth = 4; //初期値1
         _grid.animateOut(2); //初期値2（秒）
-        _grid.addEventListener("animateOutEnd", animateOutEnd_grid);
+        _grid.addEventListener("animateOut", animateOut_grid);
         _gridStatus = "animate"; //Gridの表示状態
     } else if (_gridStatus == "animate") {
         //"animate"中は未処理
     }
+    */
 }
 
 animateInEnd_grid = (_grid) => {
     _gridStatus = "on"; //Gridの表示状態
-    _grid.removeEventListener("animateInEnd");
+    _grid.removeEventListener("animateIn");
 
     //ボタンの表示準備
     _blockWidth = _canvas.width / 17;
     _blockHeight = _canvas.height / 9;
     _button1 = new BitmapPlus("red.png", true); //, "255,204,0"); //, "27,27,27", 4);
-    //_button1.name = "button1";
+    _button1.name = "button1";
+    _button1.addEventListener("mouseup", mouseup_button);
+    _button1.addEventListener("animateOut", animateOut_button);
     _button1.x = _blockWidth*2;
     _button1.y = _blockHeight*3;
-    //_button1.addEventListener("mouseup", mouseup_button);
     _canvas.addChild(_button1);
     _button1.animateIn(1); //ボタンの表示開始
 }
 
-animateOutEnd_grid = (_grid) => {
+animateOut_grid = (_grid) => {
     _gridStatus = "off";
-    _grid.removeEventListener("animateOutEnd");
+    _grid.removeEventListener("animateOut");
+}
+
+mouseup_button = (_bitmap) => {
+    //console.log("mouseup_button: " + _bitmap.name);
+}
+
+animateOut_button = (_bitmap) => {
+    //console.log("animateOut_button: " + _bitmap.name);
+    _canvas.deleteChild(_button1);
+    _grid.animateOut(2); //初期値2（秒）
+    _grid.addEventListener("animateOut", animateOut_grid);
+    _gridStatus = "animate"; //Gridの表示状態
 }
 
 /*
@@ -87,7 +97,7 @@ function load_window() {
     _grid.lineColor = "204,204,204";
     _grid.lineWidth = 4;
     _grid.animateIn(2); //初期値2（秒）
-    _grid.addEventListener("animateInEnd", animateInEnd_grid);
+    _grid.addEventListener("animateIn", animateInEnd_grid);
 
     //_canvas.addEventListener("mouseup", mouseup_button);
 }
@@ -98,7 +108,7 @@ enterframe_canvas = (_canvas) => {
 
 mouseup_button = (_bitmap) => {
     _grid.animateOut(2); //初期値2（秒）
-    _grid.addEventListener("animateOutEnd", animateOutEnd_grid);
+    _grid.addEventListener("animateOut", animateOut_grid);
 
     //_canvas.deleteChild(_button1);
     //_canvas.deleteChild(_button2);
@@ -107,7 +117,7 @@ mouseup_button = (_bitmap) => {
 
 animateInEnd_grid = (_grid) => {
     console.log("animateIn()終了");
-    _grid.removeEventListener("animateInEnd");
+    _grid.removeEventListener("animateIn");
 
     //_grid.lineAlpha = 0.5;
     //_grid.lineColor = "255,0,0";
@@ -149,8 +159,8 @@ makeButton = (_canvas, _numH, _numV) => {
     _canvas.addChild(_button3);
 }
 
-animateOutEnd_grid = (_grid) => {
+animateOut_grid = (_grid) => {
     console.log("animateOut()終了");
-    _grid.removeEventListener("animateOutEnd");
+    _grid.removeEventListener("animateOut");
 }
 */
