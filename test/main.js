@@ -6,15 +6,17 @@ function load_window() {
     _canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "png/dummy.png";
+    //_canvas.cursor = "dummy.png";
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
+    /*
     _bitmap = new toile.Bitmap("yubi.png");
     _bitmap.alpha = 0.2;
     _bitmap.x = _canvas.width/2 - 50;
     _bitmap.y = _canvas.height/2 - 80;
     _canvas.addChild(_bitmap);
+    */
     _gridStatus = "off"; //Gridの表示状態
 }
 
@@ -28,12 +30,12 @@ mouseup_canvas = (_canvas) => {
         _grid.lineColor = "187,187,187"; //"204,204,204"; //初期値"0,0,0"
         _grid.lineWidth = 4; //初期値1
         _grid.in(2); //初期値2（秒）
-        _grid.addEventListener("in", animateInEnd_grid);
+        _grid.addEventListener("in", in_grid);
         _gridStatus = "animate"; //Gridの表示状態
     }
 }
 
-animateInEnd_grid = (_grid) => {
+in_grid = (_grid) => {
     _gridStatus = "on"; //Gridの表示状態
     _grid.removeEventListener("in");
 
@@ -74,6 +76,7 @@ animateInEnd_grid = (_grid) => {
 out_grid = (_grid) => {
     _gridStatus = "off";
     _grid.removeEventListener("in");
+    console.log(_canvas);
 }
 
 mouseup_button = (_bitmap) => {
@@ -96,7 +99,7 @@ delete_button = (_bitmap) => {
     _canvas.deleteChild(_button1);
     _canvas.deleteChild(_button2);
     _canvas.deleteChild(_button3);
-    _grid.out(2); //初期値2（秒）
+    _grid.out(); //初期値2（秒）
     _grid.addEventListener("out", out_grid);
     _gridStatus = "animate"; //Gridの表示状態
 }

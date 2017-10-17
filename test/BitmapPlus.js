@@ -1,5 +1,5 @@
 /*******************************************
- * BitmapPlus Class (ver.2017-10-17T11:13)
+ * BitmapPlus Class (ver.2017-10-17T16:00)
  * 
  *  <constructor>
  *      new BitmapPlus(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4)
@@ -139,7 +139,7 @@ class BitmapPlus extends Bitmap {
     // (8) Bitmapを消していく（フェードアウト）／Rectはフェードイン
     //=============================================================
     __bitmapOutLoop(_arg1, _arg2) {
-        let _this = _arg1; //this
+        let _this = _arg1;
         if (_this.__rect.alpha < 1) {
             _this.__rect.alpha += 17*2/1000; //0.5秒でBitmap登場＆Rect消去
             _this.alpha -= 17*2/1000;
