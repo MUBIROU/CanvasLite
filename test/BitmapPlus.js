@@ -1,5 +1,5 @@
 /*******************************************
- * BitmapPlus Class (ver.2017-10-17T16:00)
+ * BitmapPlus Class (ver.2017-10-17T16:33)
  * 
  *  <constructor>
  *      new BitmapPlus(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4)
@@ -133,6 +133,10 @@ class BitmapPlus extends Bitmap {
     out(_sec=1) {
         //Bitmap消去開始
         this.__bitmapOutLoopID = setInterval(this.__bitmapOutLoop, 17, this, _sec); //≒58.8fps
+        //Bitmapの消去時はマウスイベントを無効にする
+        this.__mouseDownHandler = undefined;
+        this.__mouseUpHandler = undefined;
+        this.__mouseUpOutsideHandler = undefined;
     }
 
     //=============================================================

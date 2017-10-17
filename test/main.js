@@ -76,7 +76,7 @@ in_grid = (_grid) => {
 out_grid = (_grid) => {
     _gridStatus = "off";
     _grid.removeEventListener("in");
-    console.log(_canvas);
+    //console.log(_canvas);
 }
 
 mouseup_button = (_bitmap) => {
