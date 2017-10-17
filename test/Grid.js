@@ -1,5 +1,5 @@
 /**********************************************
- * Grid Class (ver.2017-10-16T11:34)
+ * Grid Class (ver.2017-10-17T11:19)
  * 
  *      <Public Method>
  *          addEventListener(_event, _function)
