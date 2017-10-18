@@ -75,11 +75,6 @@ in_grid = (_grid) => {
     _grid.removeEventListener("in");
 }
 
-out_grid = (_grid) => {
-    _gridStatus = "off";
-    _grid.removeEventListener("in");
-}
-
 mouseup_button = (_button) => {
     _grid._timerID = setTimeout(callback_grid_out, 1520);
 
@@ -119,4 +114,10 @@ callback_grid_out = () => {
     _grid.out(1); //初期値2（秒）
     _grid.addEventListener("out", out_grid);
     _gridStatus = "animate"; //Gridの表示状態
+}
+
+out_grid = (_grid) => {
+    _gridStatus = "off";
+    _grid.removeEventListener("in");
+    location.href = "index2.html";
 }
