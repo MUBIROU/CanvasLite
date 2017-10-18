@@ -119,5 +119,6 @@ callback_grid_out = () => {
 out_grid = (_grid) => {
     _gridStatus = "off";
     _grid.removeEventListener("in");
-    location.href = "index2.html";
+    
+    //location.href = "index2.html";
 }
