@@ -26,7 +26,7 @@ class SpriteSheetPlus extends toile.SpriteSheet {
             this.__rectLineWidth = _rectLineWidth;
         }
         this.__rect = undefined;
-        this.stop();
+        //this.stop();
         this.alpha = 0;
         this.addEventListener("load", this.__load_this);
     }
@@ -108,6 +108,7 @@ class SpriteSheetPlus extends toile.SpriteSheet {
             _this.__mouseDownHandler_bk = undefined;
             _this.__mouseUpHandler_bk = undefined;
             _this.__mouseUpOutsideHandler_bk = undefined;
+            _this.play();
         }
     }
 
