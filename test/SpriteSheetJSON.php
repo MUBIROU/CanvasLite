@@ -1,7 +1,7 @@
 <?php 
-    $w = 40; //frameWidth
-    $h = 60; //frameHeight
-    $layersNum = 8; //layersNum(framesNum)
+    $w = 240; //frameWidth
+    $h = 256; //frameHeight
+    $layersNum = 9; //layersNum(framesNum)
 
     $frames = array();
     for ($i = 0; $i < $layersNum; $i++) {

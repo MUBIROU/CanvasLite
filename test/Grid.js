@@ -1,5 +1,5 @@
 /**********************************************
- * Grid Class (ver.2017-10-17T16:00)
+ * Grid Class (ver.2017-10-19T15:36)
  * 
  *      <Public Method>
  *          addEventListener(_event, _function)
@@ -39,6 +39,9 @@ class Grid {
         this.__lineAlpha = 1;
         this.__lineColor = "0,0,0";
         this.__lineWidth = 1;
+
+        //this.create(); //この時点でLineインスタンスをcanvasにaddChild()
+        //this.lineAlpha = 0;
     }
     
     //=======================================
@@ -61,6 +64,7 @@ class Grid {
     //=============================================================
     in(_sec=2) {
         this.create();
+        //this.lineAlpha = 1;
 
         //横線の長さを0にする（左辺基準）
         var __lineHlistLength = this.__lineHlist.length;

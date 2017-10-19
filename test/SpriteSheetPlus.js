@@ -1,5 +1,5 @@
 /*******************************************
- * BitmapPlus Class (ver.2017-10-19T13:46)
+ * SpriteSheetPlus Class (ver.2017-10-19T15:36)
  * 
  *  <constructor>
  *      new BitmapPlus(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4)
@@ -13,8 +13,7 @@
  * 
 *******************************************/
 
-class BitmapPlus extends toile.Bitmap {
-//class BitmapPlus extends Bitmap {
+class SpriteSheetPlus extends toile.SpriteSheet {
     static get DELETE() { return "delete"; }
 
     constructor(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4) {
@@ -25,10 +24,11 @@ class BitmapPlus extends toile.Bitmap {
             this.__rectFillColor = _rectFillColor;
             this.__rectLineColor = _rectLineColor;
             this.__rectLineWidth = _rectLineWidth;
-            this.alpha = 0;
-            this.__rect = undefined;
-            this.addEventListener("load", this.__load_this);
         }
+        this.__rect = undefined;
+        this.stop();
+        this.alpha = 0;
+        this.addEventListener("load", this.__load_this);
     }
 
     //======================================
@@ -61,7 +61,7 @@ class BitmapPlus extends toile.Bitmap {
     // (3) ユーザからの「表示（アニメーション）開始」を支持を受ける
     //=============================================================
     in(_sec=1) {
-        this.__count = - Math.PI/2;
+        this.__loopCount = - Math.PI/2;
         this.__speed = Math.PI/2/_sec/(1000/17); //アニメーション速度（初期値1秒）
         this.__rectInLoopID = setInterval(this.__rectInLoop, 17, this); //≒58.8fps
     }
@@ -70,10 +70,10 @@ class BitmapPlus extends toile.Bitmap {
     // (4) Rectを左上から登場させる
     //=============================
     __rectInLoop(_this) {
-        _this.__count += _this.__speed; //値が大きいほど高速
+        _this.__loopCount += _this.__speed; //値が大きいほど高速
         if (_this.__rect.width < _this.width - 1) {
-            _this.__rect.width = _this.width * Math.cos(_this.__count);
-            _this.__rect.height = _this.height * Math.cos(_this.__count);
+            _this.__rect.width = _this.width * Math.cos(_this.__loopCount);
+            _this.__rect.height = _this.height * Math.cos(_this.__loopCount);
         } else { //Rect登場完了
             _this.__rect.width = _this.width; 
             _this.__rect.height = _this.height;
@@ -152,7 +152,7 @@ class BitmapPlus extends toile.Bitmap {
             clearInterval(_this.__bitmapOutLoopID); //Rectが消えBitmapが表示完了
 
             _this.__speed = Math.PI/2/_arg2/(1000/17); //アニメーション速度（初期値1秒）
-            _this.__count = -Math.PI/2;
+            _this.__loopCount = -Math.PI/2;
             _this.__rectOutLoopID = setInterval(_this.__rectOutLoop, 17, _this); //≒58.8fps
         }
     }
@@ -161,10 +161,10 @@ class BitmapPlus extends toile.Bitmap {
     // (9) Rectを左上に消していく（消去後「delete」イベント発生）
     //============================================================
     __rectOutLoop(_this) {
-        _this.__count += _this.__speed;
+        _this.__loopCount += _this.__speed;
         if (_this.__rect.width > 1) {
-            _this.__rect.width = _this.width - _this.width * Math.cos(_this.__count);
-            _this.__rect.height = _this.height - _this.height * Math.cos(_this.__count);
+            _this.__rect.width = _this.width - _this.width * Math.cos(_this.__loopCount);
+            _this.__rect.height = _this.height - _this.height * Math.cos(_this.__loopCount);
         } else {
             _this.parent.deleteChild(_this.__rect); //Rectの消去
             _this.__deleteHandler(_this);
