@@ -6,24 +6,11 @@ function load_window() {
     _canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "dummy.png";
+    //_canvas.cursor = "dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
-    /*
-    _bitmap = new toile.Bitmap("yubi.png");
-    _bitmap.alpha = 0.2;
-    _bitmap.x = _canvas.width/2 - 50;
-    _bitmap.y = _canvas.height/2 - 80;
-    _canvas.addChild(_bitmap);
-    */
     _gridStatus = "off"; //Gridの表示状態
-
-    // _pengin = new toile.SpriteSheet("pengin.png");
-    // _pengin.scale = 8;
-    // _pengin.x = _pengin.y = 100;
-    // _pengin.fps = 15;
-    // _canvas.addChild(_pengin);
 }
 
 enterframe_canvas = (_canvas) => {
@@ -33,46 +20,31 @@ enterframe_canvas = (_canvas) => {
 mouseup_canvas = (_canvas) => {
     if (_gridStatus == "off") {
         _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
-        _grid.lineColor = "187,187,187"; //"204,204,204"; //初期値"0,0,0"
+        _grid.lineColor = "187,187,187"; //初期値"0,0,0"
         _grid.lineWidth = 4; //初期値1
-        _grid.in(2); //初期値2（秒）
+        _grid.in(); //初期値2（秒）
         _grid.addEventListener("in", in_grid);
         _gridStatus = "animate"; //Gridの表示状態
 
+        //3つのBitmapPlusボタンの表示準備
         _blockWidth = _canvas.width / 17;
         _blockHeight = _canvas.height / 9;
-    
-        //ボタン1の表示準備
-        _button1 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
-        _button1.name = "button1";
-        _button1.addEventListener("mouseup", mouseup_button);
-        _button1.addEventListener("delete", delete_button);
-        _button1.x = _blockWidth*2;
-        _button1.y = _blockHeight*3;
-        _canvas.addChild(_button1);
-    
-        //ボタン2の表示準備
-        _button2 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
-        _button2.name = "button2";
-        _button2.addEventListener("mouseup", mouseup_button);
-        _button2.addEventListener("delete", delete_button);
-        _button2.x = _blockWidth*7;
-        _button2.y = _blockHeight*3;
-        _canvas.addChild(_button2);
-    
-        //ボタン3の表示準備
-        _button3 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
-        _button3.name = "button3";
-        _button3.addEventListener("mouseup", mouseup_button);
-        _button3.addEventListener("delete", delete_button);
-        _button3.x = _blockWidth*12;
-        _button3.y = _blockHeight*3;
-        _canvas.addChild(_button3);
 
-        //ボタンの表示開始
-        _button1._timerID = setTimeout(callback_button_in, 650, _button1);
-        _button2._timerID = setTimeout(callback_button_in, 980, _button2);
-        _button3._timerID = setTimeout(callback_button_in, 1290, _button3);
+        _button1 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
+        _button2 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
+        _button3 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
+
+        _buttonArray = [_button1, _button2, _button3];
+        for (let i=0; i<_buttonArray.length; i++) {
+            let _theButton = _buttonArray[i];
+            _theButton.name = "button" + (i+1); //"buttun1" => "button2" => "button3"
+            _theButton.addEventListener("mouseup", mouseup_button);
+            _theButton.addEventListener("delete", delete_button);
+            _theButton.x = _blockWidth * (2 + i * 5); //2 => 7 => 12
+            _theButton.y = _blockHeight * 3;
+            _canvas.addChild(_theButton);
+            _theButton._timerID = setTimeout(callback_button_in, (640 + 330 * i), _theButton);
+        }
     }
 }
 
@@ -107,12 +79,12 @@ delete_button = (_button) => {
 }
 
 callback_button_in = (_button) => {
-    _button.in(1);
+    _button.in(); //初期値1（秒）
     clearTimeout(_button._timerID);
 }
 
 callback_button_out = (_button) => {
-    _button.out(1);
+    _button.out(); //初期値1（秒）
     clearTimeout(_button._timerID);
 }
 

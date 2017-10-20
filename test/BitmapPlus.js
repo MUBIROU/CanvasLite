@@ -1,5 +1,5 @@
-/*******************************************
- * BitmapPlus Class (ver.2017-10-19T13:46)
+/******************************************
+ * BitmapPlus Class (ver.2017-10-20T09:21)
  * 
  *  <constructor>
  *      new BitmapPlus(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4)
@@ -11,10 +11,9 @@
  *  <event>
  *      BitmapPlus.DELETE
  * 
-*******************************************/
+******************************************/
 
 class BitmapPlus extends toile.Bitmap {
-//class BitmapPlus extends Bitmap {
     static get DELETE() { return "delete"; }
 
     constructor(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4) {
@@ -25,10 +24,10 @@ class BitmapPlus extends toile.Bitmap {
             this.__rectFillColor = _rectFillColor;
             this.__rectLineColor = _rectLineColor;
             this.__rectLineWidth = _rectLineWidth;
-            this.alpha = 0;
-            this.__rect = undefined;
-            this.addEventListener("load", this.__load_this);
         }
+        this.__rect = undefined;
+        this.alpha = 0;
+        this.addEventListener("load", this.__load_this);
     }
 
     //======================================

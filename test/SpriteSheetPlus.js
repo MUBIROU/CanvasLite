@@ -1,17 +1,17 @@
-/*******************************************
- * SpriteSheetPlus Class (ver.2017-10-19T15:36)
+/***********************************************
+ * SpriteSheetPlus Class (ver.2017-10-20T09:21)
  * 
  *  <constructor>
- *      new BitmapPlus(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4)
+ *      new SpriteSheetPlus(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4)
  * 
  *  <public method>
- *      BitmapPlus.in(_sec=1)
- *      BitmapPlus.out(_sec=1)
+ *      SpriteSheetPlus.in(_sec=1)
+ *      SpriteSheetPlus.out(_sec=1)
  *
  *  <event>
- *      BitmapPlus.DELETE
+ *      SpriteSheetPlus.DELETE
  * 
-*******************************************/
+***********************************************/
 
 class SpriteSheetPlus extends toile.SpriteSheet {
     static get DELETE() { return "delete"; }
@@ -26,7 +26,7 @@ class SpriteSheetPlus extends toile.SpriteSheet {
             this.__rectLineWidth = _rectLineWidth;
         }
         this.__rect = undefined;
-        //this.stop();
+        //this.stop(); //フェードインの間 SpriteSheetをstop()させる場合
         this.alpha = 0;
         this.addEventListener("load", this.__load_this);
     }
@@ -79,10 +79,10 @@ class SpriteSheetPlus extends toile.SpriteSheet {
             _this.__rect.height = _this.height;
             clearInterval(_this.__rectInLoopID);
 
-            //Bitmap登場を開始
-            _this.__bitmapInLoopID = setInterval(_this.__bitmapInLoop, 17, _this); //≒58.8fps
+            //SpriteSheet登場を開始
+            _this.__spriteSheetInLoopID = setInterval(_this.__spriteSheetInLoop, 17, _this); //≒58.8fps
             
-            //Bitmap登場中はマウスイベントを無効にするため
+            //SpriteSheet登場中はマウスイベントを無効にするため
             _this.__mouseDownHandler_bk = _this.__mouseDownHandler;
             _this.__mouseUpHandler_bk = _this.__mouseUpHandler;
             _this.__mouseUpOutsideHandler_bk = _this.__mouseUpOutsideHandler;
@@ -92,15 +92,15 @@ class SpriteSheetPlus extends toile.SpriteSheet {
         }
     }
 
-    //=============================================================
-    // (5) Bitmapを登場（フェードイン）させる／Rectはフェードアウト
-    //=============================================================
-    __bitmapInLoop(_this) {
+    //==================================================================
+    // (5) SpriteSheetを登場（フェードイン）させる／Rectはフェードアウト
+    //==================================================================
+    __spriteSheetInLoop(_this) {
         if (_this.__rect.alpha > 0) {
-            _this.__rect.alpha -= 17*2/1000; //0.5秒でBitmap登場＆Rect消去
+            _this.__rect.alpha -= 17*2/1000; //0.5秒でSpriteSheet登場＆Rect消去
             _this.alpha += 17*2/1000;
         } else {
-            clearInterval(_this.__bitmapInLoopID); //Rectが消えBitmapが表示完了
+            clearInterval(_this.__spriteSheetInLoopID); //Rectが消えSpriteSheetが表示完了
             //マウスイベントの復活
             _this.__mouseDownHandler = _this.__mouseDownHandler_bk;
             _this.__mouseUpHandler = _this.__mouseUpHandler_bk;
@@ -108,7 +108,7 @@ class SpriteSheetPlus extends toile.SpriteSheet {
             _this.__mouseDownHandler_bk = undefined;
             _this.__mouseUpHandler_bk = undefined;
             _this.__mouseUpOutsideHandler_bk = undefined;
-            _this.play();
+            //_this.play(); //constructor()でSpriteSheet.stop()している場合はここで再生
         }
     }
 
@@ -129,28 +129,28 @@ class SpriteSheetPlus extends toile.SpriteSheet {
         }
     }
 
-    //=======================================
-    // (7) Bitmapの消去（フェードアウト）開始
-    //=======================================
+    //============================================
+    // (7) SpriteSheetの消去（フェードアウト）開始
+    //============================================
     out(_sec=1) {
-        //Bitmap消去開始
-        this.__bitmapOutLoopID = setInterval(this.__bitmapOutLoop, 17, this, _sec); //≒58.8fps
-        //Bitmapの消去時はマウスイベントを無効にする
+        //SpriteSheet消去開始
+        this.__spriteSheetOutLoopID = setInterval(this.__spriteSheetOutLoop, 17, this, _sec); //≒58.8fps
+        //SpriteSheetの消去時はマウスイベントを無効にする
         this.__mouseDownHandler = undefined;
         this.__mouseUpHandler = undefined;
         this.__mouseUpOutsideHandler = undefined;
     }
 
-    //=============================================================
-    // (8) Bitmapを消していく（フェードアウト）／Rectはフェードイン
-    //=============================================================
-    __bitmapOutLoop(_arg1, _arg2) {
+    //==================================================================
+    // (8) SpriteSheetを消していく（フェードアウト）／Rectはフェードイン
+    //==================================================================
+    __spriteSheetOutLoop(_arg1, _arg2) {
         let _this = _arg1;
         if (_this.__rect.alpha < 1) {
-            _this.__rect.alpha += 17*2/1000; //0.5秒でBitmap登場＆Rect消去
+            _this.__rect.alpha += 17*2/1000; //0.5秒でSpriteSheet登場＆Rect消去
             _this.alpha -= 17*2/1000;
         } else {
-            clearInterval(_this.__bitmapOutLoopID); //Rectが消えBitmapが表示完了
+            clearInterval(_this.__spriteSheetOutLoopID); //Rectが消えSpriteSheetが表示完了
 
             _this.__speed = Math.PI/2/_arg2/(1000/17); //アニメーション速度（初期値1秒）
             _this.__loopCount = -Math.PI/2;
