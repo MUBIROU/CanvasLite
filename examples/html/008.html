@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>008 Scaling with ToileJS</title>
+        <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+        <script>
+            window.addEventListener("load", load_window, false);
+
+            function load_window() {
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas);
+                _canvas.enabledContextMenu(false);
+                _canvas.isBorder(true);
+
+                //元サイズ
+                _bitmap1 = new toile.Bitmap("../png/blueBox.png");
+                _bitmap1.x = 0;
+                _bitmap1.y = 0;
+                _bitmap1.scaleX = 1;
+                _bitmap1.scaleY = 1;
+                //_bitmap1.scale = 1;
+                _canvas.addChild(_bitmap1);
+
+                //横幅のみ50％
+                _bitmap2 = new toile.Bitmap("../png/blueBox.png");
+                _bitmap2.x = 105;
+                _bitmap2.y = 0;
+                _bitmap2.scaleX = 0.5;
+                _canvas.addChild(_bitmap2);
+
+                //縦のみ50％
+                _bitmap3 = new toile.Bitmap("../png/blueBox.png");
+                _bitmap3.x = 0;
+                _bitmap3.y = 105;
+                _bitmap3.scaleY = 0.5;
+                _canvas.addChild(_bitmap3);
+
+                //縦横ともに50％
+                _bitmap4 = new toile.Bitmap("../png/blueBox.png");
+                _bitmap4.x = 105;
+                _bitmap4.y = 105;
+                _bitmap4.scaleX = 0.5;
+                _bitmap4.scaleY = 0.5;
+                //_bitmap4.scale = 0.5;
+                _canvas.addChild(_bitmap4);
+
+                //横のみ200％
+                _bitmap4 = new toile.Bitmap("../png/blueBox.png");
+                _bitmap4.x = 160;
+                _bitmap4.y = 0;
+                _bitmap4.scaleX = 2;
+                _canvas.addChild(_bitmap4);
+
+                //縦のみ200％
+                _bitmap5 = new toile.Bitmap("../png/blueBox.png");
+                _bitmap5.x = 0;
+                _bitmap5.y = 160;
+                _bitmap5.scaleY = 2;
+                _canvas.addChild(_bitmap5);
+
+                //縦横200％
+                _bitmap6 = new toile.Bitmap("../png/blueBox.png");
+                _bitmap6.x = 160;
+                _bitmap6.y = 160;
+                _bitmap6.scaleX = 2;
+                _bitmap6.scaleY = 2;
+                //_bitmap6.scale = 2;
+                _canvas.addChild(_bitmap6);
+            }
+
+            enterframe_canvas = (_canvas) => {
+                _canvas.drawScreen();
+            }
+        </script>
+        <style>
+            body {
+                background:#fff;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="750" height="640"></canvas>
+    </body>
+</html>

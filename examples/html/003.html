@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>003 出前 with ToileJS</title>
+        <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+        <script>
+            addEventListener("load", load_window, false);
+
+            function load_window() {
+                _mouseX = _mouseY = 0;
+                _saraNum = 45;
+
+                //Canvas Class
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas); 
+                _canvas.addEventListener("mousedown", mousedown_canvas);
+                _canvas.addEventListener("mousemove", mousemove_canvas);
+                _canvas.enabledMouseMove(true);
+                _canvas.enabledContextMenu(false);
+                _canvas.isBorder(true);
+
+                //demae
+                _demae = new toile.Bitmap("../png/demae.png");
+                _demae.x = 330;
+                _demae.y = _canvas.height - 200;
+                _canvas.addChild(_demae);
+
+                //soba1
+                _sobaArray = [];
+                _soba1 = new toile.Bitmap("../png/soba.png");
+                _soba1.x = 330;
+                _soba1.y = _canvas.height - 182;
+                _sobaArray.push(_soba1);
+                _canvas.addChild(_soba1);
+
+                //soba2...
+                for (let i=1; i<_saraNum; i++) {
+                    let _theSoba = new toile.Bitmap("../png/soba.png");
+                    _theSoba.x = 330;
+                    _theSoba.y = _soba1.y - (10 * i);
+                    _sobaArray.push(_theSoba);
+                    _canvas.addChild(_theSoba);
+                }
+            }
+
+            enterframe_canvas = (_canvas) => {
+                _demae.x += (_mouseX - _demae.x) / 5;
+
+                //1枚目
+                _soba1.x += (_demae.x - _soba1.x) * 3/4;
+
+                for (let i=1; i<_saraNum; i++) { //2枚目以降…
+                    let _theSoba = _sobaArray[i];
+                    let _upSoba = _sobaArray[i-1];
+                    _theSoba.x += (_upSoba.x - _theSoba.x) * 3/4;
+                    var _disX = _upSoba.x - _theSoba.x + 20;
+                    var _disY = _upSoba.y - _theSoba.y + 10;
+                    var _radian = Math.atan2(_disY, _disX);
+                    _theSoba.rotateRadian = _radian - Math.PI/4;
+                }
+
+                _canvas.drawScreen("#ffffff");
+            }
+
+            mousemove_canvas = (_canvas) => {
+                _mouseX = _canvas.mouseX;
+                _mouseY = _canvas.mouseY;
+            }
+
+            mousedown_canvas = (_canvas) => {
+                _mouseX = _canvas.mouseX;
+                _mouseY = _canvas.mouseY;
+            }
+        </script>
+        <style>
+            body {
+                background:#ffffff;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="640" height="640"></canvas>
+    </body>
+</html>

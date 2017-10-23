@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>004 Canvas Color V with ToileJS</title>
+        <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+        <script>
+            addEventListener("load", load_window, false);
+
+            function load_window() {
+                _barHeight = 200;
+                _r10 = 255;
+                _g10 = 255;
+                _b10 = 255;
+                _mouseX = _mouseY = 0;
+                _webfont = "../ttf/LCDPHONE.TTF";
+
+                //=====================
+                // Canvas
+                //=====================
+                _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas); 
+                _canvas.addEventListener("mousemove", mousemove_canvas);
+                _canvas.enabledContextMenu(false);
+                _canvas.isBorder(true);
+
+                //=====================
+                // bar(Rect class)
+                //=====================
+                var _barR = new toile.Rect(0,0,10,_barHeight);
+                var _barG = new toile.Rect(0,0,10,_barHeight);
+                var _barB = new toile.Rect(0,0,10,_barHeight);
+                _canvas.addChild(_barR);
+                _canvas.addChild(_barG);
+                _canvas.addChild(_barB);
+                _barR.x = _canvas.width/4 - 5;
+                _barG.x = _canvas.width/2 - 5;
+                _barB.x = _canvas.width*3/4 - 5;
+                _barR.isFill(true);
+                _barG.isFill(true);
+                _barB.isFill(true);
+                _barR.lineColor = _barG.lineColor = _barB.lineColor = "170,170,170";
+                _barStartY = _barR.y = _barG.y = _barB.y = Math.round((_canvas.height - _barR.height) / 2);
+
+                //=====================
+                // handle(Bitmap class)
+                //=====================
+                _handleR = new toile.Bitmap("../png/handleR.png");
+                _handleG = new toile.Bitmap("../png/handleG.png");
+                _handleB = new toile.Bitmap("../png/handleB.png");
+
+                _canvas.addChild(_handleR);
+                _canvas.addChild(_handleG);
+                _canvas.addChild(_handleB);
+
+                _handleR.name = "R";
+                _handleG.name = "G";
+                _handleB.name = "B";
+
+                _handleR.x = _barR.x - 15;
+                _handleG.x = _barG.x - 15;
+                _handleB.x = _barB.x - 15;
+
+                _handleR.y = _handleG.y = _handleB.y = _barR.y - 20;
+
+                _handleR.addEventListener("mousedown", mousedown_handle);
+                _handleG.addEventListener("mousedown", mousedown_handle);
+                _handleB.addEventListener("mousedown", mousedown_handle);
+
+                _handleR.addEventListener("mouseup", mouseup_handle);
+                _handleG.addEventListener("mouseup", mouseup_handle);
+                _handleB.addEventListener("mouseup", mouseup_handle);
+
+                _handleR.addEventListener("mouseupoutside", mouseup_handle);
+                _handleG.addEventListener("mouseupoutside", mouseup_handle);
+                _handleB.addEventListener("mouseupoutside", mouseup_handle);
+
+                _isMoveHandleR = false;
+                _isMoveHandleG = false;
+                _isMoveHandleB = false;
+
+                //=====================
+                // backgound of text
+                //=====================
+                var _bg1 = new toile.Rect(0,0,_canvas.width,30);
+                _bg1.isFill(true);
+                _bg1.lineAlpha = 0;
+                _bg1.alpha = 0.3;
+                _bg1.y = _barR.y - 53;
+                _canvas.addChild(_bg1);
+
+                var _bg2 = new toile.Rect(0,0,_canvas.width,30);
+                _bg2.isFill(true);
+                _bg2.lineAlpha = 0;
+                _bg2.alpha = 0.3;
+                _bg2.y = _barR.y + _barHeight + 23;
+                _canvas.addChild(_bg2);
+                
+                //=====================
+                // 0-255(Text class)
+                //=====================
+                _textR = new toile.Text("255");
+                _textG = new toile.Text("255");
+                _textB = new toile.Text("255");
+
+                _textR.x = _barR.x + 5;
+                _textG.x = _barG.x + 5;
+                _textB.x = _barB.x + 5;
+
+                _textR.y = _textG.y = _textB.y = _barR.y - 20;
+
+                _textR.align = _textG.align = _textB.align = "center";
+
+                _textR.baseline = _textG.baseline = _textB.baseline = "bottom";
+
+                _textR.addWebFont("font01", _webfont, "truetype");
+                _textG.addWebFont("font01", _webfont, "truetype");
+                _textB.addWebFont("font01", _webfont, "truetype");
+
+                _textR.font = _textG.font = _textB.font = "font01";
+                _textR.size = _textG.size = _textB.size = 30;
+
+                _canvas.addChild(_textR);
+                _canvas.addChild(_textG);
+                _canvas.addChild(_textB);
+
+                //=====================
+                // 00-FF(Text class)
+                //=====================
+                _textR16 = new toile.Text("ff");
+                _textG16 = new toile.Text("ff");
+                _textB16 = new toile.Text("ff");
+
+                _textR16.x = _barR.x + 5;
+                _textG16.x = _barG.x + 5;
+                _textB16.x = _barB.x + 5;
+
+                _textR16.y = _textG16.y = _textB16.y = _barR.y + 26 + _barHeight;
+
+                _textR16.align = _textG16.align = _textB16.align = "center";
+
+                _textR16.baseline = _textG16.baseline = _textB16.baseline = "top";
+
+                _textR16.addWebFont("font01", _webfont, "truetype");
+                _textG16.addWebFont("font01", _webfont, "truetype");
+                _textB16.addWebFont("font01", _webfont, "truetype");
+
+                _textR16.font = _textG16.font = _textB16.font = "font01";
+                _textR16.size = _textG16.size = _textB16.size = 30;
+
+                _canvas.addChild(_textR16);
+                _canvas.addChild(_textG16);
+                _canvas.addChild(_textB16);
+            }
+
+            mousemove_canvas = (_canvas) => {
+                _mouseX = _canvas.mouseX;
+                _mouseY = _canvas.mouseY;
+            }
+
+            mousedown_handle = (_bitmap) => {
+                _canvas.enabledMouseMove(true);
+                _mouseX = _canvas.mouseX;
+                _mouseY = _canvas.mouseY;
+                switch (_bitmap.name) {
+                    case "R": _isMoveHandleR = true; break;
+                    case "G": _isMoveHandleG = true; break;
+                    case "B": _isMoveHandleB = true; break;
+                }
+            }
+
+            mouseup_handle = (_bitmap) => {
+                _canvas.enabledMouseMove(false);
+                switch (_bitmap.name) {
+                    case "R": _isMoveHandleR = false; break;
+                    case "G": _isMoveHandleG = false; break;
+                    case "B": _isMoveHandleB = false; break;
+                }
+            }
+
+            enterframe_canvas = (_canvas) => {
+                if (_isMoveHandleR) {
+                    if ((_barStartY <= _mouseY) && (_mouseY <= _barStartY + _barHeight)) {
+                        _handleR.y = _mouseY - 20;
+                        _r10 = 255 - Math.round(2.55 * (_handleR.y - _barStartY + 20) / (_barHeight/100));
+                    } else if (_mouseY < _barStartY) {
+                        _r10 = 255;
+                        _handleR.y = _barStartY - 20;
+                    } else if (_barStartY + _barHeight < _mouseY) {
+                        _r10 = 0;
+                        _handleR.y = _barStartY + _barHeight - 20;
+                    }
+                    _textR.text = _r10;
+
+                } else if (_isMoveHandleG) {
+                    if ((_barStartY <= _mouseY) && (_mouseY <= _barStartY + _barHeight)) {
+                        _handleG.y = _mouseY - 20;
+                        _g10 
+                        = 255 - Math.round(2.55 * (_handleG.y - _barStartY + 20) / (_barHeight/100));
+                    } else if (_mouseY < _barStartY) {
+                        _g10 = 255;
+                        _handleG.y = _barStartY - 20;
+                    } else if (_barStartY + _barHeight < _mouseY) {
+                        _g10 = 0;
+                        _handleG.y = _barStartY + _barHeight - 20;
+                    }
+                    _textG.text = _g10;
+
+                } else if (_isMoveHandleB) {
+                    if ((_barStartY <= _mouseY) && (_mouseY <= _barStartY + _barHeight)) {
+                        _handleB.y = _mouseY - 20;
+                        _b10 
+                        = 255 - Math.round(2.55 * (_handleB.y - _barStartY + 20) / (_barHeight/100));
+                    } else if (_mouseY < _barStartY) {
+                        _b10 = 255;
+                        _handleB.y = _barStartY - 20;
+                    } else if (_barStartY + _barHeight < _mouseY) {
+                        _b10 = 0;
+                        _handleB.y = _barStartY + _barHeight - 20;
+                    }
+                    _textB.text = _b10;
+                }
+
+                var _r16 = _r10.toString(16);
+                var _g16 = _g10.toString(16);
+                var _b16 = _b10.toString(16);
+
+                if (_r16.length == 1) { _r16 = "0" + _r16; }
+                if (_g16.length == 1) { _g16 = "0" + _g16; }
+                if (_b16.length == 1) { _b16 = "0" + _b16; }
+
+                _textR16.text = _r16;
+                _textG16.text = _g16;
+                _textB16.text = _b16;
+
+                _canvas.drawScreen("#" + _r16 + _g16 + _b16);
+            }
+        </script>
+        <style>
+            body {
+                background:#fff;
+                margin:0;
+                padding:0;
+                border: 0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="320" height="465"></canvas>
+    </body>
+</html>

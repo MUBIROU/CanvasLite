@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>009 3D Cards with ToileJS</title>
+        <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+        <script>
+            window.addEventListener("load", load_window, false);
+
+            function load_window() {
+                var _canvas = new toile.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+                _canvas.enabledContextMenu(false);
+                _canvas.isBorder(true);
+                
+                //Shadow
+                var _shadow = new toile.Bitmap("../png/shadow.png");
+                _shadow.x = 60;
+                _shadow.y = 270;
+                _shadow.scaleX = 0.8;
+                _shadow.scaleY = 0.5;
+                _shadow.alpha = 0.7;
+                _canvas.addChild(_shadow);
+
+                //Birth Card
+                _cardArray = [];
+                for (let i=1; i<=12; i++) {
+                    let _card = new Card("../png/" + i + ".png");
+                    _card.name = i + ".png";
+
+                    _card.countX = i * Math.PI / 6;
+                    _card.x3D = 500 * Math.sin(_card.countX);
+
+                    _card.countY = 0;
+                    _card.y3D = _card.countY;
+
+                    _card.countZ = i * Math.PI / 6;
+                    _card.z3D = 300 * Math.cos(_card.countZ);
+                    
+                    _canvas.addChild(_card);
+                    _cardArray.push(_card);
+                }
+
+                //視点と投影面までの距離
+                _projectDistance = 200;
+            }
+
+            enterframe_canvas = (_canvas) => {
+                for (let _indexNum in window._cardArray) {
+                    var _theCard = window._cardArray[_indexNum];
+
+                    _theCard.countX += 0.01;
+                    _theCard.countZ += 0.01;
+
+                    _theCard.x3D = 260 * Math.sin(_theCard.countX);
+                    _theCard.y3D = 30;
+                    _theCard.z3D = 400 + 260 * Math.cos(_theCard.countZ);
+
+                    // 1.透視投影変換（相似三角関係）
+                    var _x2D = _theCard.x3D * window._projectDistance / _theCard.z3D;
+                    var _y2D = _theCard.y3D * window._projectDistance / _theCard.z3D;
+
+                    // 2.ステージへの描画（投影面、ステージの原点のズレを補正）
+                    _theCard.x = -50 + _x2D + _canvas.width / 2;
+                    _theCard.y = -180 + _y2D + _canvas.height / 2;
+
+                    // 3.スケーリング（投影面で原寸大）
+                    var _scale = window._projectDistance /_theCard.z3D;
+                    _theCard.scaleX = _scale;
+                    _theCard.scaleY = _scale;
+                }
+
+                sort3Ddepth(window._cardArray, _canvas); // Z座標に合わせて深度を決める
+
+                _canvas.drawScreen();
+            }
+
+            // Z座標に合わせて深度を決める
+            sort3Ddepth = (_displayArray, _canvas) => {
+                var _copyArray = _displayArray.concat(); //複製
+                _copyArray.sort(function(a,b) {
+                    if (a.z3D > b.z3D) return -1;
+                    if (a.z3D < b.z3D) return 1;
+                    return 0;
+                });
+                for (var i in _copyArray) {
+                    _canvas.setDepthIndex(_copyArray[i], _canvas.getDepthMax());
+                }
+            }
+
+            class Card extends toile.Bitmap {
+                constructor(_path) {
+                    super(_path);
+
+                    //3D座標空間位置
+                    this.__x3D = undefined;
+                    this.__y3D = undefined;
+                    this.__z3D = undefined;
+
+                    //count
+                    this.__countX = undefined;
+                    this.__countY = undefined;
+                    this.__countZ = undefined;
+
+                    return this;
+                }
+
+                //x3D
+                get x3D() { return this.__x3D; }
+                set x3D(_newValue) { this.__x3D = _newValue; }
+
+                //y3D
+                get y3D() { return this.__y3D; }
+                set y3D(_newValue) { this.__y3D = _newValue; }
+
+                //z3D
+                get z3D() { return this.__z3D; }
+                set z3D(_newValue) { this.__z3D = _newValue; }
+
+                //count
+                get countX() { return this.__countX; }
+                get countY() { return this.__countY; }
+                get countZ() { return this.__countZ; }
+                set countX(_newValue) { this.__countX = _newValue; }
+                set countY(_newValue) { this.__countY = _newValue; }
+                set countZ(_newValue) { this.__countZ = _newValue; }
+            }
+        </script>
+        <style>
+            body {
+                background:#fff;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="640" height="640"></canvas>
+    </body>
+</html>

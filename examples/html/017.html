@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>017 Movie with ToileJS</title>
+    <script src="https://takashinishimura.github.io/ToileJS/toile_test.js"></script>
+    <script>
+        addEventListener("load", load_window, false);
+
+        function load_window() {
+            //Canvasクラス
+            _canvas = new toile.Canvas("myCanvas");
+            _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
+            _canvas.enabledContextMenu(false);
+            _canvas.isBorder(true);
+
+            //Videoクラス
+            _video = new toile.Video("../mp4/Countdown - 2637.mp4", 640, 360); //オリジナルのサイズ
+            _video.x = 0;
+            _video.y = 0;
+            _video.width = 640; //実際に表示する幅
+            _video.height = 360; //実際に表示する高さ
+            _canvas.addChild(_video);
+
+            //Textクラス
+            _webfont = "../ttf/LCDPHONE.TTF";
+            _text = new toile.Text("");
+            _text.addWebFont("font01", _webfont, "truetype");
+            _text.font = "font01";
+            _text.size = 28;
+            _text.color = "#333333";
+            _text.align = "center";
+            _text.baseline = "top";
+            _text.x = 320;
+            _text.y = 370;
+            _canvas.addChild(_text);
+
+            //Bitmapクラス
+            _playBtn = new toile.Bitmap("../png/play.png");
+            _pauseBtn = new toile.Bitmap("../png/pause.png");
+            _stopBtn = new toile.Bitmap("../png/stop.png");
+            _playBtn.name = "PLAY";
+            _pauseBtn.name = "PAUSE";
+            _stopBtn.name = "STOP";
+            _playBtn.y = _pauseBtn.y = _stopBtn.y = 400;
+            _playBtn.x = 205;
+            _pauseBtn.x = 285;
+            _stopBtn.x = 365;
+            _playBtn.addEventListener("mousedown", mousedown_playBtn, "true");
+            _pauseBtn.addEventListener("mousedown", mousedown_pauseBtn, "true");
+            _stopBtn.addEventListener("mousedown", mousedown_stopBtn, "true");
+            _canvas.addChild(_playBtn);
+            _canvas.addChild(_pauseBtn);
+            _canvas.addChild(_stopBtn);
+
+            //Rectクラス
+            _rect1 = new toile.Rect(0,340,640,360);
+            _rect1.isFill(true);
+            _rect1.fillColor = "51,51,51";
+            _rect1.fillAlpha = 0.5;
+            _rect1.lineAlpha = 0;
+            _canvas.addChild(_rect1);
+
+            _rect2 = new toile.Rect(0,340,640,360);
+            _rect2.isFill(true);
+            _rect2.fillColor = "255,0,0";
+            _rect2.fillAlpha = 0.6;
+            _rect2.lineAlpha = 0;
+            _canvas.addChild(_rect2);
+        }
+
+        enterframe_canvas = (_canvas) => {
+            //Text
+            var _currentTime = Math.round(_video.currentTime * 10) /10;
+            if ((_currentTime * 10) % 10 == 0) {
+                _currentTime = _currentTime + ".0";
+            }
+            var _duration = Math.round(_video.duration * 10) / 10;
+            _text.text = _currentTime + " / " + _duration + " SEC";
+
+            //Rect
+            _rect2.endX = 640 * (_currentTime / _duration);
+
+            //描画
+            _canvas.drawScreen("#ffffff");
+        }
+
+        mousedown_playBtn = (_bitmap) => {
+            _video.play();
+        }
+
+        mousedown_pauseBtn = (_bitmap) => {
+            _video.pause();
+        }
+
+        mousedown_stopBtn = (_bitmap) => {
+            _video.stop();
+        }
+    </script>
+    <style>
+        body {
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="640" height="480"></canvas>
+</body>
+
+</html>
