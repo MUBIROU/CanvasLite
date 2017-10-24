@@ -11,11 +11,11 @@
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.fps = 12;
                 _canvas.isBorder(true);
-                //_canvas.cursor = "dummy.png"; //マウスカーソルを消す
+                _canvas.cursor = "dummy.png"; //マウスカーソルを消す
 
                 _spriteSheet = new shinano.SpriteSheet("henohenomoheji.png");
-                _spriteSheet.x = 380;
-                _spriteSheet.y = 180;
+                _spriteSheet.x = 400;
+                _spriteSheet.y = 160;
                 _canvas.addChild(_spriteSheet);
 
                 _bitmap = new shinano.Bitmap("henohenomoheji.png");

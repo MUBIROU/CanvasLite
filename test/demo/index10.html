@@ -20,12 +20,12 @@
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
                 _canvas.fps = 60;
-                //_canvas.cursor = "dummy.png"; //マウスカーソルを消す
+                _canvas.cursor = "dummy.png"; //マウスカーソルを消す
 
                 //NEXT BUTTON
                 _next = new shinano.Bitmap("next.png");
-                _next.x = _canvas.width - 150;
-                _next.y = _canvas.height - 150;
+                _next.x = _canvas.width - 100;
+                _next.y = _canvas.height - 100;
                 _next.addEventListener("mouseup", mouseup_next);
                 _canvas.addChild(_next);
             }
