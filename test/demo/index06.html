@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <script src="shinano.js"></script>
+        <script>
+            addEventListener("load", load_window, false);
+
+            function load_window() {
+                _canvas = new shinano.Canvas("myCanvas");
+                _canvas.addEventListener("enterframe", enterframe_canvas);
+                _canvas.fps = 12;
+                _canvas.isBorder(true);
+                //_canvas.cursor = "dummy.png"; //マウスカーソルを消す
+
+                _spriteSheet = new shinano.SpriteSheet("henohenomoheji.png");
+                _spriteSheet.x = 380;
+                _spriteSheet.y = 180;
+                _canvas.addChild(_spriteSheet);
+
+                _bitmap = new shinano.Bitmap("henohenomoheji.png");
+                _bitmap.x = 0;
+                _bitmap.scale = 0.34;
+                _bitmap.alpha = 0.2;
+                _canvas.addChild(_bitmap);
+
+                //NEXT BUTTON
+                _next = new shinano.Bitmap("next.png");
+                _next.x = _canvas.width - 150;
+                _next.y = _canvas.height - 150;
+                _next.addEventListener("mouseup", mouseup_next);
+                _canvas.addChild(_next);
+            }
+
+            mouseup_next = (_bitmap) => {
+                location.href = "index07.html";
+            }
+
+            enterframe_canvas = (_canvas) => {
+                _canvas.drawScreen("#ffffff");
+            }
+        </script>
+        <style>
+            body {
+              background:#ffffff;
+              margin:0;
+              padding:0;
+              overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1360" height="768"></canvas>
+    </body>
+</html>
