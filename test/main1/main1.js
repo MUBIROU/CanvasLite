@@ -21,7 +21,6 @@ _videoList = [ //優先させたい作品は除く
     "DOK-2_1","DOK-2_2","DOK-2_3","DOK-2_4","DOK-2_5","DOK-2_6","DOK-2_7",
     "DP-3"
 ]
-
 randomArray = (_array) => { //作品リストをランダムにする
     _arrayCopy = _array.concat(); //複製
     _arrayNew = [];
@@ -32,62 +31,53 @@ randomArray = (_array) => { //作品リストをランダムにする
     }
     return _arrayNew;
 }
-
 _videoRandamList = randomArray(_videoList);
 _videoRandamList.unshift("DS-2", "DS-3"); //優先させたい作品
 
 
-//======
-// main1
-//======
+//======================================
+// 最初に実行（Webページの準備が完了後）
+//======================================
 addEventListener("load", load_window, false);
-
 function load_window() {
     _isMove = false;
     _choiceBitmap = undefined;
     _disX = _disY = 0;
     _mouseX = _mouseY = 0;
 
-    //Canvas
+    //「Canvas」関連
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.addEventListener("mousemove", mousemove_canvas);
     _canvas.enabledMouseMove(true);
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
-    //Bitmap
+    //「作品」の画像関連
     _bitmapArray = [];
     for (let i = 0; i < 81; i++) { //81作品の場合（0,1,2...79,80）
         let _theVideoName = _videoRandamList.pop();
         let _bitmap = new Bitmap("png/" + _theVideoName + ".png");
         _bitmap.name = _theVideoName;
         _bitmap.addEventListener("load", load_bitmap);
-        _bitmap.addEventListener("mousedown", mousedown_bitmap);
-        _bitmap.addEventListener("mouseup", mouseup_bitmap);
+        //_bitmap.addEventListener("mousedown", mousedown_bitmap);
+        //_bitmap.addEventListener("mouseup", mouseup_bitmap);
+        //_bitmap.addEventListener("mouseupoutside", mouseup_bitmap);
 
         _canvas.addChild(_bitmap);
 
-        _bitmap.addEventListener("mousedown", mousedown_bitmap);
-        _bitmap.addEventListener("mouseup", mouseup_bitmap);
-        _bitmap.addEventListener("mouseupoutside", mouseup_bitmap);
-        _bitmap.addEventListener("load", load_bitmap);
+        // _bitmap.addEventListener("mousedown", mousedown_bitmap);
+        // _bitmap.addEventListener("mouseup", mouseup_bitmap);
+        // _bitmap.addEventListener("mouseupoutside", mouseup_bitmap);
+        //_bitmap.addEventListener("load", load_bitmap);
 
         _bitmapArray.push(_bitmap);
     }
     _bitmapArrayCopy = _bitmapArray.concat(); //複製
 
-    //NEXT BUTTON
-    _next = new toile.Bitmap("../demo/next.png");
-    _next.scale = 0.5;
-    _next.x = _canvas.width - 70;
-    _next.y = _canvas.height - 70;
-    _next.addEventListener("mouseup", mouseup_next);
-    _canvas.addChild(_next);
-
-    //Text
+    //「タイトル」関連
     _text = new toile.Text("SHINANOJS");
     _text.addWebFont("ZilapAfricademo", "../demo/Zilap Africa demo.ttf", "opentype");
     _text.font = "ZilapAfricademo";
@@ -99,10 +89,9 @@ function load_window() {
     _canvas.addChild(_text);
 }
 
-mouseup_next = (_bitmap) => {
-    location.href = "../main0/index0.html";
-}
-
+//===========================================
+// 各作品の画像（.png）がロード完了したら実行
+//===========================================
 load_bitmap = (_bitmap) => {
     _bitmap.width = 140;
     _bitmap.height = 200;
@@ -114,32 +103,55 @@ load_bitmap = (_bitmap) => {
     _bitmap.__timerID = setTimeout(callback_start, 1000*Math.random(), _bitmap);
 }
 
+//=============================================================
+// 各作品をランダムに登場させるためのタイマー（各作品１回実行）
+//=============================================================
 callback_start = (_bitmap) => {
     _bitmap.__count = 0;
     clearTimeout(_bitmap.__timerID);
 }
 
+//=======================
+//（1）全作品が下から登場
+//=======================
 enterframe_canvas = (_canvas) => {
     for (let i=0; i<_bitmapArrayCopy.length; i++) {
-        _tmp = _bitmapArrayCopy[i];
-        if (_tmp.__count != undefined) {
-            _tmp.__count += 0.04;
-            if (_tmp.y > _tmp.__posY + 1) {
-                _tmp.y = (_tmp.__posY + _tmp.__disY) +  _tmp.__disY * Math.cos(_tmp.__count);
+        let _bitmap = _bitmapArrayCopy[i];
+        if (_bitmap.__count != undefined) {
+            _bitmap.__count += 0.04;
+            if (_bitmap.y > _bitmap.__posY + 1) {
+                _bitmap.y = (_bitmap.__posY + _bitmap.__disY) +  _bitmap.__disY * Math.cos(_bitmap.__count);
             } else {
-                _tmp.y = _tmp.__posY;
+                _bitmap.__count = undefined; //（3）用
+                _bitmap.y = _bitmap.__posY;
                 _bitmapArrayCopy.splice(i,1); //登場し終えたものを_bitmapArrayCopyから削除
                 if (_bitmapArrayCopy.length == 0) { //全て登場し終えたら...
-                    _canvas.removeEventListener("enterframe");
-                    _canvas.addEventListener("enterframe", enterframe_canvas2);
+                    //作品ボタンにマウスイベントリスナーの定義
+                    _bitmapArray.forEach(function(_theBitmap) {
+                        _theBitmap.addEventListener("mousedown", mousedown_bitmap);
+                        _theBitmap.addEventListener("mouseup", mouseup_bitmap);
+                        _theBitmap.addEventListener("mouseupoutside", mouseup_bitmap);
+                    });
 
-                    //change button
+                    //changeボタンの表示
                     _changeButton = new toile.Bitmap("change.png");
                     _changeButton.addEventListener("mouseup", mouseup_changeButton);
                     _changeButton.x = 40; //_canvas.width - 50;
                     _changeButton.y = _canvas.height - 100;//20;
                     _changeButton.scale = 2;
                     _canvas.addChild(_changeButton);
+
+                    //「ホームに戻るボタン」関連
+                    _homeButton = new toile.Bitmap("../demo/home.png");
+                    _homeButton.scale = 0.5;
+                    _homeButton.x = _canvas.width - 70;
+                    _homeButton.y = _canvas.height - 70;
+                    _homeButton.addEventListener("mouseup", mouseup_home);
+                    _canvas.addChild(_homeButton);
+
+                    //ループ関数の変更
+                    _canvas.removeEventListener("enterframe");
+                    _canvas.addEventListener("enterframe", enterframe_canvas2);
                 }
             }
         }
@@ -147,6 +159,9 @@ enterframe_canvas = (_canvas) => {
     _canvas.drawScreen("#fefefe");
 }
 
+//=================================
+//（2）全作品が登場後に繰り返し実行
+//=================================
 enterframe_canvas2 = (_canvas) => {
     if (_isMove) {
         _mouseX = _canvas.mouseX; //for Mobile
@@ -157,24 +172,17 @@ enterframe_canvas2 = (_canvas) => {
     _canvas.drawScreen("#fefefe");
 }
 
-mousedown_bitmap = (_bitmap) => {
-    //console.log("mouseDown: " + _bitmap.name);
-    _canvas.setDepthIndex(_bitmap, _canvas.getDepthMax());
-    _canvas.stopMouseDownEvent();
-    _isMove = true;
-    _choiceBitmap = _bitmap;
-
-    _disX = _canvas.mouseX - _bitmap.x;
-    _disY = _canvas.mouseY - _bitmap.y;
+//===================================
+// 作品のドラッグ時のカーソル位置検知
+//===================================
+mousemove_canvas = (_canvas) => {
+    _mouseX = _canvas.mouseX;
+    _mouseY = _canvas.mouseY;
 }
 
-mouseup_bitmap = (_bitmap) => {
-    console.log("mouseUp: " + _bitmap.name);
-    _canvas.stopMouseUpEvent();
-    _isMove = false;
-    _choiceBitmap = undefined;
-}
-
+//=======================
+// 作品の階層変更用ボタン
+//=======================
 mouseup_changeButton = (_bitmap) => {
     _bitmap.removeEventListener("mouseup");
     _screenShot = _canvas.screenShot();
@@ -190,6 +198,9 @@ mouseup_changeButton = (_bitmap) => {
     _timerScreenShotID = setInterval(callback_screenShot, 25, _screenShot);
 }
 
+//===============================
+// 作品の階層を変更（フェード）用
+//===============================
 callback_screenShot = (_screenShot) => {
     if (_screenShot.alpha > 0) {
         _screenShot.alpha -= 0.05;
@@ -201,7 +212,76 @@ callback_screenShot = (_screenShot) => {
     }
 }
 
-mousemove_canvas = (_canvas) => {
-    _mouseX = _canvas.mouseX;
-    _mouseY = _canvas.mouseY;
+//===================================
+// 作品を押した時に実行（内部処理用）
+//===================================
+mousedown_bitmap = (_bitmap) => {
+    //console.log("mouseDown: " + _bitmap.name);
+    _canvas.setDepthIndex(_bitmap, _canvas.getDepthMax());
+    _canvas.stopMouseDownEvent();
+    _isMove = true;
+    _choiceBitmap = _bitmap;
+
+    _disX = _canvas.mouseX - _bitmap.x;
+    _disY = _canvas.mouseY - _bitmap.y;
+}
+
+//===========================
+// 作品をクリックした時に実行
+//===========================
+mouseup_bitmap = (_bitmap) => {
+    console.log("mouseUp: " + _bitmap.name);
+    _canvas.stopMouseUpEvent();
+    _isMove = false;
+    _choiceBitmap = undefined;
+}
+
+//===================
+// ホームに戻るボタン
+//===================
+mouseup_home = (_bitmap) => {
+    //homeボタンの削除
+    _homeButton.removeEventListener("mouseup");
+    _canvas.deleteChild(_homeButton); //すぐ消去する場合
+
+    //changeボタンの削除
+    _changeButton.removeEventListener("mouseup");
+    _canvas.deleteChild(_changeButton); //すぐ消去する場合
+
+    //各作品をランダムに登場させるためのタイマー設定
+    _bitmapArray.forEach(function(_bitmap) {
+        _bitmap.__timerID = setTimeout(callback_start, 500*Math.random(), _bitmap);
+        _bitmap.__disY = _bitmap.y + 200; //カードの高さ
+        //マウスイベントリスナーの削除
+        _bitmap.removeEventListener("mousedown");
+        _bitmap.removeEventListener("mouseup");
+        _bitmap.removeEventListener("mouseupoutside");
+    });
+
+    _canvas.removeEventListener("enterframe");
+    _canvas.addEventListener("enterframe", enterframe_canvas3);
+}
+
+//===========================
+//（3）全作品が上へ消えていく
+//===========================
+enterframe_canvas3 = (_canvas) => {
+    for (let i=0; i<_bitmapArray.length; i++) {
+        let _bitmap = _bitmapArray[i];
+        if (_bitmap.__count != undefined) {
+            _bitmap.__count += 0.03;
+            if (_bitmap.y > -200) {
+                _bitmap.y = _bitmap.y - 5;
+                _bitmap.y = -200 + _bitmap.__disY * Math.cos(_bitmap.__count);
+            } else {
+                _bitmap.y = -200;
+                _bitmapArray.splice(i,1); //登場し終えたものを_bitmapArrayCopyから削除                
+                if (_bitmapArray.length == 0) { //全て登場し終えたら...
+                    _canvas.removeEventListener("enterframe");
+                    location.href = "../main1/index1.html";
+                }
+            }
+        }
+    }
+    _canvas.drawScreen("#fefefe");
 }
