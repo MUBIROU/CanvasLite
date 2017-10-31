@@ -44,6 +44,8 @@ function load_window() {
     _choiceBitmap = undefined;
     _disX = _disY = 0;
     _mouseX = _mouseY = 0;
+    _clickNum = 0;
+    _playMark = undefined; //Playマーク
 
     //「Canvas」関連
     _canvas = new toile.Canvas("myCanvas");
@@ -77,16 +79,27 @@ function load_window() {
     }
     _bitmapArrayCopy = _bitmapArray.concat(); //複製
 
+    logo();
+}
+
+logo = () => {
     //「タイトル」関連
-    _text = new toile.Text("SHINANOJS");
-    _text.addWebFont("ZilapAfricademo", "../demo/Zilap Africa demo.ttf", "opentype");
-    _text.font = "ZilapAfricademo";
-    _text.size = 80;
-    _text.x = 20;//12;
-    _text.y = 5; //-1;
-    _text.color = "#222222";
-    _text.alpha = 1;
-    _canvas.addChild(_text);
+    // _text = new toile.Text("SHINANOJS");
+    // _text.addWebFont("ZilapAfricademo", "../demo/Zilap Africa demo.ttf", "opentype");
+    // _text.font = "ZilapAfricademo";
+    // _text.size = 48; //80;
+    // _text.x = 60; //1165; //20;//12;
+    // _text.y = 11; //-1;
+    // _text.color = "#222222";
+    // _text.alpha = 1;
+    // _canvas.addChild(_text);
+
+    //HTML5 logo
+    _shinanojs = new toile.Bitmap("../common/shinanojs.png"); //html5.png");
+    _shinanojs.x = 20; //_canvas.width - 237;
+    _shinanojs.y = 13; //_canvas.height - 70;
+    _shinanojs.alpha = 0.7;
+    _canvas.addChild(_shinanojs);
 }
 
 //===========================================
@@ -184,6 +197,9 @@ mousemove_canvas = (_canvas) => {
 // 作品の階層変更用ボタン
 //=======================
 mouseup_changeButton = (_bitmap) => {
+    _canvas.deleteChild(_playMark);
+    _clickNum = 0;
+
     _bitmap.removeEventListener("mouseup");
     _screenShot = _canvas.screenShot();
 
@@ -191,7 +207,7 @@ mouseup_changeButton = (_bitmap) => {
        let _randomNum = Math.floor(Math.random() * (_canvas.getDepthMax() + 1));
        _canvas.setDepthIndex(_bitmap, _randomNum);
     });
-    _canvas.setDepthIndex(_text, 0); //_canvas.getDepthMax()); //最下位
+    //_canvas.setDepthIndex(_text, 0); //_canvas.getDepthMax()); //最下位
     _canvas.setDepthIndex(_changeButton, _canvas.getDepthMax()); //最上位?????????????????????????????????????
     
     _canvas.addChild(_screenShot);
@@ -216,7 +232,7 @@ callback_screenShot = (_screenShot) => {
 // 作品を押した時に実行（内部処理用）
 //===================================
 mousedown_bitmap = (_bitmap) => {
-    //console.log("mouseDown: " + _bitmap.name);
+    console.log("mouseDown: " + _bitmap.name);
     _canvas.setDepthIndex(_bitmap, _canvas.getDepthMax());
     _canvas.stopMouseDownEvent();
     _isMove = true;
@@ -230,10 +246,58 @@ mousedown_bitmap = (_bitmap) => {
 // 作品をクリックした時に実行
 //===========================
 mouseup_bitmap = (_bitmap) => {
-    console.log("mouseUp: " + _bitmap.name);
+    if (_playMark != undefined) {
+        _canvas.deleteChild(_playMark);
+    }
+    _playMark = new toile.Bitmap("play.png");
+    _playMark.x = _bitmap.x + 40;
+    _playMark.y = _bitmap.y + 70;
+    _canvas.addChild(_playMark);
+    if (_clickNum == 0) {
+        _clickNum ++;
+    } else if (_clickNum == 1) {
+        //=========================================================
+        // ここで再生プレーヤー生成!!
+        _screen = new Screen(_canvas, "SD", _bitmap.name);
+        //_screen.addEventListener("close", close_screen);
+        //_screen.open();
+
+        // console.log("mouseUp: " + _bitmap.name);
+
+        // //Background
+        // _bg = new toile.Rect(0, 0, _canvas.width, _canvas.height);
+        // _bg.isFill(true);
+        // _bg.fillColor = "0,0,0";
+        // _bg.lineColor = "0,0,0";
+        // _bg.alpha = 0.85;
+        // _canvas.addChild(_bg);
+
+        // //Screen
+        // _hoge = new toile.Rect(_bitmap.x, _bitmap.y, _bitmap.x+140, _bitmap.y+200);
+        
+        // //_hoge = new toile.Rect(440,204,920,564); //4:3 small
+        // //_hoge = new toile.Rect(360,204,1000,564); //16:9 small
+
+        // //_hoge = new toile.Rect(200,24,1160,744); //4:3 Big
+        // //_hoge = new toile.Rect(40,24,1320,744); //16:9 Big
+
+        // _hoge.isFill(true);
+        // _hoge.fillColor = "254,254,254";
+        // _hoge.lineWidth = 2;
+        // _hoge.lineColor = "204,204,204";
+        // _hoge.alpha = 0.5;
+        // _canvas.addChild(_hoge);
+        //=========================================================
+
+        _clickNum = 0;
+    }
     _canvas.stopMouseUpEvent();
     _isMove = false;
     _choiceBitmap = undefined;
+}
+
+close_screen = (_screen) => {
+    console.log("スクリーンが閉じられました");
 }
 
 //===================
@@ -247,6 +311,9 @@ mouseup_home = (_bitmap) => {
     //changeボタンの削除
     _changeButton.removeEventListener("mouseup");
     _canvas.deleteChild(_changeButton); //すぐ消去する場合
+
+    //playマークの削除
+    _canvas.deleteChild(_playMark); //すぐ消去する場合
 
     //各作品をランダムに登場させるためのタイマー設定
     _bitmapArray.forEach(function(_bitmap) {
@@ -278,7 +345,7 @@ enterframe_canvas3 = (_canvas) => {
                 _bitmapArray.splice(i,1); //登場し終えたものを_bitmapArrayCopyから削除                
                 if (_bitmapArray.length == 0) { //全て登場し終えたら...
                     _canvas.removeEventListener("enterframe");
-                    location.href = "../main1/index1.html";
+                    location.href = "../main0/index0.html";
                 }
             }
         }
