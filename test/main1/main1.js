@@ -80,27 +80,59 @@ function load_window() {
     }
     _bitmapArrayCopy = _bitmapArray.concat(); //複製
 
-    logo();
+    _logo = logo(_canvas, 15, 15);
 }
 
-logo = () => {
-    //「タイトル」関連
-    // _text = new toile.Text("SHINANOJS");
-    // _text.addWebFont("ZilapAfricademo", "../demo/Zilap Africa demo.ttf", "opentype");
-    // _text.font = "ZilapAfricademo";
-    // _text.size = 48; //80;
-    // _text.x = 60; //1165; //20;//12;
-    // _text.y = 11; //-1;
-    // _text.color = "#222222";
-    // _text.alpha = 1;
-    // _canvas.addChild(_text);
+logo = (_canvas, _x, _y) => {
+    _logoContainer = new toile.Container();
+    _logoContainer.x = _x;
+    _logoContainer.y = _y;
+    _canvas.addChild(_logoContainer);
 
-    //HTML5 logo
-    _shinanojs = new toile.Bitmap("../common/shinanojs.png"); //html5.png");
-    _shinanojs.x = 20; //_canvas.width - 237;
-    _shinanojs.y = 13; //_canvas.height - 70;
-    _shinanojs.alpha = 0.7;
-    _canvas.addChild(_shinanojs);
+    //"CREA"
+    _text1 = new toile.Text("CREA");
+    _text1.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
+    _text1.font = "VV2NIGHTCLUB";
+    _text1.size = 25; //80;
+    _text1.x = 38 + 5; //1165; //20;//12;
+    _text1.y = -3; //-1;
+    _text1.color = "#222222";
+    _logoContainer.addChild(_text1);
+
+    //"TED BY"
+    _text2 = new toile.Text("TED BY");
+    _text2.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
+    _text2.font = "VV2NIGHTCLUB";
+    _text2.size = 25; //80;
+    _text2.x = 113 + 5; //1165; //20;//12;
+    _text2.y = -3; //-1;
+    _text2.color = "#222222";
+    _logoContainer.addChild(_text2);
+
+    //"SHINANOJS"
+    _text3 = new toile.Text("SHINANOJS");
+    _text3.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
+    _text3.font = "VV2NIGHTCLUB";
+    _text3.size = 28; //80;
+    _text3.x = 38 + 5; //1165; //20;//12;
+    _text3.y = 20; //-1;
+    _text3.color = "#222222";
+    _logoContainer.addChild(_text3);
+
+    _line = new toile.Line(38,0,215,0);
+    _line.x = 38 + 5;
+    _line.y = 21;
+    _line.lineWidth = 1;
+    _line.lineColor = "64,64,64";
+    _logoContainer.addChild(_line);
+
+    //"HTML5 logo"
+    _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
+    _html5.x = 0; //_canvas.width - 230;
+    _html5.y = 0; //_canvas.height - 70;
+    _logoContainer.addChild(_html5);
+
+    return _logoContainer;
 }
 
 //===========================================
@@ -148,20 +180,26 @@ enterframe_canvas = (_canvas) => {
                     });
 
                     //changeボタンの表示
-                    _changeButton = new toile.Bitmap("change.png");
-                    _changeButton.addEventListener("mouseup", mouseup_changeButton);
-                    _changeButton.x = 40; //_canvas.width - 50;
-                    _changeButton.y = _canvas.height - 100;//20;
-                    _changeButton.scale = 2;
-                    _canvas.addChild(_changeButton);
+                    _depthChangeBtn = new toile.Bitmap("depthChange.png");
+                    _depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
+                    _depthChangeBtn.x = 15; //_canvas.width - 50;
+                    _depthChangeBtn.y = _canvas.height - 64 - 15;//20;
+                    //_depthChangeBtn.scale = 2;
+                    _canvas.addChild(_depthChangeBtn);
 
                     //「ホームに戻るボタン」関連
-                    _homeButton = new toile.Bitmap("../demo/home.png");
-                    _homeButton.scale = 0.5;
-                    _homeButton.x = _canvas.width - 70;
-                    _homeButton.y = _canvas.height - 70;
+                    _homeButton = new toile.Bitmap("../common/home.png");
+                    _homeButton.x = _canvas.width - 64 - 15;
+                    _homeButton.y = _canvas.height - 64 - 15;
                     _homeButton.addEventListener("mouseup", mouseup_home);
                     _canvas.addChild(_homeButton);
+
+                    //「ホームに戻るボタン」関連
+                    _aboutButton = new toile.Bitmap("about.png");
+                    _aboutButton.x = _canvas.width - 64 - 15;
+                    _aboutButton.y = 15;
+                    _aboutButton.addEventListener("mouseup", mouseup_aboutButton);
+                    _canvas.addChild(_aboutButton);
 
                     //ループ関数の変更
                     _canvas.removeEventListener("enterframe");
@@ -198,10 +236,17 @@ mousemove_canvas = (_canvas) => {
     _mouseY = _canvas.mouseY;
 }
 
+//==============
+// About用ボタン
+//==============
+mouseup_aboutButton = (_bitmap) => {
+    alert("XXXXXXXXXXX");
+}
+
 //=======================
 // 作品の階層変更用ボタン
 //=======================
-mouseup_changeButton = (_bitmap) => {
+mouseup_depthChangeBtn = (_bitmap) => {
     _canvas.deleteChild(_playMark);
     _clickNum = 0;
 
@@ -213,7 +258,7 @@ mouseup_changeButton = (_bitmap) => {
        _canvas.setDepthIndex(_bitmap, _randomNum);
     });
     //_canvas.setDepthIndex(_text, 0); //_canvas.getDepthMax()); //最下位
-    _canvas.setDepthIndex(_changeButton, _canvas.getDepthMax()); //最上位?????????????????????????????????????
+    _canvas.setDepthIndex(_depthChangeBtn, _canvas.getDepthMax()); //最上位?????????????????????????????????????
     
     _canvas.addChild(_screenShot);
     _timerScreenShotID = setInterval(callback_screenShot, 25, _screenShot);
@@ -229,7 +274,7 @@ callback_screenShot = (_screenShot) => {
         clearInterval(_timerScreenShotID);
         _canvas.deleteChild(_screenShot);
         _screenShot = undefined;
-        _changeButton.addEventListener("mouseup", mouseup_changeButton);
+        _depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
     }
 }
 
@@ -267,11 +312,14 @@ mouseup_bitmap = (_bitmap) => {
         _canvas.deleteChild(_playMark);
     }
 
+    _playMark = new toile.Bitmap("play.png");
+    _playMark.x = _bitmap.x + 40;
+    _playMark.y = _bitmap.y + 70;
+    _canvas.addChild(_playMark);
+
     if (_clickNum == 0) {
-        //if ((_mouseX == _mouseDownX) && (_mouseY == _mouseDownY)) {
-            console.log("++")
-            _clickNum ++;
-        //}
+        //console.log("++")
+        _clickNum ++;
     } else if (_clickNum == 1) {
         //=========================================================
         // ここで再生プレーヤー生成!!
@@ -282,7 +330,8 @@ mouseup_bitmap = (_bitmap) => {
         if ((_mouseX == _mouseDownX) && (_mouseY == _mouseDownY)) {
             if (_changeBitmap) { //選択した作品が直前と同じならば...
                 alert(_bitmap.name);
-                _clickNum = 0;
+                //_canvas.deleteChild(_playMark);
+                //_clickNum = 0;
             }
         }
         //_clickNum = 0;
@@ -314,11 +363,6 @@ mouseup_bitmap = (_bitmap) => {
         //=========================================================
     }
 
-    _playMark = new toile.Bitmap("play.png");
-    _playMark.x = _bitmap.x + 40;
-    _playMark.y = _bitmap.y + 70;
-    _canvas.addChild(_playMark);
-
     _canvas.stopMouseUpEvent();
     _isMove = false;
     //_choiceBitmap = undefined; //DEBUG
@@ -337,8 +381,12 @@ mouseup_home = (_bitmap) => {
     _canvas.deleteChild(_homeButton); //すぐ消去する場合
 
     //changeボタンの削除
-    _changeButton.removeEventListener("mouseup");
-    _canvas.deleteChild(_changeButton); //すぐ消去する場合
+    _depthChangeBtn.removeEventListener("mouseup");
+    _canvas.deleteChild(_depthChangeBtn); //すぐ消去する場合
+
+    //aboutボタンの削除
+    _aboutButton.removeEventListener("mouseup");
+    _canvas.deleteChild(_aboutButton); //すぐ消去する場合
 
     //playマークの削除
     _canvas.deleteChild(_playMark); //すぐ消去する場合
@@ -355,6 +403,8 @@ mouseup_home = (_bitmap) => {
 
     _canvas.removeEventListener("enterframe");
     _canvas.addEventListener("enterframe", enterframe_canvas3);
+
+    _canvas.setDepthIndex(_logo, _canvas.getDepthMax());
 }
 
 //===========================
@@ -373,7 +423,11 @@ enterframe_canvas3 = (_canvas) => {
                 _bitmapArray.splice(i,1); //登場し終えたものを_bitmapArrayCopyから削除                
                 if (_bitmapArray.length == 0) { //全て登場し終えたら...
                     _canvas.removeEventListener("enterframe");
-                    location.href = "../main0/index0.html";
+
+                    //ホーム（../main0/index0.html）にジャンプ
+                    //location.href = "../main0/index0.html";
+                    location.href = "../main0/index0.html?param=true"
+                    //location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html?" + "param1=100" + "&" + "param2=200";
                 }
             }
         }

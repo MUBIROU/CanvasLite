@@ -6,27 +6,76 @@ function load_window() {
     _canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
-    //Text
-    _text = new toile.Text("SHINANOJS");
-    _text.addWebFont("ZilapAfricademo", "../demo/Zilap Africa demo.ttf", "opentype");
-    _text.font = "ZilapAfricademo";
-    _text.size = 80;
-    _text.x = 20;//12;
-    _text.y = 5; //-1;
-    _text.color = "#222222";
-    _text.alpha = 1;
-    _canvas.addChild(_text);
-
-    _yubi = new toile.Bitmap("yubi.png");
-    _yubi.x = _canvas.width / 2 - 50;
-    _yubi.y = _canvas.height / 2 - 60;
-    _canvas.addChild(_yubi);
+    _logo = logo(_canvas, 15, 15);
 
     _gridStatus = "off"; //Gridの表示状態
+    _yubi = undefined;
+
+    if (location.href.indexOf("?", 0) == -1) {
+        _yubi = new toile.Bitmap("yubi.png");
+        _yubi.x = _canvas.width / 2 - 50;
+        _yubi.y = _canvas.height / 2 - 60;
+        _canvas.addChild(_yubi);
+    } else {
+        start(_canvas);
+    }
+
+}
+
+logo = (_canvas, _x, _y) => {
+    _logoContainer = new toile.Container();
+    _logoContainer.x = _x;
+    _logoContainer.y = _y;
+    _canvas.addChild(_logoContainer);
+
+    //"CREA"
+    _text1 = new toile.Text("CREA");
+    _text1.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
+    _text1.font = "VV2NIGHTCLUB";
+    _text1.size = 25; //80;
+    _text1.x = 38 + 5; //1165; //20;//12;
+    _text1.y = -3; //-1;
+    _text1.color = "#222222";
+    _logoContainer.addChild(_text1);
+
+    //"TED BY"
+    _text2 = new toile.Text("TED BY");
+    _text2.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
+    _text2.font = "VV2NIGHTCLUB";
+    _text2.size = 25; //80;
+    _text2.x = 113 + 5; //1165; //20;//12;
+    _text2.y = -3; //-1;
+    _text2.color = "#222222";
+    _logoContainer.addChild(_text2);
+
+    //"SHINANOJS"
+    _text3 = new toile.Text("SHINANOJS");
+    _text3.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
+    _text3.font = "VV2NIGHTCLUB";
+    _text3.size = 28; //80;
+    _text3.x = 38 + 5; //1165; //20;//12;
+    _text3.y = 20; //-1;
+    _text3.color = "#222222";
+    _logoContainer.addChild(_text3);
+
+    _line = new toile.Line(38,0,215,0);
+    _line.x = 38 + 5;
+    _line.y = 21;
+    _line.lineWidth = 1;
+    _line.lineColor = "64,64,64";
+    _logoContainer.addChild(_line);
+
+    //"HTML5 logo"
+    _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
+    _html5.x = 0; //_canvas.width - 230;
+    _html5.y = 0; //_canvas.height - 70;
+    _logoContainer.addChild(_html5);
+
+    return _logoContainer;
 }
 
 enterframe_canvas = (_canvas) => {
@@ -34,8 +83,13 @@ enterframe_canvas = (_canvas) => {
 }
 
 mouseup_canvas = (_canvas) => {
-    _canvas.deleteChild(_yubi);
+    if (_yubi != undefined) {
+        _canvas.deleteChild(_yubi);
+    }
+    start(_canvas);
+}
 
+start = (_canvas) => {
     if (_gridStatus == "off") {
         _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
         _grid.lineColor = "187,187,187"; //初期値"0,0,0"
@@ -66,7 +120,7 @@ mouseup_canvas = (_canvas) => {
         }
     }
 
-    _canvas.setDepthIndex(_text, _canvas.getDepthMax());
+    _canvas.setDepthIndex(_logo, _canvas.getDepthMax());
 }
 
 in_grid = (_grid) => {
