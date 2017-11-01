@@ -23,8 +23,8 @@ class Screen {
 
         //console.log("mp4/" + _videoName + "_small.mp4");
         //this.__smallVideo = new toile.Video("mp4/" + _videoName + "_small.mp4", 640, 360);
-        this.__smallVideo = new toile.Video("mp4/AS-9_small.mp4", 960, 720);
-        _canvas.addChild(this.__smallVideo);
+        //this.__smallVideo = new toile.Video("mp4/AS-9_small.mp4", 960, 720);
+        //_canvas.addChild(this.__smallVideo);
 
         // this.__isAnimate = _isAnimate;
         // if (this.__isAnimate) {

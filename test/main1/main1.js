@@ -43,9 +43,10 @@ function load_window() {
     _isMove = false;
     _choiceBitmap = undefined;
     _disX = _disY = 0;
-    _mouseX = _mouseY = 0;
+    _mouseX = _mouseY = _mouseDownX = _mouseDownY = 0;
     _clickNum = 0;
     _playMark = undefined; //Playマーク
+    _changeBitmap = false; //選択した作品が前と異なるか否か
 
     //「Canvas」関連
     _canvas = new toile.Canvas("myCanvas");
@@ -181,6 +182,10 @@ enterframe_canvas2 = (_canvas) => {
         _mouseY = _canvas.mouseY; //for Mobile
         _choiceBitmap.x = _mouseX - _disX;
         _choiceBitmap.y = _mouseY - _disY;
+        // if (_playMark != undefined) {
+        //     _playMark.x = _choiceBitmap.x + 40;
+        //     _playMark.y = _choiceBitmap.y + 70;
+        // }
     }
     _canvas.drawScreen("#fefefe");
 }
@@ -232,10 +237,22 @@ callback_screenShot = (_screenShot) => {
 // 作品を押した時に実行（内部処理用）
 //===================================
 mousedown_bitmap = (_bitmap) => {
-    console.log("mouseDown: " + _bitmap.name);
+    //console.log("mouseDown: " + _bitmap.name);
+    if (_playMark != undefined) {
+        _playMark.x = -9e9; //動いている間
+    }
+    
+    _mouseDownX = _mouseX;
+    _mouseDownY = _mouseY;
+
     _canvas.setDepthIndex(_bitmap, _canvas.getDepthMax());
     _canvas.stopMouseDownEvent();
     _isMove = true;
+
+    //if (_choiceBitmap != undefined) {
+        //console.log(_choiceBitmap.name, _bitmap.name);
+    //}
+    _changeBitmap = _choiceBitmap == _bitmap;
     _choiceBitmap = _bitmap;
 
     _disX = _canvas.mouseX - _bitmap.x;
@@ -249,20 +266,27 @@ mouseup_bitmap = (_bitmap) => {
     if (_playMark != undefined) {
         _canvas.deleteChild(_playMark);
     }
-    _playMark = new toile.Bitmap("play.png");
-    _playMark.x = _bitmap.x + 40;
-    _playMark.y = _bitmap.y + 70;
-    _canvas.addChild(_playMark);
+
     if (_clickNum == 0) {
-        _clickNum ++;
+        //if ((_mouseX == _mouseDownX) && (_mouseY == _mouseDownY)) {
+            console.log("++")
+            _clickNum ++;
+        //}
     } else if (_clickNum == 1) {
         //=========================================================
         // ここで再生プレーヤー生成!!
-        _screen = new Screen(_canvas, "SD", _bitmap.name);
+        //_screen = new Screen(_canvas, "SD", _bitmap.name);
         //_screen.addEventListener("close", close_screen);
         //_screen.open();
-
-        // console.log("mouseUp: " + _bitmap.name);
+        //console.log(_mouseX, _mouseDownX, _mouseY, _mouseDownY);
+        if ((_mouseX == _mouseDownX) && (_mouseY == _mouseDownY)) {
+            if (_changeBitmap) { //選択した作品が直前と同じならば...
+                alert(_bitmap.name);
+                _clickNum = 0;
+            }
+        }
+        //_clickNum = 0;
+        
 
         // //Background
         // _bg = new toile.Rect(0, 0, _canvas.width, _canvas.height);
@@ -288,12 +312,16 @@ mouseup_bitmap = (_bitmap) => {
         // _hoge.alpha = 0.5;
         // _canvas.addChild(_hoge);
         //=========================================================
-
-        _clickNum = 0;
     }
+
+    _playMark = new toile.Bitmap("play.png");
+    _playMark.x = _bitmap.x + 40;
+    _playMark.y = _bitmap.y + 70;
+    _canvas.addChild(_playMark);
+
     _canvas.stopMouseUpEvent();
     _isMove = false;
-    _choiceBitmap = undefined;
+    //_choiceBitmap = undefined; //DEBUG
 }
 
 close_screen = (_screen) => {
