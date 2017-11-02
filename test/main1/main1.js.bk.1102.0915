@@ -195,11 +195,11 @@ enterframe_canvas = (_canvas) => {
                     _canvas.addChild(_homeButton);
 
                     //「ホームに戻るボタン」関連
-                    _helpButton = new toile.Bitmap("help.png");
-                    _helpButton.x = _canvas.width - 64 - 15;
-                    _helpButton.y = 15;
-                    _helpButton.addEventListener("mouseup", mouseup_helpButton);
-                    _canvas.addChild(_helpButton);
+                    _aboutButton = new toile.Bitmap("about.png");
+                    _aboutButton.x = _canvas.width - 64 - 15;
+                    _aboutButton.y = 15;
+                    _aboutButton.addEventListener("mouseup", mouseup_aboutButton);
+                    _canvas.addChild(_aboutButton);
 
                     //ループ関数の変更
                     _canvas.removeEventListener("enterframe");
@@ -220,6 +220,10 @@ enterframe_canvas2 = (_canvas) => {
         _mouseY = _canvas.mouseY; //for Mobile
         _choiceBitmap.x = _mouseX - _disX;
         _choiceBitmap.y = _mouseY - _disY;
+        // if (_playMark != undefined) {
+        //     _playMark.x = _choiceBitmap.x + 40;
+        //     _playMark.y = _choiceBitmap.y + 70;
+        // }
     }
     _canvas.drawScreen("#fefefe");
 }
@@ -233,9 +237,9 @@ mousemove_canvas = (_canvas) => {
 }
 
 //==============
-// help用ボタン
+// About用ボタン
 //==============
-mouseup_helpButton = (_bitmap) => {
+mouseup_aboutButton = (_bitmap) => {
     alert("XXXXXXXXXXX");
 }
 
@@ -278,6 +282,7 @@ callback_screenShot = (_screenShot) => {
 // 作品を押した時に実行（内部処理用）
 //===================================
 mousedown_bitmap = (_bitmap) => {
+    //console.log("mouseDown: " + _bitmap.name);
     if (_playMark != undefined) {
         _playMark.x = -9e9; //動いている間
     }
@@ -289,6 +294,9 @@ mousedown_bitmap = (_bitmap) => {
     _canvas.stopMouseDownEvent();
     _isMove = true;
 
+    //if (_choiceBitmap != undefined) {
+        //console.log(_choiceBitmap.name, _bitmap.name);
+    //}
     _changeBitmap = _choiceBitmap == _bitmap;
     _choiceBitmap = _bitmap;
 
@@ -310,62 +318,58 @@ mouseup_bitmap = (_bitmap) => {
     _canvas.addChild(_playMark);
 
     if (_clickNum == 0) {
+        //console.log("++")
         _clickNum ++;
     } else if (_clickNum == 1) {
+        //=========================================================
+        // ここで再生プレーヤー生成!!
+        //_screen = new Screen(_canvas, "SD", _bitmap.name);
+        //_screen.addEventListener("close", close_screen);
+        //_screen.open();
+        //console.log(_mouseX, _mouseDownX, _mouseY, _mouseDownY);
         if ((_mouseX == _mouseDownX) && (_mouseY == _mouseDownY)) {
             if (_changeBitmap) { //選択した作品が直前と同じならば...
-                //選択したボタン類を消す
-                //_bitmap.alpha = 0;
-                _playMark.alpha = 0;
-                //全てのボタン機能をOFFにする
-                allButtonMouseEvent(false);
-                //=========================
-                // ここで再生プレーヤー生成
-                //=========================
-                _screen = new Screen(_canvas, _bitmap);
-                _screen.addEventListener("close", close_screen);
-                _screen.open();
+                alert(_bitmap.name);
+                //_canvas.deleteChild(_playMark);
+                //_clickNum = 0;
             }
         }
+        //_clickNum = 0;
+        
+
+        // //Background
+        // _bg = new toile.Rect(0, 0, _canvas.width, _canvas.height);
+        // _bg.isFill(true);
+        // _bg.fillColor = "0,0,0";
+        // _bg.lineColor = "0,0,0";
+        // _bg.alpha = 0.85;
+        // _canvas.addChild(_bg);
+
+        // //Screen
+        // _hoge = new toile.Rect(_bitmap.x, _bitmap.y, _bitmap.x+140, _bitmap.y+200);
+        
+        // //_hoge = new toile.Rect(440,204,920,564); //4:3 small
+        // //_hoge = new toile.Rect(360,204,1000,564); //16:9 small
+
+        // //_hoge = new toile.Rect(200,24,1160,744); //4:3 Big
+        // //_hoge = new toile.Rect(40,24,1320,744); //16:9 Big
+
+        // _hoge.isFill(true);
+        // _hoge.fillColor = "254,254,254";
+        // _hoge.lineWidth = 2;
+        // _hoge.lineColor = "204,204,204";
+        // _hoge.alpha = 0.5;
+        // _canvas.addChild(_hoge);
+        //=========================================================
     }
 
     _canvas.stopMouseUpEvent();
     _isMove = false;
-}
-
-//=========================================
-// スクリーン表示時に各種ボタンを無効にする
-//=========================================
-allButtonMouseEvent = (_boolean) => {
-    if (!_boolean) { //falseの時
-        _bitmapArray.forEach(function(_bitmap) {
-            _bitmap.removeEventListener("mousedown");
-            _bitmap.removeEventListener("mouseup");
-            _bitmap.removeEventListener("mouseupoutside");
-        });
-        _helpButton.removeEventListener("mouseup");
-        _depthChangeBtn.removeEventListener("mouseup");
-        _homeButton.removeEventListener("mouseup");
-    } else { //trueの時
-        _bitmapArray.forEach(function(_bitmap) {
-            _bitmap.addEventListener("mousedown", mousedown_bitmap);
-            _bitmap.addEventListener("mouseup", mouseup_bitmap);
-            _bitmap.addEventListener("mouseupoutside", mouseup_bitmap);
-        });
-        _helpButton.addEventListener("mouseup", mouseup_helpButton);
-        _depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
-        _homeButton.addEventListener("mouseup", mouseup_home);
-    }
+    //_choiceBitmap = undefined; //DEBUG
 }
 
 close_screen = (_screen) => {
     console.log("スクリーンが閉じられました");
-    
-    //選択していたボタンを再表示する
-    //_bitmap.alpha = 1;
-    _playMark.alpha = 1;
-    //全てのボタン機能をONにする
-    allButtonMouseEvent(true);
 }
 
 //===================
@@ -380,9 +384,9 @@ mouseup_home = (_bitmap) => {
     _depthChangeBtn.removeEventListener("mouseup");
     _canvas.deleteChild(_depthChangeBtn); //すぐ消去する場合
 
-    //helpボタンの削除
-    _helpButton.removeEventListener("mouseup");
-    _canvas.deleteChild(_helpButton); //すぐ消去する場合
+    //aboutボタンの削除
+    _aboutButton.removeEventListener("mouseup");
+    _canvas.deleteChild(_aboutButton); //すぐ消去する場合
 
     //playマークの削除
     _canvas.deleteChild(_playMark); //すぐ消去する場合

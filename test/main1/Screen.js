@@ -16,168 +16,147 @@
 class Screen {
     static get CLOSE() { return "close"; }
 
-    constructor(_canvas, _size="standard", _videoName) {
+    constructor(_canvas, _bitmap, _size="standard") {
         this.__canvas = _canvas;
+        this.__bitmap = _bitmap;
         this.__size = _size; //"standard" or "wide"
-        this.__videoName = _videoName;
-
-        //console.log("mp4/" + _videoName + "_small.mp4");
-        //this.__smallVideo = new toile.Video("mp4/" + _videoName + "_small.mp4", 640, 360);
-        //this.__smallVideo = new toile.Video("mp4/AS-9_small.mp4", 960, 720);
-        //_canvas.addChild(this.__smallVideo);
-
-        // this.__isAnimate = _isAnimate;
-        // if (this.__isAnimate) {
-        //     this.__rectFillColor = _rectFillColor;
-        //     this.__rectLineColor = _rectLineColor;
-        //     this.__rectLineWidth = _rectLineWidth;
-        // }
-        // this.__rect = undefined;
-        // //this.stop(); //フェードインの間 SpriteSheetをstop()させる場合
-        // this.alpha = 0;
-        // this.addEventListener("load", this.__load_this);
-    }
-
-    //======================================
-    // (1) 画像のロード完了後 Rectを生成する
-    //======================================
-    __load_this() {
-        console.log("AAAA");
-        this.removeEventListener("load");
-        //Rectの生成
-        this.__rect = new Rect(this.x, this.y, this.x, this.y);
-        this.__rect.lineWidth = this.__rectLineWidth;
-        this.__rect.isFill(true);
-        this.__rect.fillColor = this.__rectFillColor;
-        this.__rect.lineColor = this.__rectLineColor;
-        this.__rect.lineWidth = this.__rectLineWidth;
-        this.parent.addChild(this.__rect);
+        this.__closeHandler = undefined;
     }
 
     //=======================================
     // (2) ユーザによるイベントリスナーの定義
     //=======================================
-    addEventListener(_event, _function) { //override
-        if (_event == "delete") {
-            this.__deleteHandler = _function;
-        } else {
-            super.addEventListener(_event, _function);
+    addEventListener(_event, _function) {
+        if (_event == "close") {
+            this.__closeHandler = _function;
         }
     }
 
-    //=============================================================
-    // (3) ユーザからの「表示（アニメーション）開始」を支持を受ける
-    //=============================================================
-    in(_sec=1) {
-        this.__loopCount = - Math.PI/2;
-        this.__speed = Math.PI/2/_sec/(1000/17); //アニメーション速度（初期値1秒）
-        this.__rectInLoopID = setInterval(this.__rectInLoop, 17, this); //≒58.8fps
+    //======================
+    // Screen.open()メソッド
+    //======================
+    open() {
+        //Smallビデオのロード開始
+        let _videoName = this.__bitmap.name;
+        if (this.__size == "standard") {
+            this.__smallVideo = new toile.Video("mp4/" + _videoName + "_small.mp4", 480, 360);
+        } else { //"wide"
+            this.__smallVideo = new toile.Video("mp4/" + _videoName + "_small.mp4", 640, 360);
+        }
+        this.__smallVideo.stop();
+        //console.log(this.__smallVideo.autoPlay);
+
+        //背景を暗転
+        this.__bg = new toile.Rect(0, 0, this.__canvas.width, this.__canvas.height);
+        this.__bg.isFill(true);
+        this.__bg.fillColor = "0,0,0";
+        this.__bg.lineColor = "0,0,0";
+        this.__bg.alpha = 0.7; //0.7; //0.85;
+        this.__canvas.addChild(this.__bg);
+
+        //ボタンと同じサイズのスクリーンを表示
+        this.__screen = new toile.Rect(this.__bitmap.x, this.__bitmap.y, this.__bitmap.x+140, this.__bitmap.y+200);
+        this.__screen.isFill(true);
+        this.__screen.fillColor = "254,254,254";
+        this.__screen.lineWidth = 2;
+        this.__screen.lineColor = "204,204,204";
+        this.__screen.alpha = 0.5;
+        this.__canvas.addChild(this.__screen);
+
+        //スクリーンが拡大するアニメーションの開始
+        var _sec = 2;
+        this.__loopCount = 0;
+
+        this.__timeOut1ID = setTimeout(this.__timeOut1, 700, this); //少し遅らせてScreenを拡大
+
+        if (this.__size == "standard") {
+            this.__disStartX = 440 - this.__screen.startX;
+            this.__disStartY = 204 - this.__screen.startY;
+            this.__disEndX = 920 - this.__screen.endX;
+            this.__disEndY = 564 - this.__screen.endY;
+        } else { //"wide"
+            this.__disStartX = 360 - this.__screen.startX;
+            this.__disStartY = 204 - this.__screen.startY;
+            this.__disEndX = 1000 - this.__screen.endX;
+            this.__disEndY = 564 - this.__screen.endY;
+        }
+        this.__originStartX = this.__screen.startX;
+        this.__originStartY = this.__screen.startY;
+        this.__originEndX = this.__screen.endX;
+        this.__originEndY = this.__screen.endY;
+
+        // //_hoge = new toile.Rect(440,204,920,564); //4:3 small
+        // //_hoge = new toile.Rect(360,204,1000,564); //16:9 small
+        // //_hoge = new toile.Rect(200,24,1160,744); //4:3 Big
+        // //_hoge = new toile.Rect(40,24,1320,744); //16:9 Big
     }
 
-    //=============================
-    // (4) Rectを左上から登場させる
-    //=============================
-    __rectInLoop(_this) {
-        _this.__loopCount += _this.__speed; //値が大きいほど高速
-        if (_this.__rect.width < _this.width - 1) {
-            _this.__rect.width = _this.width * Math.cos(_this.__loopCount);
-            _this.__rect.height = _this.height * Math.cos(_this.__loopCount);
-        } else { //Rect登場完了
-            _this.__rect.width = _this.width; 
-            _this.__rect.height = _this.height;
-            clearInterval(_this.__rectInLoopID);
+    __timeOut1(_this) {
+        clearTimeout(_this.__timeOut1ID);
+        _this.__sreenInLoop1ID = setInterval(_this.__sreenInLoop1, 17, _this); //≒58.8fps
+    }
 
-            //SpriteSheet登場を開始
-            _this.__spriteSheetInLoopID = setInterval(_this.__spriteSheetInLoop, 17, _this); //≒58.8fps
-            
-            //SpriteSheet登場中はマウスイベントを無効にするため
-            _this.__mouseDownHandler_bk = _this.__mouseDownHandler;
-            _this.__mouseUpHandler_bk = _this.__mouseUpHandler;
-            _this.__mouseUpOutsideHandler_bk = _this.__mouseUpOutsideHandler;
-            _this.__mouseDownHandler = undefined;
-            _this.__mouseUpHandler = undefined;
-            _this.__mouseUpOutsideHandler = undefined;
+    __sreenInLoop1(_this) {//Rect.startX, Rect.startY用
+        console.log(_this.__smallVideo.currentTime); //DEBUG
+
+        _this.__loopCount += 0.03; //値が大きいほど高速
+        let _sin = Math.sin(_this.__loopCount);
+
+        if (_sin < 0.998) {
+            _this.__screen.startX = _this.__originStartX + _this.__disStartX * _sin;
+            _this.__screen.startY = _this.__originStartY + _this.__disStartY * _sin;
+            _this.__screen.endX = _this.__originEndX + _this.__disEndX * _sin;
+            _this.__screen.endY = _this.__originEndY + _this.__disEndY * _sin;
+        } else {
+            _this.__screen.startX = 440;
+            _this.__screen.startY = 204;
+            _this.__screen.endX = 920;
+            _this.__screen.endY = 564;
+
+            clearInterval(_this.__sreenInLoop1ID);
+            _this.__sreenInLoop1ID = undefined;
+
+            //第二スクリーン登場
+            _this.__screen2 = new toile.Rect(_this.__screen.x, _this.__screen.y, _this.__screen.endX, _this.__screen.startY);
+            _this.__screen2.isFill(true);
+            _this.__screen2.fillColor = "254,254,254";
+            _this.__screen2.lineWidth = 2;
+            _this.__screen2.lineColor = "204,204,204";
+            _this.__screen2.alpha = 0;
+            _this.__canvas.addChild(_this.__screen2);
+            _this.__timeOut2ID = setTimeout(_this.__timeOut2, 350, _this); //少し遅らせて第二スクリーンを下ろす
         }
     }
 
-    //==================================================================
-    // (5) SpriteSheetを登場（フェードイン）させる／Rectはフェードアウト
-    //==================================================================
-    __spriteSheetInLoop(_this) {
-        if (_this.__rect.alpha > 0) {
-            _this.__rect.alpha -= 17*2/1000; //0.5秒でSpriteSheet登場＆Rect消去
-            _this.alpha += 17*2/1000;
-        } else {
-            clearInterval(_this.__spriteSheetInLoopID); //Rectが消えSpriteSheetが表示完了
-            //マウスイベントの復活
-            _this.__mouseDownHandler = _this.__mouseDownHandler_bk;
-            _this.__mouseUpHandler = _this.__mouseUpHandler_bk;
-            _this.__mouseUpOutsideHandler = _this.__mouseUpOutsideHandler_bk;
-            _this.__mouseDownHandler_bk = undefined;
-            _this.__mouseUpHandler_bk = undefined;
-            _this.__mouseUpOutsideHandler_bk = undefined;
-            //_this.play(); //constructor()でSpriteSheet.stop()している場合はここで再生
-        }
+    __timeOut2(_this) {
+        clearTimeout(_this.__timeOut2ID);
+        _this.__timeOut2ID = undefined;
+
+        _this.__sreenInLoop2(_this);
+        _this.__sreenInLoop2ID = setInterval(_this.__sreenInLoop2, 17, _this); //≒58.8fps
+        _this.__loopCount = - Math.PI/2;
+        _this.__screen2.alpha = 0.6;
     }
 
-    //======================================
-    // (6) マウスイベント（mouseUp）を受ける
-    //======================================
-    __commonHit(_event) { //override
-        if (_event == "mouseup") { //選択（クリック）したらアニメーションさせて消すため
-            if (this.__isChoice) {
-                if (this.__mouseUpHandler != undefined) {
-                    this.__isChoice = false;
-                    this.__mouseUpHandler(this);
-                    this.out(1);
-                }
-            }
+    __sreenInLoop2(_this) { //Rect.endX, Rect.endY用
+        console.log(_this.__smallVideo.currentTime); //DEBUG
+        
+        _this.__loopCount += 0.04; //値が大きいほど高速
+        let _sin = (Math.sin(_this.__loopCount) + 1)/2; //イーズイン＆イーズアウト（POINT）
+
+        if (_sin < 0.998) {
+            _this.__screen2.endY = _this.__screen.startY + 360 * _sin;
+            _this.__bg.alpha += 0.002;
         } else {
-            super.__commonHit(_event);
-        }
-    }
+            _this.__screen2.endY = _this.__screen.startY + 360;
+            clearInterval(_this.__sreenInLoop2ID);
+            _this.__sreenInLoop2ID = undefined;
 
-    //============================================
-    // (7) SpriteSheetの消去（フェードアウト）開始
-    //============================================
-    out(_sec=1) {
-        //SpriteSheet消去開始
-        this.__spriteSheetOutLoopID = setInterval(this.__spriteSheetOutLoop, 17, this, _sec); //≒58.8fps
-        //SpriteSheetの消去時はマウスイベントを無効にする
-        this.__mouseDownHandler = undefined;
-        this.__mouseUpHandler = undefined;
-        this.__mouseUpOutsideHandler = undefined;
-    }
-
-    //==================================================================
-    // (8) SpriteSheetを消していく（フェードアウト）／Rectはフェードイン
-    //==================================================================
-    __spriteSheetOutLoop(_arg1, _arg2) {
-        let _this = _arg1;
-        if (_this.__rect.alpha < 1) {
-            _this.__rect.alpha += 17*2/1000; //0.5秒でSpriteSheet登場＆Rect消去
-            _this.alpha -= 17*2/1000;
-        } else {
-            clearInterval(_this.__spriteSheetOutLoopID); //Rectが消えSpriteSheetが表示完了
-
-            _this.__speed = Math.PI/2/_arg2/(1000/17); //アニメーション速度（初期値1秒）
-            _this.__loopCount = -Math.PI/2;
-            _this.__rectOutLoopID = setInterval(_this.__rectOutLoop, 17, _this); //≒58.8fps
-        }
-    }
-
-    //============================================================
-    // (9) Rectを左上に消していく（消去後「delete」イベント発生）
-    //============================================================
-    __rectOutLoop(_this) {
-        _this.__loopCount += _this.__speed;
-        if (_this.__rect.width > 1) {
-            _this.__rect.width = _this.width - _this.width * Math.cos(_this.__loopCount);
-            _this.__rect.height = _this.height - _this.height * Math.cos(_this.__loopCount);
-        } else {
-            _this.parent.deleteChild(_this.__rect); //Rectの消去
-            _this.__deleteHandler(_this);
-            clearInterval(_this.__rectOutLoopID);
+            //映像再生
+            _this.__canvas.addChild(_this.__smallVideo);
+            _this.__smallVideo.x = _this.__screen2.x;
+            _this.__smallVideo.y = _this.__screen2.y;
+            _this.__smallVideo.play();
         }
     }
 }
