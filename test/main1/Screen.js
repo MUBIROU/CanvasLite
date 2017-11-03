@@ -16,7 +16,7 @@
 class Screen {
     static get CLOSE() { return "close"; }
 
-    constructor(_canvas, _bitmap, _size="standard") {
+    constructor(_canvas, _bitmap, _size="standard") { //or "wide"
         this.__canvas = _canvas;
         this.__bitmap = _bitmap;
         this.__size = _size; //"standard" or "wide"
@@ -69,6 +69,7 @@ class Screen {
 
         this.__timeOut1ID = setTimeout(this.__timeOut1, 700, this); //少し遅らせてScreenを拡大
 
+        console.log("01:" + this.__size); //DEBUG
         if (this.__size == "standard") {
             this.__disStartX = 440 - this.__screen.startX;
             this.__disStartY = 204 - this.__screen.startY;
@@ -97,7 +98,7 @@ class Screen {
     }
 
     __sreenInLoop1(_this) {//Rect.startX, Rect.startY用
-        console.log(_this.__smallVideo.currentTime); //DEBUG
+        //console.log(_this.__smallVideo.currentTime); //DEBUG
 
         _this.__loopCount += 0.03; //値が大きいほど高速
         let _sin = Math.sin(_this.__loopCount);
@@ -108,10 +109,18 @@ class Screen {
             _this.__screen.endX = _this.__originEndX + _this.__disEndX * _sin;
             _this.__screen.endY = _this.__originEndY + _this.__disEndY * _sin;
         } else {
-            _this.__screen.startX = 440;
-            _this.__screen.startY = 204;
-            _this.__screen.endX = 920;
-            _this.__screen.endY = 564;
+
+            if (_this.__size == "standard") {
+                _this.__screen.startX = 440;
+                _this.__screen.startY = 204;
+                _this.__screen.endX = 920;
+                _this.__screen.endY = 564;
+            } else { //"wide"}
+                _this.__screen.startX = 360;
+                _this.__screen.startY = 204;
+                _this.__screen.endX = 1000;
+                _this.__screen.endY = 564;
+            }
 
             clearInterval(_this.__sreenInLoop1ID);
             _this.__sreenInLoop1ID = undefined;
@@ -139,7 +148,7 @@ class Screen {
     }
 
     __sreenInLoop2(_this) { //Rect.endX, Rect.endY用
-        console.log(_this.__smallVideo.currentTime); //DEBUG
+        //console.log(_this.__smallVideo.currentTime); //DEBUG
         
         _this.__loopCount += 0.04; //値が大きいほど高速
         let _sin = (Math.sin(_this.__loopCount) + 1)/2; //イーズイン＆イーズアウト（POINT）

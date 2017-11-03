@@ -8,6 +8,13 @@ console.log(_param2);
 //==========================
 //作品リストとそのランダム化
 //==========================
+//standard
+//"AS" "DAS"（VAS）"DB" "DG" "DK" "DN" "DP"
+
+//"wide"
+//"DA" "DOK" "DS"
+
+
 _videoList = [ //優先させたい作品は除く
     "AS-1","AS-2","AS-3","AS-4","AS-5","AS-6","AS-7","AS-8","AS-9","AS-10","AS-16","AS-17","AS-18","AS-20",
     "DA-24",
@@ -322,7 +329,15 @@ mouseup_bitmap = (_bitmap) => {
                 //=========================
                 // ここで再生プレーヤー生成
                 //=========================
-                _screen = new Screen(_canvas, _bitmap);
+                //作品Noにより16:9か4:3か調べる
+                var _videoName = _bitmap.name;
+                var _tmp = _videoName.substr(0,3);
+                if ((_tmp == "DA-") || (_tmp == "DOK") || (_tmp == "DS-")) {
+                    var _size = "wide";
+                } else {
+                    _size = "standard";
+                }
+                _screen = new Screen(_canvas, _bitmap, _size); //standard" or "wide"
                 _screen.addEventListener("close", close_screen);
                 _screen.open();
             }
