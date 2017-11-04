@@ -18,14 +18,14 @@ console.log(_param2);
 _videoList = [ //優先させたい作品は除く
     "AS-1","AS-2","AS-3","AS-4","AS-5","AS-6","AS-7","AS-8","AS-9","AS-10","AS-16","AS-17","AS-18","AS-20",
     "DA-24",
-    "DAP-1","DAP-2","DAP-3","DAP-4","DAP-5",
+    "DAP-3","DAP-4","DAP-5",
     "DAS-1","DAS-2","DAS-3","DAS-4","DAS-5","DAS-6","DAS-7","DAS-8","DAS-9","DAS-10",
     "DB-30",
     "DG-21",
     "DK-10","DK-11","DK-12","DK-13","DK-14","DK-15","DK-16",
     "DN-50","DN-56","DN-57","DN-58","DN-59","DN-62","DN-63","DN-64","DN-65","DN-66","DN-67","DN-68","DN-69","DN-70","DN-71","DN-72","DN-73","DN-75","DN-76","DN-77","DN-78","DN-79","DN-80","DN-81","DN-82","DN-83",
     "DOK-1_1","DOK-1_2","DOK-1_3","DOK-1_4","DOK-1_5","DOK-1_6",
-    "DOK-2_1","DOK-2_2","DOK-2_3","DOK-2_4","DOK-2_5","DOK-2_6","DOK-2_7",
+    "DOK-2_1","DOK-2_2","DOK-2_3","DOK-2_4","DOK-2_6","DOK-2_7",
     "DP-3"
 ]
 randomArray = (_array) => { //作品リストをランダムにする
@@ -40,7 +40,7 @@ randomArray = (_array) => { //作品リストをランダムにする
 }
 _videoRandamList = randomArray(_videoList);
 _videoRandamList.unshift("DS-2", "DS-3"); //優先させたい作品
-
+_videoRandamListNum = _videoRandamList.length;
 
 //======================================
 // 最初に実行（Webページの準備が完了後）
@@ -67,7 +67,7 @@ function load_window() {
 
     //「作品」の画像関連
     _bitmapArray = [];
-    for (let i = 0; i < 81; i++) { //81作品の場合（0,1,2...79,80）
+    for (let i = 0; i < _videoRandamListNum; i++) { //79作品の場合（0,1,2...,77,78）
         let _theVideoName = _videoRandamList.pop();
         let _bitmap = new Bitmap("png/" + _theVideoName + ".png");
         _bitmap.name = _theVideoName;
