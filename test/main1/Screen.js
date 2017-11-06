@@ -39,8 +39,10 @@ class Screen {
         //Smallビデオのロード開始
         let _videoName = this.__bitmap.name;
         if (this.__size == "standard") {
+            //console.log("A");
             this.__smallVideo = new toile.Video("mp4/" + _videoName + "_small.mp4", 480, 360);
         } else { //"wide"
+            //console.log("B");
             this.__smallVideo = new toile.Video("mp4/" + _videoName + "_small.mp4", 640, 360);
         }
         this.__smallVideo.stop();
@@ -203,8 +205,10 @@ class Screen {
             //大きな映像のロード開始
             let _videoName = _this.__bitmap.name;
             if (_this.__size == "standard") {
+                //console.log("C");
                 _this.__bigVideo = new toile.Video("mp4/" + _videoName + ".mp4", 960, 720);
             } else { //"wide"
+                //console.log("D");
                 _this.__bigVideo = new toile.Video("mp4/" + _videoName + ".mp4", 1280, 720);
             }
             _this.__bigVideo.stop();
@@ -284,8 +288,83 @@ class Screen {
     mouseup_bigButton(_bitmap) {
         var _this = _bitmap.__this; //力技
 
-        //再生中の XXX_small.mp4 の情報
-        console.log(_this.__bitmap.name, _this.__smallVideo.currentTime, _this.__smallVideo.duration);
+         //大きな映像の枠を作成
+        _this.__screenBig = new toile.Rect(_this.__screen1.x, _this.__screen1.y, _this.__screen1.endX, _this.__screen1.endY);
+        _this.__screenBig.lineWidth = 2;
+        _this.__screenBig.lineColor = "204,204,204";
+        _this.__screenBig.alpha = 0.8;
+        _this.__canvas.addChild(_this.__screenBig);
+
+        _this.__timeInBigScreenID = setTimeout(_this.__timeInBigScreen, 350, _this); //0.35秒遅らせて大画面用スクリーンを広げる
+    }
+
+    //=====================================================
+    // 拡大ボタンをタッチ（TouchEnd）してから0.35秒後の処理
+    //=====================================================
+    __timeInBigScreen(_this) {
+        clearTimeout(_this.__timeInBigScreenID);
+        _this.__timeInBigScreenID = undefined;
+
+        //大きな映像用のスクリーンを拡大していく処理開始
+        _this.__sreenBigInLoopID = setInterval(_this.__sreenBigInLoop, 17, _this); //≒58.8fps
+        _this.__loopCount = - Math.PI/2;
+        //_this.__screen2.alpha = 0.6;
+
+        if (_this.__size == "standard") {
+            _this.__disStartX = 200 - _this.__screen1.startX;
+            _this.__disStartY = 24 - _this.__screen1.startY;
+            _this.__disEndX = 1160 - _this.__screen1.endX;
+            _this.__disEndY = 744 - _this.__screen1.endY;
+        } else { //"wide"
+            _this.__disStartX = 40 - _this.__screen1.startX;
+            _this.__disStartY = 24 - _this.__screen1.startY;
+            _this.__disEndX = 1320 - _this.__screen1.endX;
+            _this.__disEndY = 744 - _this.__screen1.endY;
+        }
+        _this.__originStartX = _this.__screen1.startX;
+        _this.__originStartY = _this.__screen1.startY;
+        _this.__originEndX = _this.__screen1.endX;
+        _this.__originEndY = _this.__screen1.endY;
+
+        //小さな映像を停止
+        _this.__smallVideo.pause();
+    }
+
+    //========================================================================
+    // スクリーンを1280x720（Wide）か960x720（Standard）のサイズに拡大していく
+    //========================================================================
+    __sreenBigInLoop(_this) {
+        _this.__loopCount += 0.04; //値が大きいほど高速
+        let _sin = Math.cos(_this.__loopCount);
+
+        if (_sin < 0.998) {
+            _this.__screenBig.startX = _this.__originStartX + _this.__disStartX * _sin;
+            _this.__screenBig.startY = _this.__originStartY + _this.__disStartY * _sin;
+            _this.__screenBig.endX = _this.__originEndX + _this.__disEndX * _sin;
+            _this.__screenBig.endY = _this.__originEndY + _this.__disEndY * _sin;
+        } else {
+            if (_this.__size == "standard") {
+                _this.__screenBig.startX = 200; //440;
+                _this.__screenBig.startY = 24; //204;
+                _this.__screenBig.endX = 1160; //920;
+                _this.__screenBig.endY = 744; //564;
+            } else { //"wide"}
+                _this.__screenBig.startX = 40; //360;
+                _this.__screenBig.startY = 24; //204;
+                _this.__screenBig.endX = 1320; //1000;
+                _this.__screenBig.endY = 744; //564;
+            }
+
+            //大きな映像再生（再生中の XXX_small.mp4 の情報を取得）
+            _this.__bigVideo.currentTime = _this.__smallVideo.currentTime; // + 0.23; //遅れを補正（秒）
+            _this.__canvas.addChild(_this.__bigVideo);
+            _this.__bigVideo.x = _this.__screenBig.startX;
+            _this.__bigVideo.y = _this.__screenBig.startY;
+            _this.__bigVideo.play();
+
+            clearInterval(_this.__sreenBigInLoopID);
+            _this.__sreenBigInLoopID = undefined;
+        }
     }
 
     //======================================================

@@ -332,7 +332,13 @@ mouseup_bitmap = (_bitmap) => {
                 //作品Noにより16:9か4:3か調べる
                 var _videoName = _bitmap.name;
                 var _tmp = _videoName.substr(0,3);
-                if ((_tmp == "DA-") || (_tmp == "DOK") || (_tmp == "DS-") || (_tmp == "DAP")) {
+                if ((_tmp == "DA-") || 
+                    (_tmp == "DOK") || 
+                    (_tmp == "DS-") || 
+                    (_tmp == "DAP") || 
+                    (_videoName.substr(0,5) == "AS-20") ||
+                    (_videoName.substr(0,5) == "AS-16"))
+                {
                     var _size = "wide";
                 } else {
                     _size = "standard";
