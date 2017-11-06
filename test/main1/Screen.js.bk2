@@ -197,7 +197,7 @@ class Screen {
             //exitボタンの表示
             _this.__exitButton = new toile.Bitmap("exit.png");
             _this.__exitButton.__this = _this; //力技
-            _this.__exitButton.addEventListener("mouseup", _this.mouseup_exitButton); //,true);
+            _this.__exitButton.addEventListener("mouseup", _this.mouseup_exitButton, true);
             _this.__exitButton.x = _this.__screen2.x;
             _this.__exitButton.y = _this.__screen2.y;
             _this.__canvas.addChild(_this.__exitButton);
@@ -254,7 +254,7 @@ class Screen {
             clearInterval(_this.__bigButtonFadeinLoopID);
             _this.__bigButtonFadeinLoopID = undefined;
             _this.__bigButton.alpha = 1;
-            _this.__bigButton.addEventListener("mouseup", _this.mouseup_bigButton); //, true);
+            _this.__bigButton.addEventListener("mouseup", _this.mouseup_bigButton, true);
         }
     }
 
@@ -292,10 +292,9 @@ class Screen {
         _this.__screenBig = new toile.Rect(_this.__screen1.x, _this.__screen1.y, _this.__screen1.endX, _this.__screen1.endY);
         _this.__screenBig.lineWidth = 2;
         _this.__screenBig.lineColor = "204,204,204";
-        _this.__screenBig.alpha = 0.8;
+        //_this.__screenBig.alpha = 0;
         _this.__canvas.addChild(_this.__screenBig);
-
-        _this.__timeInBigScreenID = setTimeout(_this.__timeInBigScreen, 350, _this); //0.35秒遅らせて大画面用スクリーンを広げる
+        _this.__timeInBigScreenID = setTimeout(_this.__timeInBigScreen, 350, _this); //少し遅らせて第二スクリーンを下ろす
     }
 
     //=====================================================
@@ -328,29 +327,21 @@ class Screen {
 
         //小さな映像を停止
         _this.__smallVideo.pause();
-        //console.log(_this.__bg.alpha); //0.8520...
     }
 
     //========================================================================
     // スクリーンを1280x720（Wide）か960x720（Standard）のサイズに拡大していく
     //========================================================================
     __sreenBigInLoop(_this) {
-        _this.__loopCount += 0.03; //値が大きいほど高速
+        _this.__loopCount += 0.05; //値が大きいほど高速
         let _sin = Math.cos(_this.__loopCount);
 
         if (_sin < 0.998) {
-            _this.__bg.alpha += 0.0037; //DEBUG
-        
             _this.__screenBig.startX = _this.__originStartX + _this.__disStartX * _sin;
             _this.__screenBig.startY = _this.__originStartY + _this.__disStartY * _sin;
             _this.__screenBig.endX = _this.__originEndX + _this.__disEndX * _sin;
             _this.__screenBig.endY = _this.__originEndY + _this.__disEndY * _sin;
-
         } else {
-            _this.__bg.alpha = 1; //背景を真っ黒にする
-            _this.__screenBig.lineColor = "96,96,96";
-            //_this.__canvas.setDepthIndex(_this.__screenBig, _this.__canvas.getDepthMax()); //最上位にする???
-
             if (_this.__size == "standard") {
                 _this.__screenBig.startX = 200; //440;
                 _this.__screenBig.startY = 24; //204;
@@ -363,158 +354,16 @@ class Screen {
                 _this.__screenBig.endY = 744; //564;
             }
 
-            //=====================================================
             //大きな映像再生（再生中の XXX_small.mp4 の情報を取得）
-            //=====================================================
             _this.__bigVideo.currentTime = _this.__smallVideo.currentTime; // + 0.23; //遅れを補正（秒）
             _this.__canvas.addChild(_this.__bigVideo);
             _this.__bigVideo.x = _this.__screenBig.startX;
             _this.__bigVideo.y = _this.__screenBig.startY;
             _this.__bigVideo.play();
 
-            _this.__smallVideoUI(false); //小さな映像は見えなくしておく
-
-            //exitボタンの表示
-            _this.__exitButton2 = new toile.Bitmap("exit.png");
-            _this.__exitButton2.__this = _this; //力技
-            _this.__exitButton2.addEventListener("mouseup", _this.__mouseup__exitButton2);
-            _this.__exitButton2.x = _this.__screenBig.x;
-            _this.__exitButton2.y = _this.__screenBig.y;
-            _this.__canvas.addChild(_this.__exitButton2);
-
-            //smallボタンの表示
-            _this.__smallButton = new toile.Bitmap("small.png");
-            _this.__smallButton.addEventListener("mouseup", _this.__mouseup__smallButton);
-            _this.__smallButton.__this = _this; //力技
-            if (_this.__size == "standard") {
-                var _theWidth = 960;
-            } else { //"wide"
-                _theWidth = 1280;
-            }
-            _this.__smallButton.x = _this.__bigVideo.x + _theWidth - 48;
-            _this.__smallButton.y = _this.__bigVideo.y + 720 - 48;
-            _this.__canvas.addChild(_this.__smallButton);
-
             clearInterval(_this.__sreenBigInLoopID);
             _this.__sreenBigInLoopID = undefined;
         }
-    }
-
-    //==========================================================================
-    // 大きな映像の再生時は 小さな映像を見えなくする（縮小時に見えてしまうので）
-    //==========================================================================
-    __smallVideoUI(_boolean) {
-        if (_boolean) {
-            this.__smallVideo.alpha = 1;
-            this.__exitButton.alpha = 1;
-            this.__bigButton.alpha = 1;
-            this.__exitButton.addEventListener("mouseup", this.mouseup___exitButton);
-            this.__bigButton.addEventListener("mouseup", this.mouseup_bigButton);
-        } else {
-            this.__smallVideo.alpha = 0;
-            this.__exitButton.alpha = 0;
-            this.__bigButton.alpha = 0;
-            this.__exitButton.removeEventListener("mouseup");
-            this.__bigButton.removeEventListener("mouseup");
-            if (this.__screen1 != undefined) {
-                this.__canvas.deleteChild(this.__screen1);
-                this.__canvas.deleteChild(this.__screen2);
-            }
-        }
-    }
-
-    //===========================================
-    // 縮小ボタンをタッチ（TouchEnd）した時の処理
-    //===========================================
-    __mouseup__smallButton(_bitmap) {
-        console.log("mouseup__smallButton");
-    }
-
-    //==================================================================
-    // 大きな映像再生時のEXIT（×）ボタンをタッチ（TouchEnd）した時の処理
-    //==================================================================
-    __mouseup__exitButton2(_bitmap) {
-        //console.log("mouseup__exitButton2");
-        var _this = _bitmap.__this; //力技
-        
-        //カード（作品ボタン）に戻す
-        _this.__bigvideoToCardRect = new toile.Rect(_this.__screenBig.x, _this.__screenBig.y, _this.__screenBig.endX, _this.__screenBig.endY);
-        _this.__bigvideoToCardRect.lineWidth = 2;
-        _this.__bigvideoToCardRect.lineColor = "204,204,204";
-        _this.__bigvideoToCardRect.alpha = 0.8;
-        _this.__canvas.addChild(_this.__bigvideoToCardRect);
-        _this.__canvas.deleteChild(_this.__exitButton2);
-        _this.__canvas.deleteChild(_this.__smallButton);
-        _this.__canvas.deleteChild(_this.__screenBig);
-        _this.__exitButton2.removeEventListener("mouseup");
-        _this.__smallButton.removeEventListener("mouseup");
-
-        _this.__bigToCardTimeOutID = setTimeout(_this.__timeInBigScreenTimeOut, 350, _this); //0.35秒遅らせて大画面用スクリーンを広げる
-    
-        _this.__disStartX = _this.__bitmap.x - _this.__bigvideoToCardRect.startX;
-        _this.__disStartY = _this.__bitmap.y - _this.__bigvideoToCardRect.startY;
-        _this.__disEndX = (_this.__bitmap.x + 140) - _this.__bigvideoToCardRect.endX;
-        _this.__disEndY = (_this.__bitmap.y + 200) - _this.__bigvideoToCardRect.endY;
-
-        _this.__originStartX = _this.__bigvideoToCardRect.startX;
-        _this.__originStartY = _this.__bigvideoToCardRect.startY;
-        _this.__originEndX = _this.__bigvideoToCardRect.endX;
-        _this.__originEndY = _this.__bigvideoToCardRect.endY;
-
-        _this.__bg.alpha = 0.95;
-    }
-
-    //======================================================
-    // EXIT2ボタンをタッチ（TouchEnd）してから0.35秒後の処理
-    //======================================================
-    __timeInBigScreenTimeOut(_this) {
-        _this.__bigVideo.stop();
-        _this.__canvas.deleteChild(_this.__bigVideo);
-        //_this.__smallVideo.currentTime = _this.__bigVideo.currentTime; //再生ヘッドの同期
-
-        _this.__bigvideoToCardRectLoopID = setInterval(_this.__bigvideoToCardRectLoop, 17, _this); //≒58.8fps
-        _this.__loopCount = - Math.PI/2;
-    }
-
-    //====================================================
-    // EXIT2ボタンをタッチ後、作品ボタンへ縮小していく処理
-    //====================================================
-    __bigvideoToCardRectLoop(_this) {
-        _this.__loopCount += 0.03; //値が大きいほど高速
-        let _sin = Math.cos(_this.__loopCount); //-1 => 0 => 1（イーズイン・イーズアウト）
-
-        if (_sin < 0.998) {
-            _this.__bigvideoToCardRect.startX = _this.__originStartX + _this.__disStartX * _sin;
-            _this.__bigvideoToCardRect.startY = _this.__originStartY + _this.__disStartY * _sin;
-            _this.__bigvideoToCardRect.endX = _this.__originEndX + _this.__disEndX * _sin;
-            _this.__bigvideoToCardRect.endY = _this.__originEndY + _this.__disEndY * _sin;
-            //_this.__bigvideoToCardRect.alpha -= 0.006;
-            _this.__bg.alpha -= 0.005;
-        } else {
-            //console.log(_this.__bg.alpha);
-            //Rect（__bigvideoToCardRect）の最終的なサイズ
-            _this.__bigvideoToCardRect.startX = _this.__originStartX + _this.__disStartX;
-            _this.__bigvideoToCardRect.startY = _this.__originStartY + _this.__disStartY;
-            _this.__bigvideoToCardRect.endX = _this.__originEndX + _this.__disEndX;
-            _this.__bigvideoToCardRect.endY = _this.__originEndY + _this.__disEndY;
-
-            clearInterval(_this.__bigvideoToCardRectLoopID);
-            _this.__bigvideoToCardRectLoopID = undefined;
-
-            _this.__timeOut5ID = setTimeout(_this.__timeOut5, 350, _this); //少し遅らせて初期状態に戻す
-        }
-    }
-
-    //============================================================================================
-    // EXIT2ボタン（大映像再生時のEXITボタン）を押して、作品ボタンサイズに戻ってから0.35秒後の処理
-    //============================================================================================
-    __timeOut5(_this) {
-        clearTimeout(_this.__timeOut5ID);
-        _this.__timeOut5ID = undefined;
-        _this.__canvas.deleteChild(_this.__bigvideoToCardRect); //Rectを消す
-        _this.__canvas.deleteChild(_this.__bg); //背景（暗転用）を消す
-
-        _this.__closeHandler(_this); //Screen.CLOSEイベントの発生!!!
     }
 
     //======================================================

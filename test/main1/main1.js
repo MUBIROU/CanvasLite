@@ -18,7 +18,6 @@ console.log(_param2);
 _videoList = [ //優先させたい作品は除く
     "AS-1","AS-2","AS-3","AS-4","AS-5","AS-6","AS-7","AS-8","AS-9","AS-10","AS-16","AS-17","AS-18","AS-20",
     "DA-24",
-    "DAP-3","DAP-4","DAP-5",
     "DAS-1","DAS-2","DAS-3","DAS-4","DAS-5","DAS-6","DAS-7","DAS-8","DAS-9","DAS-10",
     "DB-30",
     "DG-21",
