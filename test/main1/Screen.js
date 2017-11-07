@@ -269,6 +269,10 @@ class Screen {
     //================================================
     mouseup_exitButton(_bitmap) {
         var _this = _bitmap.__this; //力技
+
+        //シークバーを消す
+        _this.__seekBar.delete();
+        _this.__seekBar = undefined;
         
         _this.__canvas.deleteChild(_this.__smallVideo); //映像を消す
         _this.__smallVideo.stop(); //映像･音を止める
@@ -294,6 +298,10 @@ class Screen {
     //===========================================
     mouseup_bigButton(_bitmap) {
         var _this = _bitmap.__this; //力技
+
+        //シークバーを消す
+        _this.__seekBar.delete();
+        _this.__seekBar = undefined;
 
         //小映像を長時間再生すると大映像がメモリから消えるのを回避するための処理
         clearInterval(_this.__synchroLoopID);
@@ -437,6 +445,10 @@ class Screen {
     //==================================================================
     __mouseup__exitButton2(_bitmap) {
         var _this = _bitmap.__this; //力技
+
+        //シークバーを消す
+        _this.__seekBar.delete();
+        _this.__seekBar = undefined;
         
         //カード（作品ボタン）に戻す枠
         _this.__bigvideoToCardRect = new toile.Rect(_this.__screenBig.x, _this.__screenBig.y, _this.__screenBig.endX, _this.__screenBig.endY);
