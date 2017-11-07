@@ -2,14 +2,14 @@
  * Screen Class (ver.2017-10-30TXX:XX)
  * 
  *  <constructor>
- *      new SpriteSheetPlus(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4)
+ *      new Screen()
  * 
  *  <public method>
- *      SpriteSheetPlus.in(_sec=1)
- *      SpriteSheetPlus.out(_sec=1)
+ *      Screen.addEventListener("close", _function)
+ *      Screen.open()
  *
  *  <event>
- *      SpriteSheetPlus.DELETE
+ *      Screen.CLOSE
  * 
 ***********************************************/
 
@@ -70,14 +70,14 @@ class Screen {
 
         if (this.__size == "standard") {
             this.__disStartX = 440 - this.__screen1.startX;
-            this.__disStartY = 204 - this.__screen1.startY;
+            this.__disStartY = (204 - 12) - this.__screen1.startY;
             this.__disEndX = 920 - this.__screen1.endX;
-            this.__disEndY = 564 - this.__screen1.endY;
+            this.__disEndY = (564 - 12) - this.__screen1.endY;
         } else { //"wide"
             this.__disStartX = 360 - this.__screen1.startX;
-            this.__disStartY = 204 - this.__screen1.startY;
+            this.__disStartY = (204 - 12) - this.__screen1.startY;
             this.__disEndX = 1000 - this.__screen1.endX;
-            this.__disEndY = 564 - this.__screen1.endY;
+            this.__disEndY = (564 - 12) - this.__screen1.endY;
         }
         this.__originStartX = this.__screen1.startX;
         this.__originStartY = this.__screen1.startY;
@@ -109,14 +109,14 @@ class Screen {
 
             if (_this.__size == "standard") {
                 _this.__screen1.startX = 440;
-                _this.__screen1.startY = 204;
+                _this.__screen1.startY = 204 - 12;
                 _this.__screen1.endX = 920;
-                _this.__screen1.endY = 564;
+                _this.__screen1.endY = 564 - 12;
             } else { //"wide"}
                 _this.__screen1.startX = 360;
-                _this.__screen1.startY = 204;
+                _this.__screen1.startY = 204 - 12;
                 _this.__screen1.endX = 1000;
-                _this.__screen1.endY = 564;
+                _this.__screen1.endY = 564 - 12;
             }
 
             clearInterval(_this.__sreenInLoop1ID);
@@ -183,6 +183,16 @@ class Screen {
             _this.__smallVideo.x = _this.__screen2.x;
             _this.__smallVideo.y = _this.__screen2.y;
             _this.__smallVideo.play();
+
+            //シークバーの表示
+            _this.__seekBar = new SeekBar(
+                _this.__canvas,
+                _this.__smallVideo,
+                _this.__smallVideo.x,
+                _this.__smallVideo.y + 360 + 18,
+                _this.__smallVideo.x + _this.__smallVideo.width,
+                _this.__smallVideo.y + 360 + 18
+            );
 
             //小映像を長時間再生すると大映像がメモリから消えるのを回避するための処理
             _this.__synchroLoopID = setInterval(_this.__synchroLoopID, 5000, _this);
@@ -316,14 +326,14 @@ class Screen {
 
         if (_this.__size == "standard") {
             _this.__disStartX = 200 - _this.__screen1.startX;
-            _this.__disStartY = 24 - _this.__screen1.startY;
+            _this.__disStartY = (24 - 12) - _this.__screen1.startY;
             _this.__disEndX = 1160 - _this.__screen1.endX;
-            _this.__disEndY = 744 - _this.__screen1.endY;
+            _this.__disEndY = (744 - 12) - _this.__screen1.endY;
         } else { //"wide"
             _this.__disStartX = 40 - _this.__screen1.startX;
-            _this.__disStartY = 24 - _this.__screen1.startY;
+            _this.__disStartY = (24 - 12) - _this.__screen1.startY;
             _this.__disEndX = 1320 - _this.__screen1.endX;
-            _this.__disEndY = 744 - _this.__screen1.endY;
+            _this.__disEndY = (744 - 12) - _this.__screen1.endY;
         }
         _this.__originStartX = _this.__screen1.startX;
         _this.__originStartY = _this.__screen1.startY;
@@ -354,15 +364,15 @@ class Screen {
             //_this.__screenBig.lineColor = "96,96,96";
 
             if (_this.__size == "standard") {
-                _this.__screenBig.startX = 200; //440;
-                _this.__screenBig.startY = 24; //204;
-                _this.__screenBig.endX = 1160; //920;
-                _this.__screenBig.endY = 744; //564;
+                _this.__screenBig.startX = 200;
+                _this.__screenBig.startY = 24 - 12;
+                _this.__screenBig.endX = 1160;
+                _this.__screenBig.endY = 744 - 12;
             } else { //"wide"}
-                _this.__screenBig.startX = 40; //360;
-                _this.__screenBig.startY = 24; //204;
-                _this.__screenBig.endX = 1320; //1000;
-                _this.__screenBig.endY = 744; //564;
+                _this.__screenBig.startX = 40;
+                _this.__screenBig.startY = 24 - 12;
+                _this.__screenBig.endX = 1320;
+                _this.__screenBig.endY = 744 - 12;
             }
 
             //===============================================
@@ -373,6 +383,16 @@ class Screen {
             _this.__bigVideo.x = _this.__screenBig.startX;
             _this.__bigVideo.y = _this.__screenBig.startY;
             _this.__bigVideo.play();
+
+            //シークバーの表示
+            _this.__seekBar = new SeekBar(
+                _this.__canvas,
+                _this.__bigVideo,
+                _this.__bigVideo.x,
+                _this.__bigVideo.y + 720 + 18,
+                _this.__bigVideo.x + _this.__bigVideo.width,
+                _this.__bigVideo.y + 720 + 18
+            );
 
             _this.__smallVideoUI(false); //小さな映像は見えなくしておく
 
