@@ -195,7 +195,7 @@ class Screen {
             );
 
             //小映像を長時間再生すると大映像がメモリから消えるのを回避するための処理
-            _this.__synchroLoopID = setInterval(_this.__synchroLoopID, 5000, _this);
+            _this.__synchroLoopID = setInterval(_this.__synchroLoop, 5000, _this);
 
             //exitボタンの表示
             _this.__exitButton = new toile.Bitmap("exit.png");
@@ -220,9 +220,8 @@ class Screen {
     }
 
     //小映像を長時間再生すると大映像がメモリから消えるのを回避するための処理
-    __synchroLoopID(_this) {
+    __synchroLoop(_this) {
         _this.__bigVideo.currentTime = _this.__smallVideo.currentTime;
-        //console.log(_this.__bigVideo.currentTime, _this.__smallVideo.currentTime);
     }
 
     //======================================================
@@ -273,6 +272,10 @@ class Screen {
         //シークバーを消す
         _this.__seekBar.delete();
         _this.__seekBar = undefined;
+
+        //小映像を長時間再生すると大映像がメモリから消えるのを回避するための処理
+        clearInterval(_this.__synchroLoopID);
+        _this.__synchroLoopID = undefined;
         
         _this.__canvas.deleteChild(_this.__smallVideo); //映像を消す
         _this.__smallVideo.stop(); //映像･音を止める

@@ -1,0 +1,235 @@
+/***********************************************
+ * SeekBar Class (ver.2017-11-XXTXX:XX)
+ * 
+ *  <constructor>
+ *      new SeekBar(_canvas, _video, _startX, _startY, _endX, _endY)
+ * 
+ *  <public method>
+ *      SeekBar.XXX
+ *
+ *  <event>
+ *      SeekBar.XXX
+ * 
+***********************************************/
+
+class SeekBar {
+    //static get CLOSE() { return "close"; }
+
+    constructor(_canvas, _video, _startX, _startY, _endX, _endY) {
+        this.__canvas = _canvas;
+        this.__video = _video;
+        this.__startX = _startX + 65 + 7 + (10);
+        this.__startY = _startY;
+        this.__endX = _endX - 73 - 8 - (10);
+        this.__endY = _endY;
+        this.__barWidth = this.__endX - this.__startX;
+
+        this.__percent = 0;
+
+        //背景のバー
+        this.__barBlack = new toile.Line(this.__startX, this.__startY, this.__endX, this.__endY);
+        this.__barBlack.lineWidth = 10;
+        this.__barBlack.lineColor = "255,255,255";
+        this.__barBlack.alpha = 0.15;
+        this.__canvas.addChild(this.__barBlack);
+
+        //変化するバー
+        this.__barWhite = new toile.Line(this.__startX, this.__startY, this.__endX - this.__barWidth, this.__endY);
+        this.__barWhite.lineWidth = 10;
+        this.__barWhite.lineColor = "255,255,255"; //"255,0,0";
+        this.__barWhite.alpha = 0.8;
+        this.__canvas.addChild(this.__barWhite);
+
+        //Time1
+        this.__text1 = new toile.Text(""); //0:00:00");
+        this.__text1.addWebFont("DigitalDismay", "../common/dotty.ttf", "truetype");
+        this.__text1.font = "DigitalDismay";
+        this.__text1.size = 38; //80;
+        this.__text1.x = this.__video.x; //38 + 5; //1165; //20;//12;
+        this.__text1.y = this.__video.y + this.__video.height + 5; //-3; //-1;
+        this.__text1.color = "#ffffff";
+        this.__text1.alpha = 0.7;
+        this.__canvas.addChild(this.__text1);
+
+        //Time2
+        this.__text2 = new toile.Text(""); //-0:00:00");
+        this.__text2.addWebFont("DigitalDismay", "../common/dotty.ttf", "truetype");
+        this.__text2.font = "DigitalDismay";
+        this.__text2.size = 38; //80;
+        this.__text2.x = this.__video.x + this.__video.width - 68 - 8; //38 + 5; //1165; //20;//12;
+        this.__text2.y = this.__video.y + this.__video.height + 5; //-3; //-1;
+        this.__text2.color = "#ffffff";
+        this.__text2.alpha = 0.7;
+        this.__canvas.addChild(this.__text2);
+
+        //WhiteCircle
+        this.__whiteCircle = new toile.Bitmap("whiteCircle.png");
+        this.__whiteCircle.__this = this; //力技
+        this.__whiteCircle.addEventListener("mousedown", this.__mousedown_whiteCircle);
+        this.__whiteCircle.addEventListener("mouseup", this.__mouseup_whiteCircle);
+        this.__whiteCircle.addEventListener("mouseupoutside", this.__mouseupoutside_whiteCircle);
+        this.__whiteCircle.x = this.__barWhite.endX - 18;
+        this.__whiteCircle.y = this.__barWhite.endY - 18;
+        this.__whiteCircle.alpha = 0.01;
+        this.__canvas.addChild(this.__whiteCircle);
+
+        //小さい円（再生ヘッド位置に表示）
+        this.__smallCircle = new toile.Circle(this.__barBlack.x - 8, this.__barBlack.y - 8, 8);
+        this.__smallCircle.isFill(true);
+        this.__smallCircle.lineWidth = 1;
+        this.__smallCircle.lineColor = "255,255,255";
+        this.__smallCircle.alpha = 0.3;
+        this.__smallCircle.lineAlpha = 0;
+        this.__canvas.addChild(this.__smallCircle);
+
+        this.__seekBarLoopID = setInterval(this.__seekBarLoop, 50, this); //≒20fps
+    }
+
+    //============
+    // whiteCircle
+    //============
+    __mousedown_whiteCircle(_bitmap) {
+        var _this = _bitmap.__this; //力技（_thisはこのSeekBarインスタンス）
+        _this.__canvas.addEventListener("mousemove", _this.__mousemove_canvas);
+        _this.__canvas.___seekBar = _this; //超力技
+        //console.log(_this.__canvas.__mousemoveHandler);
+        //_this.__canvas.enabledMouseMove(true);
+        //_bitmap.alpha = 0.;
+
+        //押した時...
+        _this.__smallCircle.alpha = 1;
+
+        _this.__video.pause();
+
+        // _this.__smallCircle.radius = 10;
+        // _this.__smallCircle.x = _this.__barWhite.x; //- 5;
+        // _this.__smallCircle.x = _this.__barWhite.y; // - 5;
+
+        // _this.__smallCircle = new toile.Circle(_bitmap.x + 8, _bitmap.y + 8, 10);
+        // _this.__smallCircle.isFill(true);
+        // _this.__smallCircle.lineWidth = 1;
+        // _this.__smallCircle.lineColor = "255,255,255";
+        // _this.__canvas.addChild(_this.__smallCircle);
+    }
+
+    __mouseup_whiteCircle(_bitmap) {
+        //console.log("B");
+        var _this = _bitmap.__this; //力技
+
+        //離したとき...
+        _this.__smallCircle.alpha = 0.3;
+        //console.log(_this.__canvas.__mousemoveHandler);
+        //_this.__canvas.__mousemoveHandler = undefined;
+        _this.__canvas.removeEventListener("mousemove");
+        _this.__canvas.___seekBar = undefined; //超力技
+        //_bitmap.alpha = 0.5;
+        //_this.__canvas.deleteChild(_this.__smallCircle);
+
+        _this.__video.play();
+    }
+
+    __mouseupoutside_whiteCircle(_bitmap) {
+        //console.log("C");
+        var _this = _bitmap.__this; //力技
+
+        //離したとき...
+        _this.__smallCircle.alpha = 0.3;
+
+        _this.__canvas.removeEventListener("mousemove");
+        _this.__canvas.___seekBar = undefined; //超力技
+        //_bitmap.alpha = 0.5;
+        //_this.__canvas.deleteChild(_this.__smallCircle);
+
+        _this.__video.play();
+    }
+
+    __mousemove_canvas(_canvas) {
+        var _seekBar = _canvas.___seekBar;
+        if (_canvas.mouseX < _seekBar.__barBlack.startX) {
+            _seekBar.__whiteCircle.x = _seekBar.__barBlack.startX - 18;
+            _seekBar.__barWhite.endX = _seekBar.__barBlack.startX;
+        } else if (_seekBar.__barBlack.endX < _canvas.mouseX) {
+            _seekBar.__whiteCircle.x = _seekBar.__barBlack.endX - 18;
+            _seekBar.__barWhite.endX = _seekBar.__barBlack.endX;
+        } else {
+            _seekBar.__whiteCircle.x = _canvas.mouseX - 18;
+            _seekBar.__barWhite.endX = _canvas.mouseX;
+            let _percent = (_canvas.mouseX - _seekBar.__barWhite.startX) / _seekBar.__barBlack.width;
+            _seekBar.__video.currentTime = _percent * _seekBar.__video.duration;
+            _seekBar.__video.play();
+        }
+        _seekBar.__smallCircle.x = _seekBar.__whiteCircle.x + 8;
+    }
+
+    //============
+    // SeekBarLoop
+    //============
+    __seekBarLoop(_this) {
+        //barWhite
+        _this.__percent = _this.__video.currentTime / _this.__video.duration;
+        _this.__barWhite.endX = _this.__barWhite.startX + _this.__barWidth * _this.__percent;
+
+        //text1
+        var _sec = Math.floor(_this.__video.currentTime);
+        _this.__text1.text = _this.timeCode(_sec);
+
+        //text2
+        var _sec = Math.floor(_this.__video.duration - _this.__video.currentTime);
+        _this.__text2.text = "-" + _this.timeCode(_sec);
+
+        //whiteCircle（シークバーに追従させる）
+        _this.__whiteCircle.x = _this.__barWhite.endX - 18;
+        _this.__smallCircle.x = _this.__barWhite.endX - 8;
+    }
+
+    timeCode(_sec) {
+        var _hms = "";
+        var _h = _sec / 3600 | 0;
+        var _m = _sec % 3600 / 60 | 0;
+        var _s = _sec % 60;
+    
+        if (_h != 0) {
+            if (_m < 10) _m = "0" + _m;
+            if (_s < 10) _s = "0" + _s;
+            _hms = _h + ":" + _m + ":" + _s;
+        } else if (_m != 0) {
+            if (_m < 10) _m = "0" + _m;
+            if (_s < 10) _s = "0" + _s;
+            _hms = "0:" + _m + ":" + _s;
+        } else {
+            if (_s < 10) _s = "0" + _s;
+            _hms = "0:00:" + _s;
+        }
+    
+        return _hms;
+    }
+
+    delete() {
+        this.__canvas.deleteChild(this.__barBlack);
+        this.__canvas.deleteChild(this.__barWhite);
+        this.__canvas.deleteChild(this.__text1);
+        this.__canvas.deleteChild(this.__text2);
+        this.__canvas.deleteChild(this.__whiteCircle);
+        this.__canvas.deleteChild(this.__smallCircle);
+        clearInterval(this.__seekBarLoopID);
+
+        this.__canvas.removeEventListener("mousemove");
+
+        this.__barBlack = undefined;
+        this.__barWhite = undefined;
+        this.__text1 = undefined;
+        this.__text2 = undefined;
+        this.__whiteCircle = undefined;
+        this.__smallCircle = undefined;
+        this.__seekBarLoopID = undefined;
+    }
+
+    //=======================================
+    // (2) ユーザによるイベントリスナーの定義
+    //=======================================
+    // addEventListener(_event, _function) {
+    //     if (_event == "close") {
+    //         this.__closeHandler = _function;
+    //     }
+    // }
+}

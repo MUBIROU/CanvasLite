@@ -20,7 +20,6 @@ _videoList = [ //優先させたい作品は除く
     "DA-24",
     "DAS-1","DAS-2","DAS-3","DAS-4","DAS-5","DAS-6","DAS-7","DAS-8","DAS-9","DAS-10",
     "DB-30",
-    "DG-21",
     "DK-10","DK-11","DK-12","DK-13","DK-14","DK-15","DK-16",
     "DN-50","DN-56","DN-57","DN-58","DN-62","DN-63","DN-64","DN-65","DN-66","DN-67","DN-68","DN-69","DN-70","DN-71","DN-72","DN-73","DN-75","DN-76","DN-77","DN-78","DN-79","DN-80","DN-81","DN-82","DN-83",
     "DOK-1_1","DOK-1_2","DOK-1_3","DOK-1_4","DOK-1_5","DOK-1_6",
@@ -242,7 +241,14 @@ mousemove_canvas = (_canvas) => {
 // help用ボタン
 //==============
 mouseup_helpButton = (_bitmap) => {
-    alert("XXXXXXXXXXX");
+    //DEBUG==========================
+    var _result = [];
+    _bitmapArray.forEach(function(_bitmap) {
+        _result.push("(" + Math.round(_bitmap.x) + "," + Math.round(_bitmap.y) + ")");
+    });
+    document.write(_result);
+    //DEBUG==========================
+    //alert("XXXXXXXXXXX");
 }
 
 //=======================
@@ -441,9 +447,7 @@ enterframe_canvas3 = (_canvas) => {
                     _canvas.removeEventListener("enterframe");
 
                     //ホーム（../main0/index0.html）にジャンプ
-                    //location.href = "../main0/index0.html";
                     location.href = "../main0/index0.html?param=true"
-                    //location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html?" + "param1=100" + "&" + "param2=200";
                 }
             }
         }
