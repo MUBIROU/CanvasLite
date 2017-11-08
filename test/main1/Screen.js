@@ -276,6 +276,7 @@ class Screen {
         
         _this.__canvas.deleteChild(_this.__smallVideo); //映像を消す
         _this.__smallVideo.stop(); //映像･音を止める
+        _this.__smallVideo = undefined;
 
         _this.__canvas.deleteChild(_this.__bigButton); //拡大ボタンを消す
         _this.__canvas.deleteChild(_this.__exitButton); //exitボタンを消す
@@ -482,6 +483,7 @@ class Screen {
     __timeInBigScreenTimeOut(_this) {
         _this.__bigVideo.stop();
         _this.__canvas.deleteChild(_this.__bigVideo);
+        _this.__bigVideo = undefined;
 
         _this.__bigvideoToCardRectLoopID = setInterval(_this.__bigvideoToCardRectLoop, 17, _this); //≒58.8fps
         _this.__loopCount = - Math.PI/2;
