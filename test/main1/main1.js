@@ -25,7 +25,13 @@ _videoList = [ //優先させたい作品は除く
     "DOK-1_1","DOK-1_2","DOK-1_3","DOK-1_4","DOK-1_5","DOK-1_6",
     "DOK-2_1","DOK-2_2","DOK-2_3","DOK-2_4","DOK-2_6","DOK-2_7",
     "DP-3"
-]
+];
+
+//任意の位置に配置する場合
+_bestPosArray = [
+    [698,441],[349,521],[724,324],[974,162],[453,40],[586,137],[403,360],[232,97],[218,186],[831,360],[795,223],[408,536],[974,432],[533,104],[176,313],[141,129],[280,82],[260,510],[841,52],[705,441],[1119,204],[1046,400],[193,172],[1001,438],[571,30],[499,386],[1146,251],[933,485],[88,202],[399,362],[622,205],[400,457],[488,506],[737,548],[63,352],[453,148],[310,310],[450,236],[115,424],[476,328],[496,435],[851,528],[394,191],[594,469],[42,271],[1084,357],[1032,109],[231,435],[809,185],[754,38],[268,209],[686,166],[387,94],[651,35],[488,538],[871,85],[915,69],[1121,304],[795,512],[282,354],[347,55],[881,206],[956,290],[1054,293],[182,468],[1083,148],[619,547],[973,87],[637,310],[483,194],[143,340],[381,456],[552,308]
+];
+
 randomArray = (_array) => { //作品リストをランダムにする
     _arrayCopy = _array.concat(); //複製
     _arrayNew = [];
@@ -144,11 +150,21 @@ logo = (_canvas, _x, _y) => {
 // 各作品の画像（.png）がロード完了したら実行
 //===========================================
 load_bitmap = (_bitmap) => {
+
     _bitmap.width = 140;
     _bitmap.height = 200;
-    _bitmap.x = 80 + (_canvas.width - 300) * Math.random();
+
+    //ランダムに配置する場合
+    // _bitmap.x = 80 + (_canvas.width - 300) * Math.random();
+    // _bitmap.y = _canvas.height;
+    // _bitmap.__posY = 80 + (_canvas.height - 360) * Math.random();
+    // _bitmap.__disY = _bitmap.y - _bitmap.__posY;
+
+    //任意の位置に配置する場合
+    let _thePos = _bestPosArray.pop();
+    _bitmap.x = _thePos[0];
     _bitmap.y = _canvas.height;
-    _bitmap.__posY = 80 + (_canvas.height - 360) * Math.random();
+    _bitmap.__posY = _thePos[1];
     _bitmap.__disY = _bitmap.y - _bitmap.__posY;
 
     _bitmap.__timerID = setTimeout(callback_start, 1000*Math.random(), _bitmap);
@@ -244,7 +260,7 @@ mouseup_helpButton = (_bitmap) => {
     //DEBUG==========================
     var _result = [];
     _bitmapArray.forEach(function(_bitmap) {
-        _result.push("(" + Math.round(_bitmap.x) + "," + Math.round(_bitmap.y) + ")");
+        _result.push("[" + Math.round(_bitmap.x) + "," + Math.round(_bitmap.y) + "]");
     });
     document.write(_result);
     //DEBUG==========================

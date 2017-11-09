@@ -178,9 +178,12 @@ class Screen {
     //====================
     __loadingTimerID(_this) {
         if (! _this.__smallVideo.isLoaded()) {
+            //var _num = Math.floor(Math.random() * 4) + 1;
+            //console.log(_num);
+            //_this.__loading = new toile.SpriteSheet("../common/loading" + _num + ".png");
             _this.__loading = new toile.SpriteSheet("../common/loading.png");
-            _this.__loading.fps = 30;
-            _this.__loading.alpha = 0.5;
+            _this.__loading.fps = 15;
+            _this.__loading.alpha = 0.8;
             _this.__loading.x = _this.__screen2.x + _this.__screen2.width / 2 - 24;
             _this.__loading.y = _this.__screen2.y + _this.__screen2.height / 2 - 24;
             _this.__canvas.addChild(_this.__loading);
