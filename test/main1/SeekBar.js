@@ -59,7 +59,6 @@ class SeekBar {
         this.__seekBarLoopID = setInterval(this.__seekBarLoop, 50, this); //≒20fps
     }
 
-
     //============
     // SeekBarLoop
     //============

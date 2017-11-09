@@ -167,6 +167,23 @@ class Screen {
 
             //EXITボタンを表示するタイミング（映像のロード完了）を調べるための処理
             _this.__smallVideoLoadCheckLoopID = setInterval(_this.__smallVideoLoadCheckLoop, 200, _this); //=5fps
+
+            //loadingアニメの表示までに少し待機（ロード済み映像の再生時は表示されないぐらい）
+            _this.__loadingTimerID = setTimeout(_this.__loadingTimerID, 350, _this); //0でも意味あり
+        }
+    }
+
+    //====================
+    // loadingアニメの表示
+    //====================
+    __loadingTimerID(_this) {
+        if (! _this.__smallVideo.isLoaded()) {
+            _this.__loading = new toile.SpriteSheet("../common/loading.png");
+            _this.__loading.fps = 30;
+            _this.__loading.alpha = 0.5;
+            _this.__loading.x = _this.__screen2.x + _this.__screen2.width / 2 - 24;
+            _this.__loading.y = _this.__screen2.y + _this.__screen2.height / 2 - 24;
+            _this.__canvas.addChild(_this.__loading);
         }
     }
 
@@ -175,6 +192,8 @@ class Screen {
     //============================================================
     __smallVideoLoadCheckLoop(_this) {
         if (_this.__smallVideo.isLoaded()) {
+            _this.__canvas.deleteChild(_this.__loading); //loadingの削除
+
             clearInterval(_this.__smallVideoLoadCheckLoopID);
             _this.__smallVideoLoadCheckLoopID = undefined;
 
