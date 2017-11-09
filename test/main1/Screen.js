@@ -21,6 +21,9 @@ class Screen {
         this.__bitmap = _bitmap;
         this.__size = _size; //"standard" or "wide"
         this.__closeHandler = undefined;
+
+        //__loadingTimerID()で利用するための事前ローディング
+        this.__loading = new toile.SpriteSheet("../common/loading.png");
     }
 
     //=======================================
@@ -181,7 +184,7 @@ class Screen {
             //var _num = Math.floor(Math.random() * 4) + 1;
             //console.log(_num);
             //_this.__loading = new toile.SpriteSheet("../common/loading" + _num + ".png");
-            _this.__loading = new toile.SpriteSheet("../common/loading.png");
+            //_this.__loading = new toile.SpriteSheet("../common/loading.png");
             _this.__loading.fps = 15;
             _this.__loading.alpha = 0.8;
             _this.__loading.x = _this.__screen2.x + _this.__screen2.width / 2 - 24;
