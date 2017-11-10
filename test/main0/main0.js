@@ -16,10 +16,10 @@ function load_window() {
     _yubi = undefined;
 
     if (location.href.indexOf("?", 0) == -1) {
-        _yubi = new toile.Bitmap("yubi.png");
-        _yubi.x = _canvas.width / 2 - 50;
-        _yubi.y = _canvas.height / 2 - 60;
-        _canvas.addChild(_yubi);
+        // _yubi = new toile.Bitmap("yubi.png");
+        // _yubi.x = _canvas.width / 2 - 50;
+        // _yubi.y = _canvas.height / 2 - 60;
+        // _canvas.addChild(_yubi);
     } else {
         start(_canvas);
     }
