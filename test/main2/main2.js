@@ -12,23 +12,13 @@ function load_window() {
     _video1.isLoop(true);
     _video1.alpha = 0;
     _canvas.addChild(_video1);
-    _timerVideo1 = setInterval(callbackFunction, 17, _canvas);
+    _timerVideo1 = setInterval(videoLoadLoop, 17, _canvas);
 
     //五線譜の生成
-    createScoreLine();
-
-    _cdArray = [];
-    for (let i=0; i<12; i++) {
-        _theCD = new toile.Bitmap("tmp1.png");
-        _theCD.name = "CD" + (i+1);
-        _theCD.x = _canvas.width/2 - 50 + 270 * Math.cos(Math.PI/6 * i - Math.PI/2); //半径320（幅）
-        _theCD.y = _canvas.height/2 - 50 + 270 * Math.sin(Math.PI/6 * i - Math.PI/2); //半径270（高さ）
-        _theCD.alpha = 0.7;
-        _canvas.addChild(_theCD);
-        //_theCD.alpha = 0.8;
-        _cdArray.push(_theCD);
-    }
-    //_cdArray[0].alpha = 1;
+    _scoreLine = new ScoreLine(_canvas);
+    _scoreLine.addEventListener("in", in_scoreLine);
+    _scoreLine.addEventListener("out", out_scoreLine);
+    _scoreLine.in();
 
     //「ホームに戻るボタン」関連
     _homeButton = new toile.Bitmap("../common/home.png");
@@ -52,11 +42,17 @@ function load_window() {
     _logo = logo(_canvas, 15, 15);
 }
 
-callbackFunction = (_canvas) => {
+in_scoreLine = (_scoreLine) => {
+    _circleMenu = new CircleMenu(_canvas);
+    _circleMenu.addEventListener("out", out_circleMenu);
+}
+
+videoLoadLoop = (_canvas) => {
     if (_video1.isLoaded()) {
         if (_video1.alpha < 1) {
             _video1.alpha += 0.01;
         } else {
+            _video1.alpha = 1;
             clearInterval(_timerVideo1);
         }
     }
@@ -114,56 +110,30 @@ logo = (_canvas, _x, _y) => {
     return _logoContainer;
 }
 
-//五線譜の生成
-createScoreLine = () => {
-    _scoreContainer = new toile.Container();
-    _scoreContainer.x = _canvas.width/2;
-    _scoreContainer.y = _canvas.height/2;
-    _canvas.addChild(_scoreContainer);
-
-    //Line1
-    _scoreCircle1 = new toile.Circle(0,0,258);
-    _scoreCircle1.x = -258;
-    _scoreCircle1.y = -258;
-    _scoreCircle1.alpha = 0.5;
-    _scoreContainer.addChild(_scoreCircle1);
-
-    //Line2
-    _scoreCircle2 = new toile.Circle(0,0,264);
-    _scoreCircle2.x = -264;
-    _scoreCircle2.y = -264;
-    _scoreCircle2.alpha = 0.5;
-    _scoreContainer.addChild(_scoreCircle2);
-
-    //Line3
-    _scoreCircle3 = new toile.Circle(0,0,270);
-    _scoreCircle3.x = -270;
-    _scoreCircle3.y = -270;
-    _scoreCircle3.alpha = 0.5;
-    _scoreContainer.addChild(_scoreCircle3);
-
-    //Line4
-    _scoreCircle4 = new toile.Circle(0,0,276);
-    _scoreCircle4.x = -276;
-    _scoreCircle4.y = -276;
-    _scoreCircle4.alpha = 0.5;
-    _scoreContainer.addChild(_scoreCircle4);
-
-    //Line5
-    _scoreCircle5 = new toile.Circle(0,0,282);
-    _scoreCircle5.x = -282;
-    _scoreCircle5.y = -282;
-    _scoreCircle5.alpha = 0.5;
-    _scoreContainer.addChild(_scoreCircle5);
-}
-
-
 enterframe_canvas = (_canvas) => {
     _canvas.drawScreen("#fefefe");
 }
 
-
 mouseup_homeButton = (_bitmap) => {
     //ホーム（../main0/index0.html）にジャンプ
+    //location.href = "../main0/index0.html?param=true"
+    _scoreLine.out(); //DEBUG
+    _circleMenu.out();
+    _timerExitVideoLoopID = setInterval(timerExitVideoLoop, 17, _canvas);
+}
+
+out_scoreLine = (_scoreLine) => {
+    // console.log("A");
+}
+
+timerExitVideoLoop = (_canvas) => {
+    if (_video1.alpha > 0) {
+        _video1.alpha -= 0.037;
+    } else {
+        _video1.stop();
+    }
+}
+
+out_circleMenu = (_circleMenu) => {
     location.href = "../main0/index0.html?param=true"
 }
