@@ -24,13 +24,20 @@ class CircleMenu { //五線譜の生成
         this.__inHandler = undefined;
         this.__outHandler = undefined;
 
+        this.__animationDirection = "stop"; //"stop","right"（時計回り）,"left"（反時計回り）
+        this.__distanceRadian = 0; //最上位（12時）のボタンの位置との「角度差」
+        this.__selectCD = undefined; //選択したボタン（CD型）
+        this.__animationCount = - Math.PI/2; //ボタンの三角関数アニメーションで利用するカウンター
+
         //12個のボタン（CD型）を作成
         this._cdArray = [];
         for (let i=0; i<12; i++) {
             this.__theCD = new toile.Bitmap("tmp1.png");
             this.__theCD.name = "CD" + (i+1);
-            this.__theCD.x = _canvas.width/2 - 50 + 270 * Math.cos(Math.PI/6 * i - Math.PI/2); //半径320（幅）
-            this.__theCD.y = _canvas.height/2 - 50 + 270 * Math.sin(Math.PI/6 * i - Math.PI/2); //半径270（高さ）    
+            this.__theCD.__rotateX = Math.PI/6 * i - Math.PI/2; //角度X（***）
+            this.__theCD.__rotateY = Math.PI/6 * i - Math.PI/2; //角度Y（***）
+            this.__theCD.x = _canvas.width/2 - 50 + 270 * Math.cos(this.__theCD.__rotateX); //半径270（幅）
+            this.__theCD.y = _canvas.height/2 - 50 + 270 * Math.sin(this.__theCD.__rotateY); //半径270（高さ）    
             //this.__theCD.alpha = 1;
             this.__theCD.__springPower = 0.15; //弾力（1.3倍の場合） 0.2
             this.__theCD.__springMinusPower = 0.0002 + Math.random * 0.0001;
@@ -42,7 +49,7 @@ class CircleMenu { //五線譜の生成
             this.__canvas.addChild(this.__theCD);
 
             //12個のボタンの登場アニメーション開始
-            this.__inLoopID = setInterval(this.__inLoop, 17, this); //≒59fps
+            this.__inLoopID = setInterval(this.__inLoop, 17, this); //≒59fp
         }
     }
 
@@ -81,7 +88,9 @@ class CircleMenu { //五線譜の生成
                     //=============================================
                     _this.__inHandler(_this);
                 }
-            }            
+                //12個のボタン機能を有効にする
+                _this.__isMouseEvent(true);
+            }
         };
     }
 
@@ -94,6 +103,86 @@ class CircleMenu { //五線譜の生成
         var _bitmapHeight = 100;
         _bitmap.x = _originX + (_bitmapWidth - _bitmapWidth * _scale) / 2;
         _bitmap.y = _originY + (_bitmapHeight - _bitmapHeight * _scale) / 2;
+    }
+
+    __isMouseEvent(_boolean) { //this => CircleMenu
+        for (let i=0; i<this._cdArray.length; i++) {
+            var _theCD = this._cdArray[i];
+            _theCD.__this = this;
+            if (true) {
+                _theCD.addEventListener("mousedown", this.__mousedown_theCD);
+            } else {
+                _theCD.removeEventListener("mousedown");
+            }
+        }
+    }
+
+    //=======================================
+    //各ボタンを押したとき（TouchOut）の処理
+    //=======================================
+    __mousedown_theCD(_theCD) { //this => Bitmap
+        var _this = _theCD.__this;
+        _this.__selectCD = _theCD;
+        _theCD.__originRotateX = _theCD.__rotateX; //選択した瞬間の角度X
+        _theCD.__originRotateY = _theCD.__rotateY; //選択した瞬間の角度Y
+
+        /******************************************************************
+        /* 角度を調べて回転方向を確定（12時の位置の場合は回転なし）
+        /* 12時（-Math.PI/2）、3時（0）、6時（Math.PI/2）、9時（Math.PI）
+        ******************************************************************/
+        if (_theCD.__rotateX == -Math.PI/2) { //CD1の場合（12時）
+            _this.__animationDirection = "stop"; //回転なし
+            _this.__distanceRadian = _theCD.__rotateX + Math.PI/2; //=0
+
+        } else if (_theCD.__rotateX < Math.PI/2) { //CD2～6の場合（1～5時）
+            _this.__animationDirection = "left"; //反時計回り
+            _this.__distanceRadian = _theCD.__rotateX + Math.PI/2;
+
+        } else { //CD7～12（6～11時）
+            _this.__animationDirection = "right"; //時計回り
+            _this.__distanceRadian = 3*Math.PI/2 - _theCD.__rotateX;
+        }
+
+        //_this.__isMouseEvent(false);
+        _this.__circleAnimationID = setInterval(_this.__circleAnimation, 17, _this, _theCD); //≒59fps
+    }
+
+    //==================================
+    //ボタンがぐるっと回るアニメーション
+    //==================================
+    __circleAnimation(_this, _theCD) { //this => Window, _this => CircleMenu
+        //console.log(_this.__selectCD.name, _this.__animationDirection, _this.__distanceRadian);
+        if (_this.__animationDirection == "stop") {
+            console.log("12時のボタンを選択");
+
+        } else if (_this.__animationDirection == "left") {
+            _this.__animationCount += 0.03;
+            let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
+            if (_cos < 0.998) {
+                _theCD.x = 630 + 270 * Math.cos(_theCD.__originRotateX - _this.__distanceRadian * _cos); //半径270（幅）
+                _theCD.y = 334 + 270 * Math.sin(_theCD.__originRotateY - _this.__distanceRadian * _cos); //半径270（高さ）
+            } else {
+                //console.log(_cos); //0.998710143975583
+                _theCD.x = 630;
+                _theCD.y = 334 - 270;
+                clearInterval(_this.__circleAnimationID);
+                _this.__circleAnimationID = undefined;
+            }
+
+        } else if (_this.__animationDirection == "right") {
+            _this.__animationCount += 0.03;
+            let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
+            if (_cos < 0.998) {
+                _theCD.x = 630 + 270 * Math.cos(_theCD.__originRotateX + _this.__distanceRadian * _cos); //半径270（幅）
+                _theCD.y = 334 + 270 * Math.sin(_theCD.__originRotateY + _this.__distanceRadian * _cos);
+            } else {
+                console.log(_cos); //0.998710143975583
+                _theCD.x = 630;
+                _theCD.y = 334 - 270;
+                clearInterval(_this.__circleAnimationID);
+                _this.__circleAnimationID = undefined;
+            }
+        }
     }
 
     //=======================================
@@ -137,3 +226,28 @@ class CircleMenu { //五線譜の生成
         }
     }
 }
+
+
+
+/*
+    __circleAnimation(_this, _theCD) { //this => Window, _this => CircleMenu
+        //console.log(_this.__selectCD.name, _this.__animationDirection, _this.__distanceRadian);
+        if (_this.__animationDirection == "stop") {
+            console.log("12時のボタンを選択");
+
+        } else if (_this.__animationDirection == "left") {
+            _this.__animationCount += 0.04;
+            let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
+            _theCD.x = 630 + 270 * Math.cos(_theCD.__originRotateX - _this.__distanceRadian * _cos); //半径270（幅）
+            _theCD.y = 334 + 270 * Math.sin(_theCD.__originRotateY - _this.__distanceRadian * _cos); //半径270（高さ）
+
+        } else if (_this.__animationDirection == "right") {
+            _this.__animationCount += 0.04;
+            let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
+
+            _theCD.x = 630 + 270 * Math.cos(_theCD.__originRotateX + _this.__distanceRadian * _cos); //半径270（幅）
+            
+            _theCD.y = 334 + 270 * Math.sin(_theCD.__originRotateY + _this.__distanceRadian * _cos);
+        }
+    }
+*/
