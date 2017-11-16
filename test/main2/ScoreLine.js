@@ -149,9 +149,7 @@ class ScoreLine { //五線譜の生成
 
             clearInterval(_this.__inLoopID);
             _this.__inLoopID = undefined;
-            
             _this.delete();
-
             _this.__outHandler(_this); //OUTイベント発生!!!
         }
     }

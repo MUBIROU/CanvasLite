@@ -54,6 +54,7 @@ videoLoadLoop = (_canvas) => {
         } else {
             _video1.alpha = 1;
             clearInterval(_timerVideo1);
+            //console.log("video")
         }
     }
 }
@@ -123,7 +124,8 @@ mouseup_homeButton = (_bitmap) => {
 }
 
 out_scoreLine = (_scoreLine) => {
-    // console.log("A");
+    //console.log("scoreline");
+    location.href = "../main0/index0.html?param=true"
 }
 
 timerExitVideoLoop = (_canvas) => {
@@ -135,5 +137,6 @@ timerExitVideoLoop = (_canvas) => {
 }
 
 out_circleMenu = (_circleMenu) => {
-    location.href = "../main0/index0.html?param=true"
+    //console.log("circlemenu");
+    //location.href = "../main0/index0.html?param=true"
 }
