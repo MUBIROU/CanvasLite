@@ -138,7 +138,7 @@ timerExitVideoLoop = (_canvas) => {
 }
 
 in_circleMenu = (_circleMenu) => {
-    console.log("in_circleMenu");
+    //console.log("in_circleMenu");
     //location.href = "../main0/index0.html?param=true"
 }
 
