@@ -28,9 +28,10 @@ class CircleMenu { //五線譜の生成
         this.__distanceRadian = 0; //最上位（12時）のボタンの位置との「角度差」
         this.__selectCD = undefined; //選択したボタン（CD型）
         this.__animationCount = - Math.PI/2; //ボタンの三角関数アニメーションで利用するカウンター
+        this.__finishCount = 0; //任意の処理が12個全て完了したかを調べるカウンター
 
         //12個のボタン（CD型）を作成
-        this._cdArray = [];
+        this.__cdArray = [];
         for (let i=0; i<12; i++) {
             this.__theCD = new toile.Bitmap("tmp1.png");
             this.__theCD.name = "CD" + (i+1);
@@ -44,12 +45,13 @@ class CircleMenu { //五線譜の生成
             this.__theCD.__originX = this.__theCD.x;
             this.__theCD.__originY = this.__theCD.y;
             this.__changeScale(this.__theCD, 0, this.__theCD.x, this.__theCD.y); //Bitmap.scaleでは中心軸がずれるため
-            this._cdArray.push(this.__theCD);
+            this.__cdArray.push(this.__theCD);
             this.__canvas.addChild(this.__theCD);
-
-            //12個のボタンの登場アニメーション開始
-            this.__inLoopID = setInterval(this.__inLoop, 17, this); //≒59fp
+            //console.log(this.__inLoopID)
         }
+
+        //12個のボタンの登場アニメーション開始
+        this.__inLoopID = setInterval(this.__inLoop, 17, this); //≒59fp
     }
 
     //======================
@@ -66,29 +68,33 @@ class CircleMenu { //五線譜の生成
     //================================
     //12個のボタンの登場アニメーション
     //================================
-    __inLoop(_this) {
-        for (let i=0; i<_this._cdArray.length; i++) {
-            var _theCD = _this._cdArray[i];
+    __inLoop(_this) { //this == Window
+        //console.log("B")
+        for (let i=0; i<_this.__cdArray.length; i++) {
+            var _theCD = _this.__cdArray[i];
 
-            _theCD.__springCount += 0.03; //値が小さい程... 0.03
+            _theCD.__springCount += 0.4; //値が小さい程... 0.03
             let _theScale = 1 + _theCD.__springPower * Math.cos(_theCD.__springCount);
 
             if (_theCD.__springPower > 0) {
-                _theCD.__springPower -= 0.00025; //値が大きい程... 0.0003
+                _theCD.__springPower -= 0.003; //値が大きい程... 0.0003
                 //Bitmap.scaleでは中心軸がずれるため
                 _this.__changeScale(_theCD, _theScale, _theCD.__originX, _theCD.__originY);
+            
             } else {
                 _theCD.__springPower = 0;
-                clearInterval(_this.__inLoopID);
-                _this.__inLoopID = undefined;
-                if (_this.__inHandler != undefined) {
-                    //=============================================
-                    // INイベント（12個のボタンの表示完了）発生!!!
-                    //=============================================
-                    _this.__inHandler(_this);
+                if (++ _this.__finishCount == 12) {
+                    clearInterval(_this.__inLoopID);
+                    _this.__inLoopID = undefined;
+                    _this.__finishCount = 0;
+                    _this.__isMouseEvent(true); //12個のボタン機能を有効にする
+                    if (_this.__inHandler != undefined) {
+                        //=============================================
+                        // INイベント（12個のボタンの表示完了）発生!!!
+                        //=============================================
+                        _this.__inHandler(_this);
+                    }
                 }
-                //12個のボタン機能を有効にする
-                _this.__isMouseEvent(true);
             }
         };
     }
@@ -105,8 +111,9 @@ class CircleMenu { //五線譜の生成
     }
 
     __isMouseEvent(_boolean) { //this => CircleMenu
-        for (let i=0; i<this._cdArray.length; i++) {
-            var _theCD = this._cdArray[i];
+        //console.log("A:" + _boolean);
+        for (let i=0; i<this.__cdArray.length; i++) {
+            var _theCD = this.__cdArray[i];
             _theCD.__this = this;
             if (true) {
                 _theCD.addEventListener("mousedown", this.__mousedown_theCD);
@@ -127,8 +134,8 @@ class CircleMenu { //五線譜の生成
         _theCD.__originRotate = _theCD.__rotate; //選択した瞬間の角度X
 
         //選択CD型ボタンと他のCD型ボタンとの角度差
-        for (let i=0; i<_this._cdArray.length; i++) {
-            let _tmpCD = _this._cdArray[i];
+        for (let i=0; i<_this.__cdArray.length; i++) {
+            let _tmpCD = _this.__cdArray[i];
             if (_tmpCD != _theCD) {
                 //（どれかを選択した瞬間の）選択されたもの以外のCD型ボタンの角度X,Y
                 _tmpCD.__distanceSelectRadian = _tmpCD.__rotate - _theCD.__rotate;
@@ -144,7 +151,7 @@ class CircleMenu { //五線譜の生成
     //===================================================================
     __mousedownTimeout(_theCD) { //this == Window
         var _this = _theCD.__this;
-        console.log(_theCD.__rotate); //DEBUG
+        //console.log(_theCD.__rotate); //DEBUG
         /******************************************************************
         /* 角度を調べて回転方向を確定（12時の位置の場合は回転なし）
         /* 12時（-Math.PI/2）、3時（0）、6時（Math.PI/2）、9時（Math.PI）
@@ -193,8 +200,8 @@ class CircleMenu { //五線譜の生成
                 _theCD.y = 334 + 270 * Math.sin(_nextRotation); //半径270（高さ）
         
                 //選択されたもの以外のCD型ボタンの処理
-                for (let i=0; i<_this._cdArray.length; i++) {
-                    let _tmpCD = _this._cdArray[i];
+                for (let i=0; i<_this.__cdArray.length; i++) {
+                    let _tmpCD = _this.__cdArray[i];
                     if (_tmpCD != _theCD) {
                         _tmpCD.x = 630 + 270 * Math.cos(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（幅）
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
@@ -210,8 +217,8 @@ class CircleMenu { //五線譜の生成
 
                 //選択されたもの以外のCD型ボタンの処理（＝ぐるっと回るアニメーションの完了）
                 let _nextRotation = _theCD.__originRotate - _this.__distanceRadian;
-                for (let i=0; i<_this._cdArray.length; i++) {
-                    let _tmpCD = _this._cdArray[i];
+                for (let i=0; i<_this.__cdArray.length; i++) {
+                    let _tmpCD = _this.__cdArray[i];
                     if (_tmpCD != _theCD) {
                         _tmpCD.x = 630 + 270 * Math.cos(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（幅）
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
@@ -234,8 +241,8 @@ class CircleMenu { //五線譜の生成
                 _theCD.y = 334 + 270 * Math.sin(_nextRotation);
 
                 //選択されたもの以外のCD型ボタンの処理
-                for (let i=0; i<_this._cdArray.length; i++) {
-                    let _tmpCD = _this._cdArray[i];
+                for (let i=0; i<_this.__cdArray.length; i++) {
+                    let _tmpCD = _this.__cdArray[i];
                     if (_tmpCD != _theCD) {
                         _tmpCD.x = 630 + 270 * Math.cos(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（幅）
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
@@ -251,8 +258,8 @@ class CircleMenu { //五線譜の生成
 
                 //選択されたもの以外のCD型ボタンの処理
                 let _nextRotation = _theCD.__originRotate + _this.__distanceRadian;
-                for (let i=0; i<_this._cdArray.length; i++) {
-                    let _tmpCD = _this._cdArray[i];
+                for (let i=0; i<_this.__cdArray.length; i++) {
+                    let _tmpCD = _this.__cdArray[i];
                     if (_tmpCD != _theCD) {
                         _tmpCD.x = 630 + 270 * Math.cos(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（幅）
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
@@ -270,9 +277,9 @@ class CircleMenu { //五線譜の生成
     //パブリックメソッド：12個のボタンを消す
     //=======================================
     out() {
-        for (let i=0; i<this._cdArray.length; i++) {
-            this._cdArray[i].__springPower = 0.12;
-            this._cdArray[i].__springCount = 0;
+        for (let i=0; i<this.__cdArray.length; i++) {
+            this.__cdArray[i].__springPower = 0.12;
+            this.__cdArray[i].__springCount = 0;
         }
         //12個のボタンを消すアニメーション開始
         this.__outLoopID = setInterval(this.__outLoop, 17, this); //≒59fps
@@ -282,26 +289,29 @@ class CircleMenu { //五線譜の生成
     //12個のボタンを消すアニメーション
     //================================
     __outLoop(_this) {
-        for (let i=0; i<_this._cdArray.length; i++) {
-            var _theCD = _this._cdArray[i];
+        for (let i=0; i<_this.__cdArray.length; i++) {
+            var _theCD = _this.__cdArray[i];
 
-            _theCD.__springCount += 0.03; //値が小さい程...
+            _theCD.__springCount += 0.4; //値が小さい程...
             let _theScale = 1 + _theCD.__springPower * Math.cos(_theCD.__springCount);
 
             if (_theCD.__springPower > 0) {
-                _theCD.__springPower -= 0.0003; //値が大きい程..
+                _theCD.__springPower -= 0.003; //値が大きい程..
                 if (_theCD.alpha > 0) _theCD.alpha -= 0.04;
                 //Bitmap.scaleでは中心軸がずれるため
                 _this.__changeScale(_theCD, _theScale, _theCD.__originX, _theCD.__originY);
             } else {
                 _theCD.__springPower = 0;
-                clearInterval(_this.__outLoopID);
-                _this.__outLoopID = undefined;
-                if (_this.__outHandler != undefined) {
-                    //===========================================
-                    // OUTイベント（12個のボタンが消えた）発生!!!
-                    //===========================================
-                    _this.__outHandler(_this);
+                if (++ _this.__finishCount == 12) {
+                    clearInterval(_this.__outLoopID);
+                    _this.__outLoopID = undefined;
+                    _this.__finishCount = 0;
+                    if (_this.__outHandler != undefined) {
+                        //===========================================
+                        // OUTイベント（12個のボタンが消えた）発生!!!
+                        //===========================================
+                        _this.__outHandler(_this);
+                    }
                 }
             }
         }

@@ -44,6 +44,7 @@ function load_window() {
 
 in_scoreLine = (_scoreLine) => {
     _circleMenu = new CircleMenu(_canvas);
+    _circleMenu.addEventListener("in", in_circleMenu)
     _circleMenu.addEventListener("out", out_circleMenu);
 }
 
@@ -134,6 +135,11 @@ timerExitVideoLoop = (_canvas) => {
     } else {
         _video1.stop();
     }
+}
+
+in_circleMenu = (_circleMenu) => {
+    console.log("in_circleMenu");
+    //location.href = "../main0/index0.html?param=true"
 }
 
 out_circleMenu = (_circleMenu) => {
