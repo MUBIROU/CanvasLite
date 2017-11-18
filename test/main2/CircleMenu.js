@@ -26,12 +26,17 @@ class CircleMenu { //五線譜の生成
 
         this.init(); //初期値の設定
 
+        this.__positionList = []; //CD型ボタンの固定ポジション（角度＝円を12分割）のリスト
+        for (let i=0; i<12; i++) {
+            this.__positionList.push(Math.PI/6 * i - Math.PI/2);
+        }
+
         //12個のボタン（CD型）を作成
         this.__cdArray = [];
         for (let i=0; i<12; i++) {
             this.__theCD = new toile.Bitmap("tmp1.png");
             this.__theCD.name = "CD" + (i+1);
-            this.__theCD.__rotate = Math.PI/6 * i - Math.PI/2; //角度X（***）
+            this.__theCD.__rotate = this.__positionList[i]; // = Math.PI/6 * i - Math.PI/2;
             this.__theCD.x = _canvas.width/2 - 50 + 270 * Math.cos(this.__theCD.__rotate); //半径270（幅）
             this.__theCD.y = _canvas.height/2 - 50 + 270 * Math.sin(this.__theCD.__rotate); //半径270（高さ）    
             //this.__theCD.alpha = 1;
@@ -132,7 +137,7 @@ class CircleMenu { //五線譜の生成
     __mouseup_theCD(_theCD) { //this => Bitmap
         var _this = _theCD.__this;
 
-        console.log(_theCD.name, _theCD.__rotate); //DEBUG（問題はここだ！！！！！！！！！！）
+        //console.log(_theCD.name, _theCD.__rotate);
 
         //選択CD型ボタンの角度
         _this.__selectCD = _theCD;
@@ -157,6 +162,7 @@ class CircleMenu { //五線譜の生成
     //===================================================================
     __mouseupTimeout(_theCD) { //this == Window  ← ★
         var _this = _theCD.__this;
+
         /******************************************************************
         /* 角度を調べて回転方向を確定（12時の位置の場合は回転なし）
         /* 12時（-Math.PI/2）、3時（0）、6時（Math.PI/2）、9時（Math.PI）
@@ -173,6 +179,8 @@ class CircleMenu { //五線譜の生成
             _this.__animationDirection = "right"; //時計回り
             _this.__distanceRadian = 3*Math.PI/2 - _theCD.__rotate;
         }
+
+        //console.log(_theCD.name, _theCD.__rotate, _this.__animationDirection, _this.__distanceRadian);
 
         _this.__circleAnimationID = setInterval(_this.__circleAnimation, 17, _this, _theCD); //≒59fps
     }
@@ -191,9 +199,13 @@ class CircleMenu { //五線譜の生成
     __circleAnimation(_this, _theCD) { //this => Window, _this => CircleMenu
         //console.log(_this.__selectCD.name, _this.__animationDirection, _this.__distanceRadian);
         
+        /******************** 12時の位置のボタンを選択した場合 ********************/
         if (_this.__animationDirection == "stop") {
-            console.log("12時のボタンを選択");
+            clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了①
+            _this.__circleAnimationID = undefined;
+            _this.init();
 
+        /******************* 1～5時の位置のボタンを選択した場合 *******************/
         } else if (_this.__animationDirection == "left") {
             _this.__animationCount += 0.03;
             let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
@@ -227,7 +239,7 @@ class CircleMenu { //五線譜の生成
                     if (_tmpCD != _theCD) {
                         _tmpCD.x = 630 + 270 * Math.cos(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（幅）
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
-                        _tmpCD.__rotate = _theCD.__rotate + _tmpCD.__distanceSelectRadian;
+                        _this.__positionReset(_theCD, _tmpCD, i); //少し苦戦したところ
                     }
                 }
 
@@ -236,6 +248,7 @@ class CircleMenu { //五線譜の生成
                 _this.init();
             }
 
+        /******************* 6～11時の位置のボタンを選択した場合 *******************/
         } else if (_this.__animationDirection == "right") {
             _this.__animationCount += 0.03;
             let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
@@ -269,7 +282,7 @@ class CircleMenu { //五線譜の生成
                     if (_tmpCD != _theCD) {
                         _tmpCD.x = 630 + 270 * Math.cos(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（幅）
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
-                        _tmpCD.__rotate = 2*Math.PI + _theCD.__rotate + _tmpCD.__distanceSelectRadian;
+                        _this.__positionReset(_theCD, _tmpCD, i); //少し苦戦したところ
                     }
                 }
 
@@ -278,6 +291,15 @@ class CircleMenu { //五線譜の生成
                 _this.init();
             }
         }
+    }
+
+    //==============================================
+    //汎用関数：CD型ボタンの__rotation値のリセット化
+    //==============================================
+    __positionReset(_selectCD, _targetCD, _i) {
+        let _selectNum = Number(_selectCD.name.substr(2)); //"CDXX"の2文字以降を取得
+        let _positionNum = (12 - (_selectNum - 1 - _i)) % 12;
+        _targetCD.__rotate = this.__positionList[_positionNum];
     }
 
     //=======================================
