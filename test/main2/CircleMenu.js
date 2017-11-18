@@ -119,11 +119,10 @@ class CircleMenu { //五線譜の生成
     }
 
     __isMouseEvent(_boolean) { //this => CircleMenu
-        //console.log("A:" + _boolean);
         for (let i=0; i<this.__cdArray.length; i++) {
             var _theCD = this.__cdArray[i];
             _theCD.__this = this;
-            if (true) {
+            if (_boolean) {
                 _theCD.addEventListener("mouseup", this.__mouseup_theCD);
             } else {
                 _theCD.removeEventListener("mouseup");
@@ -137,7 +136,8 @@ class CircleMenu { //五線譜の生成
     __mouseup_theCD(_theCD) { //this => Bitmap
         var _this = _theCD.__this;
 
-        //console.log(_theCD.name, _theCD.__rotate);
+        //一時的にボタン機能をOFF
+        _this.__isMouseEvent(false);
 
         //選択CD型ボタンの角度
         _this.__selectCD = _theCD;
@@ -154,13 +154,12 @@ class CircleMenu { //五線譜の生成
 
         //マウスダウン（TouchOut）のXXXミリ秒後にCD型ボタンをアニメーションさせる
         _this.__mouseupTimeoutID = setTimeout(_this.__mouseupTimeout, 0, _theCD); //→ ★
-        _this.__isMouseEvent(false);
     }
 
     //===================================================================
     //マウスダウン（TouchOut）XXXミリ秒後のCD型ボタンのアニメーション処理
     //===================================================================
-    __mouseupTimeout(_theCD) { //this == Window  ← ★
+    __mouseupTimeout(_theCD) { //this == Window ← ★
         var _this = _theCD.__this;
 
         /******************************************************************
@@ -179,8 +178,6 @@ class CircleMenu { //五線譜の生成
             _this.__animationDirection = "right"; //時計回り
             _this.__distanceRadian = 3*Math.PI/2 - _theCD.__rotate;
         }
-
-        //console.log(_theCD.name, _theCD.__rotate, _this.__animationDirection, _this.__distanceRadian);
 
         _this.__circleAnimationID = setInterval(_this.__circleAnimation, 17, _this, _theCD); //≒59fps
     }
@@ -204,6 +201,9 @@ class CircleMenu { //五線譜の生成
             clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了①
             _this.__circleAnimationID = undefined;
             _this.init();
+
+            //一時的にOFFにしていたボタン機能をONに戻す
+            _this.__isMouseEvent(true);
 
         /******************* 1～5時の位置のボタンを選択した場合 *******************/
         } else if (_this.__animationDirection == "left") {
@@ -246,6 +246,9 @@ class CircleMenu { //五線譜の生成
                 clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了①
                 _this.__circleAnimationID = undefined;
                 _this.init();
+
+                //一時的にOFFにしていたボタン機能をONに戻す
+                _this.__isMouseEvent(true);
             }
 
         /******************* 6～11時の位置のボタンを選択した場合 *******************/
@@ -289,6 +292,9 @@ class CircleMenu { //五線譜の生成
                 clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了②
                 _this.__circleAnimationID = undefined;
                 _this.init();
+
+                //一時的にOFFにしていたボタン機能をONに戻す
+                _this.__isMouseEvent(true);
             }
         }
     }
