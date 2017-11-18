@@ -198,12 +198,12 @@ class CircleMenu { //五線譜の生成
         
         /******************** 12時の位置のボタンを選択した場合 ********************/
         if (_this.__animationDirection == "stop") {
-            clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了①
+            clearInterval(_this.__circleAnimationID); //ぐるっと回る（ここは回らないけれど）アニメーション完了①
             _this.__circleAnimationID = undefined;
             _this.init();
 
-            //一時的にOFFにしていたボタン機能をONに戻す
-            _this.__isMouseEvent(true);
+            //選択したボタンをビヨヨンとアニメーション開始①
+            _this.__startSelectButtonAnimation(_theCD);
 
         /******************* 1～5時の位置のボタンを選択した場合 *******************/
         } else if (_this.__animationDirection == "left") {
@@ -243,12 +243,12 @@ class CircleMenu { //五線譜の生成
                     }
                 }
 
-                clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了①
+                clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了②
                 _this.__circleAnimationID = undefined;
                 _this.init();
 
-                //一時的にOFFにしていたボタン機能をONに戻す
-                _this.__isMouseEvent(true);
+                //選択したボタンをビヨヨンとアニメーション開始②
+                _this.__startSelectButtonAnimation(_theCD);
             }
 
         /******************* 6～11時の位置のボタンを選択した場合 *******************/
@@ -289,13 +289,49 @@ class CircleMenu { //五線譜の生成
                     }
                 }
 
-                clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了②
+                clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了③
                 _this.__circleAnimationID = undefined;
                 _this.init();
 
-                //一時的にOFFにしていたボタン機能をONに戻す
-                _this.__isMouseEvent(true);
+                //選択したボタンをビヨヨンとアニメーション開始③
+                _this.__startSelectButtonAnimation(_theCD);
             }
+        }
+    }
+
+
+    //======================================================
+    //汎用関数：選択したボタンをビヨヨンとアニメーション開始
+    //======================================================
+    __startSelectButtonAnimation(_selectCD) {
+        this.__selectButtonAnimLoopID = setInterval(this.__selectButtonAnimLoop, 17, this, _selectCD); //≒59fp
+        _selectCD.__originX = _selectCD.x;
+        _selectCD.__originY = _selectCD.y;
+        _selectCD.__springPower = 0.12;
+        _selectCD.__springCount = 0;
+    }
+    
+    //========================================
+    //選択したボタンをビヨヨンとアニメーション
+    //========================================
+    __selectButtonAnimLoop(_this, _selectCD) { //this == Window
+        _selectCD.__springCount += 0.4; //値が小さい程... 0.03
+        let _theScale = 1 + _selectCD.__springPower * Math.cos(_selectCD.__springCount);
+
+        if (_selectCD.__springPower > 0) {
+            _selectCD.__springPower -= 0.003; //値が大きい程... 0.0003
+            //Bitmap.scaleでは中心軸がずれるため
+            _this.__changeScale(_selectCD, _theScale, _selectCD.__originX, _selectCD.__originY);
+        
+        } else {
+            _selectCD.__springPower = 0;
+            clearInterval(_this.__selectButtonAnimLoopID);
+            _this.__selectButtonAnimLoopID = undefined;
+
+            //一時的にOFFにしていたボタン機能をONに戻す
+            _this.__isMouseEvent(true);
+
+            console.log(_selectCD.name + ": 音楽再生開始"); //←ここまできた!（2017-11-18T15:15）
         }
     }
 
