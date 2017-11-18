@@ -34,7 +34,7 @@ class CircleMenu { //五線譜の生成
         //12個のボタン（CD型）を作成
         this.__cdArray = [];
         for (let i=0; i<12; i++) {
-            this.__theCD = new toile.Bitmap("tmp1.png");
+            this.__theCD = new toile.Bitmap("btn" + (i+1) + ".png");
             this.__theCD.name = "CD" + (i+1);
             this.__theCD.__rotate = this.__positionList[i]; // = Math.PI/6 * i - Math.PI/2;
             this.__theCD.x = _canvas.width/2 - 50 + 270 * Math.cos(this.__theCD.__rotate); //半径270（幅）
