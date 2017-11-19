@@ -152,6 +152,11 @@ class CircleMenu { //五線譜の生成
             }
         }
 
+        //シークサークルが表示されている場合は消す
+        if (_this.__seekCircle != undefined) {
+            _this.__canvas.deleteChild(_this.__seekCircle);
+        }
+
         //マウスダウン（TouchOut）のXXXミリ秒後にCD型ボタンをアニメーションさせる
         _this.__mouseupTimeoutID = setTimeout(_this.__mouseupTimeout, 0, _theCD); //→ ★
     }
@@ -304,11 +309,21 @@ class CircleMenu { //五線譜の生成
     //汎用関数：選択したボタンをビヨヨンとアニメーション開始
     //======================================================
     __startSelectButtonAnimation(_selectCD) {
-        this.__selectButtonAnimLoopID = setInterval(this.__selectButtonAnimLoop, 17, this, _selectCD); //≒59fp
+        //アニメーション準備
         _selectCD.__originX = _selectCD.x;
         _selectCD.__originY = _selectCD.y;
         _selectCD.__springPower = 0.12;
         _selectCD.__springCount = 0;
+
+        //シークサークルを表示
+        this.__seekCircle = new toile.Bitmap("seekCircle.png");
+        this.__seekCircle.x = _selectCD.x - 10;
+        this.__seekCircle.y = _selectCD.y - 10;
+        this.__seekCircle.alpha = 0;
+        this.__canvas.addChild(this.__seekCircle);
+
+        //アニメーション開始
+        this.__selectButtonAnimLoopID = setInterval(this.__selectButtonAnimLoop, 17, this, _selectCD); //≒59fp
     }
     
     //========================================
@@ -322,14 +337,24 @@ class CircleMenu { //五線譜の生成
             _selectCD.__springPower -= 0.003; //値が大きい程... 0.0003
             //Bitmap.scaleでは中心軸がずれるため
             _this.__changeScale(_selectCD, _theScale, _selectCD.__originX, _selectCD.__originY);
-        
+            _this.__changeScale(_this.__seekCircle, _theScale, _selectCD.__originX-10, _selectCD.__originY-10);
+            _this.__seekCircle.alpha += 0.024;
+
         } else {
             _selectCD.__springPower = 0;
             clearInterval(_this.__selectButtonAnimLoopID);
             _this.__selectButtonAnimLoopID = undefined;
 
+            //スケールを1にする
+            _this.__changeScale(_selectCD, 1, _selectCD.__originX, _selectCD.__originY);
+            _this.__changeScale(_this.__seekCircle, 1, _selectCD.__originX-10, _selectCD.__originY-10);
+
             //一時的にOFFにしていたボタン機能をONに戻す
             _this.__isMouseEvent(true);
+
+            //シークサークルを表示
+            //console.log(_this.__seekCircle.alpha); //0.96000...
+            _this.__seekCircle.alpha = 1;
 
             console.log(_selectCD.name + ": 音楽再生開始"); //←ここまできた!（2017-11-18T15:15）
         }
@@ -368,9 +393,15 @@ class CircleMenu { //五線譜の生成
 
             if (_theCD.__springPower > 0) {
                 _theCD.__springPower -= 0.003; //値が大きい程..
-                if (_theCD.alpha > 0) _theCD.alpha -= 0.04;
+                if (_theCD.alpha > 0) {
+                    _theCD.alpha -= 0.04;
+                    if (_this.__seekCircle != undefined) _this.__seekCircle.alpha -= 0.04;
+                }
                 //Bitmap.scaleでは中心軸がずれるため
                 _this.__changeScale(_theCD, _theScale, _theCD.__originX, _theCD.__originY);
+                if (_this.__seekCircle != undefined) {
+                    _this.__changeScale(_this.__seekCircle, _theScale, _theCD.__originX-10, _theCD.__originY-10);
+                }
             } else {
                 _theCD.__springPower = 0;
                 if (++ _this.__finishCount == 12) {
