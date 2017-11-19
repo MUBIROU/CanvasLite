@@ -21,6 +21,22 @@ class CircleMenu { //五線譜の生成
     constructor(_canvas) {
         this.__canvas = _canvas;
 
+        this.__soundList = [
+            "01_gomenne",
+            "02_hokkori tea time",
+            "03_In That Mood",
+            "04_inaka no daisougen",
+            "05_kanasimi ni sakuhana",
+            "06_kuuhaku to seizyaku",
+            "07_Let It Happen",
+            "08_Lovely Day",
+            "09_mizu no mati",
+            "10_namida no imi",
+            "11_odayakana zikan",
+            "12_Pieces of a Dream"
+        ]; //"anata wo siritakute"（オルゴール）
+        //console.log(this.__soundList.length); //12
+
         this.__inHandler = undefined;
         this.__outHandler = undefined;
 
@@ -55,6 +71,10 @@ class CircleMenu { //五線譜の生成
     }
 
     init() { //初期値の設定
+        if (this.__circleAnimationID != undefined) {
+            clearInterval(this.__circleAnimationID); //ぐるっと回るアニメーション完了②
+            this.__circleAnimationID = undefined;
+        }
         this.__animationDirection = "stop"; //"stop","right"（時計回り）,"left"（反時計回り）
         this.__distanceRadian = 0; //最上位（12時）のボタンの位置との「角度差」
         this.__selectCD = undefined; //選択したボタン（CD型）
@@ -135,6 +155,16 @@ class CircleMenu { //五線譜の生成
     //=======================================
     __mouseup_theCD(_theCD) { //this => Bitmap
         var _this = _theCD.__this;
+
+        //再生中の曲があればフェードアウトする
+        if (_this.__playSound != undefined) {
+            _this.__playSound.fadeOut(1.5); //曲のフェードアウトと再生開始のタイミングの調整（秒）
+        }
+
+        //曲の再生準備
+        let _selectNum = Number(_theCD.name.substr(2)); //"CDXX"の2文字以降を取得
+        _this.__playSound = new toile.Sound("mp3/" + _this.__soundList[_selectNum-1] + ".mp3");
+        //_this.__playSound.play();
 
         //一時的にボタン機能をOFF
         _this.__isMouseEvent(false);
@@ -248,8 +278,6 @@ class CircleMenu { //五線譜の生成
                     }
                 }
 
-                clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了②
-                _this.__circleAnimationID = undefined;
                 _this.init();
 
                 //選択したボタンをビヨヨンとアニメーション開始②
@@ -294,8 +322,6 @@ class CircleMenu { //五線譜の生成
                     }
                 }
 
-                clearInterval(_this.__circleAnimationID); //ぐるっと回るアニメーション完了③
-                _this.__circleAnimationID = undefined;
                 _this.init();
 
                 //選択したボタンをビヨヨンとアニメーション開始③
@@ -356,8 +382,24 @@ class CircleMenu { //五線譜の生成
             //console.log(_this.__seekCircle.alpha); //0.96000...
             _this.__seekCircle.alpha = 1;
 
+            
+            //曲の再生開始
             console.log(_selectCD.name + ": 音楽再生開始"); //←ここまできた!（2017-11-18T15:15）
+            _this.__playSound.play();
+            _this.__playSoundTimerID = setInterval(_this.__playSoundTimer, 40, _this, _selectCD); //25fps
+
+            //
+            _selectCD.regX = _selectCD.regY = 50;
         }
+    }
+
+    //================================
+    //曲の再生が完了したかのチェック用
+    //================================
+    __playSoundTimer(_this, _selectCD) {
+        let _sound = _this.__playSound;
+        _selectCD.rotate += 8; //33.3..回転/分
+        //console.log(100 * _sound.currentTime/_sound.duration); //0.00..～100
     }
 
     //==============================================
