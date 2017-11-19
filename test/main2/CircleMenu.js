@@ -39,6 +39,7 @@ class CircleMenu { //五線譜の生成
 
         this.__inHandler = undefined;
         this.__outHandler = undefined;
+        this.__oldSelectCD = undefined; //2017-11-19T17:30
 
         this.init(); //初期値の設定
 
@@ -77,9 +78,14 @@ class CircleMenu { //五線譜の生成
         }
         this.__animationDirection = "stop"; //"stop","right"（時計回り）,"left"（反時計回り）
         this.__distanceRadian = 0; //最上位（12時）のボタンの位置との「角度差」
-        this.__selectCD = undefined; //選択したボタン（CD型）
+        //this.__selectCD = undefined; //選択したボタン（CD型）
         this.__animationCount = - Math.PI/2; //ボタンの三角関数アニメーションで利用するカウンター
         this.__finishCount = 0; //任意の処理が12個全て完了したかを調べるカウンター
+
+        if (this.__oldSelectCD != undefined) {
+            this.__oldSelectCD.rotate = 0;
+            //console.log(this.__oldSelectCD.name, this.__oldSelectCD.rotate); //DEBUG
+        }
     }
 
     //======================
@@ -169,6 +175,11 @@ class CircleMenu { //五線譜の生成
         //一時的にボタン機能をOFF
         _this.__isMouseEvent(false);
 
+        if (_this.__selectCD != undefined) {
+            clearInterval(_this.__playSoundTimerID);
+            _this.__playSoundTimerID = undefined;
+            _this.__oldSelectCD = _this.__selectCD;
+        }
         //選択CD型ボタンの角度
         _this.__selectCD = _theCD;
         _theCD.__originRotate = _theCD.__rotate; //選択した瞬間の角度X
@@ -185,6 +196,11 @@ class CircleMenu { //五線譜の生成
         //シークサークルが表示されている場合は消す
         if (_this.__seekCircle != undefined) {
             _this.__canvas.deleteChild(_this.__seekCircle);
+        }
+
+        //シークスタートポイントが表示されている場合は消す
+        if (_this.__seekStartPoint != undefined) {
+            _this.__canvas.deleteChild(_this.__seekStartPoint);
         }
 
         //マウスダウン（TouchOut）のXXXミリ秒後にCD型ボタンをアニメーションさせる
@@ -215,6 +231,11 @@ class CircleMenu { //五線譜の生成
         }
 
         _this.__circleAnimationID = setInterval(_this.__circleAnimation, 17, _this, _theCD); //≒59fps
+        
+        if (_this.__oldSelectCD != undefined) {
+            _this.__oldRotateToZero = 360 - _this.__oldSelectCD.rotate % 360;
+        }
+        _this.____count = 0;
     }
     
     //=============================================================
@@ -225,11 +246,17 @@ class CircleMenu { //五線譜の生成
         clearTimeout(_bitmap.__timerID);
     }
 
-    //==================================
-    //ボタンがぐるっと回るアニメーション
-    //==================================
+    //======================================================
+    //ボタンがぐるっと回るアニメーション（51回繰り返される）
+    //======================================================
     __circleAnimation(_this, _theCD) { //this => Window, _this => CircleMenu
         //console.log(_this.__selectCD.name, _this.__animationDirection, _this.__distanceRadian);
+
+        //直前まで回転していたCD型ボタンを角度0まで戻す
+        if (_this.__oldSelectCD != undefined) {
+            let _nextRotate = _this.__oldSelectCD.rotate + _this.__oldRotateToZero/51;
+            _this.__oldSelectCD.rotate = _nextRotate;
+        }
         
         /******************** 12時の位置のボタンを選択した場合 ********************/
         if (_this.__animationDirection == "stop") {
@@ -384,12 +411,21 @@ class CircleMenu { //五線譜の生成
 
             
             //曲の再生開始
-            console.log(_selectCD.name + ": 音楽再生開始"); //←ここまできた!（2017-11-18T15:15）
+            //console.log(_selectCD.name + ": 音楽再生開始"); //←ここまできた!（2017-11-18T15:15）
             _this.__playSound.play();
             _this.__playSoundTimerID = setInterval(_this.__playSoundTimer, 40, _this, _selectCD); //25fps
 
-            //
+            //回転軸の調整
             _selectCD.regX = _selectCD.regY = 50;
+            _this.__seekCircle.regX = _this.__seekCircle.regY = _this.__seekCircle.width / 2; 
+
+            //シークスタートポイントを表示
+            _this.__seekStartPoint = new toile.Bitmap("seekStartPoint.png");
+            _this.__seekStartPoint.x = _selectCD.x + _selectCD.width/2 - 5;
+            _this.__seekStartPoint.y = _selectCD.y - 10;
+            _this.__seekStartPoint.alpha = 0.5;
+            _this.__canvas.addChild(_this.__seekStartPoint);
+            _this.__canvas.setDepthIndex(_this.__seekCircle, _this.__canvas.getDepthIndex(_this.__seekStartPoint));
         }
     }
 
@@ -397,9 +433,41 @@ class CircleMenu { //五線譜の生成
     //曲の再生が完了したかのチェック用
     //================================
     __playSoundTimer(_this, _selectCD) {
+        _selectCD.rotate += 8; //33.3..回転/分（この関数が25fpsで実行される場合）
+
         let _sound = _this.__playSound;
-        _selectCD.rotate += 8; //33.3..回転/分
-        //console.log(100 * _sound.currentTime/_sound.duration); //0.00..～100
+        let _percent = _sound.currentTime/_sound.duration; //実際はパーセットではなく（0.0～1）
+        _this.__seekCircle.rotate = 360 * _percent;
+
+        //再生が完了したら...
+        if (_percent == 1) {
+            clearInterval(_this.__playSoundTimerID);
+            _this.__playSoundTimerID = undefined;
+            _sound.stop();
+
+            //再生モードボタンの選択内容により処理
+            var _loopMode = "one"; //DEBUG（後で削除）←…………………………ボタンを作成しないと!!!!
+            switch (_loopMode) {
+                case "none": //何もしない
+                    break;
+
+                case "one": //もう一度再生
+                    _sound.play();
+                    _this.__playSoundTimerID = setInterval(_this.__playSoundTimer, 40, _this, _selectCD); //25fps
+                    break;
+
+                case "all": //順々に全て再生
+                    break;
+
+                case "random": //ランダム再生
+                    break;
+                
+                dafault:
+                    console.log("ERROR: CircleMenu.__playSoundTimer");
+                    brea;
+            }
+        }
+        //console.log(_percent); 
     }
 
     //==============================================
