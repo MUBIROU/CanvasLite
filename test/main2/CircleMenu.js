@@ -45,7 +45,8 @@ class CircleMenu { //五線譜の生成
 
         this.__positionList = []; //CD型ボタンの固定ポジション（角度＝円を12分割）のリスト
         for (let i=0; i<12; i++) {
-            this.__positionList.push(Math.PI/6 * i - Math.PI/2);
+            this.__positionList.push(2*Math.PI - Math.PI/6 * i - Math.PI/2); //反時計回りに配列
+            //this.__positionList.push(Math.PI/6 * i - Math.PI/2); //時計回りに配列
         }
 
         //12個のボタン（CD型）を作成
@@ -54,9 +55,10 @@ class CircleMenu { //五線譜の生成
             this.__theCD = new toile.Bitmap("btn" + (i+1) + ".png");
             this.__theCD.name = "CD" + (i+1);
             this.__theCD.__rotate = this.__positionList[i]; // = Math.PI/6 * i - Math.PI/2;
+
             this.__theCD.x = _canvas.width/2 - 50 + 270 * Math.cos(this.__theCD.__rotate); //半径270（幅）
             this.__theCD.y = _canvas.height/2 - 50 + 270 * Math.sin(this.__theCD.__rotate); //半径270（高さ）    
-            //this.__theCD.alpha = 1;
+
             this.__theCD.__springPower = 0.15; //弾力（1.3倍の場合） 0.2
             this.__theCD.__springMinusPower = 0.0002 + Math.random * 0.0001;
             this.__theCD.__springCount = 0; //- Math.PI/2; //弾力用カウント
