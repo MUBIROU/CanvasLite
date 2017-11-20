@@ -156,9 +156,9 @@ class CircleMenu { //五線譜の生成
         }
     }
 
-    //=======================================
-    //各ボタンを押したとき（TouchOut）の処理
-    //=======================================
+    //============================================
+    //各ボタンを押したとき（TouchOut）の最初の処理
+    //============================================
     __mouseup_theCD(_theCD) { //this => Bitmap
         var _this = _theCD.__this;
 
@@ -180,28 +180,29 @@ class CircleMenu { //五線譜の生成
             _this.__playSoundTimerID = undefined;
             _this.__oldSelectCD = _this.__selectCD;
         }
-        //選択CD型ボタンの角度
+
+        //選択した瞬間の角度を調べる
         _this.__selectCD = _theCD;
-        _theCD.__originRotate = _theCD.__rotate; //選択した瞬間の角度X
+        _theCD.__originRotate = _theCD.__rotate;
 
         //選択CD型ボタンと他のCD型ボタンとの角度差
         for (let i=0; i<_this.__cdArray.length; i++) {
             let _tmpCD = _this.__cdArray[i];
             if (_tmpCD != _theCD) {
-                //（どれかを選択した瞬間の）選択されたもの以外のCD型ボタンの角度X,Y
+                //選択されたもの以外の各CD型ボタンの角度
                 _tmpCD.__distanceSelectRadian = _tmpCD.__rotate - _theCD.__rotate;
             }
         }
 
         //シークサークルが表示されている場合は消す
-        if (_this.__seekCircle != undefined) {
-            _this.__canvas.deleteChild(_this.__seekCircle);
-        }
+        //if (_this.__seekCircle != undefined) {
+            //_this.__canvas.deleteChild(_this.__seekCircle);
+        //}
 
         //シークスタートポイントが表示されている場合は消す
-        if (_this.__seekStartPoint != undefined) {
-            _this.__canvas.deleteChild(_this.__seekStartPoint);
-        }
+        //if (_this.__seekStartPoint != undefined) {
+            //_this.__canvas.deleteChild(_this.__seekStartPoint);
+        //}
 
         //マウスダウン（TouchOut）のXXXミリ秒後にCD型ボタンをアニメーションさせる
         _this.__mouseupTimeoutID = setTimeout(_this.__mouseupTimeout, 0, _theCD); //→ ★
@@ -257,17 +258,33 @@ class CircleMenu { //五線譜の生成
             let _nextRotate = _this.__oldSelectCD.rotate + _this.__oldRotateToZero/51;
             _this.__oldSelectCD.rotate = _nextRotate;
         }
-        
-        /******************** 12時の位置のボタンを選択した場合 ********************/
+
+        /************************************
+         * 12時の位置のボタンを選択した場合
+         ***********************************/
         if (_this.__animationDirection == "stop") {
             clearInterval(_this.__circleAnimationID); //ぐるっと回る（ここは回らないけれど）アニメーション完了①
             _this.__circleAnimationID = undefined;
             _this.init();
 
+            //シークサークルが表示されている場合は消す（2017-11-20T10:31）
+            if (_this.__seekCircle != undefined) {
+                _this.__canvas.deleteChild(_this.__seekCircle);
+                _this.__seekCircle = undefined;
+            }
+
+            //シークスタートポイントが表示されている場合は消す（2017-11-20T10:31）
+            if (_this.__seekStartPoint != undefined) {
+                _this.__canvas.deleteChild(_this.__seekStartPoint);
+                _this.__seekStartPoint = undefined;
+            }
+
             //選択したボタンをビヨヨンとアニメーション開始①
             _this.__startSelectButtonAnimation(_theCD);
 
-        /******************* 1～5時の位置のボタンを選択した場合 *******************/
+        /**************************************
+         * 1～5時の位置のボタンを選択した場合
+         *************************************/
         } else if (_this.__animationDirection == "left") {
             _this.__animationCount += 0.03;
             let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
@@ -285,6 +302,20 @@ class CircleMenu { //五線譜の生成
                         _tmpCD.x = 630 + 270 * Math.cos(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（幅）
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
                     }
+                }
+
+                //シークサークルが表示されている場合は回転しながら徐々に消す（2017-11-20T10:31）
+                if (_this.__seekCircle != undefined) {
+                    _this.__seekCircle.alpha -= 1/51;
+                    _this.__seekCircle.x = _this.__oldSelectCD.x - 10;
+                    _this.__seekCircle.y = _this.__oldSelectCD.y - 10;
+                }
+
+                //シークスタートポイントが表示されている場合は回転しながら徐々に消す（2017-11-20T10:31）
+                if (_this.__seekStartPoint != undefined) {
+                    _this.__seekStartPoint.alpha -= 1/51;
+                    _this.__seekStartPoint.x = _this.__oldSelectCD.x + 45; //_this.__oldSelectCD.width/2 - 5;
+                    _this.__seekStartPoint.y = _this.__oldSelectCD.y - 10;
                 }
 
             } else { //選択されたCD型ボタンが最上部に到着（＝ぐるっと回るアニメーションの完了!!）
@@ -305,13 +336,27 @@ class CircleMenu { //五線譜の生成
                     }
                 }
 
+                //シークサークルが表示されている場合は（完全に）消す（2017-11-20T10:31）
+                if (_this.__seekCircle != undefined) {
+                    _this.__canvas.deleteChild(_this.__seekCircle);
+                    _this.__seekCircle = undefined;
+                }
+
+                //シークスタートポイントが表示されている場合は（完全に）消す（2017-11-20T10:31）
+                if (_this.__seekStartPoint != undefined) {
+                    _this.__canvas.deleteChild(_this.__seekStartPoint);
+                    _this.__seekStartPoint = undefined;
+                }
+
                 _this.init();
 
                 //選択したボタンをビヨヨンとアニメーション開始②
                 _this.__startSelectButtonAnimation(_theCD);
             }
 
-        /******************* 6～11時の位置のボタンを選択した場合 *******************/
+        /***************************************
+         * 6～11時の位置のボタンを選択した場合
+         **************************************/
         } else if (_this.__animationDirection == "right") {
             _this.__animationCount += 0.03;
             let _cos = Math.cos(_this.__animationCount); //-1 => 0 => 1（イーズイン・イーズアウト）
@@ -331,6 +376,20 @@ class CircleMenu { //五線譜の生成
                     }
                 }
 
+                //シークサークルが表示されている場合は回転しながら徐々に消す（2017-11-20T10:31）
+                if (_this.__seekCircle != undefined) {
+                    _this.__seekCircle.alpha -= 1/51;
+                    _this.__seekCircle.x = _this.__oldSelectCD.x - 10;
+                    _this.__seekCircle.y = _this.__oldSelectCD.y - 10;
+                }
+
+                //シークスタートポイントが表示されている場合は回転しながら徐々に消す（2017-11-20T10:31）
+                if (_this.__seekStartPoint != undefined) {
+                    _this.__seekStartPoint.alpha -= 1/51;
+                    _this.__seekStartPoint.x = _this.__oldSelectCD.x + 45; //_this.__oldSelectCD.width/2 - 5;
+                    _this.__seekStartPoint.y = _this.__oldSelectCD.y - 10;
+                }
+
             } else { //選択されたCD型ボタンが最上部に到着（＝ぐるっと回るアニメーションの完了!!）
                 //console.log(_cos); //0.998710143975583
                 //選択されたCDボタンの処理
@@ -347,6 +406,18 @@ class CircleMenu { //五線譜の生成
                         _tmpCD.y = 334 + 270 * Math.sin(_nextRotation + _tmpCD.__distanceSelectRadian); //半径270（高さ）
                         _this.__positionReset(_theCD, _tmpCD, i); //少し苦戦したところ
                     }
+                }
+
+                //シークサークルが表示されている場合は（完全に）消す（2017-11-20T10:31）
+                if (_this.__seekCircle != undefined) {
+                    _this.__canvas.deleteChild(_this.__seekCircle);
+                    _this.__seekCircle = undefined;
+                }
+
+                //シークスタートポイントが表示されている場合は（完全に）消す（2017-11-20T10:31）
+                if (_this.__seekStartPoint != undefined) {
+                    _this.__canvas.deleteChild(_this.__seekStartPoint);
+                    _this.__seekStartPoint = undefined;
                 }
 
                 _this.init();
