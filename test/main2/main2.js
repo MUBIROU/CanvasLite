@@ -145,4 +145,5 @@ in_circleMenu = (_circleMenu) => {
 out_circleMenu = (_circleMenu) => {
     //console.log("circlemenu");
     //location.href = "../main0/index0.html?param=true"
+    location.href = "index2.html"
 }
