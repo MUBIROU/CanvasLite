@@ -126,7 +126,7 @@ mouseup_homeButton = (_bitmap) => {
 
 out_scoreLine = (_scoreLine) => {
     //console.log("scoreline");
-    location.href = "../main0/index0.html?param=true"
+    //location.href = "../main0/index0.html?param=true"
 }
 
 timerExitVideoLoop = (_canvas) => {

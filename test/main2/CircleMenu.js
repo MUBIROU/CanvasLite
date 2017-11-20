@@ -196,16 +196,6 @@ class CircleMenu { //五線譜の生成
             }
         }
 
-        //シークサークルが表示されている場合は消す
-        //if (_this.__seekCircle != undefined) {
-            //_this.__canvas.deleteChild(_this.__seekCircle);
-        //}
-
-        //シークスタートポイントが表示されている場合は消す
-        //if (_this.__seekStartPoint != undefined) {
-            //_this.__canvas.deleteChild(_this.__seekStartPoint);
-        //}
-
         //マウスダウン（TouchOut）のXXXミリ秒後にCD型ボタンをアニメーションさせる
         _this.__mouseupTimeoutID = setTimeout(_this.__mouseupTimeout, 0, _theCD); //→ ★
     }
@@ -560,8 +550,50 @@ class CircleMenu { //五線譜の生成
             this.__cdArray[i].__springPower = 0.12;
             this.__cdArray[i].__springCount = 0;
         }
-        //12個のボタンを消すアニメーション開始
-        this.__outLoopID = setInterval(this.__outLoop, 17, this); //≒59fps
+
+        //シークスタートポイントの削除
+        this.__canvas.deleteChild(this.__seekStartPoint);
+        this.__canvas.deleteChild(this.__seekCircle);
+
+        //ひとつずれてしまうので...
+        for (let i=0; i<this.__cdArray.length; i++) {
+            var _theCD = this.__cdArray[i];
+            _theCD.__originX = _theCD.x;
+            _theCD.__originY = _theCD.y;
+        }
+
+        if (this.__playSoundTimerID != undefined) clearInterval(this.__playSoundTimerID); //回転を止める
+
+        if (this.__selectCD != undefined) {
+            this.__oldRotateToZero = 360 - this.__selectCD.rotate % 360;
+        }
+        this.__returnZeroLoopID = setInterval(this.__returnZeroLoop, 17, this); //≒59fps
+    }
+
+    //===================================================
+    //回転しているCD型ボタンの角度を0にするアニメーション
+    //===================================================
+    __returnZeroLoop(_this) {
+        //直前まで回転していたCD型ボタンを角度0まで戻す
+        if (_this.__selectCD != undefined) {
+
+            let _nextRotate = _this.__selectCD.rotate % 360 + (360 - _this.__selectCD.rotate % 360) / 10;
+            //let _nextRotate = _this.__selectCD.rotate % 360 + _this.__oldRotateToZero;
+            if (_nextRotate < 355) {
+                _this.__selectCD.rotate = _nextRotate;
+            } else {
+                _this.__selectCD.rotate = 0;
+                //12個のボタンを消すアニメーション開始
+                _this.__outLoopID = setInterval(_this.__outLoop, 17, _this); //≒59fps
+                clearInterval(_this.__returnZeroLoopID);
+                _this.__returnZeroLoopID = undefined;
+            }
+        } else { //どれも選択していない場合...
+            //12個のボタンを消すアニメーション開始
+            _this.__outLoopID = setInterval(_this.__outLoop, 17, _this); //≒59fps
+            clearInterval(_this.__returnZeroLoopID);
+            _this.__returnZeroLoopID = undefined;
+        }
     }
 
     //================================
@@ -580,11 +612,8 @@ class CircleMenu { //五線譜の生成
                     _theCD.alpha -= 0.04;
                     if (_this.__seekCircle != undefined) _this.__seekCircle.alpha -= 0.04;
                 }
-                //Bitmap.scaleでは中心軸がずれるため
                 _this.__changeScale(_theCD, _theScale, _theCD.__originX, _theCD.__originY);
-                if (_this.__seekCircle != undefined) {
-                    _this.__changeScale(_this.__seekCircle, _theScale, _theCD.__originX-10, _theCD.__originY-10);
-                }
+                
             } else {
                 _theCD.__springPower = 0;
                 if (++ _this.__finishCount == 12) {

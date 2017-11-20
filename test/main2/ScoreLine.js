@@ -128,11 +128,11 @@ class ScoreLine { //五線譜の生成
     }
 
     __outLoop(_this) {
-        _this.__scoreCircle1.__count -= 0.05;
-        _this.__scoreCircle2.__count -= 0.05;
-        _this.__scoreCircle3.__count -= 0.05;
-        _this.__scoreCircle4.__count -= 0.05;
-        _this.__scoreCircle5.__count -= 0.05;
+        _this.__scoreCircle1.__count -= 0.03;
+        _this.__scoreCircle2.__count -= 0.03;
+        _this.__scoreCircle3.__count -= 0.03;
+        _this.__scoreCircle4.__count -= 0.03;
+        _this.__scoreCircle5.__count -= 0.03;
 
         if (_this.__scoreCircle5.__count > 0) {
             if (_this.__scoreCircle1.alpha > 0) _this.__scoreCircle1.alpha = _this.__scoreCircle1.__count;
