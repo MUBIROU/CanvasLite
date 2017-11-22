@@ -29,14 +29,15 @@ class PhotoMovie {
         ]
         //console.log(this.__photoList.length); //28
 
-        this.__interval = 5000;
+        this.__interval = undefined;
 
         this.__currentPhoto = new toile.Bitmap("jpg/" + this.__photoList[1]);
         this.__canvas.addChild(this.__currentPhoto);
     }
 
     //パブリックメソッド
-    start() {
+    start(_millsec = 1000) {
+        this.__interval = _millsec;
         this.__photoLoopID = setInterval(this.__photoLoop, this.__interval, this);
     }
 
@@ -50,7 +51,7 @@ class PhotoMovie {
 
     //プライベートメソッド
     __photoLoop(_this) { //this == Window
-        console.log(this, _this);
+        console.log(_this);
     }
 
 }
