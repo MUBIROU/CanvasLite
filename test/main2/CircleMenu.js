@@ -7,6 +7,9 @@
  *  <public method>
  *      CircleMenu.addEventListener(_event, _function)   "in" or "out"
  *      CircleMenu.out()
+ * 
+ *  <public property>
+ *      CircleMenu.loopMode   "none", "one", "all", "random"
  *      
  *  <event>
  *      CircleMenu.IN
@@ -14,32 +17,39 @@
  *
 ***********************************************/
 
-class CircleMenu { //五線譜の生成
+class CircleMenu {
     static get IN() { return "in"; }
     static get OUT() { return "out"; }
     
     constructor(_canvas) {
         this.__canvas = _canvas;
 
-        this.__soundList = [
-            "01_gomenne",
-            "02_hokkori tea time",
-            "03_In That Mood",
-            "04_inaka no daisougen",
-            "05_kanasimi ni sakuhana",
-            "06_kuuhaku to seizyaku",
-            "07_Let It Happen",
-            "08_Lovely Day",
-            "09_mizu no mati",
-            "10_namida no imi",
-            "11_odayakana zikan",
-            "12_Pieces of a Dream"
-        ]; //"anata wo siritakute"（オルゴール）
+        this.__soundList = ["tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp"];
+        
+        //this.__soundList = [
+        //     "01_gomenne",
+        //     "02_hokkori tea time",
+        //     "03_In That Mood",
+        //     "04_inaka no daisougen",
+        //     "05_kanasimi ni sakuhana",
+        //     "06_kuuhaku to seizyaku",
+        //     "07_Let It Happen",
+        //     "08_Lovely Day",
+        //     "09_mizu no mati",
+        //     "10_namida no imi",
+        //     "11_odayakana zikan",
+        //     "12_Pieces of a Dream"
+        // ]; 
+
+        //"anata wo siritakute"（オルゴール）
         //console.log(this.__soundList.length); //12
 
+        this.__playSound = undefined;
+        this.__soundVolume = 0.2;
         this.__inHandler = undefined;
         this.__outHandler = undefined;
         this.__oldSelectCD = undefined; //2017-11-19T17:30
+        this.__loopMode = "one"; //"none", "one",  "all", "random"
 
         this.init(); //初期値の設定
 
@@ -98,6 +108,21 @@ class CircleMenu { //五線譜の生成
             this.__inHandler = _function;
         } else if (_event == "out") {
             this.__outHandler = _function;
+        }
+    }
+
+    //===============================
+    // CircleMenu.loopMode プロパティ
+    //===============================
+    get loopMode() {
+        return this.__loopMode;
+    }
+    set loopMode(newValue) {
+        if ((newValue == "none") || (newValue == "one") || (newValue == "all") || (newValue == "random")) {
+            this.__loopMode = newValue;
+            //console.log(this.__loopMode);
+        } else {
+            throw new Error(newValue + " は対応していません");
         }
     }
 
@@ -162,6 +187,7 @@ class CircleMenu { //五線譜の生成
     //各ボタンを押したとき（TouchOut）の最初の処理
     //============================================
     __mouseup_theCD(_theCD) { //this => Bitmap
+        //console.log(_theCD.name)
         var _this = _theCD.__this;
 
         //再生中の曲があればフェードアウトする
@@ -172,6 +198,7 @@ class CircleMenu { //五線譜の生成
         //曲の再生準備
         let _selectNum = Number(_theCD.name.substr(2)); //"CDXX"の2文字以降を取得
         _this.__playSound = new toile.Sound("mp3/" + _this.__soundList[_selectNum-1] + ".mp3");
+        _this.__playSound.volume = _this.__soundVolume;
         //_this.__playSound.play();
 
         //一時的にボタン機能をOFF
@@ -210,15 +237,18 @@ class CircleMenu { //五線譜の生成
         /* 角度を調べて回転方向を確定（12時の位置の場合は回転なし）
         /* 12時（-Math.PI/2）、3時（0）、6時（Math.PI/2）、9時（Math.PI）
         ******************************************************************/
-        if (_theCD.__rotate == -Math.PI/2) { //CD1の場合（12時）
+        if (_theCD.__rotate == 3*Math.PI/2) { //-Math.PI/2) { //CD1の場合（12時）
+            //console.log("A");
             _this.__animationDirection = "stop"; //回転なし
             _this.__distanceRadian = _theCD.__rotate + Math.PI/2; //=0
 
         } else if (_theCD.__rotate < Math.PI/2) { //CD2～6の場合（1～5時）
+            //console.log("B");
             _this.__animationDirection = "left"; //反時計回り
             _this.__distanceRadian = _theCD.__rotate + Math.PI/2;
 
         } else { //CD7～12（6～11時）
+            //console.log("C");
             _this.__animationDirection = "right"; //時計回り
             _this.__distanceRadian = 3*Math.PI/2 - _theCD.__rotate;
         }
@@ -509,20 +539,33 @@ class CircleMenu { //五線譜の生成
             _sound.stop();
 
             //再生モードボタンの選択内容により処理
-            var _loopMode = "one"; //DEBUG（後で削除）←…………………………ボタンを作成しないと!!!!
-            switch (_loopMode) {
+            //var _loopMode = "one"; //DEBUG（後で削除）←……………ボタンを作成しないと!!!!
+            switch (_this.__loopMode) {
                 case "none": //何もしない
+                    _selectCD.rotate = 3*Math.PI/2;
+                    _sound.stop(); //不要
                     break;
 
                 case "one": //もう一度再生
                     _sound.play();
+                    _sound.volume = _this.__soundVolume;
                     _this.__playSoundTimerID = setInterval(_this.__playSoundTimer, 40, _this, _selectCD); //25fps
                     break;
 
                 case "all": //順々に全て再生
+                    let _currentNum = Number(_this.__selectCD.name.substr(2));
+                    let _nextNum = (_currentNum + 1) % 12;
+                    let _nextCD = _this.__cdArray[_nextNum-1];
+                    _this.__mouseup_theCD(_nextCD);
                     break;
 
                 case "random": //ランダム再生
+                    let _nowNum = Number(_this.__selectCD.name.substr(2));
+                    var _randomNum = Math.floor(Math.random()*12) + 1;
+                    while (_randomNum == _nowNum) { //同曲を連続再生させないようにする
+                        _randomNum = Math.floor(Math.random()*12) + 1;
+                    }
+                    _this.__mouseup_theCD(_this.__cdArray[_randomNum-1]);
                     break;
                 
                 dafault:
@@ -546,6 +589,10 @@ class CircleMenu { //五線譜の生成
     //パブリックメソッド：12個のボタンを消す
     //=======================================
     out() {
+        if (this.__playSound != undefined) {
+            this.__playSound.fadeOut(1);
+        }
+
         for (let i=0; i<this.__cdArray.length; i++) {
             this.__cdArray[i].__springPower = 0.12;
             this.__cdArray[i].__springCount = 0;
