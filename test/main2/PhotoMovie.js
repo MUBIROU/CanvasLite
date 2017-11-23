@@ -22,10 +22,10 @@ class PhotoMovie {
         this.__canvas = _canvas;
         this.__endHandler = undefined;
 
-        var _fadeInTime = 2000; //最初のフェードインに使う時間（ミリ秒）
-        var _crossfadeTime = 5000; //クロスフェードに使う時間（ミリ秒）
+        var _fadeInTime = 2000; //2000; //最初のフェードインに使う時間（ミリ秒）
+        var _crossfadeTime = 5000; //5000; //クロスフェードに使う時間（ミリ秒）
         var _fadeOutTime = 2000; //最後のフェードアウトに使う時間（ミリ秒）
-        this.__showTime = 5000; //写真を見せる時間（ミリ秒）
+        this.__showTime = 5000; //5000; //写真を見せる時間（ミリ秒）
 
         //内部計算処理
         this.__fadeInMillTime = 17/_fadeInTime;
@@ -77,6 +77,7 @@ class PhotoMovie {
     //プライベートメソッド
     __createPhoto(_num) {
         let _photo = new toile.Bitmap("jpg/" + this.__photoList[_num]);
+        //console.log(this.__photoList[_num]);
         _photo.alpha = 0;
         _photo.name = this.__photoList[_num];
         _canvas.addChild(_photo);
@@ -100,7 +101,11 @@ class PhotoMovie {
         clearTimeout(_this.__showEndID);
         _this.__crossfadeID = setInterval(_this.__crossfade, 17, _this);
         
-        _this.__nextPhoto = _this.__createPhoto(++ _this.__count);
+        let _nextCount = ++ _this.__count;
+        if (_this.__photoList.length <= _nextCount) {
+            _nextCount = 0;
+        }
+        _this.__nextPhoto = _this.__createPhoto(_nextCount);
     }
 
     __crossfade(_this) {
