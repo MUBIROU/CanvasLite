@@ -16,10 +16,21 @@
 ***********************************************/
 
 class PhotoMovie {
-    //static get IN() { return "in"; }
+    static get END() { return "end"; }
     
     constructor(_canvas) {
         this.__canvas = _canvas;
+        this.__endHandler = undefined;
+
+        var _fadeInTime = 2000; //最初のフェードインに使う時間（ミリ秒）
+        var _crossfadeTime = 5000; //クロスフェードに使う時間（ミリ秒）
+        var _fadeOutTime = 2000; //最後のフェードアウトに使う時間（ミリ秒）
+        this.__showTime = 5000; //写真を見せる時間（ミリ秒）
+
+        //内部計算処理
+        this.__fadeInMillTime = 17/_fadeInTime;
+        this.__crossfadeMillTime = 17/_crossfadeTime;
+        this.__fadeOutMillTime = 17/_fadeOutTime;
 
         this.__photoList = [
             "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg",
@@ -29,29 +40,91 @@ class PhotoMovie {
         ]
         //console.log(this.__photoList.length); //28
 
-        this.__interval = undefined;
+        this.__count = 0;
 
-        this.__currentPhoto = new toile.Bitmap("jpg/" + this.__photoList[1]);
-        this.__canvas.addChild(this.__currentPhoto);
+        this.__currentPhoto = this.__createPhoto(this.__count);
+        this.__nextPhoto = undefined;
     }
 
     //パブリックメソッド
-    start(_millsec = 1000) {
-        this.__interval = _millsec;
-        this.__photoLoopID = setInterval(this.__photoLoop, this.__interval, this);
+    addEventListener(_event, _function) {
+        if (_event == "end") {
+            this.__endHandler = _function;
+        } else {
+            throw new Error(_event + " は対応していません");
+        }
+    }
+
+    start() {
+        this.__fadeInLoopID = setInterval(this.__fadeInLoop, 17, this);
+    }
+
+    end() {
+        if (this.__fadeInLoopID != undefined) clearInterval(this.__fadeInLoopID);
+        if (this.__crossfadeID != undefined) clearInterval(this.__crossfadeID);
+        if (this.__showEndID != undefined) clearInterval(this.__showEnd);
+        this.__fadeOutLoopID = setInterval(this.__fadeOutLoop, 17, this);
     }
 
     //パブリックプロパティ
     get interval() {
-        return this.__interval;
+        return this.__showTime;
     }
     set interval(newValue) {
-        this.__interval = newValue;
+        this.__showTime = newValue;
     }
 
     //プライベートメソッド
-    __photoLoop(_this) { //this == Window
-        console.log(_this);
+    __createPhoto(_num) {
+        let _photo = new toile.Bitmap("jpg/" + this.__photoList[_num]);
+        _photo.alpha = 0;
+        _photo.name = this.__photoList[_num];
+        _canvas.addChild(_photo);
+        _canvas.setDepthIndex(_photo, 0);
+        return _photo;
     }
 
+    __fadeInLoop(_this) { //this == Window
+        if (_this.__currentPhoto.alpha < 1) {
+            _this.__currentPhoto.alpha += _this.__fadeInMillTime;
+        } else {
+            clearInterval(_this.__fadeInLoopID);
+            _this.__currentPhoto.alpha = 1;
+            
+            //xxxミリ秒見せる
+            _this.__showEndID = setTimeout(_this.__showEnd, _this.__showTime, _this); //__showTimeミリ秒見せる
+        }
+    }
+
+    __showEnd(_this) {
+        clearTimeout(_this.__showEndID);
+        _this.__crossfadeID = setInterval(_this.__crossfade, 17, _this);
+        
+        _this.__nextPhoto = _this.__createPhoto(++ _this.__count);
+    }
+
+    __crossfade(_this) {
+        console.log("__crossfade")
+        if (0 < _this.__currentPhoto.alpha) {
+            _this.__currentPhoto.alpha -= _this.__crossfadeMillTime;
+            _this.__nextPhoto.alpha += _this.__crossfadeMillTime;
+        } else {
+            clearInterval(_this.__crossfadeID);
+            _this.__nextPhoto.alpha = 1;
+            _this.__currentPhoto = _this.__nextPhoto;
+
+            //xxxミリ秒見せる
+            _this.__showEndID = setTimeout(_this.__showEnd, _this.__showTime, _this); //__showTimeミリ秒見せる
+        }
+    }
+
+    __fadeOutLoop(_this) { //this == Window
+        if (0 < _this.__currentPhoto.alpha) {
+            _this.__currentPhoto.alpha -= _this.__fadeInMillTime;
+        } else {
+            clearInterval(_this.__fadeOutLoopID);
+            _this.__currentPhoto.alpha = 0;
+            _this.__endHandler(_this); //"end"イベントの発生
+        }
+    }
 }

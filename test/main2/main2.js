@@ -14,10 +14,6 @@ function load_window() {
     // _canvas.addChild(_video1);
     // _timerVideo1 = setInterval(videoLoadLoop, 17, _canvas);
 
-    //PhotoMovie
-    _photoMovie = new PhotoMovie(_canvas);
-    _photoMovie.start();
-
     //五線譜の生成
     _scoreLine = new ScoreLine(_canvas);
     _scoreLine.addEventListener("in", in_scoreLine);
@@ -166,7 +162,8 @@ mouseup_homeButton = (_bitmap) => {
     //location.href = "../main0/index0.html?param=true"
     _scoreLine.out(); //DEBUG
     _circleMenu.out();
-    _timerExitVideoLoopID = setInterval(timerExitVideoLoop, 17, _canvas);
+    _photoMovie.end();
+    //_timerExitVideoLoopID = setInterval(timerExitVideoLoop, 17, _canvas);
 }
 
 out_scoreLine = (_scoreLine) => {
@@ -174,21 +171,23 @@ out_scoreLine = (_scoreLine) => {
     //location.href = "../main0/index0.html?param=true"
 }
 
-timerExitVideoLoop = (_canvas) => {
-    if (_video1.alpha > 0) {
-        _video1.alpha -= 0.037;
-    } else {
-        _video1.stop();
-    }
-}
-
 in_circleMenu = (_circleMenu) => {
     //console.log("in_circleMenu");
     //location.href = "../main0/index0.html?param=true"
+    //PhotoMovie
+    _photoMovie = new PhotoMovie(_canvas);
+    _photoMovie.addEventListener("end", end_photoMovie);
+    _photoMovie.start();
+}
+
+end_photoMovie = (_photoMovie) => {
+    //console.log("end_photoMovie");
+    //location.href = "../main0/index0.html?param=true"
+    location.href = "index2.html"
 }
 
 out_circleMenu = (_circleMenu) => {
     //console.log("circlemenu");
-    location.href = "../main0/index0.html?param=true"
+    //location.href = "../main0/index0.html?param=true"
     //location.href = "index2.html"
 }
