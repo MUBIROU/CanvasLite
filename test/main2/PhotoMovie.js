@@ -104,7 +104,7 @@ class PhotoMovie {
     }
 
     __crossfade(_this) {
-        console.log("__crossfade")
+        //console.log("__crossfade")
         if (0 < _this.__currentPhoto.alpha) {
             _this.__currentPhoto.alpha -= _this.__crossfadeMillTime;
             _this.__nextPhoto.alpha += _this.__crossfadeMillTime;

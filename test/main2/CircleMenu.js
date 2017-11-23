@@ -187,7 +187,6 @@ class CircleMenu {
     //各ボタンを押したとき（TouchOut）の最初の処理
     //============================================
     __mouseup_theCD(_theCD) { //this => Bitmap
-        //console.log(_theCD.name)
         var _this = _theCD.__this;
 
         //再生中の曲があればフェードアウトする
@@ -288,6 +287,7 @@ class CircleMenu {
             clearInterval(_this.__circleAnimationID); //ぐるっと回る（ここは回らないけれど）アニメーション完了①
             _this.__circleAnimationID = undefined;
             _this.init();
+            //console.log(_theCD.name, _theCD.rotate);
 
             //シークサークルが表示されている場合は消す（2017-11-20T10:31）
             if (_this.__seekCircle != undefined) {
@@ -554,7 +554,7 @@ class CircleMenu {
 
                 case "all": //順々に全て再生
                     let _currentNum = Number(_this.__selectCD.name.substr(2));
-                    let _nextNum = (_currentNum + 1) % 12;
+                    let _nextNum = (_currentNum) % 12 + 1; //2017-11-23T18:51
                     let _nextCD = _this.__cdArray[_nextNum-1];
                     _this.__mouseup_theCD(_nextCD);
                     break;
@@ -573,7 +573,6 @@ class CircleMenu {
                     brea;
             }
         }
-        //console.log(_percent); 
     }
 
     //==============================================
