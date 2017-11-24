@@ -205,8 +205,8 @@ in_circleMenu = (_circleMenu) => {
 
 end_photoMovie = (_photoMovie) => {
     //console.log("end_photoMovie");
-    //location.href = "../main0/index0.html?param=true"
-    location.href = "index2.html"
+    location.href = "../main0/index0.html?param=true"
+    //location.href = "index2.html"
 }
 
 out_circleMenu = (_circleMenu) => {

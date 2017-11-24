@@ -23,9 +23,9 @@ class PhotoMovie {
         this.__endHandler = undefined;
 
         var _fadeInTime = 2000; //2000; //最初のフェードインに使う時間（ミリ秒）
-        var _crossfadeTime = 5000; //5000; //クロスフェードに使う時間（ミリ秒）
+        var _crossfadeTime = 5000; //クロスフェードに使う時間（ミリ秒）
         var _fadeOutTime = 2000; //最後のフェードアウトに使う時間（ミリ秒）
-        this.__showTime = 5000; //5000; //写真を見せる時間（ミリ秒）
+        this.__showTime = 5000; //写真を見せる時間（ミリ秒）
 
         //内部計算処理
         this.__fadeInMillTime = 17/_fadeInTime;
@@ -100,12 +100,12 @@ class PhotoMovie {
     __showEnd(_this) {
         clearTimeout(_this.__showEndID);
         _this.__crossfadeID = setInterval(_this.__crossfade, 17, _this);
-        
-        let _nextCount = ++ _this.__count;
-        if (_this.__photoList.length <= _nextCount) {
-            _nextCount = 0;
+
+        _this.__count += 1;
+        if (_this.__photoList.length <= _this.__count) {
+            _this.__count = 0;
         }
-        _this.__nextPhoto = _this.__createPhoto(_nextCount);
+        _this.__nextPhoto = _this.__createPhoto(_this.__count);
     }
 
     __crossfade(_this) {
