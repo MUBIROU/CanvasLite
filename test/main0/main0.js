@@ -75,6 +75,18 @@ logo = (_canvas, _x, _y) => {
     _html5.y = 0; //_canvas.height - 70;
     _logoContainer.addChild(_html5);
 
+    //"50th Anniversary"
+    _text50th = new toile.Text("50th Anniversary");
+    _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
+    _text50th.font = "FoglihtenNo04";
+    _text50th.size = 28; //80;
+    _text50th.align = "center";
+    _text50th.baseline = "bottom";
+    _text50th.x = _canvas.width / 2;
+    _text50th.y = _canvas.height - 20;
+    _text50th.color = "#222222";
+    _logoContainer.addChild(_text50th);
+
     return _logoContainer;
 }
 
@@ -178,5 +190,6 @@ out_grid = (_grid) => {
     
     //location.href = "../main3/index3.html?param1=100&param2=200"
     //location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html?" + "param1=100" + "&" + "param2=200";
-    location.href = "../main1/index1.html";
+    //location.href = "../main1/index1.html";
+    location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html";
 }

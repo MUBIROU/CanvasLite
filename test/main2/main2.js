@@ -131,6 +131,18 @@ logo = (_canvas, _x, _y) => {
     _html5.y = 0; //_canvas.height - 70;
     _logoContainer.addChild(_html5);
 
+    //"50th Anniversary"
+    _text50th = new toile.Text("50th Anniversary");
+    _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
+    _text50th.font = "FoglihtenNo04";
+    _text50th.size = 28; //80;
+    _text50th.align = "center";
+    _text50th.baseline = "bottom";
+    _text50th.x = _canvas.width / 2;
+    _text50th.y = _canvas.height - 20;
+    _text50th.color = "#222222";
+    _logoContainer.addChild(_text50th);
+
     return _logoContainer;
 }
 
@@ -157,13 +169,24 @@ mouseup_loopModeButton = (_spriteSheet) => {
     _spriteSheet.gotoAndStop(_nextframe);
 }
 
+//============
+// HOMEボタン
+//============
 mouseup_homeButton = (_bitmap) => {
     //ホーム（../main0/index0.html）にジャンプ
     //location.href = "../main0/index0.html?param=true"
     _scoreLine.out(); //DEBUG
     _circleMenu.out();
     _photoMovie.end();
-    //_timerExitVideoLoopID = setInterval(timerExitVideoLoop, 17, _canvas);
+
+    _timerHomeButtonID = setInterval(timerHomeButton, 17, _canvas);
+}
+
+//=====================
+// HOMEボタンの後処理
+//=====================
+timerHomeButton = () => {
+    console.log("timerHomeButton");
 }
 
 out_scoreLine = (_scoreLine) => {
