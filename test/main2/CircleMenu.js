@@ -67,7 +67,7 @@ class CircleMenu {
             this.__theCD.__rotate = this.__positionList[i]; // = Math.PI/6 * i - Math.PI/2;
 
             this.__theCD.x = _canvas.width/2 - 50 + 270 * Math.cos(this.__theCD.__rotate); //半径270（幅）
-            this.__theCD.y = _canvas.height/2 - 50 + 270 * Math.sin(this.__theCD.__rotate); //半径270（高さ）    
+            this.__theCD.y = _canvas.height/2 - 50 + 270 * Math.sin(this.__theCD.__rotate); //半径270（高さ）
 
             this.__theCD.__springPower = 0.15; //弾力（1.3倍の場合） 0.2
             this.__theCD.__springMinusPower = 0.0002 + Math.random * 0.0001;
@@ -90,13 +90,11 @@ class CircleMenu {
         }
         this.__animationDirection = "stop"; //"stop","right"（時計回り）,"left"（反時計回り）
         this.__distanceRadian = 0; //最上位（12時）のボタンの位置との「角度差」
-        //this.__selectCD = undefined; //選択したボタン（CD型）
         this.__animationCount = - Math.PI/2; //ボタンの三角関数アニメーションで利用するカウンター
         this.__finishCount = 0; //任意の処理が12個全て完了したかを調べるカウンター
 
         if (this.__oldSelectCD != undefined) {
             this.__oldSelectCD.rotate = 0;
-            //console.log(this.__oldSelectCD.name, this.__oldSelectCD.rotate); //DEBUG
         }
     }
 
@@ -198,7 +196,6 @@ class CircleMenu {
         let _selectNum = Number(_theCD.name.substr(2)); //"CDXX"の2文字以降を取得
         _this.__playSound = new toile.Sound("mp3/" + _this.__soundList[_selectNum-1] + ".mp3");
         _this.__playSound.volume = _this.__soundVolume;
-        //_this.__playSound.play();
 
         //一時的にボタン機能をOFF
         _this.__isMouseEvent(false);
@@ -237,17 +234,14 @@ class CircleMenu {
         /* 12時（-Math.PI/2）、3時（0）、6時（Math.PI/2）、9時（Math.PI）
         ******************************************************************/
         if (_theCD.__rotate == 3*Math.PI/2) { //-Math.PI/2) { //CD1の場合（12時）
-            //console.log("A");
             _this.__animationDirection = "stop"; //回転なし
             _this.__distanceRadian = _theCD.__rotate + Math.PI/2; //=0
 
         } else if (_theCD.__rotate < Math.PI/2) { //CD2～6の場合（1～5時）
-            //console.log("B");
             _this.__animationDirection = "left"; //反時計回り
             _this.__distanceRadian = _theCD.__rotate + Math.PI/2;
 
         } else { //CD7～12（6～11時）
-            //console.log("C");
             _this.__animationDirection = "right"; //時計回り
             _this.__distanceRadian = 3*Math.PI/2 - _theCD.__rotate;
         }
@@ -272,7 +266,6 @@ class CircleMenu {
     //ボタンがぐるっと回るアニメーション（51回繰り返される）
     //======================================================
     __circleAnimation(_this, _theCD) { //this => Window, _this => CircleMenu
-        //console.log(_this.__selectCD.name, _this.__animationDirection, _this.__distanceRadian);
 
         //直前まで回転していたCD型ボタンを角度0まで戻す
         if (_this.__oldSelectCD != undefined) {
@@ -287,7 +280,6 @@ class CircleMenu {
             clearInterval(_this.__circleAnimationID); //ぐるっと回る（ここは回らないけれど）アニメーション完了①
             _this.__circleAnimationID = undefined;
             _this.init();
-            //console.log(_theCD.name, _theCD.rotate);
 
             //シークサークルが表示されている場合は消す（2017-11-20T10:31）
             if (_this.__seekCircle != undefined) {
@@ -539,11 +531,10 @@ class CircleMenu {
             _sound.stop();
 
             //再生モードボタンの選択内容により処理
-            //var _loopMode = "one"; //DEBUG（後で削除）←……………ボタンを作成しないと!!!!
             switch (_this.__loopMode) {
                 case "none": //何もしない
                     _selectCD.rotate = 3*Math.PI/2;
-                    _sound.stop(); //不要
+                    _sound.stop(); //なくても良い
                     break;
 
                 case "one": //もう一度再生
@@ -624,7 +615,6 @@ class CircleMenu {
         if (_this.__selectCD != undefined) {
 
             let _nextRotate = _this.__selectCD.rotate % 360 + (360 - _this.__selectCD.rotate % 360) / 10;
-            //let _nextRotate = _this.__selectCD.rotate % 360 + _this.__oldRotateToZero;
             if (_nextRotate < 355) {
                 _this.__selectCD.rotate = _nextRotate;
             } else {
