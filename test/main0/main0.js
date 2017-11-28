@@ -24,6 +24,13 @@ function load_window() {
         start(_canvas);
     }
 
+    //"50th Anniversary"
+    _50th = new toile.Bitmap("../common/50thlogo.png");
+    _50th.x = _canvas.width / 2 - 110;
+    _50th.y = _canvas.height - 70;
+    _50th.alpha = 1; //0.8;
+    _logoContainer.addChild(_50th);
+
 }
 
 logo = (_canvas, _x, _y) => {
@@ -75,17 +82,17 @@ logo = (_canvas, _x, _y) => {
     _html5.y = 0; //_canvas.height - 70;
     _logoContainer.addChild(_html5);
 
-    //"50th Anniversary"
-    _text50th = new toile.Text("50th Anniversary");
-    _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
-    _text50th.font = "FoglihtenNo04";
-    _text50th.size = 28; //80;
-    _text50th.align = "center";
-    _text50th.baseline = "bottom";
-    _text50th.x = _canvas.width / 2;
-    _text50th.y = _canvas.height - 20;
-    _text50th.color = "#222222";
-    _logoContainer.addChild(_text50th);
+    // //"50th Anniversary"
+    // _text50th = new toile.Text("50th Anniversary");
+    // _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
+    // _text50th.font = "FoglihtenNo04";
+    // _text50th.size = 28; //80;
+    // _text50th.align = "center";
+    // _text50th.baseline = "bottom";
+    // _text50th.x = _canvas.width / 2;
+    // _text50th.y = _canvas.height - 20;
+    // _text50th.color = "#222222";
+    // _logoContainer.addChild(_text50th);
 
     return _logoContainer;
 }
@@ -114,9 +121,9 @@ start = (_canvas) => {
         _blockWidth = _canvas.width / 17;
         _blockHeight = _canvas.height / 9;
 
-        _button1 = new SpriteSheetPlus("SpriteSheetButton1.png", true, "255,255,255", "0,0,0", 4);
-        _button2 = new SpriteSheetPlus("SpriteSheetButton1.png", true, "255,255,255", "0,0,0",4);
-        _button3 = new SpriteSheetPlus("SpriteSheetButton1.png", true, "255,255,255", "0,0,0",4);
+        _button1 = new SpriteSheetPlus("btn1.png", true, "255,255,255", "0,0,0", 4);
+        _button2 = new SpriteSheetPlus("btn2.png", true, "255,255,255", "0,0,0",4);
+        _button3 = new SpriteSheetPlus("btn2.png", true, "255,255,255", "0,0,0",4);
         _buttonArray = [_button1, _button2, _button3];
 
         for (let i=0; i<_buttonArray.length; i++) {
@@ -191,5 +198,6 @@ out_grid = (_grid) => {
     //location.href = "../main3/index3.html?param1=100&param2=200"
     //location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html?" + "param1=100" + "&" + "param2=200";
     //location.href = "../main1/index1.html";
+    if (_choiceNum == 3) _choiceNum = 2; //DEBUG
     location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html";
 }
