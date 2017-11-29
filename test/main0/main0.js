@@ -123,7 +123,7 @@ start = (_canvas) => {
 
         _button1 = new SpriteSheetPlus("btn1.png", true, "255,255,255", "0,0,0", 4);
         _button2 = new SpriteSheetPlus("btn2.png", true, "255,255,255", "0,0,0",4);
-        _button3 = new SpriteSheetPlus("btn2.png", true, "255,255,255", "0,0,0",4);
+        _button3 = new SpriteSheetPlus("btn3.png", true, "255,255,255", "0,0,0",4);
         _buttonArray = [_button1, _button2, _button3];
 
         for (let i=0; i<_buttonArray.length; i++) {
