@@ -7,6 +7,9 @@ function load_window() {
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
+    _photoMovie = undefined;
+    _videoMovie = undefined;
+
     //Video
     // _video1 = new toile.Video("bgv1.mp4", 1360, 768);
     // _video1.isLoop(true);
@@ -21,10 +24,11 @@ function load_window() {
     _scoreLine.in();
 
     //「ホームに戻るボタン」関連
+    //「ホームに戻るボタン」関連
     _homeButton = new toile.Bitmap("../common/home.png");
-    _homeButton.addEventListener("mouseup", mouseup_homeButton);
     _homeButton.x = _canvas.width - 64 - 15;
     _homeButton.y = _canvas.height - 64 - 15;
+    _homeButton.addEventListener("mouseup", mouseup_homeButton);
     _canvas.addChild(_homeButton);
 
     //「oooボタン」関連
@@ -41,6 +45,7 @@ function load_window() {
 
     //loopModeButton
     _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
+    _loopModeButton.gotoAndStop(3);
     _loopModeButton.addEventListener("load", load_loopModeButton);
     _loopModeButton.addEventListener("mouseup", mouseup_loopModeButton);
     _loopModeButton.x = _canvas.width/2 - 32;
@@ -62,6 +67,13 @@ function load_window() {
     _text4.x = _canvas.width/2;
     _text4.y = _canvas.height/2 + 167;
     _canvas.addChild(_text4);
+
+    //"50th Anniversary"
+    _50th = new toile.Bitmap("../common/50thlogo.png");
+    _50th.x = _canvas.width / 2 - 110;
+    _50th.y = _canvas.height - 70;
+    _50th.alpha = 1; //0.8;
+    _logoContainer.addChild(_50th);
 }
 
 in_scoreLine = (_scoreLine) => {
@@ -70,17 +82,17 @@ in_scoreLine = (_scoreLine) => {
     _circleMenu.addEventListener("out", out_circleMenu);
 }
 
-videoLoadLoop = (_canvas) => {
-    if (_video1.isLoaded()) {
-        if (_video1.alpha < 1) {
-            _video1.alpha += 0.01;
-        } else {
-            _video1.alpha = 1;
-            clearInterval(_timerVideo1);
-            //console.log("video")
-        }
-    }
-}
+// videoLoadLoop = (_canvas) => {
+//     if (_video1.isLoaded()) {
+//         if (_video1.alpha < 1) {
+//             _video1.alpha += 0.01;
+//         } else {
+//             _video1.alpha = 1;
+//             clearInterval(_timerVideo1);
+//             //console.log("video")
+//         }
+//     }
+// }
 
 logo = (_canvas, _x, _y) => {
     _logoContainer = new toile.Container();
@@ -132,21 +144,22 @@ logo = (_canvas, _x, _y) => {
     _logoContainer.addChild(_html5);
 
     //"50th Anniversary"
-    _text50th = new toile.Text("50th Anniversary");
-    _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
-    _text50th.font = "FoglihtenNo04";
-    _text50th.size = 28; //80;
-    _text50th.align = "center";
-    _text50th.baseline = "bottom";
-    _text50th.x = _canvas.width / 2;
-    _text50th.y = _canvas.height - 20;
-    _text50th.color = "#222222";
-    _logoContainer.addChild(_text50th);
+    // _text50th = new toile.Text("50th Anniversary");
+    // _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
+    // _text50th.font = "FoglihtenNo04";
+    // _text50th.size = 28; //80;
+    // _text50th.align = "center";
+    // _text50th.baseline = "bottom";
+    // _text50th.x = _canvas.width / 2;
+    // _text50th.y = _canvas.height - 20;
+    // _text50th.color = "#222222";
+    // _logoContainer.addChild(_text50th);
 
     return _logoContainer;
 }
 
 enterframe_canvas = (_canvas) => {
+    //console.log(_video.x);
     _canvas.drawScreen("#fefefe");
 }
 
@@ -177,16 +190,23 @@ mouseup_homeButton = (_bitmap) => {
     //location.href = "../main0/index0.html?param=true"
     _scoreLine.out(); //DEBUG
     _circleMenu.out();
-    _photoMovie.end();
 
-    _timerHomeButtonID = setInterval(timerHomeButton, 17, _canvas);
+    if (_photoMovie != undefined) {
+        _photoMovie.end();
+    }
+     
+    if (_videoMovie != undefined) {
+        _videoMovie.end();
+    }
+
+    //_timerHomeButtonID = setInterval(timerHomeButton, 17, _canvas);
 }
 
 //=====================
 // HOMEボタンの後処理
 //=====================
 timerHomeButton = () => {
-    console.log("timerHomeButton");
+    //console.log("timerHomeButton");
 }
 
 out_scoreLine = (_scoreLine) => {
@@ -197,16 +217,25 @@ out_scoreLine = (_scoreLine) => {
 in_circleMenu = (_circleMenu) => {
     //console.log("in_circleMenu");
     //location.href = "../main0/index0.html?param=true"
+    
     //PhotoMovie
-    _photoMovie = new PhotoMovie(_canvas);
-    _photoMovie.addEventListener("end", end_photoMovie);
-    _photoMovie.start();
+    // _photoMovie = new PhotoMovie(_canvas);
+    // _photoMovie.addEventListener("end", end_photoMovie);
+    // _photoMovie.start();
+
+    _videoMovie = new VideoMovie(_canvas);
+    _videoMovie.addEventListener("end", end_videoMovie);
+    _videoMovie.start();
 }
 
 end_photoMovie = (_photoMovie) => {
     //console.log("end_photoMovie");
     location.href = "../main0/index0.html?param=true"
     //location.href = "index2.html"
+}
+
+end_videoMovie = (_videoMovie) => {
+    location.href = "../main0/index0.html?param=true"
 }
 
 out_circleMenu = (_circleMenu) => {
