@@ -1,17 +1,18 @@
 /***********************************************
- * VideoMovie Class (ver.2017-11-XXTXX:XX)
+ * VideoMovie Class (ver.2017-12-XXTXX:XX)
  * 
  *  <constructor>
  *      new VideoMovie(_canvas)
  * 
  *  <public method>
- *      VideoMovie.addEventListener(_event, _function)   "in" or "out"
- *      ScoreLine.in()
- *      ScoreLine.out()
+ *      VideoMovie.addEventListener(_event, _function)   "end"
+ *      VideoMovie.start()
+ * 
+ *  <public property>
+ *      Video.interval
  *      
  *  <event>
- *      ScoreLine.IN
- *      ScoreLine.OUT
+ *      VideoMovie.END
  *
 ***********************************************/
 
@@ -146,7 +147,6 @@ class VideoMovie {
             _this.__showEndID = setTimeout(_this.__showEnd, _this.__showTime, _this); //__showTimeミリ秒見せる
         }
     }
-
 
     end() {
         if (this.__firstFadeInLoopID != undefined) clearInterval(this.__firstFadeInLoopID);
