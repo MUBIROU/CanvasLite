@@ -39,7 +39,7 @@ randomArray = (_array) => { //作品リストをランダムにする
 
 //任意の位置に配置する場合
 _bestPosArray = [
-    [231,435],[1021,392],[141,129],[218,186],[400,457],[476,328],[637,310],[994,424],[483,194],[268,209],[724,324],[686,166],[255,476],[88,202],[399,362],[533,104],[994,73],[586,137],[176,313],[486,461],[881,206],[651,35],[831,360],[1121,304],[575,16],[193,172],[269,54],[1092,345],[1083,148],[933,450],[499,386],[394,191],[414,496],[818,484],[488,506],[615,513],[143,340],[730,497],[552,308],[115,424],[347,41],[450,236],[758,19],[809,185],[381,456],[1146,251],[310,310],[306,484],[63,352],[883,467],[42,271],[795,223],[920,54],[452,24],[1119,204],[705,441],[594,469],[387,94],[1057,369],[376,441],[871,85],[956,290],[848,37],[974,162],[698,441],[191,449],[1042,102],[453,148],[282,354],[622,205],[1054,293],[207,83]
+    [1061,382],[794,38],[1022,93],[499,386],[246,438],[586,137],[686,166],[67,216],[453,148],[871,85],[594,469],[575,27],[809,185],[795,223],[381,456],[1014,410],[484,493],[970,441],[105,177],[533,104],[476,328],[224,101],[841,474],[1105,158],[450,236],[399,362],[154,410],[143,340],[413,485],[1141,188],[159,172],[688,30],[1175,249],[400,457],[637,310],[366,51],[65,334],[310,140],[734,487],[606,499],[330,214],[1060,119],[282,354],[705,441],[944,68],[310,310],[224,203],[698,441],[486,461],[387,94],[450,33],[152,296],[1117,317],[552,308],[353,436],[1090,345],[205,422],[859,51],[109,371],[974,162],[622,205],[956,290],[149,138],[36,268],[296,463],[724,324],[300,67],[1140,276],[913,457],[881,206],[831,360],[176,313]
 ];
 // [
 //     [698,441],[349,521],[724,324],[974,162],[453,40],[586,137],[403,360],[232,97],[218,186],[831,360],[795,223],[408,536],[974,432],[533,104],[176,313],[141,129],[280,82],[260,510],[841,52],[705,441],[1119,204],[1046,400],[193,172],[1001,438],[571,30],[499,386],[1146,251],[933,485],[88,202],[399,362],[622,205],[400,457],[488,506],[737,548],[63,352],[453,148],[310,310],[450,236],[115,424],[476,328],[851,528],[394,191],[594,469],[42,271],[1084,357],[1032,109],[231,435],[809,185],[754,38],[268,209],[686,166],[387,94],[651,35],[488,538],[871,85],[915,69],[1121,304],[795,512],[282,354],[347,55],[881,206],[956,290],[1054,293],[182,468],[1083,148],[619,547],[973,87],[637,310],[483,194],[143,340],[381,456],[552,308]
@@ -95,71 +95,18 @@ function load_window() {
     }
     _bitmapArrayCopy = _bitmapArray.concat(); //複製
 
-    _logo = logo(_canvas, 15, 15);
-}
-
-logo = (_canvas, _x, _y) => {
-    _logoContainer = new toile.Container();
-    _logoContainer.x = _x;
-    _logoContainer.y = _y;
-    _canvas.addChild(_logoContainer);
-
-    //"CREA"
-    _text1 = new toile.Text("CREA");
-    _text1.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
-    _text1.font = "VV2NIGHTCLUB";
-    _text1.size = 25; //80;
-    _text1.x = 38 + 5; //1165; //20;//12;
-    _text1.y = -3; //-1;
-    _text1.color = "#222222";
-    _logoContainer.addChild(_text1);
-
-    //"TED BY"
-    _text2 = new toile.Text("TED BY");
-    _text2.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
-    _text2.font = "VV2NIGHTCLUB";
-    _text2.size = 25; //80;
-    _text2.x = 113 + 5; //1165; //20;//12;
-    _text2.y = -3; //-1;
-    _text2.color = "#222222";
-    _logoContainer.addChild(_text2);
-
-    //"SHINANOJS"
-    _text3 = new toile.Text("SHINANOJS");
-    _text3.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
-    _text3.font = "VV2NIGHTCLUB";
-    _text3.size = 28; //80;
-    _text3.x = 38 + 5; //1165; //20;//12;
-    _text3.y = 20; //-1;
-    _text3.color = "#222222";
-    _logoContainer.addChild(_text3);
-
-    _line = new toile.Line(38,0,215,0);
-    _line.x = 38 + 5;
-    _line.y = 21;
-    _line.lineWidth = 1;
-    _line.lineColor = "64,64,64";
-    _logoContainer.addChild(_line);
-
-    //"HTML5 logo"
+    //_logo = logo(_canvas, 15, 15);
     _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
-    _html5.x = 0; //_canvas.width - 230;
-    _html5.y = 0; //_canvas.height - 70;
-    _logoContainer.addChild(_html5);
+    _html5.x = 15; //_canvas.width - 230;
+    _html5.y = 15; //_canvas.height - 70;
+    _canvas.addChild(_html5);
 
     //"50th Anniversary"
-    _text50th = new toile.Text("50th Anniversary");
-    _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
-    _text50th.font = "FoglihtenNo04";
-    _text50th.size = 28; //80;
-    _text50th.align = "center";
-    _text50th.baseline = "bottom";
-    _text50th.x = _canvas.width / 2;
-    _text50th.y = _canvas.height - 20;
-    _text50th.color = "#222222";
-    _logoContainer.addChild(_text50th);
-
-    return _logoContainer;
+    _50th = new toile.Bitmap("../common/50thlogo.png");
+    _50th.x = _canvas.width / 2 - 165;
+    _50th.y = _canvas.height - 70;
+    _50th.alpha = 1; //0.8;
+    _canvas.addChild(_50th);
 }
 
 //===========================================
@@ -169,12 +116,6 @@ load_bitmap = (_bitmap) => {
 
     _bitmap.width = 140;
     _bitmap.height = 200;
-
-    //ランダムに配置する場合
-    // _bitmap.x = 80 + (_canvas.width - 300) * Math.random();
-    // _bitmap.y = _canvas.height;
-    // _bitmap.__posY = 80 + (_canvas.height - 360) * Math.random();
-    // _bitmap.__disY = _bitmap.y - _bitmap.__posY;
 
     //任意の位置に配置する場合
     let _thePos = _bestPosArray.pop();
@@ -227,16 +168,24 @@ enterframe_canvas = (_canvas) => {
                     //「ホームに戻るボタン」関連
                     _homeButton = new toile.Bitmap("../common/home.png");
                     _homeButton.x = _canvas.width - 64 - 15;
-                    _homeButton.y = _canvas.height - 64 - 15;
-                    _homeButton.addEventListener("mouseup", mouseup_home);
+                    _homeButton.y = 15; //_canvas.height - 64 - 15;
+                    _homeButton.addEventListener("mouseup", mouseup_homeButton, true);
                     _canvas.addChild(_homeButton);
+
+                    //「シナノロゴ」関連
+                    //_shinanologo = new toile.Bitmap("../common/shinano.png");
+                    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+                    _shinanologo.x = _canvas.width - 64 - 245;
+                    _shinanologo.y = _canvas.height -37 -10; //10;
+                    //_shinanologo.alpha = 0.8;
+                    _canvas.addChild(_shinanologo);
 
                     //「ヘルプボタン」関連
                     _helpButton = new toile.Bitmap("help.png");
-                    _helpButton.x = _canvas.width - 64 - 15;
+                    _helpButton.x = _canvas.width - 64 - 115;
                     _helpButton.y = 15;
                     _helpButton.addEventListener("mouseup", mouseup_helpButton);
-                    _canvas.addChild(_helpButton);
+                    //_canvas.addChild(_helpButton); //DEBUG（位置調整用）
 
                     //ループ関数の変更
                     _canvas.removeEventListener("enterframe");
@@ -431,7 +380,8 @@ close_screen = (_screen) => {
 //===================
 // ホームに戻るボタン
 //===================
-mouseup_home = (_bitmap) => {
+mouseup_homeButton = (_bitmap) => {
+    console.log("CCC");
     //homeボタンの削除
     _homeButton.removeEventListener("mouseup");
     _canvas.deleteChild(_homeButton); //すぐ消去する場合
@@ -460,7 +410,8 @@ mouseup_home = (_bitmap) => {
     _canvas.removeEventListener("enterframe");
     _canvas.addEventListener("enterframe", enterframe_canvas3);
 
-    _canvas.setDepthIndex(_logo, _canvas.getDepthMax());
+    //_canvas.setDepthIndex(_logo, _canvas.getDepthMax());
+    _canvas.setDepthIndex(_html5, _canvas.getDepthMax());
 }
 
 //===========================

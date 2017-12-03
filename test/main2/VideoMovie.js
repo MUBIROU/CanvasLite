@@ -147,12 +147,31 @@ class VideoMovie {
         }
     }
 
-
-    end() {
+    end(_boolean = true) {
         if (this.__firstFadeInLoopID != undefined) clearInterval(this.__firstFadeInLoopID);
         if (this.__crossfadeID != undefined) clearInterval(this.__crossfadeID);
         if (this.__showEndID != undefined) clearInterval(this.__showEnd);
-        this.__fadeOutLoopID = setInterval(this.__fadeOutLoop, 17, this);
+        
+        //if (_boolean) {
+            this.__fadeOutLoopID = setInterval(this.__fadeOutLoop, 17, this);
+        
+        // } else {
+        //     if (this.__currentVideo != undefined) {
+        //         this.__currentVideo.alpha = 0;
+        //         this.__canvas.deleteChild(this.__currentVideo);
+        //     }
+            
+        //     if (this.__newVideo != undefined) {
+        //         this.__newVideo.alpha = 0;
+        //         this.__canvas.deleteChild(this.__newVideo);
+        //     }
+
+        //     if (this.__nextVideo != undefined) {
+        //         this.__nextVideo.alpha = 0;
+        //         this.__canvas.deleteChild(this.__nextVideo);
+        //     }
+
+        // }
     }
 
     //パブリックプロパティ

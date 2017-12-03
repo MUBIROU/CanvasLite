@@ -10,13 +10,6 @@ function load_window() {
     _photoMovie = undefined;
     _videoMovie = undefined;
 
-    //Video
-    // _video1 = new toile.Video("bgv1.mp4", 1360, 768);
-    // _video1.isLoop(true);
-    // _video1.alpha = 0;
-    // _canvas.addChild(_video1);
-    // _timerVideo1 = setInterval(videoLoadLoop, 17, _canvas);
-
     //五線譜の生成
     _scoreLine = new ScoreLine(_canvas);
     _scoreLine.addEventListener("in", in_scoreLine);
@@ -24,24 +17,19 @@ function load_window() {
     _scoreLine.in();
 
     //「ホームに戻るボタン」関連
-    //「ホームに戻るボタン」関連
     _homeButton = new toile.Bitmap("../common/home.png");
     _homeButton.x = _canvas.width - 64 - 15;
-    _homeButton.y = _canvas.height - 64 - 15;
+    _homeButton.y = 15; //_canvas.height - 64 - 15;
     _homeButton.addEventListener("mouseup", mouseup_homeButton);
     _canvas.addChild(_homeButton);
 
-    //「oooボタン」関連
-    _oooButton = new toile.Bitmap("oooButton.png");
-    _oooButton.x = _canvas.width - 64 - 15;
-    _oooButton.y = 15;
-    _canvas.addChild(_oooButton);
-
-    //「xxxボタン」関連
-    _xxxButton = new toile.Bitmap("xxxButton.png");
-    _xxxButton.x = 15;
-    _xxxButton.y = _canvas.height - 64 - 15;
-    _canvas.addChild(_xxxButton);
+    //「シナノロゴ」関連
+    //_shinanologo = new toile.Bitmap("../common/shinano.png");
+    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+    _shinanologo.x = _canvas.width - 64 - 245;
+    _shinanologo.y = _canvas.height -37 -10; //10;
+    //_shinanologo.alpha = 0.8;
+    _canvas.addChild(_shinanologo);
 
     //loopModeButton
     _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
@@ -53,7 +41,11 @@ function load_window() {
     //_loopModeButton.alpha = 0.9;
     _canvas.addChild(_loopModeButton);
 
-    _logo = logo(_canvas, 15, 15);
+    //_logo = logo(_canvas, 15, 15);
+    _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
+    _html5.x = 15; //_canvas.width - 230;
+    _html5.y = 15; //_canvas.height - 70;
+    _canvas.addChild(_html5);
 
     //"Music is VFR"
     _text4 = new toile.Text("Music is VFR");
@@ -70,92 +62,16 @@ function load_window() {
 
     //"50th Anniversary"
     _50th = new toile.Bitmap("../common/50thlogo.png");
-    _50th.x = _canvas.width / 2 - 110;
+    _50th.x = _canvas.width / 2 - 165;
     _50th.y = _canvas.height - 70;
     _50th.alpha = 1; //0.8;
-    _logoContainer.addChild(_50th);
+    _canvas.addChild(_50th);
 }
 
 in_scoreLine = (_scoreLine) => {
     _circleMenu = new CircleMenu(_canvas);
     _circleMenu.addEventListener("in", in_circleMenu)
     _circleMenu.addEventListener("out", out_circleMenu);
-}
-
-// videoLoadLoop = (_canvas) => {
-//     if (_video1.isLoaded()) {
-//         if (_video1.alpha < 1) {
-//             _video1.alpha += 0.01;
-//         } else {
-//             _video1.alpha = 1;
-//             clearInterval(_timerVideo1);
-//             //console.log("video")
-//         }
-//     }
-// }
-
-logo = (_canvas, _x, _y) => {
-    _logoContainer = new toile.Container();
-    _logoContainer.x = _x;
-    _logoContainer.y = _y;
-    _canvas.addChild(_logoContainer);
-
-    //"CREA"
-    _text1 = new toile.Text("CREA");
-    _text1.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
-    _text1.font = "VV2NIGHTCLUB";
-    _text1.size = 25; //80;
-    _text1.x = 38 + 5; //1165; //20;//12;
-    _text1.y = -3; //-1;
-    _text1.color = "#222222";
-    _logoContainer.addChild(_text1);
-
-    //"TED BY"
-    _text2 = new toile.Text("TED BY");
-    _text2.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
-    _text2.font = "VV2NIGHTCLUB";
-    _text2.size = 25; //80;
-    _text2.x = 113 + 5; //1165; //20;//12;
-    _text2.y = -3; //-1;
-    _text2.color = "#222222";
-    _logoContainer.addChild(_text2);
-
-    //"SHINANOJS"
-    _text3 = new toile.Text("SHINANOJS");
-    _text3.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
-    _text3.font = "VV2NIGHTCLUB";
-    _text3.size = 28; //80;
-    _text3.x = 38 + 5; //1165; //20;//12;
-    _text3.y = 20; //-1;
-    _text3.color = "#222222";
-    _logoContainer.addChild(_text3);
-
-    _line = new toile.Line(38,0,215,0);
-    _line.x = 38 + 5;
-    _line.y = 21;
-    _line.lineWidth = 1;
-    _line.lineColor = "64,64,64";
-    _logoContainer.addChild(_line);
-
-    //"HTML5 logo"
-    _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
-    _html5.x = 0; //_canvas.width - 230;
-    _html5.y = 0; //_canvas.height - 70;
-    _logoContainer.addChild(_html5);
-
-    //"50th Anniversary"
-    // _text50th = new toile.Text("50th Anniversary");
-    // _text50th.addWebFont("FoglihtenNo04", "../common/FoglihtenNo04-070.otf", "opentype");
-    // _text50th.font = "FoglihtenNo04";
-    // _text50th.size = 28; //80;
-    // _text50th.align = "center";
-    // _text50th.baseline = "bottom";
-    // _text50th.x = _canvas.width / 2;
-    // _text50th.y = _canvas.height - 20;
-    // _text50th.color = "#222222";
-    // _logoContainer.addChild(_text50th);
-
-    return _logoContainer;
 }
 
 enterframe_canvas = (_canvas) => {
@@ -198,8 +114,6 @@ mouseup_homeButton = (_bitmap) => {
     if (_videoMovie != undefined) {
         _videoMovie.end();
     }
-
-    //_timerHomeButtonID = setInterval(timerHomeButton, 17, _canvas);
 }
 
 //=====================
@@ -215,23 +129,9 @@ out_scoreLine = (_scoreLine) => {
 }
 
 in_circleMenu = (_circleMenu) => {
-    //console.log("in_circleMenu");
-    //location.href = "../main0/index0.html?param=true"
-    
-    //PhotoMovie
-    // _photoMovie = new PhotoMovie(_canvas);
-    // _photoMovie.addEventListener("end", end_photoMovie);
-    // _photoMovie.start();
-
     _videoMovie = new VideoMovie(_canvas);
     _videoMovie.addEventListener("end", end_videoMovie);
     _videoMovie.start();
-}
-
-end_photoMovie = (_photoMovie) => {
-    //console.log("end_photoMovie");
-    location.href = "../main0/index0.html?param=true"
-    //location.href = "index2.html"
 }
 
 end_videoMovie = (_videoMovie) => {
