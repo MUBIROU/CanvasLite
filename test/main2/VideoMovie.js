@@ -1,17 +1,18 @@
 /***********************************************
- * VideoMovie Class (ver.2017-11-XXTXX:XX)
+ * VideoMovie Class (ver.2017-12-XXTXX:XX)
  * 
  *  <constructor>
  *      new VideoMovie(_canvas)
  * 
  *  <public method>
- *      VideoMovie.addEventListener(_event, _function)   "in" or "out"
- *      ScoreLine.in()
- *      ScoreLine.out()
+ *      VideoMovie.addEventListener(_event, _function)   "end"
+ *      VideoMovie.start()
+ * 
+ *  <public property>
+ *      Video.interval
  *      
  *  <event>
- *      ScoreLine.IN
- *      ScoreLine.OUT
+ *      VideoMovie.END
  *
 ***********************************************/
 
@@ -147,7 +148,11 @@ class VideoMovie {
         }
     }
 
+<<<<<<< HEAD
     end(_boolean = true) {
+=======
+    end() {
+>>>>>>> b22c8eb033feb1598ee2e834790533b10b337bfe
         if (this.__firstFadeInLoopID != undefined) clearInterval(this.__firstFadeInLoopID);
         if (this.__crossfadeID != undefined) clearInterval(this.__crossfadeID);
         if (this.__showEndID != undefined) clearInterval(this.__showEnd);
