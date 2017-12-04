@@ -28,25 +28,25 @@ class CircleMenu {
 
         //this.__soundList = ["tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp"];
         
-        this.__soundList = ["tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp",
-        "10_namida no imi",
-        "11_odayakana zikan",
-        "12_Pieces of a Dream"];
+        // this.__soundList = ["tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp",
+        // "10_namida no imi",
+        // "11_odayakana zikan",
+        // "12_Pieces of a Dream"];
         
-        //this.__soundList = [
-        //     "01_gomenne",
-        //     "02_hokkori tea time",
-        //     "03_In That Mood",
-        //     "04_inaka no daisougen",
-        //     "05_kanasimi ni sakuhana",
-        //     "06_kuuhaku to seizyaku",
-        //     "07_Let It Happen",
-        //     "08_Lovely Day",
-        //     "09_mizu no mati",
-        //     "10_namida no imi",
-        //     "11_odayakana zikan",
-        //     "12_Pieces of a Dream"
-        // ]; 
+        this.__soundList = [
+            "01_gomenne",
+            "02_hokkori tea time",
+            "03_In That Mood",
+            "04_inaka no daisougen",
+            "05_kanasimi ni sakuhana",
+            "06_kuuhaku to seizyaku",
+            "07_Let It Happen",
+            "08_Lovely Day",
+            "09_mizu no mati",
+            "10_namida no imi",
+            "11_odayakana zikan",
+            "12_Pieces of a Dream"
+        ]; 
 
         //"anata wo siritakute"（オルゴール）
         //console.log(this.__soundList.length); //12

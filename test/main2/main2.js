@@ -1,5 +1,8 @@
 addEventListener("load", load_window, false);
 function load_window() {
+    _photoMovie = undefined;
+    _videoMovie = undefined;
+
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.enabledContextMenu(false);
@@ -7,8 +10,10 @@ function load_window() {
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
-    _photoMovie = undefined;
-    _videoMovie = undefined;
+    _uiList = [];
+
+    // _uiContainer = new toile.Container();
+    // _canvas.addChild(_uiContainer);
 
     //五線譜の生成
     _scoreLine = new ScoreLine(_canvas);
@@ -21,7 +26,9 @@ function load_window() {
     _homeButton.x = _canvas.width - 64 - 15;
     _homeButton.y = 15; //_canvas.height - 64 - 15;
     _homeButton.addEventListener("mouseup", mouseup_homeButton);
+    //_uiContainer.addChild(_homeButton);
     _canvas.addChild(_homeButton);
+    _uiList.push(_homeButton);
 
     //「シナノロゴ」関連
     //_shinanologo = new toile.Bitmap("../common/shinano.png");
@@ -29,7 +36,9 @@ function load_window() {
     _shinanologo.x = _canvas.width - 64 - 245;
     _shinanologo.y = _canvas.height -37 -10; //10;
     //_shinanologo.alpha = 0.8;
+    //_uiContainer.addChild(_shinanologo);
     _canvas.addChild(_shinanologo);
+    _uiList.push(_shinanologo);
 
     //loopModeButton
     _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
@@ -38,26 +47,26 @@ function load_window() {
     _loopModeButton.x = _canvas.width/2 - 32;
     _loopModeButton.y = _canvas.height/2 + 85;
     //_loopModeButton.alpha = 0.9;
+    //_uiContainer.addChild(_loopModeButton);
     _canvas.addChild(_loopModeButton);
+    _uiList.push(_loopModeButton);
 
     //_logo = logo(_canvas, 15, 15);
     _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
     _html5.x = 15; //_canvas.width - 230;
     _html5.y = 15; //_canvas.height - 70;
     _canvas.addChild(_html5);
+    _uiList.push(_html5);
+    //_uiContainer.addChild(_html5);
 
     //"Music is VFR"
-    _text4 = new toile.Text("Music is VFR");
-    _text4.addWebFont("VV2NIGHTCLUB", "../common/VV2NIGHTCLUB.OTF", "opentype");
-    _text4.font = "VV2NIGHTCLUB";
-    _text4.color = "#222222"; //"#ffffff";
-    _text4.size = 16; //80;
-    _text4.align = "center"
-    _text4.baseline = "middle";
-    _text4.alpha = 0.3;
-    _text4.x = _canvas.width/2;
-    _text4.y = _canvas.height/2 + 167;
-    _canvas.addChild(_text4);
+    _VFR = new toile.Bitmap("MusicIsVFR.png");
+    _VFR.x = _canvas.width / 2 - 61;
+    _VFR.y = _canvas.height - 228;
+    _VFR.alpha = 1; //0.8;
+    _canvas.addChild(_VFR);
+    _uiList.push(_VFR);
+    //_uiContainer.addChild(_VFR);
 
     //"50th Anniversary"
     _50th = new toile.Bitmap("../common/50thlogo.png");
@@ -65,6 +74,8 @@ function load_window() {
     _50th.y = _canvas.height - 70;
     _50th.alpha = 1; //0.8;
     _canvas.addChild(_50th);
+    _uiList.push(_50th);
+    //_uiContainer.addChild(_50th);
 }
 
 in_scoreLine = (_scoreLine) => {
@@ -113,6 +124,19 @@ mouseup_homeButton = (_bitmap) => {
     if (_videoMovie != undefined) {
         _videoMovie.end();
     }
+
+    _uiFadeOutID = setInterval(_uiFadeOut, 17);
+}
+
+_uiFadeOut = () => {
+    _uiList.forEach(function(_bitmap) {
+        if (0 < _bitmap.alpha) {
+            _bitmap.alpha -= 0.01;
+        } else {
+            //console.log("AAAAAAAAAAAAAAA")
+            _bitmap.alpha = 0;
+        }
+    });
 }
 
 //=====================
