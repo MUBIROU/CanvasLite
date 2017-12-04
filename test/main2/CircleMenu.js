@@ -161,10 +161,17 @@ class CircleMenu {
                         // INイベント（12個のボタンの表示完了）発生!!!
                         //=============================================
                         _this.__inHandler(_this);
+
+                        _this.__startTimeoutID = setTimeout(_this.__startTimeout, 1000, _this);
                     }
                 }
             }
         };
+    }
+
+    __startTimeout(_this) {
+        var _randomNum = Math.floor(Math.random()*12) + 1;
+        _this.__mouseup_theCD(_this.__cdArray[_randomNum-1]);
     }
 
     //=========================================================================

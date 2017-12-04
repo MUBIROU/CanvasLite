@@ -33,7 +33,6 @@ function load_window() {
 
     //loopModeButton
     _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
-    _loopModeButton.gotoAndStop(3);
     _loopModeButton.addEventListener("load", load_loopModeButton);
     _loopModeButton.addEventListener("mouseup", mouseup_loopModeButton);
     _loopModeButton.x = _canvas.width/2 - 32;
@@ -80,7 +79,7 @@ enterframe_canvas = (_canvas) => {
 }
 
 load_loopModeButton = (_spriteSheet) => {
-    _spriteSheet.gotoAndStop(2);
+    _spriteSheet.gotoAndStop(3);
 }
 
 mouseup_loopModeButton = (_spriteSheet) => {
