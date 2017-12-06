@@ -37,7 +37,7 @@ class SpriteSheetPlus extends toile.SpriteSheet {
     __load_this() {
         this.removeEventListener("load");
         //Rectの生成
-        this.__rect = new Rect(this.x, this.y, this.x, this.y);
+        this.__rect = new Rect(this.x + 2, this.y + 2, this.x + 2, this.y + 2);
         this.__rect.lineWidth = this.__rectLineWidth;
         this.__rect.isFill(true);
         this.__rect.fillColor = this.__rectFillColor;
@@ -71,12 +71,13 @@ class SpriteSheetPlus extends toile.SpriteSheet {
     //=============================
     __rectInLoop(_this) {
         _this.__loopCount += _this.__speed; //値が大きいほど高速
-        if (_this.__rect.width < _this.width - 1) {
-            _this.__rect.width = _this.width * Math.cos(_this.__loopCount);
-            _this.__rect.height = _this.height * Math.cos(_this.__loopCount);
+        if (_this.__rect.width < (_this.width - _this.__rect.lineWidth - 1)) {
+            _this.__rect.width = (_this.width - _this.__rect.lineWidth) * Math.cos(_this.__loopCount);
+            _this.__rect.height = (_this.height - _this.__rect.lineWidth) * Math.cos(_this.__loopCount);
         } else { //Rect登場完了
-            _this.__rect.width = _this.width; 
-            _this.__rect.height = _this.height;
+            //console.log(_this.width, _this.height);
+            _this.__rect.width = _this.width - _this.__rect.lineWidth; 
+            _this.__rect.height = _this.height - _this.__rect.lineWidth;
             clearInterval(_this.__rectInLoopID);
 
             //SpriteSheet登場を開始

@@ -1,20 +1,3 @@
-/*
-_param1 = location.search.match(/param1=(.*?)(&|$)/)[1];
-console.log(_param1);
-_param2 = location.search.match(/param2=(.*?)(&|$)/)[1];
-console.log(_param2);
-*/
-
-//==========================
-//作品リストとそのランダム化
-//==========================
-//standard
-//"AS" "DAS"（VAS）"DB" "DG" "DK" "DN" "DP"
-
-//"wide"
-//"DA" "DOK" "DS"
-
-
 _videoList = [ //優先させたい作品は除く
     "AS-1","AS-2","AS-3","AS-4","AS-5","AS-6","AS-7","AS-8","AS-9","AS-10","AS-16","AS-17","AS-18","AS-20",
     "DA-24",
@@ -63,6 +46,8 @@ function load_window() {
     _playMark = undefined; //Playマーク
     _changeBitmap = false; //選択した作品が前と異なるか否か
 
+    _uiList = [];
+
     //「Canvas」関連
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
@@ -100,6 +85,7 @@ function load_window() {
     _html5.x = 15; //_canvas.width - 230;
     _html5.y = 15; //_canvas.height - 70;
     _canvas.addChild(_html5);
+    _uiList.push(_html5);
 
     //"50th Anniversary"
     _50th = new toile.Bitmap("../common/50thlogo.png");
@@ -107,6 +93,7 @@ function load_window() {
     _50th.y = _canvas.height - 70;
     _50th.alpha = 1; //0.8;
     _canvas.addChild(_50th);
+    _uiList.push(_50th);
 }
 
 //===========================================
@@ -164,13 +151,15 @@ enterframe_canvas = (_canvas) => {
                     _depthChangeBtn.y = _canvas.height - 64 - 15;//20;
                     //_depthChangeBtn.scale = 2;
                     _canvas.addChild(_depthChangeBtn);
+                    _uiList.push(_depthChangeBtn);
 
                     //「ホームに戻るボタン」関連
                     _homeButton = new toile.Bitmap("../common/home.png");
                     _homeButton.x = _canvas.width - 64 - 15;
                     _homeButton.y = 15; //_canvas.height - 64 - 15;
-                    _homeButton.addEventListener("mouseup", mouseup_homeButton, true);
+                    _homeButton.addEventListener("mouseup", mouseup_homeButton);
                     _canvas.addChild(_homeButton);
+                    _uiList.push(_homeButton);
 
                     //「シナノロゴ」関連
                     //_shinanologo = new toile.Bitmap("../common/shinano.png");
@@ -179,6 +168,7 @@ enterframe_canvas = (_canvas) => {
                     _shinanologo.y = _canvas.height -37 -10; //10;
                     //_shinanologo.alpha = 0.8;
                     _canvas.addChild(_shinanologo);
+                    _uiList.push(_shinanologo);
 
                     //「ヘルプボタン」関連
                     _helpButton = new toile.Bitmap("help.png");
@@ -271,7 +261,7 @@ callback_screenShot = (_screenShot) => {
 // 作品を押した時に実行（内部処理用）
 //===================================
 mousedown_bitmap = (_bitmap) => {
-    console.log("D:" + _bitmap.name);
+    //console.log("D:" + _bitmap.name);
     if (_playMark != undefined) {
         _playMark.x = -9e9; //動いている間
     }
@@ -294,7 +284,7 @@ mousedown_bitmap = (_bitmap) => {
 // 作品をクリックした時に実行
 //===========================
 mouseup_bitmap = (_bitmap) => {
-    console.log("U:" + _bitmap.name);
+    //console.log("U:" + _bitmap.name);
     if (_playMark != undefined) {
         _canvas.deleteChild(_playMark);
     }
@@ -363,12 +353,12 @@ allButtonMouseEvent = (_boolean) => {
         });
         _helpButton.addEventListener("mouseup", mouseup_helpButton);
         _depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
-        _homeButton.addEventListener("mouseup", mouseup_home);
+        _homeButton.addEventListener("mouseup", mouseup_homeButton);
     }
 }
 
 close_screen = (_screen) => {
-    console.log("スクリーンが閉じられました");
+    //console.log("スクリーンが閉じられました");
     
     //選択していたボタンを再表示する
     //_bitmap.alpha = 1;
@@ -381,18 +371,18 @@ close_screen = (_screen) => {
 // ホームに戻るボタン
 //===================
 mouseup_homeButton = (_bitmap) => {
-    console.log("CCC");
+    //console.log("CCC");
     //homeボタンの削除
     _homeButton.removeEventListener("mouseup");
-    _canvas.deleteChild(_homeButton); //すぐ消去する場合
+    //_canvas.deleteChild(_homeButton); //すぐ消去する場合
 
     //changeボタンの削除
     _depthChangeBtn.removeEventListener("mouseup");
-    _canvas.deleteChild(_depthChangeBtn); //すぐ消去する場合
+    //_canvas.deleteChild(_depthChangeBtn); //すぐ消去する場合
 
     //helpボタンの削除
     _helpButton.removeEventListener("mouseup");
-    _canvas.deleteChild(_helpButton); //すぐ消去する場合
+    //_canvas.deleteChild(_helpButton); //すぐ消去する場合
 
     //playマークの削除
     _canvas.deleteChild(_playMark); //すぐ消去する場合
@@ -412,6 +402,8 @@ mouseup_homeButton = (_bitmap) => {
 
     //_canvas.setDepthIndex(_logo, _canvas.getDepthMax());
     _canvas.setDepthIndex(_html5, _canvas.getDepthMax());
+
+    _uiFadeOutID = setInterval(_uiFadeOut, 17);
 }
 
 //===========================
@@ -438,4 +430,16 @@ enterframe_canvas3 = (_canvas) => {
         }
     }
     _canvas.drawScreen("#fefefe");
+}
+
+
+_uiFadeOut = () => {
+    _uiList.forEach(function(_bitmap) {
+        if (0 < _bitmap.alpha) {
+            _bitmap.alpha -= 0.015;
+        } else {
+            //console.log("AAAAAAAAAAAAAAA")
+            _bitmap.alpha = 0;
+        }
+    });
 }

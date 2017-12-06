@@ -378,7 +378,7 @@ class Screen {
         _this.__originEndY = _this.__screen1.endY;
 
         //小さな映像を停止
-        _this.__smallVideo.pause();
+        //_this.__smallVideo.pause();
     }
 
     //========================================================================
@@ -415,7 +415,7 @@ class Screen {
             //===============================================
             //大きな映像再生（再生中の XXX.mp4 の情報を取得）
             //===============================================
-            _this.__bigVideo.currentTime = _this.__smallVideo.currentTime;
+            _this.__bigVideo.currentTime = _this.__smallVideo.currentTime + 0.25; //0.25
             _this.__canvas.addChild(_this.__bigVideo);
             _this.__bigVideo.x = _this.__screenBig.startX;
             _this.__bigVideo.y = _this.__screenBig.startY;
@@ -443,7 +443,16 @@ class Screen {
 
             clearInterval(_this.__sreenBigInLoopID);
             _this.__sreenBigInLoopID = undefined;
+
+            //小→大への映像切替時の音切れ抑止
+            _this.__crossVideoTimeoutID = setTimeout(_this.__crossVideoTimeout, 100, _this);
         }
+    }
+
+    __crossVideoTimeout(_this) {
+        //小さな映像を停止
+        _this.__smallVideo.pause();
+        clearTimeout(_this.__crossVideoTimeoutID);
     }
 
     //==========================================================================

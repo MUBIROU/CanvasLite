@@ -134,7 +134,10 @@ _uiFadeOut = () => {
             _bitmap.alpha -= 0.01;
         } else {
             //console.log("AAAAAAAAAAAAAAA")
+            //
+            //cleconsole.log(_uiFadeOutID);
             _bitmap.alpha = 0;
+            //clearInterval(_uiFadeOutID);
         }
     });
 }

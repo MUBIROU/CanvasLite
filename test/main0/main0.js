@@ -10,6 +10,8 @@ function load_window() {
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
+    //_bgVideo = undefined;
+
     //_logo = logo(_canvas, 15, 15);
     _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
     _html5.x = 15; //_canvas.width - 230;
@@ -34,6 +36,11 @@ function load_window() {
     _gridStatus = "off"; //Gridの表示状態
     _yubi = undefined;
 
+    //VideoLoopクラス
+    _videoLoop = new VideoLoop(_canvas);
+    //_videoLoop.addEventListener("end", end_videoLoop);
+    //_videoLoop.start();
+
     if (location.href.indexOf("?", 0) == -1) {
         // _yubi = new toile.Bitmap("yubi.png");
         // _yubi.x = _canvas.width / 2 - 50;
@@ -45,6 +52,9 @@ function load_window() {
 }
 
 enterframe_canvas = (_canvas) => {
+    // if (_bgVideo != undefined) {
+    //     console.log(_bgVideo);
+    // }
     _canvas.drawScreen("#fefefe"); //SpriteSheet内に白（#ffffff）がある場合
 }
 
@@ -68,6 +78,13 @@ start = (_canvas) => {
         _blockWidth = _canvas.width / 17;
         _blockHeight = _canvas.height / 9;
 
+        //テスト中
+        //console.log("..///common/bgVideo.mp4");
+        // _bgVideo = new toile.Video("../common/bgVideo.mp4", 1360, 768);
+        // _bgVideo.alpha = 0.5;
+        // _canvas.addChild(_bgVideo);
+        // _canvas.setDepthIndex(_bgVideo, 0);
+
         _button1 = new SpriteSheetPlus("btn1.png", true, "255,255,255", "0,0,0", 4);
         _button2 = new SpriteSheetPlus("btn2.png", true, "255,255,255", "0,0,0",4);
         _button3 = new SpriteSheetPlus("btn3.png", true, "255,255,255", "0,0,0",4);
@@ -78,8 +95,8 @@ start = (_canvas) => {
             _theButton.name = "button" + (i+1); //"buttun1" => "button2" => "button3"
             _theButton.addEventListener("mouseup", mouseup_button);
             _theButton.addEventListener("delete", delete_button);
-            _theButton.x = _blockWidth * (2 + i * 5); //2 => 7 => 12
-            _theButton.y = _blockHeight * 3;
+            _theButton.x = _blockWidth * (2 + i * 5) - 2; //2 => 7 => 12
+            _theButton.y = _blockHeight * 3 - 2;
             _theButton.fps = 10; //各SpriteSheetPlusのfpsの値が異なる場合はfor文の外で処理
             _canvas.addChild(_theButton);
             _theButton._timerID = setTimeout(callback_button_in, (640 + 330 * i), _theButton);
@@ -119,6 +136,7 @@ mouseup_button = (_button) => {
             _button2._timerID = setTimeout(callback_button_out, 300, _button2);
             _lastButton = _button1;
     }
+    _videoLoop.end();
 }
 
 delete_button = (_button) => {
