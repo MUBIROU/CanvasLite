@@ -12,6 +12,10 @@ function load_window() {
 
     _uiList = [];
 
+    // _3colors = new toile.Bitmap("../common/3colors.png");
+    // _canvas.addChild(_3colors);
+    // _uiList.push(_3colors);
+
     // _uiContainer = new toile.Container();
     // _canvas.addChild(_uiContainer);
 
@@ -94,6 +98,10 @@ load_loopModeButton = (_spriteSheet) => {
 }
 
 mouseup_loopModeButton = (_spriteSheet) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
     var _nextframe = _spriteSheet.currentframe + 1;
     if (_spriteSheet.totalframes < _nextframe) {
         _nextframe = 1;
@@ -112,6 +120,10 @@ mouseup_loopModeButton = (_spriteSheet) => {
 // HOMEボタン
 //============
 mouseup_homeButton = (_bitmap) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
     //ホーム（../main0/index0.html）にジャンプ
     //location.href = "../main0/index0.html?param=true"
     _scoreLine.out(); //DEBUG

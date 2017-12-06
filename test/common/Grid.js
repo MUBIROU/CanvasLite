@@ -144,7 +144,9 @@ class Grid {
                 _theObject.line.startY = 0;
                 //最後の縦の線が表示し終わったら...
                 if (_theObject.name == "v" + _this.__lineVlist.length) {
-                    _this.__inHandler(_this); //in()の終了イベント発生
+                    if (_this.__inHandler != undefined) {
+                        _this.__inHandler(_this); //in()の終了イベント発生
+                    }
                 }
             }
         });

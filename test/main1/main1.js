@@ -45,6 +45,7 @@ function load_window() {
     _clickNum = 0;
     _playMark = undefined; //Playマーク
     _changeBitmap = false; //選択した作品が前と異なるか否か
+    _shadow = undefined;
 
     _uiList = [];
 
@@ -57,6 +58,10 @@ function load_window() {
     //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
+
+    _3colors = new toile.Bitmap("../common/3colors.png");
+    _canvas.addChild(_3colors);
+    _uiList.push(_3colors);
 
     //「作品」の画像関連
     _bitmapArray = [];
@@ -197,6 +202,10 @@ enterframe_canvas2 = (_canvas) => {
         _choiceBitmap.x = _mouseX - _disX;
         _choiceBitmap.y = _mouseY - _disY;
     }
+    if (_shadow != undefined) {
+        _shadow.x = _shadow.x + (_choiceBitmap.x - _shadow.x) / 8;
+        _shadow.y = _shadow.y + (_choiceBitmap.y - _shadow.y) / 8;
+    }
     _canvas.drawScreen("#fefefe");
 }
 
@@ -226,6 +235,12 @@ mouseup_helpButton = (_bitmap) => {
 // 作品の階層変更用ボタン
 //=======================
 mouseup_depthChangeBtn = (_bitmap) => {
+    if (_shadow != undefined) _canvas.deleteChild(_shadow); //影が残らないようにする
+
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
     _canvas.deleteChild(_playMark);
     _clickNum = 0;
 
@@ -269,6 +284,15 @@ mousedown_bitmap = (_bitmap) => {
     _mouseDownX = _mouseX;
     _mouseDownY = _mouseY;
 
+    //影
+    if (_shadow != undefined) {
+        _canvas.deleteChild(_shadow);
+    }
+    _shadow = new toile.Bitmap("png/shadow.png");
+    _shadow.x = _bitmap.x;
+    _shadow.y = _bitmap.y;
+    _canvas.addChild(_shadow);
+
     _canvas.setDepthIndex(_bitmap, _canvas.getDepthMax());
     _canvas.stopMouseDownEvent();
     _isMove = true;
@@ -284,10 +308,16 @@ mousedown_bitmap = (_bitmap) => {
 // 作品をクリックした時に実行
 //===========================
 mouseup_bitmap = (_bitmap) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
     //console.log("U:" + _bitmap.name);
     if (_playMark != undefined) {
         _canvas.deleteChild(_playMark);
     }
+
+    //_canvas.deleteChild(_shadow); //影を消す
 
     _playMark = new toile.Bitmap("play.png");
     _playMark.x = _bitmap.x + 40;
@@ -324,6 +354,13 @@ mouseup_bitmap = (_bitmap) => {
                 _screen = new Screen(_canvas, _bitmap, _size); //standard" or "wide"
                 _screen.addEventListener("close", close_screen);
                 _screen.open();
+
+                //効果音
+                if (_se1 != undefined) {
+                    _se1.stop();
+                }
+                _se1 = new toile.Sound("../common/se1.wav");
+                _se1.play();
             }
         }
     }
@@ -371,6 +408,10 @@ close_screen = (_screen) => {
 // ホームに戻るボタン
 //===================
 mouseup_homeButton = (_bitmap) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
     //console.log("CCC");
     //homeボタンの削除
     _homeButton.removeEventListener("mouseup");
@@ -386,6 +427,9 @@ mouseup_homeButton = (_bitmap) => {
 
     //playマークの削除
     _canvas.deleteChild(_playMark); //すぐ消去する場合
+
+    //影の削除
+    _canvas.deleteChild(_shadow);
 
     //各作品をランダムに登場させるためのタイマー設定
     _bitmapArray.forEach(function(_bitmap) {

@@ -3,7 +3,7 @@ addEventListener("load", load_window, false);
 function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
-    _canvas.addEventListener("mouseup", mouseup_canvas);
+    //_canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
     //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
@@ -41,14 +41,38 @@ function load_window() {
     //_videoLoop.addEventListener("end", end_videoLoop);
     //_videoLoop.start();
 
+    _3colors = new toile.Bitmap("../common/3colors.png");
+    _3colors.alpha = 0.6;
+    _canvas.addChild(_3colors);
+
+    _hello = new toile.Bitmap("hello.png");
+    _hello.addEventListener("mouseup", mouseup_hello);
+    _canvas.addChild(_hello);
+
     if (location.href.indexOf("?", 0) == -1) {
         // _yubi = new toile.Bitmap("yubi.png");
         // _yubi.x = _canvas.width / 2 - 50;
         // _yubi.y = _canvas.height / 2 - 60;
         // _canvas.addChild(_yubi);
     } else {
+        if (_hello != undefined) _canvas.deleteChild(_hello);
         start(_canvas);
     }
+}
+
+mouseup_hello = (_bitmap) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
+    _canvas.stopMouseUpEvent();
+    _canvas.deleteChild(_bitmap);
+    
+    _helloTimerID = setTimeout(helloTimer, 500, this);
+}
+
+helloTimer = (_this) => {
+    _this.start(_this._canvas);
 }
 
 enterframe_canvas = (_canvas) => {
@@ -58,21 +82,31 @@ enterframe_canvas = (_canvas) => {
     _canvas.drawScreen("#fefefe"); //SpriteSheet内に白（#ffffff）がある場合
 }
 
-mouseup_canvas = (_canvas) => {
-    if (_yubi != undefined) {
-        _canvas.deleteChild(_yubi);
-    }
-    start(_canvas);
-}
+// mouseup_canvas = (_canvas) => {
+//     console.log("CCDC")
+//     // if (_yubi != undefined) {
+//     //     _canvas.deleteChild(_yubi);
+//     // }
+//     start(_canvas);
+// }
 
 start = (_canvas) => {
     if (_gridStatus == "off") {
         _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
-        _grid.lineColor = "187,187,187"; //初期値"0,0,0"
+        _grid.lineColor = "96,96,96"; //"187,187,187"; //初期値"0,0,0"
         _grid.lineWidth = 4; //初期値1
+        _grid.lineAlpha = 0.3;
         _grid.in(); //初期値2（秒）
         _grid.addEventListener("in", in_grid);
         _gridStatus = "animate"; //Gridの表示状態
+
+        _grid2 = new Grid(_canvas,34,18); //Canvasを横17,縦9に分割
+        _grid2.lineColor = "96,96,96"; //初期値"0,0,0"
+        _grid2.lineWidth = 1; //初期値1
+        _grid2.lineAlpha = 0.2;
+        _grid2.in(4); //初期値2（秒）
+        //_grid2.addEventListener("in", in_grid);
+
 
         //3つのBitmapPlusボタンの表示準備
         _blockWidth = _canvas.width / 17;
@@ -112,10 +146,18 @@ start = (_canvas) => {
 in_grid = (_grid) => {
     _gridStatus = "on"; //Gridの表示状態
     _grid.removeEventListener("in");
+    _grid.lineAlpha = 0.2;
+    _grid2.lineAlpha = 0.1;
 }
 
 mouseup_button = (_button) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
     _grid._timerID = setTimeout(callback_grid_out, 1520);
+    _grid.lineAlpha = 0.3;
+    //_grid2.lineAlpha = 0.2;
 
     switch (_button.name) {
         case "button1":
@@ -151,6 +193,13 @@ callback_button_in = (_button) => {
 callback_button_out = (_button) => {
     _button.out(); //初期値1（秒）
     clearTimeout(_button._timerID);
+
+    _grid2FadeOutID = setInterval(grid2FadeOut, 17);
+    //_grid.lineColor = "187,187,187";
+}
+
+grid2FadeOut = () => {
+    _grid2.lineAlpha -= 0.003;
 }
 
 callback_grid_out = () => {

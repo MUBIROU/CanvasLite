@@ -292,6 +292,10 @@ class Screen {
     // EXIT（×）ボタンをタッチ（TouchEnd）した時の処理
     //================================================
     mouseup_exitButton(_bitmap) {
+        //効果音
+        _se1 = new toile.Sound("../common/se1.wav");
+        _se1.play();
+
         var _this = _bitmap.__this; //力技
 
         //シークバーを消す
@@ -326,6 +330,10 @@ class Screen {
     // 拡大ボタンをタッチ（TouchEnd）した時の処理
     //===========================================
     mouseup_bigButton(_bitmap) {
+        //効果音
+        _se1 = new toile.Sound("../common/se1.wav");
+        _se1.play();
+
         var _this = _bitmap.__this; //力技
 
         //シークバーを消す
@@ -482,6 +490,10 @@ class Screen {
     // 大きな映像再生時のEXIT（×）ボタンをタッチ（TouchEnd）した時の処理
     //==================================================================
     __mouseup__exitButton2(_bitmap) {
+        //効果音
+        _se1 = new toile.Sound("../common/se1.wav");
+        _se1.play();
+
         var _this = _bitmap.__this; //力技
 
         //シークバーを消す
