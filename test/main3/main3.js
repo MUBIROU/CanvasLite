@@ -1,107 +1,118 @@
-_param1 = location.search.match(/param1=(.*?)(&|$)/)[1];
-console.log(_param1);
-_param2 = location.search.match(/param2=(.*?)(&|$)/)[1];
-console.log(_param2);
-
 addEventListener("load", load_window, false);
 
 function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
-    _canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
     //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
-    _gridStatus = "off"; //Gridの表示状態
+    _uiList = [];
+
+    //HTML5
+    _html5 = new toile.Bitmap("../common/html5.png");
+    _html5.x = 15;
+    _html5.y = 15;
+    _canvas.addChild(_html5);
+    _uiList.push(_html5);
+
+    //「ホームに戻るボタン」関連
+    _homeButton = new toile.Bitmap("../common/home.png");
+    _homeButton.x = _canvas.width - 64 - 15;
+    _homeButton.y = 15; //_canvas.height - 64 - 15;
+    _homeButton.addEventListener("mouseup", mouseup_homeButton);
+    _canvas.addChild(_homeButton);
+    _uiList.push(_homeButton);
+
+    //「シナノロゴ」関連
+    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+    _shinanologo.x = _canvas.width - 64 - 245;
+    _shinanologo.y = _canvas.height -37 -10;
+    _canvas.addChild(_shinanologo);
+    _uiList.push(_shinanologo);
+
+    //"50th Anniversary"
+    _50th = new toile.Bitmap("../common/50thlogo.png");
+    _50th.x = _canvas.width / 2 - 165;
+    _50th.y = _canvas.height - 70;
+    _50th.alpha = 1; //0.8;
+    _canvas.addChild(_50th);
+    _uiList.push(_50th);
+
+    //工事中
+    // _koujichu = new toile.Bitmap("koujichu.png");
+    // _koujichu.scale = 0.6;
+    // _koujichu.x = _canvas.width/2 - 312*_koujichu.scale;
+    // _koujichu.y = _canvas.height/2 - 312*_koujichu.scale;
+    // _canvas.addChild(_koujichu);
+    // _uiList.push(_koujichu);
+
+    //ボタン1
+    _content1 = new toile.Bitmap("content1.png");
+    _content1.x = 1360/2 - 50;
+    _content1.y = - 100;
+    _content1.targetY = 768/2 - 80;
+    _content1.elasticY = 0;
+    _content1.spring = 0.06; //0.1; //値が小さいと動きが遅い
+    _content1.damp = 0.9; //0.8; //値が小さいとすぐにとまる
+    _content1.oldY = _content1.y;
+    _canvas.addChild(_content1);
+    _line1 = new toile.Line(
+        _content1.x + 50,
+        _content1.y,
+        _content1.x + 50,
+        _content1.y
+    )
+    _line1.lineWidth = 2;
+    _line1.lineColor = "64,64,64"; //"51,51,51"; //#333
+    _canvas.addChild(_line1);
+
+    _startTimeOutID = setTimeout(startTimeOut, 500);
+    //_startLoopID = setInterval(startLoop, 17, _canvas); //すぐに実行する場合
+}
+
+startTimeOut = () => {
+    _startLoopID = setInterval(startLoop, 17, _canvas);
+}
+
+startLoop = () => { //this == window
+    c1 = _content1;
+    c1.elasticY = (c1.elasticY - (c1.y - c1.targetY)*c1.spring)*c1.damp;
+    let _nextY = c1.y + c1.elasticY;
+    if (Math.abs(_nextY - c1.oldY) > 0.01) {
+        c1.y = _nextY;
+        c1.oldY = c1.y;
+        _line1.endY = c1.y + 5;
+    } else {
+        console.log("STOP");
+        clearInterval(_startLoopID);
+    }
 }
 
 enterframe_canvas = (_canvas) => {
-    _canvas.drawScreen("#ffffff");
+    _canvas.drawScreen("#fefefe");
 }
 
-mouseup_canvas = (_canvas) => {
-    if (_gridStatus == "off") {
-        _grid = new Grid(_canvas,17,9); //Canvasを横17,縦9に分割
-        _grid.lineColor = "187,187,187"; //初期値"0,0,0"
-        _grid.lineWidth = 4; //初期値1
-        _grid.in(); //初期値2（秒）
-        _grid.addEventListener("in", in_grid);
-        _gridStatus = "animate"; //Gridの表示状態
+//============
+// HOMEボタン
+//============
+mouseup_homeButton = (_bitmap) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
 
-        //3つのBitmapPlusボタンの表示準備
-        _blockWidth = _canvas.width / 17;
-        _blockHeight = _canvas.height / 9;
+    _uiFadeOutID = setInterval(_uiFadeOut, 17);
+}
 
-        _button1 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
-        _button2 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
-        _button3 = new BitmapPlus("red.png", true, "255,255,255", "0,0,0",4);
-        _buttonArray = [_button1, _button2, _button3];
-
-        for (let i=0; i<_buttonArray.length; i++) {
-            let _theButton = _buttonArray[i];
-            _theButton.name = "button" + (i+1); //"buttun1" => "button2" => "button3"
-            _theButton.addEventListener("mouseup", mouseup_button);
-            _theButton.addEventListener("delete", delete_button);
-            _theButton.x = _blockWidth * (2 + i * 5); //2 => 7 => 12
-            _theButton.y = _blockHeight * 3;
-            _canvas.addChild(_theButton);
-            _theButton._timerID = setTimeout(callback_button_in, (640 + 330 * i), _theButton);
+_uiFadeOut = () => {
+    _uiList.forEach(function(_bitmap) {
+        if (0 < _bitmap.alpha) {
+            _bitmap.alpha -= 0.01;
+        } else {
+            _bitmap.alpha = 0;
+            location.href = "../main0/index0.html?param=true"
         }
-    }
-}
-
-in_grid = (_grid) => {
-    _gridStatus = "on"; //Gridの表示状態
-    _grid.removeEventListener("in");
-}
-
-mouseup_button = (_button) => {
-    _grid._timerID = setTimeout(callback_grid_out, 1520);
-
-    switch (_button.name) {
-        case "button1":
-            _button2._timerID = setTimeout(callback_button_out, 300, _button2);
-            _button3._timerID = setTimeout(callback_button_out, 600, _button3);
-            _lastButton = _button3;
-            break;
-        case "button2":
-            _button1._timerID = setTimeout(callback_button_out, 600, _button1);
-            _button3._timerID = setTimeout(callback_button_out, 600, _button3);
-            _lastButton = _button3;
-            break;
-        case "button3":
-            _button1._timerID = setTimeout(callback_button_out, 600, _button1);
-            _button2._timerID = setTimeout(callback_button_out, 300, _button2);
-            _lastButton = _button1;
-    }
-}
-
-delete_button = (_button) => {
-    _canvas.deleteChild(_button);
-}
-
-callback_button_in = (_button) => {
-    _button.in(); //初期値1（秒）
-    clearTimeout(_button._timerID);
-}
-
-callback_button_out = (_button) => {
-    _button.out(); //初期値1（秒）
-    clearTimeout(_button._timerID);
-}
-
-callback_grid_out = () => {
-    _grid.out(1); //初期値2（秒）
-    _grid.addEventListener("out", out_grid);
-    _gridStatus = "animate"; //Gridの表示状態
-}
-
-out_grid = (_grid) => {
-    _gridStatus = "off";
-    _grid.removeEventListener("in");
-    
-    //location.href = "index2.html";
+    });
 }

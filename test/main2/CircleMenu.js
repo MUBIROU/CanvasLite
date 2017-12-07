@@ -28,13 +28,16 @@ class CircleMenu {
 
         //this.__soundList = ["tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp"];
         
-        this.__soundList = ["tmp","tmp","tmp","tmp","tmp","tmp",
-        "07_Let It Happen",
-        "08_Lovely Day",
-        "09_mizu no mati",
-        "10_namida no imi",
-        "11_odayakana zikan",
-        "12_Pieces of a Dream"];
+        this.__soundList = [
+            "01_anata wo siritakute",
+            "tmp","tmp","tmp","tmp","tmp",
+            "07_Let It Happen",
+            "08_Lovely Day",
+            "09_mizu no mati",
+            "10_namida no imi",
+            "11_odayakana zikan",
+            "12_Pieces of a Dream"
+        ];
         
         // this.__soundList = [
         //     "01_gomenne",

@@ -6,7 +6,7 @@ function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
