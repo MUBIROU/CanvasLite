@@ -55,7 +55,7 @@ function load_window() {
     _canvas.addEventListener("mousemove", mousemove_canvas);
     _canvas.enabledMouseMove(true);
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 

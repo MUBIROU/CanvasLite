@@ -20,38 +20,41 @@
 class CircleMenu {
     static get IN() { return "in"; }
     static get OUT() { return "out"; }
+    static get CHANGE() { return "change"}
     
     constructor(_canvas) {
         this.__canvas = _canvas;
 
         this.__adjustY = -23;
 
-        //this.__soundList = ["tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp","tmp"];
-        
         this.__soundList = [
-            "01_anata wo siritakute",
-            "tmp","tmp","tmp","tmp","tmp",
-            "07_Let It Happen",
-            "08_Lovely Day",
-            "09_mizu no mati",
-            "10_namida no imi",
-            "11_odayakana zikan",
-            "12_Pieces of a Dream"
+            "01_anata wo siritakute.mp3",
+            "02_namida no imi.mp3",
+            "03_Let It Happen.mp3",
+            "04_inaka no daisougen.mp3",
+            "05_kuuhaku to seizyaku.mp3",
+            "06_Lovely Day.mp3",
+            "07_mizu no mati.mp3",
+            "08_Bush_Warbler-Synthetic01-3.mp3",
+            "09_Shortbridge24-2.mp3",
+            "10_Accent42-2.mp3",
+            "11_Shortbridge17-5.mp3",
+            "12_Shortbridge30-1.mp3"
         ];
         
         // this.__soundList = [
-        //     "01_gomenne",
-        //     "02_hokkori tea time",
-        //     "03_In That Mood",
-        //     "04_inaka no daisougen",
-        //     "05_kanasimi ni sakuhana",
-        //     "06_kuuhaku to seizyaku",
-        //     "07_Let It Happen",
-        //     "08_Lovely Day",
-        //     "09_mizu no mati",
-        //     "10_namida no imi",
-        //     "11_odayakana zikan",
-        //     "12_Pieces of a Dream"
+        //     "01_gomenne.mp3",
+        //     "02_hokkori tea time.mp3",
+        //     "03_In That Mood.mp3",
+        //     "04_inaka no daisougen.mp3",
+        //     "05_kanasimi ni sakuhana.mp3",
+        //     "06_kuuhaku to seizyaku.mp3",
+        //     "07_Let It Happen.mp3",
+        //     "08_Lovely Day.mp3",
+        //     "09_mizu no mati.mp3",
+        //     "10_namida no imi.mp3",
+        //     "11_odayakana zikan.mp3",
+        //     "12_Pieces of a Dream.mp3"
         // ]; 
 
         //"anata wo siritakute"（オルゴール）
@@ -61,8 +64,10 @@ class CircleMenu {
         this.__soundVolume = 0.2;
         this.__inHandler = undefined;
         this.__outHandler = undefined;
+        this.__changeHandler = undefined;
         this.__oldSelectCD = undefined; //2017-11-19T17:30
         this.__loopMode = "all"; //"none", "one",  "all", "random"
+        this.__isTouch = true;
 
         this.init(); //初期値の設定
 
@@ -121,6 +126,8 @@ class CircleMenu {
             this.__inHandler = _function;
         } else if (_event == "out") {
             this.__outHandler = _function;
+        } else if (_event == "change") {
+            this.__changeHandler = _function;
         }
     }
 
@@ -177,6 +184,7 @@ class CircleMenu {
 
     __startTimeout(_this) {
         var _randomNum = Math.floor(Math.random()*12) + 1;
+        _this.__isTouch = false; //パーティクルを発生させるか否かの処理
         _this.__mouseup_theCD(_this.__cdArray[_randomNum-1]);
     }
 
@@ -209,6 +217,17 @@ class CircleMenu {
     __mouseup_theCD(_theCD) { //this => Bitmap
         var _this = _theCD.__this;
 
+        //パーティクルを発生させるか否かの処理
+        if (_this.__isTouch) {
+            new Particle(_this.__canvas, _theCD); //パーティクルの発生
+            //効果音
+            let _se1 = new toile.Sound("../common/se2.mp3");
+            _se1.play();
+        }
+        _this.__isTouch = true;
+
+        _this.__changeHandler(_this, Number(_theCD.name.substr(2))); //"change"イベント発生!!!
+
         //再生中の曲があればフェードアウトする
         if (_this.__playSound != undefined) {
             _this.__playSound.fadeOut(1.5); //曲のフェードアウトと再生開始のタイミングの調整（秒）
@@ -216,7 +235,7 @@ class CircleMenu {
 
         //曲の再生準備
         let _selectNum = Number(_theCD.name.substr(2)); //"CDXX"の2文字以降を取得
-        _this.__playSound = new toile.Sound("mp3/" + _this.__soundList[_selectNum-1] + ".mp3");
+        _this.__playSound = new toile.Sound("mp3/" + _this.__soundList[_selectNum-1]); // + ".mp3");
         _this.__playSound.volume = _this.__soundVolume;
         //_this.__playSound.play();
 
@@ -576,6 +595,7 @@ class CircleMenu {
                     let _currentNum = Number(_this.__selectCD.name.substr(2));
                     let _nextNum = (_currentNum) % 12 + 1; //2017-11-23T18:51
                     let _nextCD = _this.__cdArray[_nextNum-1];
+                    _this.__isTouch = false; //パーティクルを発生させるか否かの処理
                     _this.__mouseup_theCD(_nextCD);
                     break;
 
@@ -585,6 +605,7 @@ class CircleMenu {
                     while (_randomNum == _nowNum) { //同曲を連続再生させないようにする
                         _randomNum = Math.floor(Math.random()*12) + 1;
                     }
+                    _this.__isTouch = false; //パーティクルを発生させるか否かの処理
                     _this.__mouseup_theCD(_this.__cdArray[_randomNum-1]);
                     break;
                 

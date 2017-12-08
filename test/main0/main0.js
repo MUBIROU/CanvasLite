@@ -215,6 +215,6 @@ out_grid = (_grid) => {
     //location.href = "../main3/index3.html?param1=100&param2=200"
     //location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html?" + "param1=100" + "&" + "param2=200";
     //location.href = "../main1/index1.html";
-    if (_choiceNum == 3) _choiceNum = 2; //DEBUG
+    //if (_choiceNum == 3) _choiceNum = 2; //DEBUG
     location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html";
 }

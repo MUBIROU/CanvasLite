@@ -6,18 +6,11 @@ function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
     _uiList = [];
-
-    // _3colors = new toile.Bitmap("../common/3colors.png");
-    // _canvas.addChild(_3colors);
-    // _uiList.push(_3colors);
-
-    // _uiContainer = new toile.Container();
-    // _canvas.addChild(_uiContainer);
 
     //五線譜の生成
     _scoreLine = new ScoreLine(_canvas);
@@ -28,9 +21,8 @@ function load_window() {
     //「ホームに戻るボタン」関連
     _homeButton = new toile.Bitmap("../common/home.png");
     _homeButton.x = _canvas.width - 64 - 15;
-    _homeButton.y = 15; //_canvas.height - 64 - 15;
+    _homeButton.y = 15;
     _homeButton.addEventListener("mouseup", mouseup_homeButton);
-    //_uiContainer.addChild(_homeButton);
     _canvas.addChild(_homeButton);
     _uiList.push(_homeButton);
 
@@ -38,9 +30,7 @@ function load_window() {
     //_shinanologo = new toile.Bitmap("../common/shinano.png");
     _shinanologo = new toile.Bitmap("../common/shinanologo.png");
     _shinanologo.x = _canvas.width - 64 - 245;
-    _shinanologo.y = _canvas.height -37 -10; //10;
-    //_shinanologo.alpha = 0.8;
-    //_uiContainer.addChild(_shinanologo);
+    _shinanologo.y = _canvas.height -37 -10;
     _canvas.addChild(_shinanologo);
     _uiList.push(_shinanologo);
 
@@ -49,28 +39,25 @@ function load_window() {
     _loopModeButton.addEventListener("load", load_loopModeButton);
     _loopModeButton.addEventListener("mouseup", mouseup_loopModeButton);
     _loopModeButton.x = _canvas.width/2 - 32;
-    _loopModeButton.y = _canvas.height/2 + 85;
-    //_loopModeButton.alpha = 0.9;
-    //_uiContainer.addChild(_loopModeButton);
+    _loopModeButton.y = _canvas.height/2 + 60; //85;
     _canvas.addChild(_loopModeButton);
     _uiList.push(_loopModeButton);
 
-    //_logo = logo(_canvas, 15, 15);
-    _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
-    _html5.x = 15; //_canvas.width - 230;
-    _html5.y = 15; //_canvas.height - 70;
+    //HTML5ロゴ
+    _html5 = new toile.Bitmap("../common/html5.png");
+    _html5.x = 15;
+    _html5.y = 15;
     _canvas.addChild(_html5);
     _uiList.push(_html5);
-    //_uiContainer.addChild(_html5);
 
-    //"Music is VFR"
-    _VFR = new toile.Bitmap("MusicIsVFR.png");
-    _VFR.x = _canvas.width / 2 - 61;
-    _VFR.y = _canvas.height - 228;
-    _VFR.alpha = 1; //0.8;
-    _canvas.addChild(_VFR);
-    _uiList.push(_VFR);
-    //_uiContainer.addChild(_VFR);
+    //クレジット
+    _credit = new toile.Bitmap("MusicIsVFR.png");
+    //_credit.image.src = "tsukada.png";
+    _credit.x = _canvas.width / 2 - 61;
+    _credit.y = _canvas.height - 252; //228;
+    _credit.alpha = 1; //0.8;
+    _canvas.addChild(_credit);
+    _uiList.push(_credit);
 
     //"50th Anniversary"
     _50th = new toile.Bitmap("../common/50thlogo.png");
@@ -79,17 +66,16 @@ function load_window() {
     _50th.alpha = 1; //0.8;
     _canvas.addChild(_50th);
     _uiList.push(_50th);
-    //_uiContainer.addChild(_50th);
 }
 
 in_scoreLine = (_scoreLine) => {
     _circleMenu = new CircleMenu(_canvas);
     _circleMenu.addEventListener("in", in_circleMenu)
     _circleMenu.addEventListener("out", out_circleMenu);
+    _circleMenu.addEventListener("change", change_circleMenu);
 }
 
 enterframe_canvas = (_canvas) => {
-    //console.log(_video.x);
     _canvas.drawScreen("#fefefe");
 }
 
@@ -145,11 +131,7 @@ _uiFadeOut = () => {
         if (0 < _bitmap.alpha) {
             _bitmap.alpha -= 0.01;
         } else {
-            //console.log("AAAAAAAAAAAAAAA")
-            //
-            //cleconsole.log(_uiFadeOutID);
             _bitmap.alpha = 0;
-            //clearInterval(_uiFadeOutID);
         }
     });
 }
@@ -180,4 +162,12 @@ out_circleMenu = (_circleMenu) => {
     //console.log("circlemenu");
     //location.href = "../main0/index0.html?param=true"
     //location.href = "index2.html"
+}
+
+change_circleMenu = (_circleMenu, _num) => {
+    if (_num == 1) {
+        _credit.image.src = "tsukada.png";
+    } else {
+        _credit.image.src = "MusicIsVFR.png";
+    }
 }
