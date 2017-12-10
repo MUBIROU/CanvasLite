@@ -17,55 +17,6 @@ function load_window() {
     _scoreLine.addEventListener("in", in_scoreLine);
     _scoreLine.addEventListener("out", out_scoreLine);
     _scoreLine.in();
-
-    //「ホームに戻るボタン」関連
-    _homeButton = new toile.Bitmap("../common/home.png");
-    _homeButton.x = _canvas.width - 64 - 15;
-    _homeButton.y = 15;
-    _homeButton.addEventListener("mouseup", mouseup_homeButton);
-    _canvas.addChild(_homeButton);
-    _uiList.push(_homeButton);
-
-    //「シナノロゴ」関連
-    //_shinanologo = new toile.Bitmap("../common/shinano.png");
-    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
-    _shinanologo.x = _canvas.width - 64 - 245;
-    _shinanologo.y = _canvas.height -37 -10;
-    _canvas.addChild(_shinanologo);
-    _uiList.push(_shinanologo);
-
-    //loopModeButton
-    _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
-    _loopModeButton.addEventListener("load", load_loopModeButton);
-    _loopModeButton.addEventListener("mouseup", mouseup_loopModeButton);
-    _loopModeButton.x = _canvas.width/2 - 32;
-    _loopModeButton.y = _canvas.height/2 + 60; //85;
-    _canvas.addChild(_loopModeButton);
-    _uiList.push(_loopModeButton);
-
-    //HTML5ロゴ
-    _html5 = new toile.Bitmap("../common/html5.png");
-    _html5.x = 15;
-    _html5.y = 15;
-    _canvas.addChild(_html5);
-    _uiList.push(_html5);
-
-    //クレジット
-    _credit = new toile.Bitmap("MusicIsVFR.png");
-    //_credit.image.src = "tsukada.png";
-    _credit.x = _canvas.width / 2 - 61;
-    _credit.y = _canvas.height - 252; //228;
-    _credit.alpha = 1; //0.8;
-    _canvas.addChild(_credit);
-    _uiList.push(_credit);
-
-    //"50th Anniversary"
-    _50th = new toile.Bitmap("../common/50thlogo.png");
-    _50th.x = _canvas.width / 2 - 165;
-    _50th.y = _canvas.height - 70;
-    _50th.alpha = 1; //0.8;
-    _canvas.addChild(_50th);
-    _uiList.push(_50th);
 }
 
 in_scoreLine = (_scoreLine) => {
@@ -84,6 +35,8 @@ load_loopModeButton = (_spriteSheet) => {
 }
 
 mouseup_loopModeButton = (_spriteSheet) => {
+    //_circleMenu.isMouseEvent(false);
+
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
@@ -106,6 +59,9 @@ mouseup_loopModeButton = (_spriteSheet) => {
 // HOMEボタン
 //============
 mouseup_homeButton = (_bitmap) => {
+    console.log("homeButton");
+    _circleMenu.stopAnimation();
+
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
@@ -152,6 +108,84 @@ in_circleMenu = (_circleMenu) => {
     _videoMovie = new VideoMovie(_canvas);
     _videoMovie.addEventListener("end", end_videoMovie);
     _videoMovie.start();
+
+    //「ホームに戻るボタン」関連
+    _homeButton = new toile.Bitmap("../common/home.png");
+    _homeButton.x = _canvas.width - 64 - 15;
+    _homeButton.y = 15;
+    _homeButton.addEventListener("mouseup", mouseup_homeButton);
+    _canvas.addChild(_homeButton);
+    _uiList.push(_homeButton);
+
+    //「シナノロゴ」関連
+    //_shinanologo = new toile.Bitmap("../common/shinano.png");
+    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+    _shinanologo.x = _canvas.width - 64 - 245;
+    _shinanologo.y = _canvas.height -37 -10;
+    _canvas.addChild(_shinanologo);
+    _uiList.push(_shinanologo);
+
+    //loopModeButton
+    _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
+    _loopModeButton.addEventListener("load", load_loopModeButton);
+    _loopModeButton.addEventListener("mouseup", mouseup_loopModeButton);
+    _loopModeButton.x = _canvas.width/2 - 32;
+    _loopModeButton.y = _canvas.height/2 + 60; //85;
+    _canvas.addChild(_loopModeButton);
+    _uiList.push(_loopModeButton);
+
+    //HTML5ロゴ
+    _html5 = new toile.Bitmap("../common/html5.png");
+    _html5.x = 15;
+    _html5.y = 15;
+    _canvas.addChild(_html5);
+    _uiList.push(_html5);
+
+    //クレジット
+    _credit = new toile.Bitmap("MusicIsVFR.png");
+    //_credit.image.src = "tsukada.png";
+    _credit.x = _canvas.width / 2 - 61;
+    _credit.y = _canvas.height - 252; //228;
+    _canvas.addChild(_credit);
+    _uiList.push(_credit);
+
+    //"50th Anniversary"
+    _50th = new toile.Bitmap("../common/50thlogo.png");
+    _50th.x = _canvas.width / 2 - 165;
+    _50th.y = _canvas.height - 70;
+    _canvas.addChild(_50th);
+    _uiList.push(_50th);
+
+    //上記のUIのアルファ値を0にする
+    _homeButton.alpha = 0;
+    _shinanologo.alpha = 0;
+    _loopModeButton.alpha = 0;
+    _html5.alpha = 0;
+    _credit.alpha = 0; //0.8;
+    _50th.alpha = 0; //0.8;
+
+    _uiFadeInLoopID = setInterval(uiFadeInLoop, 17);
+}
+
+uiFadeInLoop = () => {
+    if (_homeButton.alpha < 1) {
+        //上記のUIのアルファ値を0にする
+        _homeButton.alpha += 0.02;
+        _shinanologo.alpha += 0.02;
+        _loopModeButton.alpha += 0.02;
+        _html5.alpha += 0.02;
+        _credit.alpha += 0.02;
+        _50th.alpha += 0.02;
+    } else {
+        _homeButton.alpha = 1;
+        _shinanologo.alpha = 1;
+        _loopModeButton.alpha = 1;
+        _html5.alpha = 1;
+        _credit.alpha = 1;
+        _50th.alpha = 1;
+        clearInterval(_uiFadeInLoopID);
+        //console.log("_uiFadeInLoopID")
+    }
 }
 
 end_videoMovie = (_videoMovie) => {

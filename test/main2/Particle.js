@@ -39,7 +39,7 @@ class Particle {
             } else {
                 _this.__noteList.splice(_indexNum,1);
                 _canvas.deleteChild(_bitmap);
-                console.log(_this.__noteList.length);
+                //console.log(_this.__noteList.length);
             }
         }
     }

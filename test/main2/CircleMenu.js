@@ -7,6 +7,7 @@
  *  <public method>
  *      CircleMenu.addEventListener(_event, _function)   "in" or "out"
  *      CircleMenu.out()
+ *      CircleMenu.stopAnimation()
  * 
  *  <public property>
  *      CircleMenu.loopMode   "none", "one", "all", "random"
@@ -41,24 +42,6 @@ class CircleMenu {
             "11_Shortbridge17-5.mp3",
             "12_Shortbridge30-1.mp3"
         ];
-        
-        // this.__soundList = [
-        //     "01_gomenne.mp3",
-        //     "02_hokkori tea time.mp3",
-        //     "03_In That Mood.mp3",
-        //     "04_inaka no daisougen.mp3",
-        //     "05_kanasimi ni sakuhana.mp3",
-        //     "06_kuuhaku to seizyaku.mp3",
-        //     "07_Let It Happen.mp3",
-        //     "08_Lovely Day.mp3",
-        //     "09_mizu no mati.mp3",
-        //     "10_namida no imi.mp3",
-        //     "11_odayakana zikan.mp3",
-        //     "12_Pieces of a Dream.mp3"
-        // ]; 
-
-        //"anata wo siritakute"（オルゴール）
-        //console.log(this.__soundList.length); //12
 
         this.__playSound = undefined;
         this.__soundVolume = 0.2;
@@ -68,6 +51,7 @@ class CircleMenu {
         this.__oldSelectCD = undefined; //2017-11-19T17:30
         this.__loopMode = "all"; //"none", "one",  "all", "random"
         this.__isTouch = true;
+        this.__isOutLoopRotation = true; //HOMEボタンを押し際の異常な回転を防ぐため
 
         this.init(); //初期値の設定
 
@@ -96,6 +80,8 @@ class CircleMenu {
             this.__cdArray.push(this.__theCD);
             this.__canvas.addChild(this.__theCD);
         }
+
+        this.__isMouseEvent(false);
 
         //12個のボタンの登場アニメーション開始
         this.__inLoopID = setInterval(this.__inLoop, 17, this); //≒59fp
@@ -129,6 +115,38 @@ class CircleMenu {
         } else if (_event == "change") {
             this.__changeHandler = _function;
         }
+    }
+
+    //===================================
+    // 公開メソッド：アニメーションの停止
+    //===================================
+    stopAnimation() {
+        if (this.__circleAnimationID != undefined) {
+            clearInterval(this.__circleAnimationID);
+            console.log("stop1");
+        }
+
+        if (this.__selectButtonAnimLoopID != undefined) {
+            clearInterval(this.__selectButtonAnimLoopID);
+            console.log("stop2");
+        }
+
+        if (this.__returnZeroLoopID != undefined) {
+            clearInterval(this.__returnZeroLoopID);
+            console.log("stop3");
+        }
+
+        if (this.__inLoopID != undefined) {
+            clearInterval(this.__inLoopID);
+            console.log("stop4");
+        }
+    
+        if (this.__playSoundTimerID != undefined) {
+            clearInterval(this.__playSoundTimerID);
+            console.log("stop5");
+        }
+        
+        //clearInterval(this.__outLoopID)
     }
 
     //===============================
@@ -168,12 +186,13 @@ class CircleMenu {
                     clearInterval(_this.__inLoopID);
                     _this.__inLoopID = undefined;
                     _this.__finishCount = 0;
-                    _this.__isMouseEvent(true); //12個のボタン機能を有効にする
+                    //_this.__isMouseEvent(true); //12個のボタン機能を有効にする
                     if (_this.__inHandler != undefined) {
                         //=============================================
                         // INイベント（12個のボタンの表示完了）発生!!!
                         //=============================================
                         _this.__inHandler(_this);
+                        //_this.__isMouseEvent(true);
 
                         _this.__startTimeoutID = setTimeout(_this.__startTimeout, 1000, _this);
                     }
@@ -452,6 +471,8 @@ class CircleMenu {
                 }
 
             } else { //選択されたCD型ボタンが最上部に到着（＝ぐるっと回るアニメーションの完了!!）
+                //_this.__isMouseEvent(true);
+                
                 //console.log(_cos); //0.998710143975583
                 //選択されたCDボタンの処理
                 _theCD.x = 630;
@@ -661,6 +682,8 @@ class CircleMenu {
     //回転しているCD型ボタンの角度を0にするアニメーション
     //===================================================
     __returnZeroLoop(_this) {
+        //console.log("__returnZeroLoop");
+
         //直前まで回転していたCD型ボタンを角度0まで戻す
         if (_this.__selectCD != undefined) {
 
@@ -699,6 +722,7 @@ class CircleMenu {
                     _theCD.alpha -= 0.04;
                     if (_this.__seekCircle != undefined) _this.__seekCircle.alpha -= 0.04;
                 }
+
                 _this.__changeScale(_theCD, _theScale, _theCD.__originX, _theCD.__originY);
                 
             } else {
