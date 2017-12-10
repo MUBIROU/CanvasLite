@@ -51,7 +51,7 @@ class CircleMenu {
         this.__oldSelectCD = undefined; //2017-11-19T17:30
         this.__loopMode = "all"; //"none", "one",  "all", "random"
         this.__isTouch = true;
-        this.__isOutLoopRotation = true; //HOMEボタンを押し際の異常な回転を防ぐため
+        this.__isMove = false;
 
         this.init(); //初期値の設定
 
@@ -123,27 +123,27 @@ class CircleMenu {
     stopAnimation() {
         if (this.__circleAnimationID != undefined) {
             clearInterval(this.__circleAnimationID);
-            console.log("stop1");
+            //console.log("stop1");
         }
 
         if (this.__selectButtonAnimLoopID != undefined) {
             clearInterval(this.__selectButtonAnimLoopID);
-            console.log("stop2");
+            //console.log("stop2");
         }
 
         if (this.__returnZeroLoopID != undefined) {
             clearInterval(this.__returnZeroLoopID);
-            console.log("stop3");
+            //console.log("stop3");
         }
 
         if (this.__inLoopID != undefined) {
             clearInterval(this.__inLoopID);
-            console.log("stop4");
+            //console.log("stop4");
         }
     
         if (this.__playSoundTimerID != undefined) {
             clearInterval(this.__playSoundTimerID);
-            console.log("stop5");
+            //console.log("stop5");
         }
         
         //clearInterval(this.__outLoopID)
@@ -586,6 +586,7 @@ class CircleMenu {
     //曲の再生が完了したかのチェック用
     //================================
     __playSoundTimer(_this, _selectCD) {
+        //console.log("PLAY");
         _selectCD.rotate += 8; //33.3..回転/分（この関数が25fpsで実行される場合）
 
         let _sound = _this.__playSound;
@@ -678,9 +679,9 @@ class CircleMenu {
         this.__returnZeroLoopID = setInterval(this.__returnZeroLoop, 17, this); //≒59fps
     }
 
-    //===================================================
-    //回転しているCD型ボタンの角度を0にするアニメーション
-    //===================================================
+    //===================================================================
+    //__outLoo()の際、回転しているCD型ボタンの角度を0にするアニメーション
+    //===================================================================
     __returnZeroLoop(_this) {
         //console.log("__returnZeroLoop");
 
@@ -690,7 +691,15 @@ class CircleMenu {
             let _nextRotate = _this.__selectCD.rotate % 360 + (360 - _this.__selectCD.rotate % 360) / 10;
             //let _nextRotate = _this.__selectCD.rotate % 360 + _this.__oldRotateToZero;
             if (_nextRotate < 355) {
-                _this.__selectCD.rotate = _nextRotate;
+                if (_this.__selectCD.rotate != 0) {
+                    _this.__selectCD.rotate = _nextRotate;
+                } else {
+                    //12個のボタンを消すアニメーション開始
+                    _this.__selectCD.rotate = 0;
+                    _this.__outLoopID = setInterval(_this.__outLoop, 17, _this); //≒59fps
+                    clearInterval(_this.__returnZeroLoopID);
+                    _this.__returnZeroLoopID = undefined;
+                }
             } else {
                 _this.__selectCD.rotate = 0;
                 //12個のボタンを消すアニメーション開始
@@ -716,9 +725,9 @@ class CircleMenu {
             _theCD.__springCount += 0.4; //値が小さい程...
             let _theScale = 1 + _theCD.__springPower * Math.cos(_theCD.__springCount);
 
-            if (_theCD.__springPower > 0) {
+            if (0 < _theCD.__springPower) {
                 _theCD.__springPower -= 0.003; //値が大きい程..
-                if (_theCD.alpha > 0) {
+                if (0 < _theCD.alpha) {
                     _theCD.alpha -= 0.04;
                     if (_this.__seekCircle != undefined) _this.__seekCircle.alpha -= 0.04;
                 }

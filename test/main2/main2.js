@@ -59,7 +59,7 @@ mouseup_loopModeButton = (_spriteSheet) => {
 // HOMEボタン
 //============
 mouseup_homeButton = (_bitmap) => {
-    console.log("homeButton");
+    //console.log("homeButton");
     _circleMenu.stopAnimation();
 
     //効果音
