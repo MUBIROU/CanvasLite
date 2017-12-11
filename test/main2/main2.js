@@ -17,6 +17,15 @@ function load_window() {
     _scoreLine.addEventListener("in", in_scoreLine);
     _scoreLine.addEventListener("out", out_scoreLine);
     _scoreLine.in();
+
+    //事前読込（ちらつき防止）
+    _homeButton = new toile.Bitmap("../common/home.png");
+    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+    _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
+    _loopModeButton.addEventListener("load", load_loopModeButton);
+    _html5 = new toile.Bitmap("../common/html5.png");
+    _credit = new toile.Bitmap("MusicIsVFR.png");
+    _50th = new toile.Bitmap("../common/50thlogo.png");
 }
 
 in_scoreLine = (_scoreLine) => {
@@ -24,6 +33,8 @@ in_scoreLine = (_scoreLine) => {
     _circleMenu.addEventListener("in", in_circleMenu)
     _circleMenu.addEventListener("out", out_circleMenu);
     _circleMenu.addEventListener("change", change_circleMenu);
+
+    _videoMovie = new VideoMovie(_canvas);
 }
 
 enterframe_canvas = (_canvas) => {
@@ -105,12 +116,12 @@ out_scoreLine = (_scoreLine) => {
 }
 
 in_circleMenu = (_circleMenu) => {
-    _videoMovie = new VideoMovie(_canvas);
+    //_videoMovie = new VideoMovie(_canvas);
     _videoMovie.addEventListener("end", end_videoMovie);
     _videoMovie.start();
 
     //「ホームに戻るボタン」関連
-    _homeButton = new toile.Bitmap("../common/home.png");
+    //_homeButton = new toile.Bitmap("../common/home.png");
     _homeButton.x = _canvas.width - 64 - 15;
     _homeButton.y = 15;
     _homeButton.addEventListener("mouseup", mouseup_homeButton);
@@ -118,16 +129,15 @@ in_circleMenu = (_circleMenu) => {
     _uiList.push(_homeButton);
 
     //「シナノロゴ」関連
-    //_shinanologo = new toile.Bitmap("../common/shinano.png");
-    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+    //_shinanologo = new toile.Bitmap("../common/shinanologo.png");
     _shinanologo.x = _canvas.width - 64 - 245;
     _shinanologo.y = _canvas.height -37 -10;
     _canvas.addChild(_shinanologo);
     _uiList.push(_shinanologo);
 
     //loopModeButton
-    _loopModeButton = new toile.SpriteSheet("loopModeButton.png");
-    _loopModeButton.addEventListener("load", load_loopModeButton);
+    //_loopModeButton = new toile.SpriteSheet("loopModeButton.png");
+    //_loopModeButton.addEventListener("load", load_loopModeButton);
     _loopModeButton.addEventListener("mouseup", mouseup_loopModeButton);
     _loopModeButton.x = _canvas.width/2 - 32;
     _loopModeButton.y = _canvas.height/2 + 60; //85;
@@ -135,22 +145,21 @@ in_circleMenu = (_circleMenu) => {
     _uiList.push(_loopModeButton);
 
     //HTML5ロゴ
-    _html5 = new toile.Bitmap("../common/html5.png");
+    //_html5 = new toile.Bitmap("../common/html5.png");
     _html5.x = 15;
     _html5.y = 15;
     _canvas.addChild(_html5);
     _uiList.push(_html5);
 
     //クレジット
-    _credit = new toile.Bitmap("MusicIsVFR.png");
-    //_credit.image.src = "tsukada.png";
+    //_credit = new toile.Bitmap("MusicIsVFR.png");
     _credit.x = _canvas.width / 2 - 61;
     _credit.y = _canvas.height - 252; //228;
     _canvas.addChild(_credit);
     _uiList.push(_credit);
 
     //"50th Anniversary"
-    _50th = new toile.Bitmap("../common/50thlogo.png");
+    //_50th = new toile.Bitmap("../common/50thlogo.png");
     _50th.x = _canvas.width / 2 - 165;
     _50th.y = _canvas.height - 70;
     _canvas.addChild(_50th);

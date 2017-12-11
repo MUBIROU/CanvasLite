@@ -1,18 +1,17 @@
 /***********************************************
- * VideoMovie Class (ver.2017-12-XXTXX:XX)
+ * VideoMovie Class (ver.2017-11-XXTXX:XX)
  * 
  *  <constructor>
  *      new VideoMovie(_canvas)
  * 
  *  <public method>
- *      VideoMovie.addEventListener(_event, _function)   "end"
- *      VideoMovie.start()
- * 
- *  <public property>
- *      Video.interval
+ *      VideoMovie.addEventListener(_event, _function)   "in" or "out"
+ *      ScoreLine.in()
+ *      ScoreLine.out()
  *      
  *  <event>
- *      VideoMovie.END
+ *      ScoreLine.IN
+ *      ScoreLine.OUT
  *
 ***********************************************/
 
@@ -58,7 +57,7 @@ class VideoMovie {
     start() {
         //currentVideo
         this.__currentVideo = new toile.Video("mp4/" + this.__videoList[this.__count], 1360, 768);
-        this.__currentVideo.stop();
+        this.__currentVideo.pause();
         this.__currentVideo.alpha = 0;
         this.__currentVideo.name = this.__videoList[this.__count];
         this.__firstLoadVideoTimerID = setInterval(this.__firstLoadVideoTimer, 50, this);
@@ -69,7 +68,7 @@ class VideoMovie {
             this.__count = 0;
         }
         this.__nextVideo = new toile.Video("mp4/" + this.__videoList[this.__count], 1360, 768);
-        this.__nextVideo.stop();
+        this.__nextVideo.pause();
         this.__nextVideo.alpha = 0;
         this.__nextVideo.name = this.__videoList[this.__count];
     }
@@ -148,11 +147,7 @@ class VideoMovie {
         }
     }
 
-<<<<<<< HEAD
     end(_boolean = true) {
-=======
-    end() {
->>>>>>> b22c8eb033feb1598ee2e834790533b10b337bfe
         if (this.__firstFadeInLoopID != undefined) clearInterval(this.__firstFadeInLoopID);
         if (this.__crossfadeID != undefined) clearInterval(this.__crossfadeID);
         if (this.__showEndID != undefined) clearInterval(this.__showEnd);
