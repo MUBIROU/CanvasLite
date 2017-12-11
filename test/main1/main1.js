@@ -60,6 +60,7 @@ function load_window() {
     _canvas.fps = 60;
 
     _3colors = new toile.Bitmap("../common/3colors.png");
+    _3colors.alpha = 0;
     _canvas.addChild(_3colors);
     _uiList.push(_3colors);
 
@@ -89,6 +90,7 @@ function load_window() {
     _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
     _html5.x = 15; //_canvas.width - 230;
     _html5.y = 15; //_canvas.height - 70;
+    _html5.alpha = 0;
     _canvas.addChild(_html5);
     _uiList.push(_html5);
 
@@ -96,9 +98,35 @@ function load_window() {
     _50th = new toile.Bitmap("../common/50thlogo.png");
     _50th.x = _canvas.width / 2 - 165;
     _50th.y = _canvas.height - 70;
-    _50th.alpha = 1; //0.8;
+    _50th.alpha = 0;
     _canvas.addChild(_50th);
     _uiList.push(_50th);
+
+    //「シナノロゴ」関連
+    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+    _shinanologo.x = _canvas.width - 64 - 245;
+    _shinanologo.y = _canvas.height -37 -10; //10;
+    _shinanologo.alpha = 0;
+    _canvas.addChild(_shinanologo);
+    _uiList.push(_shinanologo);
+
+    //changeボタンの表示
+    _depthChangeBtn = new toile.Bitmap("depthChange.png");
+    _depthChangeBtn.x = 15; //_canvas.width - 50;
+    _depthChangeBtn.y = _canvas.height - 64 - 15;//20;
+    _depthChangeBtn.alpha = 0;
+    _canvas.addChild(_depthChangeBtn);
+    _uiList.push(_depthChangeBtn);
+
+    //「ホームに戻るボタン」関連
+    _homeButton = new toile.Bitmap("../common/home.png");
+    _homeButton.x = _canvas.width - 64 - 15;
+    _homeButton.y = 15; //_canvas.height - 64 - 15;
+    _canvas.addChild(_homeButton);
+    _homeButton.alpha = 0;
+    _uiList.push(_homeButton);
+
+    _uiFadeInID = setInterval(_uiFadeIn, 17);
 }
 
 //===========================================
@@ -150,30 +178,10 @@ enterframe_canvas = (_canvas) => {
                     });
 
                     //changeボタンの表示
-                    _depthChangeBtn = new toile.Bitmap("depthChange.png");
                     _depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
-                    _depthChangeBtn.x = 15; //_canvas.width - 50;
-                    _depthChangeBtn.y = _canvas.height - 64 - 15;//20;
-                    //_depthChangeBtn.scale = 2;
-                    _canvas.addChild(_depthChangeBtn);
-                    _uiList.push(_depthChangeBtn);
-
+                
                     //「ホームに戻るボタン」関連
-                    _homeButton = new toile.Bitmap("../common/home.png");
-                    _homeButton.x = _canvas.width - 64 - 15;
-                    _homeButton.y = 15; //_canvas.height - 64 - 15;
                     _homeButton.addEventListener("mouseup", mouseup_homeButton);
-                    _canvas.addChild(_homeButton);
-                    _uiList.push(_homeButton);
-
-                    //「シナノロゴ」関連
-                    //_shinanologo = new toile.Bitmap("../common/shinano.png");
-                    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
-                    _shinanologo.x = _canvas.width - 64 - 245;
-                    _shinanologo.y = _canvas.height -37 -10; //10;
-                    //_shinanologo.alpha = 0.8;
-                    _canvas.addChild(_shinanologo);
-                    _uiList.push(_shinanologo);
 
                     //「ヘルプボタン」関連
                     _helpButton = new toile.Bitmap("help.png");
@@ -476,12 +484,24 @@ enterframe_canvas3 = (_canvas) => {
     _canvas.drawScreen("#fefefe");
 }
 
+_uiFadeIn = () => {
+    console.log("AAA")
+    _uiList.forEach(function(_bitmap) {
+        if (_bitmap.alpha < 1) {
+            _bitmap.alpha += 0.02; //05;
+        } else {
+            clearInterval(_uiFadeInID);
+            _bitmap.alpha = 1;
+        }
+    });
+}
 
 _uiFadeOut = () => {
     _uiList.forEach(function(_bitmap) {
         if (0 < _bitmap.alpha) {
             _bitmap.alpha -= 0.015;
         } else {
+            clearInterval(_uiFadeOutID);
             //console.log("AAAAAAAAAAAAAAA")
             _bitmap.alpha = 0;
         }

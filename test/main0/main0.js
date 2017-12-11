@@ -10,28 +10,25 @@ function load_window() {
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
-    //_bgVideo = undefined;
+    _uiList = [];
 
-    //_logo = logo(_canvas, 15, 15);
+    //HTML%
     _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
     _html5.x = 15; //_canvas.width - 230;
     _html5.y = 15; //_canvas.height - 70;
+    _html5.alpha = 0;
+    _html5.name = "html5";
     _canvas.addChild(_html5);
+    _uiList.push(_html5);
 
     //"50th Anniversary"
     _50th = new toile.Bitmap("../common/50thlogo.png");
     _50th.x = _canvas.width / 2 - 165;
     _50th.y = _canvas.height - 70;
-    _50th.alpha = 1; //0.8;
+    _50th.alpha = 0;
+    _50th.name = "50th";
     _canvas.addChild(_50th);
-
-    //「シナノロゴ」関連
-    //_shinanologo = new toile.Bitmap("../common/shinano.png");
-    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
-    _shinanologo.x = _canvas.width - 64 - 245;
-    _shinanologo.y = _canvas.height -37 -10; //10;
-    //_shinanologo.alpha = 0.8;
-    _canvas.addChild(_shinanologo);
+    _uiList.push(_50th);
 
     _gridStatus = "off"; //Gridの表示状態
     _yubi = undefined;
@@ -40,8 +37,19 @@ function load_window() {
     _videoLoop = new VideoLoop(_canvas);
 
     _3colors = new toile.Bitmap("../common/3colors.png");
-    _3colors.alpha = 0.6;
+    _3colors.alpha = 0;
+    _3colors.name = "3colors";
     _canvas.addChild(_3colors);
+    _uiList.push(_3colors);
+
+    //「シナノロゴ」関連
+    _shinanologo = new toile.Bitmap("../common/shinanologo.png");
+    _shinanologo.x = _canvas.width - 64 - 245;
+    _shinanologo.y = _canvas.height -37 -10; //10;
+    _shinanologo.alpha = 0;
+    _shinanologo.name = "shinanologo";
+    _canvas.addChild(_shinanologo);
+    _uiList.push(_shinanologo);
 
     //================================
     //3つのBitmapPlusボタンの表示準備
@@ -61,12 +69,9 @@ function load_window() {
         _theButton.addEventListener("delete", delete_button);
         //_theButton.addEventListener("open", open_button);
         _theButton.x = _blockWidth * (2 + i * 5) - 2; //2 => 7 => 12; //-9e9;
-        //_theButton.posX = _blockWidth * (2 + i * 5) - 2; //2 => 7 => 12
-        _theButton.y = _blockHeight * 3 - 2; //-9e9;
-        //_theButton.posY = _blockHeight * 3 - 2;
+        _theButton.y = _blockHeight * 3 - 2;
         _theButton.fps = 10; //各SpriteSheetPlusのfpsの値が異なる場合はfor文の外で処理
         _canvas.addChild(_theButton);
-        //_theButton._timerID = setTimeout(callback_button_in, (640 + 330 * i), _theButton);
     }
 
     //挨拶文
@@ -78,6 +83,8 @@ function load_window() {
         if (_hello != undefined) _canvas.deleteChild(_hello);
         start(_canvas);
     }
+
+    _uiFadeInID = setInterval(_uiFadeIn, 17);
 }
 
 // open_button = (_bitmap) => {
@@ -144,7 +151,8 @@ in_grid = (_grid) => {
 }
 
 mouseup_button = (_button) => {
-    //console.log(_button.name);
+    _uiFadeOutID = setInterval(_uiFadeOut, 17);
+
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
@@ -211,4 +219,27 @@ out_grid = (_grid) => {
     //location.href = "../main1/index1.html";
     //if (_choiceNum == 3) _choiceNum = 2; //DEBUG
     location.href = "../main" + _choiceNum + "/" + "index" + _choiceNum + ".html";
+}
+
+_uiFadeIn = () => {
+    _uiList.forEach(function(_bitmap) {
+        if (_bitmap.alpha < 1) {
+            _bitmap.alpha += 0.02; //05;
+        } else {
+            clearInterval(_uiFadeInID);
+            _bitmap.alpha = 1;
+        }
+    });
+}
+
+_uiFadeOut = () => {
+    _uiList.forEach(function(_bitmap) {
+        if (0 < _uiList[0].alpha) {
+            _bitmap.alpha -= 0.05; //05;
+        } else {
+            clearInterval(_uiFadeOutID);
+            //console.log("AAAAAAAAAAAAAAA")
+            _bitmap.alpha = 0;
+        }
+    });
 }
