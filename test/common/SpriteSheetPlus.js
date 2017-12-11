@@ -14,10 +14,13 @@
 ***********************************************/
 
 class SpriteSheetPlus extends toile.SpriteSheet {
+    static get OPEN() { return "open"; }
     static get DELETE() { return "delete"; }
 
     constructor(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4) {
         super(_path);
+
+        this.__isMouseEvent = false; //途中でmouseupを受付けないようにするため
 
         this.__isAnimate = _isAnimate;
         if (this.__isAnimate) {
@@ -52,6 +55,8 @@ class SpriteSheetPlus extends toile.SpriteSheet {
     addEventListener(_event, _function) { //override
         if (_event == "delete") {
             this.__deleteHandler = _function;
+        } else if (_event == "open") {
+            this.__openHandler = _function;
         } else {
             super.addEventListener(_event, _function);
         }
@@ -101,6 +106,7 @@ class SpriteSheetPlus extends toile.SpriteSheet {
             _this.__rect.alpha -= 17*2/1000; //0.5秒でSpriteSheet登場＆Rect消去
             _this.alpha += 17*2/1000;
         } else {
+            _this.__isMouseEvent = true;
             clearInterval(_this.__spriteSheetInLoopID); //Rectが消えSpriteSheetが表示完了
             //マウスイベントの復活
             _this.__mouseDownHandler = _this.__mouseDownHandler_bk;
@@ -117,16 +123,18 @@ class SpriteSheetPlus extends toile.SpriteSheet {
     // (6) マウスイベント（mouseUp）を受ける
     //======================================
     __commonHit(_event) { //override
-        if (_event == "mouseup") { //選択（クリック）したらアニメーションさせて消すため
-            if (this.__isChoice) {
-                if (this.__mouseUpHandler != undefined) {
-                    this.__isChoice = false;
-                    this.__mouseUpHandler(this);
-                    this.out(1);
+        if (this.__isMouseEvent) {
+            if (_event == "mouseup") { //選択（クリック）したらアニメーションさせて消すため
+                if (this.__isChoice) {
+                    if (this.__mouseUpHandler != undefined) {
+                        this.__isChoice = false;
+                        this.__mouseUpHandler(this);
+                        this.out(1);
+                    }
                 }
+            } else {
+                super.__commonHit(_event);
             }
-        } else {
-            super.__commonHit(_event);
         }
     }
 
@@ -169,7 +177,7 @@ class SpriteSheetPlus extends toile.SpriteSheet {
             _this.__rect.height = _this.height - _this.height * Math.cos(_this.__loopCount);
         } else {
             _this.parent.deleteChild(_this.__rect); //Rectの消去
-            _this.__deleteHandler(_this);
+            if (_this.__deleteHandler != undefined) _this.__deleteHandler(_this);
             clearInterval(_this.__rectOutLoopID);
         }
     }

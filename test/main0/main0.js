@@ -59,6 +59,7 @@ function load_window() {
         _theButton.name = "button" + (i+1); //"buttun1" => "button2" => "button3"
         _theButton.addEventListener("mouseup", mouseup_button);
         _theButton.addEventListener("delete", delete_button);
+        //_theButton.addEventListener("open", open_button);
         _theButton.x = _blockWidth * (2 + i * 5) - 2; //2 => 7 => 12; //-9e9;
         //_theButton.posX = _blockWidth * (2 + i * 5) - 2; //2 => 7 => 12
         _theButton.y = _blockHeight * 3 - 2; //-9e9;
@@ -78,6 +79,11 @@ function load_window() {
         start(_canvas);
     }
 }
+
+// open_button = (_bitmap) => {
+//     //console.log(mouseup_button);
+//     //_bitmap.addEventListener("mouseup", mouseup_button);
+// }
 
 mouseup_hello = (_bitmap) => {
     //効果音
@@ -116,6 +122,7 @@ start = (_canvas) => {
 
         for (let i=0; i<_buttonArray.length; i++) {
             let _theButton = _buttonArray[i];
+            _canvas.setDepthIndex(_theButton, _canvas.getDepthMax()); //最上位に表示
             //_canvas.addChild(_theButton);
             //_theButton.x = _theButton.posX;
             //_theButton.y = _theButton.posY;
@@ -137,6 +144,7 @@ in_grid = (_grid) => {
 }
 
 mouseup_button = (_button) => {
+    //console.log(_button.name);
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
