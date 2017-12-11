@@ -14,7 +14,6 @@
 ***********************************************/
 
 class SpriteSheetPlus extends toile.SpriteSheet {
-    static get OPEN() { return "open"; }
     static get DELETE() { return "delete"; }
 
     constructor(_path, _isAnimate=false, _rectFillColor="255,255,255", _rectLineColor="0,0,0", _rectLineWidth=4) {

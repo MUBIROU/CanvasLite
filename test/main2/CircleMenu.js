@@ -37,10 +37,10 @@ class CircleMenu {
             "06_Lovely Day.mp3",
             "07_mizu no mati.mp3",
             "08_Bush_Warbler-Synthetic01-3.mp3",
-            "09_Shortbridge24-2.mp3",
-            "10_Accent42-2.mp3",
-            "11_Shortbridge17-5.mp3",
-            "12_Shortbridge30-1.mp3"
+            "09_horornis-diphone-twitter1.mp3",
+            "10_troglodytes-troglodytes-twitter-1.mp3",
+            "11_terpsiphone-atrocaudata1.mp3",
+            "12_bird25.mp3"
         ];
 
         this.__playSound = undefined;
@@ -51,7 +51,6 @@ class CircleMenu {
         this.__oldSelectCD = undefined; //2017-11-19T17:30
         this.__loopMode = "all"; //"none", "one",  "all", "random"
         this.__isTouch = true;
-        this.__isMove = false;
 
         this.init(); //初期値の設定
 

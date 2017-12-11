@@ -6,7 +6,7 @@ function load_window() {
     //_canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 

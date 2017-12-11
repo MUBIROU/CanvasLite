@@ -89,6 +89,14 @@ class ScoreLine { //五線譜の生成
         }
     }
 
+    removeEventListener(_event) {
+        if (_event == "in") {
+            this.__inHandler = undefined;
+        } else if (_event == "out") {
+            this.__outHandler = undefined;
+        }
+    }
+
     in() {
         this.__inLoopID = setInterval(this.__inLoop, 17, this); //≒59fps
     }
@@ -118,7 +126,9 @@ class ScoreLine { //五線譜の生成
             clearInterval(_this.__inLoopID);
             _this.__inLoopID = undefined;
 
-            _this.__inHandler(_this); //INイベント発生!!!
+            if (_this.__inHandler != undefined) {
+                _this.__inHandler(_this); //INイベント発生!!!
+            }
         }
     }
 
@@ -155,7 +165,10 @@ class ScoreLine { //五線譜の生成
             clearInterval(_this.__inLoopID);
             _this.__inLoopID = undefined;
             _this.delete();
-            _this.__outHandler(_this); //OUTイベント発生!!!
+            
+            if (_this.__outHandler != undefined) {
+                _this.__outHandler(_this); //OUTイベント発生!!!
+            }
         }
     }
 

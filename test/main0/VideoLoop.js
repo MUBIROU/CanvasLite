@@ -111,7 +111,7 @@ class VideoLoop {
     __fadeOutLoop(_this) { //this == Window 
         if (0 < _this.__currentVideo.alpha) {
             _this.__currentVideo.alpha -= _this.__fadeOutMillTime;
-            _this.__nextVideo.alpha -= 0.05;
+            _this.__nextVideo.alpha -= _this.__fadeOutMillTime;
         } else {
             clearInterval(_this.__fadeOutLoopID);
             _this.__video1.alpha = 0;

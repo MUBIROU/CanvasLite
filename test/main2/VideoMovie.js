@@ -152,26 +152,8 @@ class VideoMovie {
         if (this.__crossfadeID != undefined) clearInterval(this.__crossfadeID);
         if (this.__showEndID != undefined) clearInterval(this.__showEnd);
         
-        //if (_boolean) {
-            this.__fadeOutLoopID = setInterval(this.__fadeOutLoop, 17, this);
-        
-        // } else {
-        //     if (this.__currentVideo != undefined) {
-        //         this.__currentVideo.alpha = 0;
-        //         this.__canvas.deleteChild(this.__currentVideo);
-        //     }
-            
-        //     if (this.__newVideo != undefined) {
-        //         this.__newVideo.alpha = 0;
-        //         this.__canvas.deleteChild(this.__newVideo);
-        //     }
 
-        //     if (this.__nextVideo != undefined) {
-        //         this.__nextVideo.alpha = 0;
-        //         this.__canvas.deleteChild(this.__nextVideo);
-        //     }
-
-        // }
+        this.__fadeOutLoopID = setInterval(this.__fadeOutLoop, 17, this);
     }
 
     //パブリックプロパティ
@@ -194,6 +176,7 @@ class VideoMovie {
         } else {
             clearInterval(_this.__fadeOutLoopID);
             _this.__currentVideo.alpha = 0;
+            if (_this.__newVideo != undefined) _this.__newVideo.alpha = 0;
             _this.__endHandler(_this); //"end"イベントの発生
         }
     }

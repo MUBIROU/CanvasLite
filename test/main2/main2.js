@@ -6,7 +6,7 @@ function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
@@ -111,7 +111,12 @@ timerHomeButton = () => {
 }
 
 out_scoreLine = (_scoreLine) => {
-    //console.log("scoreline");
+    //console.log("003");
+    _videoMovie.__currentVideo.alpha = 0;
+    _videoMovie.__nextVideo.alpha = 0;
+    //console.log("002: " + _videoMovie.__currentVideo.alpha);
+    //console.log("002: " + _videoMovie.__nextVideo.alpha);
+    _scoreLine.removeEventListener("out");
     //location.href = "../main0/index0.html?param=true"
 }
 
@@ -198,10 +203,18 @@ uiFadeInLoop = () => {
 }
 
 end_videoMovie = (_videoMovie) => {
+    //console.log("002");
+    _videoMovie.__currentVideo.alpha = 0;
+    _videoMovie.__nextVideo.alpha = 0;
     location.href = "../main0/index0.html?param=true"
 }
 
 out_circleMenu = (_circleMenu) => {
+    //console.log("001");
+    _videoMovie.__currentVideo.alpha = 0;
+    _videoMovie.__nextVideo.alpha = 0;
+    //console.log("001: " + _videoMovie.__currentVideo.alpha);
+    //console.log("001: " + _videoMovie.__nextVideo.alpha);
     //console.log("circlemenu");
     //location.href = "../main0/index0.html?param=true"
     //location.href = "index2.html"
