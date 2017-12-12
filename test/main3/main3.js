@@ -41,28 +41,20 @@ function load_window() {
     _canvas.addChild(_50th);
     _uiList.push(_50th);
 
-    //ボタン1
-    _content1 = new toile.Bitmap("content1.png");
-    _content1.x = 1360/2 - 50;
-    _content1.y = - 100;
-    _content1.targetY = 768/2 - 80;
-    _content1.elasticY = 0;
-    _content1.spring = 0.06; //0.1; //値が小さいと動きが遅い
-    _content1.damp = 0.9; //0.8; //値が小さいとすぐにとまる
-    _content1.oldY = _content1.y;
-    _canvas.addChild(_content1);
-    _line1 = new toile.Line(
-        _content1.x + 50,
-        _content1.y,
-        _content1.x + 50,
-        _content1.y
-    )
-    _line1.lineWidth = 2;
-    _line1.lineColor = "64,64,64"; //"51,51,51"; //#333
-    _canvas.addChild(_line1);
+    _buttonList = [];
 
-    _startTimeOutID = setTimeout(startTimeOut, 500);
-    //_startLoopID = setInterval(startLoop, 17, _canvas); //すぐに実行する場合
+    //=======================
+    // びよーんボタン1の準備
+    //=======================
+    _BjornBitmap1 = new BjornBitmap(
+        _canvas,
+        "content1.png",
+        1360/2 - 50,
+        - 100,
+        768/2 - 80
+    )
+
+    _startTimeOutID = setTimeout(startTimeOut, 500); //演出上少し時間をあける
 
     //一度全て消す
     _uiList.forEach(function(_bitmap) {
@@ -72,21 +64,8 @@ function load_window() {
 }
 
 startTimeOut = () => {
-    _startLoopID = setInterval(startLoop, 17, _canvas);
-}
-
-startLoop = () => { //this == window
-    c1 = _content1;
-    c1.elasticY = (c1.elasticY - (c1.y - c1.targetY)*c1.spring)*c1.damp;
-    let _nextY = c1.y + c1.elasticY;
-    if (Math.abs(_nextY - c1.oldY) > 0.01) {
-        c1.y = _nextY;
-        c1.oldY = c1.y;
-        _line1.endY = c1.y + 5;
-    } else {
-        console.log("STOP");
-        clearInterval(_startLoopID);
-    }
+    _BjornBitmap1.start(); //びよーんボタン1の登場開始
+    clearInterval(_startTimeOutID);
 }
 
 enterframe_canvas = (_canvas) => {
