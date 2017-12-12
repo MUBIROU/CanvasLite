@@ -46,13 +46,16 @@ function load_window() {
     //=======================
     // びよーんボタン1の準備
     //=======================
-    _BjornBitmap1 = new BjornBitmap(
+    _bjornBitmap1 = new BjornBitmap(
         _canvas,
         "content1.png",
         1360/2 - 50,
         - 100,
         768/2 - 80
     )
+    _bjornBitmap1.name = "bjornBitmap1";
+    _bjornBitmap1.addEventListener("mouseup", mouseup_bjornBitmap1, true);
+    _bjornBitmap1.addEventListener("end", end_bjornBitmap1);
 
     _startTimeOutID = setTimeout(startTimeOut, 500); //演出上少し時間をあける
 
@@ -64,7 +67,7 @@ function load_window() {
 }
 
 startTimeOut = () => {
-    _BjornBitmap1.start(); //びよーんボタン1の登場開始
+    _bjornBitmap1.start(); //びよーんボタン1の登場開始
     clearInterval(_startTimeOutID);
 }
 
@@ -81,6 +84,8 @@ mouseup_homeButton = (_bitmap) => {
     _se1.play();
 
     _uiFadeOutID = setInterval(_uiFadeOut, 17);
+
+    _bjornBitmap1.end();
 }
 
 _uiFadeIn = () => {
@@ -100,7 +105,26 @@ _uiFadeOut = () => {
             _bitmap.alpha -= 0.02;
         } else {
             _bitmap.alpha = 0;
-            location.href = "../main0/index0.html?param=true"
+            //location.href = "../main0/index0.html?param=true"
         }
     });
+}
+
+//==================
+// イベントリスナー
+//==================
+mouseup_bjornBitmap1 = (_bjornBitmap) => {
+    console.log(_bjornBitmap.name);
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+
+    _uiFadeOutID = setInterval(_uiFadeOut, 17);
+    
+    _bjornBitmap.end();
+}
+
+end_bjornBitmap1 = (_bjornBitmap) => {
+    //console.log("END");
+    location.href = "../main0/index0.html?param=true"
 }
