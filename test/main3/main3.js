@@ -5,7 +5,7 @@ function load_window() {
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
@@ -41,14 +41,6 @@ function load_window() {
     _canvas.addChild(_50th);
     _uiList.push(_50th);
 
-    //工事中
-    // _koujichu = new toile.Bitmap("koujichu.png");
-    // _koujichu.scale = 0.6;
-    // _koujichu.x = _canvas.width/2 - 312*_koujichu.scale;
-    // _koujichu.y = _canvas.height/2 - 312*_koujichu.scale;
-    // _canvas.addChild(_koujichu);
-    // _uiList.push(_koujichu);
-
     //ボタン1
     _content1 = new toile.Bitmap("content1.png");
     _content1.x = 1360/2 - 50;
@@ -71,6 +63,12 @@ function load_window() {
 
     _startTimeOutID = setTimeout(startTimeOut, 500);
     //_startLoopID = setInterval(startLoop, 17, _canvas); //すぐに実行する場合
+
+    //一度全て消す
+    _uiList.forEach(function(_bitmap) {
+        _bitmap.alpha = 0;
+    });
+    _uiFadeInID = setInterval(_uiFadeIn, 17);
 }
 
 startTimeOut = () => {
@@ -106,10 +104,21 @@ mouseup_homeButton = (_bitmap) => {
     _uiFadeOutID = setInterval(_uiFadeOut, 17);
 }
 
+_uiFadeIn = () => {
+    _uiList.forEach(function(_bitmap) {
+        if (_bitmap.alpha < 1) {
+            _bitmap.alpha += 0.02; //05;
+        } else {
+            clearInterval(_uiFadeInID);
+            _bitmap.alpha = 1;
+        }
+    });
+}
+
 _uiFadeOut = () => {
     _uiList.forEach(function(_bitmap) {
         if (0 < _bitmap.alpha) {
-            _bitmap.alpha -= 0.01;
+            _bitmap.alpha -= 0.02;
         } else {
             _bitmap.alpha = 0;
             location.href = "../main0/index0.html?param=true"

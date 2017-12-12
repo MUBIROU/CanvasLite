@@ -6,7 +6,7 @@ function load_window() {
     //_canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
@@ -31,7 +31,6 @@ function load_window() {
     _uiList.push(_50th);
 
     _gridStatus = "off"; //Gridの表示状態
-    _yubi = undefined;
 
     //VideoLoopクラス
     _videoLoop = new VideoLoop(_canvas);

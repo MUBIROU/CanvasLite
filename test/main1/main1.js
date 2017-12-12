@@ -55,7 +55,7 @@ function load_window() {
     _canvas.addEventListener("mousemove", mousemove_canvas);
     _canvas.enabledMouseMove(true);
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
@@ -273,6 +273,7 @@ callback_screenShot = (_screenShot) => {
     if (_screenShot.alpha > 0) {
         _screenShot.alpha -= 0.05;
     } else {
+        _screenShot.alpha = 0;
         clearInterval(_timerScreenShotID);
         _canvas.deleteChild(_screenShot);
         _screenShot = undefined;
@@ -485,7 +486,7 @@ enterframe_canvas3 = (_canvas) => {
 }
 
 _uiFadeIn = () => {
-    console.log("AAA")
+    //console.log("AAA")
     _uiList.forEach(function(_bitmap) {
         if (_bitmap.alpha < 1) {
             _bitmap.alpha += 0.02; //05;
