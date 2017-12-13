@@ -6,17 +6,21 @@
  *      BjornBitmap.end(_millsec = 0)
  * 
  * Event
+ *      BjornBitmap.IN
  *      BjornBitmap.END
  * 
 ***********************************************/
 
 class BjornBitmap extends Bitmap {
+    static get IN() { return "in"; }
     static get END() { return "end"; }
 
-    constructor(_canvas, _bitmap, _startX, _startY, _targetY) {
+    constructor(_canvas, _bitmap, _startX, _startY, _targetY, _damp=0.86) {
         super(_bitmap);
 
+        this.__inHandler = undefined;
         this.__endHandler = undefined;
+        this.__alpha = this.alpha;
 
         this.addEventListener("load", this.__load_this, this);
 
@@ -25,10 +29,10 @@ class BjornBitmap extends Bitmap {
         this.x = _startX;
         this.y = _startY;
 
-        this.__targetY = 768/2 - 80;
+        this.__targetY = _targetY; //768/2 - 80;
         this.__elasticY = 0;
         this.__spring = 0.09; //0.1; //値が小さいと動きが遅い
-        this.__damp = 0.86; //0.8; //値が小さいとすぐにとまる
+        this.__damp = _damp; //0.86; //0.8; //値が小さいとすぐにとまる
         this.__oldY = _startY;
         this.__endSpeed = 0;
 
@@ -42,17 +46,33 @@ class BjornBitmap extends Bitmap {
             _this.x + _this.width/2,
             _this.y
         )
+        _this.__line.alpha = _this.__alpha;
         _this.__line.lineWidth = 2;
         _this.__line.lineColor = "64,64,64"; //"51,51,51"; //#333
         _this.__canvas.addChild(_this.__line);
+        _this.__canvas.setDepthIndex(_this.__line, _this.__canvas.getDepthIndex(_this));
     }
 
     addEventListener(_event, _function) { //override
-        if (_event == "end") {
+        if (_event == "in") {
+            this.__inHandler = _function;
+        } else if (_event == "end") {
             this.__endHandler = _function;
         } else {
             super.addEventListener(_event, _function);
         }
+    }
+
+    set alpha(newValue) {
+        this.__alpha = newValue;
+        super.alpha = this.__alpha;
+        if (this.__line != undefined) {
+            this.__line.alpha = this.__alpha;
+        }
+    }
+
+    get alpha() {
+        return this.__alpha;
     }
 
     //=================================
@@ -73,11 +93,12 @@ class BjornBitmap extends Bitmap {
         if (Math.abs(_nextY - _this.__oldY) > 0.01) {
             _this.y = _nextY;
             _this.__oldY = _this.y;
-            _this.__line.endY = _this.y + 5;
+            _this.__line.endY = _this.y + 15;
         } else {
             _this.y = _this.__targetY;
-            _this.__line.endY = _this.y + 5;
+            _this.__line.endY = _this.y + 15;
             clearInterval(_this.__startLoopID);
+            _this.__inHandler(_this); //"in"イベント発生
         }
     }
 
@@ -96,13 +117,14 @@ class BjornBitmap extends Bitmap {
     __endLoop(_this) {
         _this.__endSpeed += 0.5;
         let _nextY = _this.y - _this.__endSpeed;
-        if (- 100 < _this.y) {
+        //console.log(_this.width);
+        if (- _this.width < _this.y) {
             _this.y = _nextY;
-            _this.__line.endY = _this.y + 5;
+            _this.__line.endY = _this.y + 15;
         } else {
             clearInterval(_this.__endLoopID);
             if (_this.__endHandler != undefined) {
-                _this.__endHandler(); //"end"イベント発生
+                _this.__endHandler(_this); //"end"イベント発生
             }
         }
     }
