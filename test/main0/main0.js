@@ -3,7 +3,6 @@ addEventListener("load", load_window, false);
 function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
-    //_canvas.addEventListener("mouseup", mouseup_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
     //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合

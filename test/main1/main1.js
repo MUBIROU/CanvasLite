@@ -59,7 +59,7 @@ function load_window() {
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
-    _3colors = new toile.Bitmap("../common/3colors.png");
+    _3colors = new toile.Bitmap("../common/3colorsDark.png");
     _3colors.alpha = 0;
     _canvas.addChild(_3colors);
     _uiList.push(_3colors);
@@ -171,28 +171,36 @@ enterframe_canvas = (_canvas) => {
                 _bitmapArrayCopy.splice(i,1); //登場し終えたものを_bitmapArrayCopyから削除
                 if (_bitmapArrayCopy.length == 0) { //全て登場し終えたら...
                     //作品ボタンにマウスイベントリスナーの定義
-                    _bitmapArray.forEach(function(_theBitmap) {
-                        _theBitmap.addEventListener("mousedown", mousedown_bitmap);
-                        _theBitmap.addEventListener("mouseup", mouseup_bitmap);
-                        _theBitmap.addEventListener("mouseupoutside", mouseup_bitmap);
-                    });
+                    // _bitmapArray.forEach(function(_theBitmap) {
+                    //     _theBitmap.addEventListener("mousedown", mousedown_bitmap);
+                    //     _theBitmap.addEventListener("mouseup", mouseup_bitmap);
+                    //     _theBitmap.addEventListener("mouseupoutside", mouseup_bitmap);
+                    // });
 
                     //changeボタンの表示
-                    _depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
+                    //_depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
                 
                     //「ホームに戻るボタン」関連
-                    _homeButton.addEventListener("mouseup", mouseup_homeButton);
+                    //_homeButton.addEventListener("mouseup", mouseup_homeButton);
 
                     //「ヘルプボタン」関連
                     _helpButton = new toile.Bitmap("help.png");
                     _helpButton.x = _canvas.width - 64 - 115;
                     _helpButton.y = 15;
-                    _helpButton.addEventListener("mouseup", mouseup_helpButton);
+                    //_helpButton.addEventListener("mouseup", mouseup_helpButton);
                     //_canvas.addChild(_helpButton); //DEBUG（位置調整用）
 
                     //ループ関数の変更
                     _canvas.removeEventListener("enterframe");
                     _canvas.addEventListener("enterframe", enterframe_canvas2);
+
+                    //説明
+                    _about = new toile.Bitmap("about.png");
+                    //_about.addEventListener("mouseup", mouseup_about);
+                    _about.x = _canvas.width/2 - 542/2;
+                    _about.y = _canvas.height/2 - 217/2 - 30;
+                    _canvas.addChild(_about);
+                    _canvas.addEventListener("mouseup", mouseup_canvas);
                 }
             }
         }
@@ -285,7 +293,7 @@ callback_screenShot = (_screenShot) => {
 // 作品を押した時に実行（内部処理用）
 //===================================
 mousedown_bitmap = (_bitmap) => {
-    //console.log("D:" + _bitmap.name);
+    //console.log(_bitmap.name);
     if (_playMark != undefined) {
         _playMark.x = -9e9; //動いている間
     }
@@ -503,8 +511,17 @@ _uiFadeOut = () => {
             _bitmap.alpha -= 0.015;
         } else {
             clearInterval(_uiFadeOutID);
-            //console.log("AAAAAAAAAAAAAAA")
             _bitmap.alpha = 0;
         }
     });
+}
+
+mouseup_canvas = (_canvas) => {
+    //効果音
+    _se1 = new toile.Sound("../common/se1.wav");
+    _se1.play();
+    _canvas.deleteChild(_about);
+    _about = undefined;
+    //_canvas.stopMouseUpEvent();
+    allButtonMouseEvent(true);
 }

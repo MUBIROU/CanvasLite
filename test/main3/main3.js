@@ -11,6 +11,7 @@ function load_window() {
 
     _uiList = [];
     _count = 0;
+    _choiceName = undefined;
 
     //HTML5
     _html5 = new toile.Bitmap("../common/html5.png");
@@ -47,9 +48,9 @@ function load_window() {
     //===============================
     _bjornBitmapList = [];
     for (let i=1; i<=11; i++) {
-        let _thePNG = "content" + i + ".png";
+        let _thePNG = "png/content" + i + ".png";
         let _theBjornBitmap = new BjornBitmap(_canvas, _thePNG, i*1360/12-75,
-            - 150, 768/2 - randomInt(100,200) //平均-150
+            - 150, 768/2 - randomInt(90,130) //平均-110
         )
         _theBjornBitmap.name = "bjornBitmap" + i;
         _bjornBitmapList.push(_theBjornBitmap);
@@ -59,12 +60,12 @@ function load_window() {
     // BjornBitmap（12～21個）の生成
     //===============================
     for (let i=12; i<=21; i++) {
-        let _thePNG = "content" + i + ".png";
+        let _thePNG = "png/content" + i + ".png";
         //console.log(_thePNG);
         let _theBjornBitmap = new BjornBitmap(_canvas, _thePNG, (i-11)*1360/12-17,
             - 150, //- 150
-            768/2 + randomInt(30, 130), //平均+80
-            0.77
+            768/2 + randomInt(20, 60), //平均+40
+            0.77 //値が小さいとすぐにとまる
         )
         _theBjornBitmap.name = "bjornBitmap" + i;
         _bjornBitmapList.push(_theBjornBitmap);
@@ -199,18 +200,32 @@ mouseup_bjornBitmap = (_bjornBitmap) => {
 
 end_bjornBitmap = (_bjornBitmap) => {
     if (_count == 0) {
-        var _choiceName = _bjornBitmap.name;
+        _choiceName = _bjornBitmap.name;
     }
     _count ++;
     if (_count == _bjornBitmapList.length) {
         //location.href = "../main0/index0.html?param=true"
-        setTimeout(waitURL, 300, _choiceName); //少し待ってHOMEページへ
+        setTimeout(waitURL, 300); //少し待ってHOMEページへ
     }
 }
 
-waitURL = (_choiceName) => {
-    console.log(_choiceName);
-    location.href = "../main0/index0.html?param=true"
+waitURL = () => {
+    let _regExp = new RegExp("bjornBitmap");
+    let _choiceNum = Number(_choiceName.replace(_regExp, ""));
+    if (_choiceNum == 1) {
+        let _folderName = "";
+        if (_choiceNum < 100) {
+            _folderName = "0"; //"0X"にする
+            if (_choiceNum < 10) {
+                _folderName += "0"; //"00X"にする
+            }
+        }
+        _folderName += _choiceNum;
+        console.log(_folderName);
+        location.href = _folderName + "/index" + _folderName + ".html";
+    } else {
+        location.href = "../main0/index0.html?param=true"
+    }
 }
 
 //==========
