@@ -111,10 +111,6 @@ startTimeOut = () => { //this == Window
         _bjornBitmapList[i].start(_millsec);
     }
 
-    // _bjornBitmapList.forEach(function(_bjornBitmap) {
-    //     let _millsec = Math.random()*300;
-    //     _bjornBitmap.start(_millsec);
-    // });
     clearInterval(_startTimeOutID);
 }
 
@@ -187,6 +183,8 @@ mouseup_bjornBitmap = (_bjornBitmap) => {
     _se1.play();
     _canvas.stopMouseUpEvent(); //ボタンが重なっているところの対策
 
+    _bjornBitmap.removeEventListener("mouseup");
+
     _uiFadeOutID = setInterval(_uiFadeOut, 17);
     _bjornBitmap.end();
 
@@ -194,6 +192,7 @@ mouseup_bjornBitmap = (_bjornBitmap) => {
         let _millsec = Math.random()*200 + 500;
         if (_theBjornBitmap != _bjornBitmap) {
             _theBjornBitmap.end(_millsec);
+            _theBjornBitmap.removeEventListener("mouseup");
         }
     });
 }
@@ -212,7 +211,7 @@ end_bjornBitmap = (_bjornBitmap) => {
 waitURL = () => {
     let _regExp = new RegExp("bjornBitmap");
     let _choiceNum = Number(_choiceName.replace(_regExp, ""));
-    if (_choiceNum == 1) {
+    if ((_choiceNum == 1) || (_choiceNum == 2)) {
         let _folderName = "";
         if (_choiceNum < 100) {
             _folderName = "0"; //"0X"にする
