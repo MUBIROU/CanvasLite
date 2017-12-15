@@ -46,6 +46,8 @@ function load_window() {
     _playMark = undefined; //Playマーク
     _changeBitmap = false; //選択した作品が前と異なるか否か
     _shadow = undefined;
+    _nothingTimerID = undefined;
+    _about = undefined;
 
     _uiList = [];
 
@@ -194,13 +196,16 @@ enterframe_canvas = (_canvas) => {
                     _canvas.removeEventListener("enterframe");
                     _canvas.addEventListener("enterframe", enterframe_canvas2);
 
+                    showDialogBox(); //ダイアログを表示する
+                    _about.alpha = 0;
+                    _daialogFadeInID = setInterval(_daialogFadeIn, 17);
                     //説明
-                    _about = new toile.Bitmap("about.png");
-                    //_about.addEventListener("mouseup", mouseup_about);
-                    _about.x = _canvas.width/2 - 542/2;
-                    _about.y = _canvas.height/2 - 217/2 - 30;
-                    _canvas.addChild(_about);
-                    _canvas.addEventListener("mouseup", mouseup_canvas);
+                    // _about = new toile.Bitmap("about.png");
+                    // //_about.addEventListener("mouseup", mouseup_about);
+                    // _about.x = _canvas.width/2 - 542/2;
+                    // _about.y = _canvas.height/2 - 217/2 - 30;
+                    // _canvas.addChild(_about);
+                    // _canvas.addEventListener("mouseup", mouseup_canvas);
                 }
             }
         }
@@ -257,6 +262,8 @@ mouseup_depthChangeBtn = (_bitmap) => {
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
 
+    stopNothingTimer(); //（何もしない時間の）計測を止める
+
     _canvas.deleteChild(_playMark);
     _clickNum = 0;
 
@@ -268,7 +275,7 @@ mouseup_depthChangeBtn = (_bitmap) => {
        _canvas.setDepthIndex(_bitmap, _randomNum);
     });
     //_canvas.setDepthIndex(_text, 0); //_canvas.getDepthMax()); //最下位
-    _canvas.setDepthIndex(_depthChangeBtn, _canvas.getDepthMax()); //最上位?????????????????????????????????????
+    _canvas.setDepthIndex(_depthChangeBtn, _canvas.getDepthMax()); //最上位
     
     _canvas.addChild(_screenShot);
     _timerScreenShotID = setInterval(callback_screenShot, 25, _screenShot);
@@ -286,6 +293,8 @@ callback_screenShot = (_screenShot) => {
         _canvas.deleteChild(_screenShot);
         _screenShot = undefined;
         _depthChangeBtn.addEventListener("mouseup", mouseup_depthChangeBtn);
+
+        startNothingTimer(); //（何もしない時間の）計測を開始する
     }
 }
 
@@ -319,6 +328,8 @@ mousedown_bitmap = (_bitmap) => {
 
     _disX = _canvas.mouseX - _bitmap.x;
     _disY = _canvas.mouseY - _bitmap.y;
+
+    stopNothingTimer(); //（何もしない時間の）計測を止める
 }
 
 //===========================
@@ -341,11 +352,17 @@ mouseup_bitmap = (_bitmap) => {
     _playMark.y = _bitmap.y + 70;
     _canvas.addChild(_playMark);
 
+    startNothingTimer(); //（何もしない時間の）計測を開始する
+
     if (_clickNum == 0) {
         _clickNum ++;
+        //console.log("い");
     } else if (_clickNum == 1) {
         if ((_mouseX == _mouseDownX) && (_mouseY == _mouseDownY)) {
-            if (_changeBitmap) { //選択した作品が直前と同じならば...
+            if (_changeBitmap) { //選択した作品が直前と同じならば...（再生ボタン有）
+
+                stopNothingTimer(); //（何もしない時間の）計測を止める
+
                 //選択したボタン類を消す
                 //_bitmap.alpha = 0;
                 _playMark.alpha = 0;
@@ -419,6 +436,8 @@ close_screen = (_screen) => {
     _playMark.alpha = 1;
     //全てのボタン機能をONにする
     allButtonMouseEvent(true);
+
+    startNothingTimer(); //（何もしない時間の）計測を開始する
 }
 
 //===================
@@ -428,6 +447,8 @@ mouseup_homeButton = (_bitmap) => {
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
+
+    stopNothingTimer(); //（何もしない時間の）計測を止める
 
     //console.log("CCC");
     //homeボタンの削除
@@ -520,8 +541,96 @@ mouseup_canvas = (_canvas) => {
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
-    _canvas.deleteChild(_about);
-    _about = undefined;
-    //_canvas.stopMouseUpEvent();
-    allButtonMouseEvent(true);
+
+    hideDialogBox(); //ダイアログを消す
+    startNothingTimer(); //計測を開始する
+}
+
+//===================================
+//（何もしない時間の）計測を開始する
+//===================================
+startNothingTimer = () => {
+    if (_nothingTimerID == undefined) {
+        _nothingTimerID = setInterval(_nothingTimer, 1000);
+        //console.log("A: " + _nothingTimerID);
+        _nothingStart = new Date().getTime();
+    } else {
+        //console.log("ERROR: startNothingTimer");
+    }
+}
+
+//=======================================================
+// 何もしない時間がXX秒続いたらABOUTダイアログを表示する
+//=======================================================
+_nothingTimer = () => { //this == Window
+    //console.log("B: " + _nothingTimerID);
+    let _sec = Math.floor((new Date().getTime() - _nothingStart) / 1000);
+    if (5 < _sec ) { //<================================================5秒の場合
+        stopNothingTimer();
+        showDialogBox();
+        _about.alpha = 0;
+        //console.log("タイムアウト");
+        _daialogFadeInID = setInterval(_daialogFadeIn, 17);
+    }
+}
+
+_daialogFadeIn = () => {
+    if (_about.alpha < 1) {
+        _about.alpha += 0.05;
+    } else {
+        _about.alpha = 1;
+        clearInterval(_daialogFadeInID);
+    }
+}
+
+
+//=================================
+//（何もしない時間の）計測を止める
+//=================================
+stopNothingTimer = () => {
+    //console.log("C: " + _nothingTimerID);
+    //_nothingTimerID（タイマーID）
+    if (_nothingTimerID != undefined) {
+        clearInterval(_nothingTimerID); //計測を止める
+        _nothingTimerID = undefined;
+    } else {
+        console.log("ERROR: stopNothingTimer: _nothingTimerID");
+    }
+
+    //_nothingStart（計測開始時間）
+    if (_nothingStart != undefined) {
+        _nothingStart = undefined;
+    } else {
+        console.log("ERROR: stopNothingTimer: _nothingStart");
+    }
+}
+
+//======================
+//ダイアログを表示する
+//======================
+showDialogBox = () => {
+    if (_about == undefined) {
+        _about = new toile.Bitmap("about.png");
+        _about.x = _canvas.width/2 - 542/2;
+        _about.y = _canvas.height/2 - 217/2 - 30;
+        _canvas.addChild(_about);
+        _canvas.addEventListener("mouseup", mouseup_canvas);
+        allButtonMouseEvent(false);
+    } else {
+        console.log("ERROR: showDialogBox");
+    }
+}
+
+//======================
+//ダイアログを消す
+//======================
+hideDialogBox = () => {
+    if (_about != undefined) {
+        _canvas.deleteChild(_about);
+        _about = undefined;
+        _canvas.removeEventListener("mouseup");
+        allButtonMouseEvent(true);
+    } else {
+        console.log("ERROR: hideDialogBox");
+    }
 }
