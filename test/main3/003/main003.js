@@ -2,7 +2,7 @@ addEventListener("load", load_window, false);
 
 function load_window() {
     _canvas = new toile.Canvas("myCanvas");
-    _canvas.addEventListener("enterframe", enterframe_canvas);
+    _canvas.addEventListener("enterframe", enterframe_canvas1);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
     //_canvas.cursor = "../../common/dummy.png"; //マウスカーソルを消す場合
@@ -14,7 +14,7 @@ function load_window() {
 
     _uiList = [];
     _count = 0;
-    _mouseX = 100;
+    _mouseX = _canvas.width/2 - 140/2;
     _mouseY = 768/2-30;
 
     //三色グラデーション
@@ -30,6 +30,42 @@ function load_window() {
     _html5.y = 15;
     _canvas.addChild(_html5);
     _uiList.push(_html5);
+
+    //demae
+    _demae = new toile.SpriteSheet("demae.png");
+    _demae.fps = 10;
+    _demae.x = _canvas.width/2 - 140/2;
+    _demae.y = _canvas.height - 210 - 80;
+    _canvas.addChild(_demae);
+    _uiList.push(_demae);
+
+    //soba1
+    _sobaArray = [];
+    _soba1 = new toile.Bitmap("soba.png");
+    _soba1.x = _demae.x + 5;
+    _soba1.y = _demae.y + 21;
+    _sobaArray.push(_soba1);
+    _canvas.addChild(_soba1);
+    _uiList.push(_soba1);
+
+    //soba2...
+    _saraNum = 50;
+    for (let i=1; i<_saraNum; i++) {
+        let _theSoba = new toile.Bitmap("soba.png");
+        _theSoba.x = _soba1.x;
+        _theSoba.y = _soba1.y - (10 * i);
+        _theSoba.regX = 25;
+        _theSoba.regY = 10;
+        _sobaArray.push(_theSoba);
+        _canvas.addChild(_theSoba);
+        _uiList.push(_theSoba);
+    }
+
+    //groundLine
+    _groundLine = new toile.Line(0,_demae.y+205,_canvas.width,_demae.y+205);
+    _groundLine.lineWidth = 2;
+    _canvas.addChild(_groundLine);
+    _uiList.push(_groundLine);
 
     //「バックボタン」関連
     _backButton = new toile.Bitmap("../../common/back.png");
@@ -66,7 +102,27 @@ mousemove_canvas = (_canvas) => {
     _mouseY = _canvas.mouseY;
 }
 
-enterframe_canvas = (_canvas) => {
+enterframe_canvas1 = (_canvas) => {
+    _canvas.drawScreen("#fefefe");
+}
+
+enterframe_canvas2 = (_canvas) => {
+    _demae.x += (_mouseX - _demae.x) / 10;
+    _demae.x += randomInt(-1, 1)/2;
+    //_demae.y +- randomInt(-1, 1);
+    
+    //1枚目
+    _soba1.x += (_demae.x + 5 - _soba1.x) / 1.8;
+
+    for (let i=1; i<_saraNum; i++) { //2枚目以降…
+        let _theSoba = _sobaArray[i];
+        let _upSoba = _sobaArray[i-1];
+        _theSoba.x += (_upSoba.x - _theSoba.x) / 1.8;
+        var _disX = _upSoba.x - _theSoba.x + 21;
+        var _disY = _upSoba.y - _theSoba.y + 5;
+        var _radian = Math.atan2(_disY, _disX) + Math.PI/20;
+        _theSoba.rotateRadian = _radian - Math.PI/4;
+    }
     _canvas.drawScreen("#fefefe");
 }
 
@@ -98,6 +154,9 @@ _uiFadeIn = () => {
                 _backButton.addEventListener("mouseup", mouseup_backButton);
                 _canvas.setDepthIndex(_html5, _canvas.getDepthMax());
                 _count = 0;
+
+                _canvas.removeEventListener("enterframe");
+                _canvas.addEventListener("enterframe", enterframe_canvas2);
             }
         }
     });
@@ -119,4 +178,11 @@ _uiFadeOut = (_string) => {
             }
         }
     });
+}
+
+//==========
+// 汎用関数
+//==========
+randomInt = (_min, _max) => {
+    return Math.floor(Math.random()*(_max-_min+1))+_min;
 }
