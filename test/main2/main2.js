@@ -6,7 +6,7 @@ function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
@@ -99,8 +99,28 @@ _uiFadeOut = () => {
             _bitmap.alpha -= 0.01;
         } else {
             _bitmap.alpha = 0;
+            //ちらつき防止
+            if (_videoMovie.__nextVideo != undefined) {
+                _videoMovie.__nextVideo.alpha = 0;
+            }
+            if (_videoMovie.__oldVideo != undefined) {
+                _videoMovie.__oldVideo.alpha = 0;
+            }
+            if (_videoMovie.__currentVideo != undefined) {
+                _videoMovie.__currentVideo.alpha = 0;
+            }
         }
     });
+    //ちらつき防止
+    if (_videoMovie.__nextVideo != undefined) {
+        _videoMovie.__nextVideo.alpha -= 0.01;
+    }
+    if (_videoMovie.__oldVideo != undefined) {
+        _videoMovie.__oldVideo.alpha -= 0.01;
+    }
+    if (_videoMovie.__currentVideo != undefined) {
+        _videoMovie.__currentVideo.alpha -= 0.01;
+    }
 }
 
 //=====================

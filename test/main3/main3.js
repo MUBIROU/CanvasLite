@@ -5,13 +5,14 @@ function load_window() {
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
     _uiList = [];
     _count = 0;
     _choiceName = undefined;
+    _isHome = false;
 
     //HTML5
     _html5 = new toile.Bitmap("../common/html5.png");
@@ -122,6 +123,7 @@ enterframe_canvas = (_canvas) => {
 // HOMEボタン
 //============
 mouseup_homeButton = (_bitmap) => {
+    _isHome = true;
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
     _se1.play();
@@ -177,6 +179,7 @@ in_bjornBitmap = (_bjornBitmap) => {
 }
 
 mouseup_bjornBitmap = (_bjornBitmap) => {
+    _isHome = false;
     //console.log(_bjornBitmap.name);
     //効果音
     _se1 = new toile.Sound("../common/se1.wav");
@@ -209,10 +212,10 @@ end_bjornBitmap = (_bjornBitmap) => {
 }
 
 waitURL = () => {
-    let _regExp = new RegExp("bjornBitmap");
-    let _choiceNum = Number(_choiceName.replace(_regExp, ""));
-    if ((_choiceNum == 1) || (_choiceNum == 2)) {
-        let _folderName = "";
+    var _regExp = new RegExp("bjornBitmap");
+    var _choiceNum = Number(_choiceName.replace(_regExp, ""));
+    if ((_choiceNum == 1) || (_choiceNum == 2) || (_choiceNum == 3)) {
+        var _folderName = "";
         if (_choiceNum < 100) {
             _folderName = "0"; //"0X"にする
             if (_choiceNum < 10) {
@@ -220,10 +223,14 @@ waitURL = () => {
             }
         }
         _folderName += _choiceNum;
-        console.log(_folderName);
-        location.href = _folderName + "/index" + _folderName + ".html";
     } else {
+        _isHome = true;
+    }
+    if (_isHome) {
         location.href = "../main0/index0.html?param=true"
+        _isHome = false;
+    } else {
+        location.href = _folderName + "/index" + _folderName + ".html";
     }
 }
 

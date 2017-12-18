@@ -57,7 +57,7 @@ function load_window() {
     _canvas.addEventListener("mousemove", mousemove_canvas);
     _canvas.enabledMouseMove(true);
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
@@ -565,7 +565,7 @@ startNothingTimer = () => {
 _nothingTimer = () => { //this == Window
     //console.log("B: " + _nothingTimerID);
     let _sec = Math.floor((new Date().getTime() - _nothingStart) / 1000);
-    if (5 < _sec ) { //<================================================5秒の場合
+    if (10 < _sec ) { //<================================================10秒の場合
         stopNothingTimer();
         showDialogBox();
         _about.alpha = 0;

@@ -16,7 +16,7 @@ class Dragon {
         _canvas.addChild(this.__bitmap0);
         this.__bitmapArray.push(this.__bitmap0);
 
-        for (let i = 1; i < 1000; i++) {
+        for (let i = 1; i < 300; i++) {
             let _bitmap = new toile.Bitmap("box.png");
             _bitmap.x = this.__bitmap0.x;
             _bitmap.y = this.__bitmap0.y;

@@ -5,13 +5,14 @@ function load_window() {
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
     _uiList = [];
+    _count = 0;
 
-    //HTML%
+    //HTML5
     _html5 = new toile.Bitmap("../common/html5.png"); //html5.png");
     _html5.x = 15; //_canvas.width - 230;
     _html5.y = 15; //_canvas.height - 70;
@@ -72,10 +73,16 @@ function load_window() {
         _canvas.addChild(_theButton);
     }
 
+
     //挨拶文
     _hello = new toile.Bitmap("hello.png");
     _hello.addEventListener("mouseup", mouseup_hello);
     _canvas.addChild(_hello);
+
+    //一度全て消す
+    _uiList.forEach(function(_bitmap) {
+        _bitmap.alpha = 0;
+    });
 
     if (location.href.indexOf("?", 0) != -1) {
         if (_hello != undefined) _canvas.deleteChild(_hello);
@@ -224,8 +231,11 @@ _uiFadeIn = () => {
         if (_bitmap.alpha < 1) {
             _bitmap.alpha += 0.02; //05;
         } else {
-            clearInterval(_uiFadeInID);
-            _bitmap.alpha = 1;
+            _count ++;
+            if (_count == _uiList.length) { //ul個数分繰り返されてしまう為
+                clearInterval(_uiFadeInID);
+                _bitmap.alpha = 1;
+            }
         }
     });
 }

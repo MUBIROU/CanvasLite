@@ -5,7 +5,7 @@ function load_window() {
     _canvas.addEventListener("enterframe", enterframe_canvas1);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
-    //_canvas.cursor = "../../common/dummy.png"; //マウスカーソルを消す場合
+    _canvas.cursor = "../../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true);
     _canvas.borderWidth = 2;
 
@@ -16,6 +16,8 @@ function load_window() {
     _count = 0;
     _mouseX = _canvas.width/2 - 140/2;
     _mouseY = 768/2-30;
+    _arrow = undefined;
+    _nothingTimerID = undefined;
 
     //三色グラデーション
     _3colors = new toile.Bitmap("../../common/3colorsDark.png");
@@ -47,6 +49,13 @@ function load_window() {
     _sobaArray.push(_soba1);
     _canvas.addChild(_soba1);
     _uiList.push(_soba1);
+
+    //矢印を表示
+    _arrow = new toile.Bitmap("arrow.png");
+    _arrow.x = _demae.x - 72;
+    _arrow.y = _demae.y + 100;
+    _canvas.addChild(_arrow);
+    _uiList.push(_arrow);
 
     //soba2...
     _saraNum = 50;
@@ -100,6 +109,8 @@ function load_window() {
 mousemove_canvas = (_canvas) => {
     _mouseX = _canvas.mouseX;
     _mouseY = _canvas.mouseY;
+    _arrow.x = -9e9;
+    startNothingTimer();
 }
 
 enterframe_canvas1 = (_canvas) => {
@@ -185,4 +196,42 @@ _uiFadeOut = (_string) => {
 //==========
 randomInt = (_min, _max) => {
     return Math.floor(Math.random()*(_max-_min+1))+_min;
+}
+
+
+//===================================
+//（何もしない時間の）計測を開始する
+//===================================
+startNothingTimer = () => {
+    if (_nothingTimerID == undefined) {
+        _nothingTimerID = setInterval(_nothingTimer, 1000);
+        _nothingStart = new Date().getTime();
+    }
+}
+
+//=======================================================
+// 何もしない時間がXX秒続いたらABOUTダイアログを表示する
+//=======================================================
+_nothingTimer = () => { //this == Window
+    let _sec = Math.floor((new Date().getTime() - _nothingStart) / 1000);
+    //console.log(_sec);
+    if (8 < _sec ) { //<================================================10秒の場合
+        clearInterval(_nothingTimerID);
+        _nothingTimerID = undefined;
+        startNothingTimer();
+        //stopNothingTimer();
+        _arrow.x = _demae.x - 72;
+        _arrow.alpha = 0;
+        //console.log("タイムアウト");
+        _daialogFadeInID = setInterval(_daialogFadeIn, 17);
+    }
+}
+
+_daialogFadeIn = () => {
+    if (_arrow.alpha < 1) {
+        _arrow.alpha += 0.05;
+    } else {
+        _arrow.alpha = 1;
+        clearInterval(_daialogFadeInID);
+    }
 }
