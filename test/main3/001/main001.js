@@ -14,7 +14,7 @@ function load_window() {
 
     _uiList = [];
     _count = 0;
-    _mouseX = 100;
+    _mouseX = 380; //100;
     _mouseY = 768/2-30;
 
     //HTML5
@@ -59,6 +59,14 @@ function load_window() {
     _canvas.addChild(_3colors);
     _uiList.push(_3colors);
     _canvas.setDepthIndex(_3colors, 0);
+
+    //300BOX
+    _300box = new toile.Bitmap("300BOX.png");
+    _300box.x = _canvas.width - 617;
+    _300box.y = _canvas.height - 240;
+    _canvas.addChild(_300box);
+
+    _uiList.push(_300box);
 
     //一度全て消す
     _uiList.forEach(function(_bitmap) {

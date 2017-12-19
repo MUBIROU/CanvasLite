@@ -26,6 +26,12 @@ function load_window() {
     _uiList.push(_3colors);
     _canvas.setDepthIndex(_3colors, 0);
 
+    //DEMAE50
+    _DEMAE50 = new toile.Bitmap("DEMAE50.png");
+    _DEMAE50.x = _canvas.width - 498;
+    _DEMAE50.y = _canvas.height - 200;
+    _canvas.addChild(_DEMAE50);
+
     //HTML5
     _html5 = new toile.Bitmap("../../common/html5.png");
     _html5.x = 15;
@@ -37,7 +43,7 @@ function load_window() {
     _demae = new toile.SpriteSheet("demae.png");
     _demae.fps = 10;
     _demae.x = _canvas.width/2 - 140/2;
-    _demae.y = _canvas.height - 210 - 80;
+    _demae.y = _canvas.height - 286;
     _canvas.addChild(_demae);
     _uiList.push(_demae);
 
@@ -53,7 +59,7 @@ function load_window() {
     //矢印を表示
     _arrow = new toile.Bitmap("arrow.png");
     _arrow.x = _demae.x - 72;
-    _arrow.y = _demae.y + 100;
+    _arrow.y = _demae.y + 108;
     _canvas.addChild(_arrow);
     _uiList.push(_arrow);
 

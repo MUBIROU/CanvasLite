@@ -1,4 +1,5 @@
 addEventListener("load", load_window, false);
+
 function load_window() {
     _photoMovie = undefined;
     _videoMovie = undefined;
@@ -6,7 +7,7 @@ function load_window() {
     _canvas = new toile.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.enabledContextMenu(false);
-    _canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
+    //_canvas.cursor = "../common/dummy.png"; //マウスカーソルを消す場合
     _canvas.isBorder(true)
     _canvas.fps = 60;
 
@@ -26,6 +27,10 @@ function load_window() {
     _html5 = new toile.Bitmap("../common/html5.png");
     _credit = new toile.Bitmap("MusicIsVFR.png");
     _50th = new toile.Bitmap("../common/50thlogo.png");
+}
+
+change_volume = (_volume) => {
+    _circleMenu.volume = _volume.volume;
 }
 
 in_scoreLine = (_scoreLine) => {
@@ -91,36 +96,6 @@ mouseup_homeButton = (_bitmap) => {
     }
 
     _uiFadeOutID = setInterval(_uiFadeOut, 17);
-}
-
-_uiFadeOut = () => {
-    _uiList.forEach(function(_bitmap) {
-        if (0 < _bitmap.alpha) {
-            _bitmap.alpha -= 0.01;
-        } else {
-            _bitmap.alpha = 0;
-            //ちらつき防止
-            if (_videoMovie.__nextVideo != undefined) {
-                _videoMovie.__nextVideo.alpha = 0;
-            }
-            if (_videoMovie.__oldVideo != undefined) {
-                _videoMovie.__oldVideo.alpha = 0;
-            }
-            if (_videoMovie.__currentVideo != undefined) {
-                _videoMovie.__currentVideo.alpha = 0;
-            }
-        }
-    });
-    //ちらつき防止
-    if (_videoMovie.__nextVideo != undefined) {
-        _videoMovie.__nextVideo.alpha -= 0.01;
-    }
-    if (_videoMovie.__oldVideo != undefined) {
-        _videoMovie.__oldVideo.alpha -= 0.01;
-    }
-    if (_videoMovie.__currentVideo != undefined) {
-        _videoMovie.__currentVideo.alpha -= 0.01;
-    }
 }
 
 //=====================
@@ -190,6 +165,11 @@ in_circleMenu = (_circleMenu) => {
     _canvas.addChild(_50th);
     _uiList.push(_50th);
 
+    //ボリューム
+    _volume = new Volume(_canvas);
+    _uiList.push(_volume);
+    //_volume.addEventListener("change", change_volume);
+
     //上記のUIのアルファ値を0にする
     _homeButton.alpha = 0;
     _shinanologo.alpha = 0;
@@ -197,6 +177,7 @@ in_circleMenu = (_circleMenu) => {
     _html5.alpha = 0;
     _credit.alpha = 0; //0.8;
     _50th.alpha = 0; //0.8;
+    _volume.alpha = 0;
 
     _uiFadeInLoopID = setInterval(uiFadeInLoop, 17);
 }
@@ -210,6 +191,7 @@ uiFadeInLoop = () => {
         _html5.alpha += 0.02;
         _credit.alpha += 0.02;
         _50th.alpha += 0.02;
+        _volume.alpha += 0.02;
     } else {
         _homeButton.alpha = 1;
         _shinanologo.alpha = 1;
@@ -217,8 +199,40 @@ uiFadeInLoop = () => {
         _html5.alpha = 1;
         _credit.alpha = 1;
         _50th.alpha = 1;
+        _volume.alpha = 1;
+        _volume.addEventListener("change", change_volume);
         clearInterval(_uiFadeInLoopID);
         //console.log("_uiFadeInLoopID")
+    }
+}
+
+_uiFadeOut = () => {
+    _uiList.forEach(function(_bitmap) {
+        if (0 < _bitmap.alpha) {
+            _bitmap.alpha -= 0.01;
+        } else {
+            _bitmap.alpha = 0;
+            //ちらつき防止
+            if (_videoMovie.__nextVideo != undefined) {
+                _videoMovie.__nextVideo.alpha = 0;
+            }
+            if (_videoMovie.__oldVideo != undefined) {
+                _videoMovie.__oldVideo.alpha = 0;
+            }
+            if (_videoMovie.__currentVideo != undefined) {
+                _videoMovie.__currentVideo.alpha = 0;
+            }
+        }
+    });
+    //ちらつき防止
+    if (_videoMovie.__nextVideo != undefined) {
+        _videoMovie.__nextVideo.alpha -= 0.01;
+    }
+    if (_videoMovie.__oldVideo != undefined) {
+        _videoMovie.__oldVideo.alpha -= 0.01;
+    }
+    if (_videoMovie.__currentVideo != undefined) {
+        _videoMovie.__currentVideo.alpha -= 0.01;
     }
 }
 

@@ -749,4 +749,15 @@ class CircleMenu {
             }
         }
     }
+
+    //===========
+    // アクセサ
+    //===========
+    set volume(newValue) {
+        this.__soundVolume = newValue / 100;
+        this.__playSound.volume = this.__soundVolume;
+    }
+    get volume() {
+        return this.__soundVolume * 100;
+    }
 }
