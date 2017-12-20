@@ -2,7 +2,7 @@ addEventListener("load", load_window, false);
 
 function load_window() {
     _canvas = new toile.Canvas("myCanvas");
-    _canvas.addEventListener("enterframe", enterframe_canvas);
+    _canvas.addEventListener("enterframe", enterframe_canvas1);
     _canvas.fps = 60;
     _canvas.enabledContextMenu(false);
     _canvas.cursor = "../../common/dummy.png"; //マウスカーソルを消す場合
@@ -14,9 +14,10 @@ function load_window() {
 
     _uiList = [];
     _count = 0;
-    _mouseX = 100;
+    _mouseX = _canvas.width/2 - 140/2;
     _mouseY = 768/2-30;
-    _isPlay = true;
+    _arrow = undefined;
+    _nothingTimerID = undefined;
 
     //三色グラデーション
     _3colors = new toile.Bitmap("../../common/3colorsDark.png");
@@ -25,49 +26,11 @@ function load_window() {
     _uiList.push(_3colors);
     _canvas.setDepthIndex(_3colors, 0);
 
-    //へのへのもへじアニメ
-    _henohenomoheji = new toile.SpriteSheet("henohenomoheji.png");
-    _henohenomoheji.x = 495; //450;
-    _henohenomoheji.y = 110; //145;
-    _henohenomoheji.fps = 12;
-    _canvas.addChild(_henohenomoheji);
-    _uiList.push(_henohenomoheji);
-
-    //へのへのもへじ背景
-    _bg = new toile.Bitmap("henohenomoheji_bk.png");
-    _bg.x = 0;
-    _bg.scale = 0.34;
-    _bg.alpha = 0.2;
-    _canvas.addChild(_bg);
-    _uiList.push(_bg);
-
-    _playButtonY = _canvas.height/2 + 200;
-
-    //pausePlay Button
-    _pausePlay = new toile.SpriteSheet("pausePlay.png");
-    _pausePlay.stop();
-    _pausePlay.x = _canvas.width/2 - 68/2;
-    _pausePlay.y = _playButtonY;
-    _canvas.addChild(_pausePlay);
-    _uiList.push(_pausePlay);
-
-    //minus Button
-    _minus = new toile.Bitmap("minus.png");
-    _minus.x = _pausePlay.x - 100;
-    _minus.y = _playButtonY;
-    _minus.name = "minus";
-    _minus.alpha = 0;
-    _canvas.addChild(_minus);
-    _uiList.push(_minus);
-
-    //plus Button
-    _plus = new toile.Bitmap("plus.png");
-    _plus.x = _pausePlay.x + 100;
-    _plus.y = _playButtonY;
-    _plus.name = "plus";
-    _plus.alpha = 0;
-    _canvas.addChild(_plus);
-    _uiList.push(_plus);
+    //DEMAE50
+    _DEMAE50 = new toile.Bitmap("DEMAE50.png");
+    _DEMAE50.x = _canvas.width - 498;
+    _DEMAE50.y = _canvas.height - 200;
+    _canvas.addChild(_DEMAE50);
 
     //HTML5
     _html5 = new toile.Bitmap("../../common/html5.png");
@@ -75,6 +38,49 @@ function load_window() {
     _html5.y = 15;
     _canvas.addChild(_html5);
     _uiList.push(_html5);
+
+    //demae
+    _demae = new toile.SpriteSheet("demae.png");
+    _demae.fps = 10;
+    _demae.x = _canvas.width/2 - 140/2;
+    _demae.y = _canvas.height - 286;
+    _canvas.addChild(_demae);
+    _uiList.push(_demae);
+
+    //soba1
+    _sobaArray = [];
+    _soba1 = new toile.Bitmap("soba.png");
+    _soba1.x = _demae.x + 5;
+    _soba1.y = _demae.y + 21;
+    _sobaArray.push(_soba1);
+    _canvas.addChild(_soba1);
+    _uiList.push(_soba1);
+
+    //矢印を表示
+    _arrow = new toile.Bitmap("arrow.png");
+    _arrow.x = _demae.x - 72;
+    _arrow.y = _demae.y + 108;
+    _canvas.addChild(_arrow);
+    _uiList.push(_arrow);
+
+    //soba2...
+    _saraNum = 50;
+    for (let i=1; i<_saraNum; i++) {
+        let _theSoba = new toile.Bitmap("soba.png");
+        _theSoba.x = _soba1.x;
+        _theSoba.y = _soba1.y - (10 * i);
+        _theSoba.regX = 25;
+        _theSoba.regY = 10;
+        _sobaArray.push(_theSoba);
+        _canvas.addChild(_theSoba);
+        _uiList.push(_theSoba);
+    }
+
+    //groundLine
+    _groundLine = new toile.Line(0,_demae.y+205,_canvas.width,_demae.y+205);
+    _groundLine.lineWidth = 2;
+    _canvas.addChild(_groundLine);
+    _uiList.push(_groundLine);
 
     //「バックボタン」関連
     _backButton = new toile.Bitmap("../../common/back.png");
@@ -109,9 +115,31 @@ function load_window() {
 mousemove_canvas = (_canvas) => {
     _mouseX = _canvas.mouseX;
     _mouseY = _canvas.mouseY;
+    _arrow.x = -9e9;
+    startNothingTimer();
 }
 
-enterframe_canvas = (_canvas) => {
+enterframe_canvas1 = (_canvas) => {
+    _canvas.drawScreen("#fefefe");
+}
+
+enterframe_canvas2 = (_canvas) => {
+    _demae.x += (_mouseX - _demae.x) / 10;
+    _demae.x += randomInt(-1, 1)/2;
+    //_demae.y +- randomInt(-1, 1);
+    
+    //1枚目
+    _soba1.x += (_demae.x + 5 - _soba1.x) / 1.8;
+
+    for (let i=1; i<_saraNum; i++) { //2枚目以降…
+        let _theSoba = _sobaArray[i];
+        let _upSoba = _sobaArray[i-1];
+        _theSoba.x += (_upSoba.x - _theSoba.x) / 1.8;
+        var _disX = _upSoba.x - _theSoba.x + 21;
+        var _disY = _upSoba.y - _theSoba.y + 5;
+        var _radian = Math.atan2(_disY, _disX) + Math.PI/20;
+        _theSoba.rotateRadian = _radian - Math.PI/4;
+    }
     _canvas.drawScreen("#fefefe");
 }
 
@@ -130,40 +158,22 @@ mouseup_backButton = (_bitmap) => {
     _uiFadeOutID = setInterval(_uiFadeOut, 17, "back");
 }
 
-// //=============
-// // homeボタン
-// //=============
-// mouseup_homeButton = (_bitmap) => {
-//     //console.log("home");
-//     //効果音
-//     _se1 = new toile.Sound("../../common/se1.wav");
-//     _se1.play();
-
-//     //_homeButton.removeEventListener("mouseup");
-//     _backButton.removeEventListener("mouseup");
-
-//     _uiFadeOutID = setInterval(_uiFadeOut, 17, "home");
-// }
-
 _uiFadeIn = () => {
     _uiList.forEach(function(_bitmap) {
-        if ((_bitmap.name != "minus" ) && (_bitmap.name != "plus")) {
-            if (_bitmap.alpha < 1) {
-                _bitmap.alpha += 0.02; //05;
-            } else {
-                _count ++;
-                if (_count == _uiList.length) { //ul個数分繰り返されてしまう為
-                    clearInterval(_uiFadeInID);
-                    _bitmap.alpha = 1;
-                    //_homeButton.addEventListener("mouseup", mouseup_homeButton);
-                    _backButton.addEventListener("mouseup", mouseup_backButton);
-                    _canvas.setDepthIndex(_html5, _canvas.getDepthMax());
-                    _count = 0;
-    
-                    //_minus.addEventListener("mouseup", mouseup_minus);
-                    _pausePlay.addEventListener("mouseup", mouseup_pausePlay);
-                    //_plus.addEventListener("mouseup", mouseup_plus);
-                }
+        if (_bitmap.alpha < 1) {
+            _bitmap.alpha += 0.02; //05;
+        } else {
+            _count ++;
+            if (_count == _uiList.length) { //ul個数分繰り返されてしまう為
+                clearInterval(_uiFadeInID);
+                _bitmap.alpha = 1;
+                //_homeButton.addEventListener("mouseup", mouseup_homeButton);
+                _backButton.addEventListener("mouseup", mouseup_backButton);
+                _canvas.setDepthIndex(_html5, _canvas.getDepthMax());
+                _count = 0;
+
+                _canvas.removeEventListener("enterframe");
+                _canvas.addEventListener("enterframe", enterframe_canvas2);
             }
         }
     });
@@ -187,50 +197,47 @@ _uiFadeOut = (_string) => {
     });
 }
 
-mouseup_pausePlay = () => {
-    //効果音
-    _se1 = new toile.Sound("../../common/se1.wav");
-    _se1.play();
+//==========
+// 汎用関数
+//==========
+randomInt = (_min, _max) => {
+    return Math.floor(Math.random()*(_max-_min+1))+_min;
+}
 
-    if (_isPlay) { //再生中の場合...
-        _henohenomoheji.stop();
-        _pausePlay.gotoAndStop(2);
-        _minus.alpha = _plus.alpha = 1;
-        _minus.addEventListener("mouseup", mouseup_minus);
-        _plus.addEventListener("mouseup",mouseup_plus);
-        _isPlay = false;
-    } else { //停止中の場合...
-        _henohenomoheji.play();
-        _pausePlay.gotoAndStop(1);
-        _minus.alpha = _plus.alpha = 0;
-        _minus.removeEventListener("mouseup");
-        _plus.removeEventListener("mouseup");
-        _isPlay = true;
+
+//===================================
+//（何もしない時間の）計測を開始する
+//===================================
+startNothingTimer = () => {
+    if (_nothingTimerID == undefined) {
+        _nothingTimerID = setInterval(_nothingTimer, 1000);
+        _nothingStart = new Date().getTime();
     }
 }
 
-mouseup_minus = () => {
-    //効果音
-    _se1 = new toile.Sound("../../common/se1.wav");
-    _se1.play();
-
-    var _nextframe = _henohenomoheji.currentframe - 1;
-    if (_nextframe > 0) {
-        _henohenomoheji.gotoAndStop(_nextframe);
-    } else {
-        _henohenomoheji.gotoAndStop(_henohenomoheji.totalframes);
+//=======================================================
+// 何もしない時間がXX秒続いたらABOUTダイアログを表示する
+//=======================================================
+_nothingTimer = () => { //this == Window
+    let _sec = Math.floor((new Date().getTime() - _nothingStart) / 1000);
+    //console.log(_sec);
+    if (8 < _sec ) { //<================================================10秒の場合
+        clearInterval(_nothingTimerID);
+        _nothingTimerID = undefined;
+        startNothingTimer();
+        //stopNothingTimer();
+        _arrow.x = _demae.x - 72;
+        _arrow.alpha = 0;
+        //console.log("タイムアウト");
+        _daialogFadeInID = setInterval(_daialogFadeIn, 17);
     }
 }
 
-mouseup_plus = () => {
-    //効果音
-    _se1 = new toile.Sound("../../common/se1.wav");
-    _se1.play();
-
-    var _currentframe = _henohenomoheji.currentframe;
-    if (_currentframe < _henohenomoheji.totalframes) {
-        _henohenomoheji.gotoAndStop(++ _currentframe);
+_daialogFadeIn = () => {
+    if (_arrow.alpha < 1) {
+        _arrow.alpha += 0.05;
     } else {
-        _henohenomoheji.gotoAndStop(1);
+        _arrow.alpha = 1;
+        clearInterval(_daialogFadeInID);
     }
 }

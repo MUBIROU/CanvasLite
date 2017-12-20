@@ -31,7 +31,7 @@ class BjornBitmap extends Bitmap {
 
         this.__targetY = _targetY; //768/2 - 80;
         this.__elasticY = 0;
-        this.__spring = 0.09; //0.1; //値が小さいと動きが遅い
+        this.__spring = 0.05; //0.09; //値が小さいと動きが遅い
         this.__damp = _damp; //0.86; //0.8; //値が小さいとすぐにとまる
         this.__oldY = _startY;
         this.__endSpeed = 0;

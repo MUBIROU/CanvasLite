@@ -244,10 +244,13 @@ _uiFadeOut = () => {
     _uiList.forEach(function(_bitmap) {
         if (0 < _uiList[0].alpha) {
             _bitmap.alpha -= 0.05; //05;
+            if (_videoLoop.__video1 != undefined) _videoLoop.__video1.alpha -= 0.005;
+            if (_videoLoop.__video2 != undefined) _videoLoop.__video2.alpha -= 0.005;
         } else {
             clearInterval(_uiFadeOutID);
-            //console.log("AAAAAAAAAAAAAAA")
             _bitmap.alpha = 0;
+            if (_videoLoop.__video1 != undefined) _videoLoop.__video1.alpha = 0;
+            if (_videoLoop.__video2 != undefined) _videoLoop.__video2.alpha = 0;
         }
     });
 }

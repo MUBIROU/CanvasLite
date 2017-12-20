@@ -214,7 +214,7 @@ end_bjornBitmap = (_bjornBitmap) => {
 waitURL = () => {
     var _regExp = new RegExp("bjornBitmap");
     var _choiceNum = Number(_choiceName.replace(_regExp, ""));
-    if ((_choiceNum == 1) || (_choiceNum == 2) || (_choiceNum == 3)) {
+    if ((_choiceNum == 1) || (_choiceNum == 2)) { //} || (_choiceNum == 3)) {
         var _folderName = "";
         if (_choiceNum < 100) {
             _folderName = "0"; //"0X"にする

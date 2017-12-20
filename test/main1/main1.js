@@ -565,7 +565,7 @@ startNothingTimer = () => {
 _nothingTimer = () => { //this == Window
     //console.log("B: " + _nothingTimerID);
     let _sec = Math.floor((new Date().getTime() - _nothingStart) / 1000);
-    if (10 < _sec ) { //<================================================10秒の場合
+    if (30 < _sec ) { //<================================================30秒の場合
         stopNothingTimer();
         showDialogBox();
         _about.alpha = 0;
@@ -611,8 +611,8 @@ stopNothingTimer = () => {
 showDialogBox = () => {
     if (_about == undefined) {
         _about = new toile.Bitmap("about.png");
-        _about.x = _canvas.width/2 - 542/2;
-        _about.y = _canvas.height/2 - 217/2 - 30;
+        //_about.x = _canvas.width/2 - 542/2;
+        //_about.y = _canvas.height/2 - 217/2 - 30;
         _canvas.addChild(_about);
         _canvas.addEventListener("mouseup", mouseup_canvas);
         allButtonMouseEvent(false);
