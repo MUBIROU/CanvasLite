@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T10:45
+ * 2017-12-25T10:49
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -545,7 +545,7 @@ toile.Canvas =
         //this＝Canvasオブジェクトとする為
         __mousedown_canvas_method(_e) { //_e: JavaScript.MouseEvent
             //ブラウザによっては「MouseEvent.offset○」?
-            alert("[" + _e.layerX + "," + _e.layerY + "],[" + _e.offsetLeft + "," + _e.layerY + "]");
+            alert("[" + _e.layerX + "," + _e.layerY + "],[" + _e.offsetLeft + "," + _e.layerY + "]" + " 001");
             if (! this.__isAndroid) { // for !Android
                 var _theMouseX = _e.layerX / this.__canvasScale;
                 var _theMouseY = _e.layerY / this.__canvasScale;
