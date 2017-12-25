@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T09:39
+ * 2017-12-25T09:44
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -133,7 +133,8 @@ toile.Canvas =
 
             this.__timerID = setInterval(this.__loop, this.__millisecPerFrame, this); //第3引数を利用
 
-            alert(navigator.platform);
+            //alert(navigator.platform); //Linux armv7l
+            alert(navigator.userAgent);
 
             if (!("ontouchstart" in window) || (navigator.platform.indexOf("Win") != -1)) { //for Linux/Mac/Windows
                 this.__canvas.addEventListener("mousedown", this.__mousedown_canvas, false);
