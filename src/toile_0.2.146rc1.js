@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T11:22
+ * 2017-12-25T11:30
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -369,7 +369,7 @@ toile.Canvas =
             } else if (_target.requestFullscreen) { // HTML5 Fullscreen API仕様
                 _target.requestFullscreen();
             } else {
-                alert("NOT SUPPORT FULLSCREEN MODE");
+                ("NOT SUPPORT FULLSCREEN MODE");
                 return;
             }
         }
@@ -547,20 +547,19 @@ toile.Canvas =
             //ブラウザによっては「MouseEvent.offset○」?
 
             //テスト中...
-            if (_e.changedTouches != undefined) {
-                alert(_e.changedTouches[0].pageX + "," + _e.changedTouches[0].pageY);
-            } else {
-                alert("Not Android");
-            }
+            // if (_e.changedTouches != undefined) {
+            //     alert(_e.changedTouches[0].pageX + "," + _e.changedTouches[0].pageY);
+            // } else {
+            //     alert("Not Android");
+            // }
             // alert("[" + _e.layerX + "," + _e.layerY + "],[" + _e.offsetLeft + "," + _e.offsetTop + "],[" + _e.clientX + "," + _e.clientY + "],[" + _e.changedTouches[0].pageX + "," + _e.changedTouches[0].pageY +  + "]" + "003");
-
 
             if (! this.__isAndroid) { // for !Android
                 var _theMouseX = _e.layerX / this.__canvasScale;
                 var _theMouseY = _e.layerY / this.__canvasScale;
             } else { // for Android
-                _theMouseX = _e.offsetLeft / this.__canvasScale;
-                _theMouseY = _e.offsetTop / this.__canvasScale;
+                _theMouseX = _e.changedTouches[0].pageX / this.__canvasScale;
+                _theMouseY = _e.changedTouches[0].pageY / this.__canvasScale;
             }
             this.__mouseX = _theMouseX;
             this.__mouseY = _theMouseY;
@@ -603,8 +602,8 @@ toile.Canvas =
                 var _theMouseX = _e.layerX / this.__canvasScale;
                 var _theMouseY = _e.layerY / this.__canvasScale;
             } else { // for Android
-                _theMouseX = _e.offsetLeft / this.__canvasScale;
-                _theMouseY = _e.offsetTop / this.__canvasScale;
+                _theMouseX = _e.changedTouches[0].pageX / this.__canvasScale;
+                _theMouseY = _e.changedTouches[0].pageY / this.__canvasScale;
             }
             this.__mouseX = _theMouseX;
             this.__mouseY = _theMouseY;
@@ -647,8 +646,8 @@ toile.Canvas =
                 this.__mouseX = _mouseEvent.layerX / this.__canvasScale;
                 this.__mouseY = _mouseEvent.layerY / this.__canvasScale;
             } else { // for Android
-                this.__mouseX = _mouseEvent.offsetLeft / this.__canvasScale;
-                this.__mouseY = _mouseEvent.offsetTop / this.__canvasScale;
+                this.__mouseX = _mouseEvent.changedTouches[0].pageX / this.__canvasScale;
+                this.__mouseY = _mouseEvent.changedTouches[0].pageY / this.__canvasScale;
             }
             this.__mousemoveHandler(this, _mouseEvent);
         }
