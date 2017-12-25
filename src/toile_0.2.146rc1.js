@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T11:19
+ * 2017-12-25T11:22
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -548,7 +548,7 @@ toile.Canvas =
 
             //テスト中...
             if (_e.changedTouches != undefined) {
-                alert(e.changedTouches[0].pageX + "," + _e.changedTouches[0].pageY);
+                alert(_e.changedTouches[0].pageX + "," + _e.changedTouches[0].pageY);
             } else {
                 alert("Not Android");
             }
