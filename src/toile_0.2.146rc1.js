@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T09:55
+ * 2017-12-25T10:10
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -94,6 +94,7 @@ toile.Canvas =
             this.__perspective = 5000; //1000～10000
             this.__rotateX = 0;
             this.__rotateY = 0;
+            this.__isAndroid = (navigator.userAgent.indexOf("Android") != -1);
 
             //private variables（初期値無）
             this.__canvas = undefined;
@@ -132,9 +133,6 @@ toile.Canvas =
             this.__context2D = this.__canvas.getContext("2d"); //create Context2D object
 
             this.__timerID = setInterval(this.__loop, this.__millisecPerFrame, this); //第3引数を利用
-
-            //alert(navigator.platform); //Linux armv7l
-            alert(navigator.userAgent.indexOf("Android") != -1);
 
             if (!("ontouchstart" in window) || (navigator.platform.indexOf("Win") != -1)) { //for Linux/Mac/Windows
                 this.__canvas.addEventListener("mousedown", this.__mousedown_canvas, false);
@@ -547,8 +545,15 @@ toile.Canvas =
         //this＝Canvasオブジェクトとする為
         __mousedown_canvas_method(_e) { //_e: JavaScript.MouseEvent
             //ブラウザによっては「MouseEvent.offset○」?
-            this.__mouseX = _e.layerX / this.__canvasScale;
-            this.__mouseY = _e.layerY / this.__canvasScale;
+            if (! this.__isAndroid) { // for !Android
+                var _theMouseX = _e.layerX / this.__canvasScale;
+                var _theMouseY = _e.layerY / this.__canvasScale;
+            } else { // for Android
+                _theMouseX = _e.offsetX / this.__canvasScale;
+                _theMouseY = _e.offsetY / this.__canvasScale;
+            }
+            this.__mouseX = _theMouseX;
+            this.__mouseY = _theMouseY;
 
             //Duplicate
             var _tempArray = this.__container_observerArray.concat();
@@ -560,8 +565,8 @@ toile.Canvas =
                 //only Bitmap & SpriteSheet
                 if (_theObserver.mouseHitTest != undefined) {
                     _theObserver.mouseHitTest(
-                        _e.layerX / this.__canvasScale,
-                        _e.layerY / this.__canvasScale,
+                        _theMouseX,
+                        _theMouseY,
                         this.__context2D,
                         this.__screenColor,
                         "mousedown"
@@ -584,8 +589,15 @@ toile.Canvas =
         //this＝Canvasオブジェクトとする為
         __mouseup_canvas_method(_e) {
             //ブラウザによっては「MouseEvent.offset○」?
-            this.__mouseX = _e.layerX / this.__canvasScale;
-            this.__mouseY = _e.layerY / this.__canvasScale;
+            if (! this.__isAndroid) { // for !Android
+                var _theMouseX = _e.layerX / this.__canvasScale;
+                var _theMouseY = _e.layerY / this.__canvasScale;
+            } else { // for Android
+                _theMouseX = _e.offsetX / this.__canvasScale;
+                _theMouseY = _e.offsetY / this.__canvasScale;
+            }
+            this.__mouseX = _theMouseX;
+            this.__mouseY = _theMouseY;
 
             //Duplicate
             var _tempArray = this.__container_observerArray.concat();
@@ -597,8 +609,8 @@ toile.Canvas =
                 //only Bitmap & SpriteSheet
                 if (_theObserver.mouseHitTest != undefined) {
                     _theObserver.mouseHitTest(
-                        _e.layerX / this.__canvasScale,
-                        _e.layerY / this.__canvasScale,
+                        _theMouseX,
+                        _theMouseY,
                         this.__context2D,
                         this.__screenColor,
                         "mouseup"
@@ -621,8 +633,13 @@ toile.Canvas =
         //this＝Canvasオブジェクトとする為
         __mousemove_canvas_method(_mouseEvent) {
             //ブラウザによっては「MouseEvent.offset○」?
-            this.__mouseX = _mouseEvent.layerX / this.__canvasScale;
-            this.__mouseY = _mouseEvent.layerY / this.__canvasScale;
+            if (! this.__isAndroid) { // for !Android
+                this.__mouseX = _mouseEvent.layerX / this.__canvasScale;
+                this.__mouseY = _mouseEvent.layerY / this.__canvasScale;
+            } else { // for Android
+                this.__mouseX = _mouseEvent.offsetX / this.__canvasScale;
+                this.__mouseY = _mouseEvent.offsetY / this.__canvasScale;
+            }
             this.__mousemoveHandler(this, _mouseEvent);
         }
 
