@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T11:15
+ * 2017-12-25T11:19
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -547,7 +547,11 @@ toile.Canvas =
             //ブラウザによっては「MouseEvent.offset○」?
 
             //テスト中...
-            alert(_e.changedTouches);
+            if (_e.changedTouches != undefined) {
+                alert(e.changedTouches[0].pageX + "," + _e.changedTouches[0].pageY);
+            } else {
+                alert("Not Android");
+            }
             // alert("[" + _e.layerX + "," + _e.layerY + "],[" + _e.offsetLeft + "," + _e.offsetTop + "],[" + _e.clientX + "," + _e.clientY + "],[" + _e.changedTouches[0].pageX + "," + _e.changedTouches[0].pageY +  + "]" + "003");
 
 
