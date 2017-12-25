@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T10:27
+ * 2017-12-25T10:45
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -545,13 +545,13 @@ toile.Canvas =
         //this＝Canvasオブジェクトとする為
         __mousedown_canvas_method(_e) { //_e: JavaScript.MouseEvent
             //ブラウザによっては「MouseEvent.offset○」?
-            alert("[" + _e.layerX + "," + _e.layerY + "],[" + _e.offsetX + "," + _e.layerY + "]");
+            alert("[" + _e.layerX + "," + _e.layerY + "],[" + _e.offsetLeft + "," + _e.layerY + "]");
             if (! this.__isAndroid) { // for !Android
                 var _theMouseX = _e.layerX / this.__canvasScale;
                 var _theMouseY = _e.layerY / this.__canvasScale;
             } else { // for Android
-                _theMouseX = _e.offsetX / this.__canvasScale;
-                _theMouseY = _e.offsetY / this.__canvasScale;
+                _theMouseX = _e.offsetLeft / this.__canvasScale;
+                _theMouseY = _e.offsetTop / this.__canvasScale;
             }
             this.__mouseX = _theMouseX;
             this.__mouseY = _theMouseY;
@@ -594,8 +594,8 @@ toile.Canvas =
                 var _theMouseX = _e.layerX / this.__canvasScale;
                 var _theMouseY = _e.layerY / this.__canvasScale;
             } else { // for Android
-                _theMouseX = _e.offsetX / this.__canvasScale;
-                _theMouseY = _e.offsetY / this.__canvasScale;
+                _theMouseX = _e.offsetLeft / this.__canvasScale;
+                _theMouseY = _e.offsetTop / this.__canvasScale;
             }
             this.__mouseX = _theMouseX;
             this.__mouseY = _theMouseY;
@@ -638,8 +638,8 @@ toile.Canvas =
                 this.__mouseX = _mouseEvent.layerX / this.__canvasScale;
                 this.__mouseY = _mouseEvent.layerY / this.__canvasScale;
             } else { // for Android
-                this.__mouseX = _mouseEvent.offsetX / this.__canvasScale;
-                this.__mouseY = _mouseEvent.offsetY / this.__canvasScale;
+                this.__mouseX = _mouseEvent.offsetLeft / this.__canvasScale;
+                this.__mouseY = _mouseEvent.offsetTop / this.__canvasScale;
             }
             this.__mousemoveHandler(this, _mouseEvent);
         }
