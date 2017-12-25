@@ -133,6 +133,8 @@ toile.Canvas =
 
             this.__timerID = setInterval(this.__loop, this.__millisecPerFrame, this); //第3引数を利用
 
+            alert(navigator.platform);
+
             if (!("ontouchstart" in window) || (navigator.platform.indexOf("Win") != -1)) { //for Linux/Mac/Windows
                 this.__canvas.addEventListener("mousedown", this.__mousedown_canvas, false);
                 this.__canvas.addEventListener("mouseup", this.__mouseup_canvas, false);
