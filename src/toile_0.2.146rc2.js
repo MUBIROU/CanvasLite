@@ -1,6 +1,6 @@
 /***************************************************************************
  * toile.js (ver.0.2 build 146 RC2)
- * 2017-12-26T14:26
+ * 2017-12-26T14:33
  * © 2017 Takashi Nishimura
  ***************************************************************************/
 
@@ -2318,7 +2318,7 @@ toile.Video =
             this.__video.src = this.__url;
             this.__video.loop = false;
             this.__video.autoplay = true;
-            this.__video.onclick = "this.play();return false;";
+            this.__video.onclick = "this.play();"; //return false;";
         }
 
         //===============
