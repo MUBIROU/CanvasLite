@@ -1,6 +1,6 @@
 # Reference Manual （リファレンスマニュアル）
 Version 0.2 Build 145 対応  
-© 2017 Takashi Nishimura
+© 2017-2018 Takashi Nishimura
 
 ### <b>INDEX</b>（クラス一覧）
 * [Bitmap class](#Bitmap): 画像を表示するためのクラス

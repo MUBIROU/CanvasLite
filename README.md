@@ -8,4 +8,4 @@
 * [Examples（動作確認）](https://github.com/TakashiNishimura/ToileJS/tree/master/examples)
 * Linux / Windows / macOS / iOS 対応（Android は近日対応予定）
 
-© 2017 Takashi Nishimura[.](https://takashinishimura.github.io/ToileJS/test)
+© 2017-2018 Takashi Nishimura
