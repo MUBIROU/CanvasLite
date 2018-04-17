@@ -31,4 +31,4 @@ ToileJS の開発（アップデート）時に動作確認をするためのサ
 |026|[RectとBitmap等の接触](https://takashinishimura.github.io/ToileJS/examples/html/026.html)|RectとBitmap/SpriteSheet/Rectの接触の検証（Consoleに出力）|
 |027|[正円と正円の接触](https://takashinishimura.github.io/ToileJS/examples/html/027.html)|正円（Bitmap/Circle）と正円の接触の検証（Consoleに出力）|
 
-© 2018 夢寐郎
+© 2017-2018 夢寐郎
