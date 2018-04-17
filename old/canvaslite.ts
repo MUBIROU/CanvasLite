@@ -4,7 +4,7 @@
  * for HTML5 Canvas
  * alpha vesion (build 181)
  * 2014-09-17T14:25
- * © 2014 Takashi Nishimura
+ * © 2014 夢寐郎
 ***************************/
 
 /*
