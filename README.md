@@ -6,6 +6,6 @@
 * HTML Canvas（2D）制御用の [ECMAScript 6](https://github.com/TakashiNishimura/HelloWorld/blob/master/languages/ECMAScript6/ECMAScript6_reference.md) + ライブラリ
 * [Reference Manual （リファレンスマニュアル）](https://github.com/TakashiNishimura/toile.js/blob/master/doc/reference.md)
 * [Examples（動作確認）](https://github.com/TakashiNishimura/ToileJS/tree/master/examples)
-* Linux / Windows / macOS / iOS 対応（Android は近日対応予定）
+* Linux / Windows / macOS / iOS 対応（Android は一部未対応）
 
 © 2017-2018 Takashi Nishimura
