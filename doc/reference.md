@@ -1,6 +1,6 @@
 # Reference Manual （リファレンスマニュアル）
 Version 0.2 Build 145 対応  
-© 2017-2018 MUBIROU
+© 2017-2018 vvestvillage
 
 ### <b>INDEX</b>（クラス一覧）
 * [Bitmap class](#Bitmap): 画像を表示するためのクラス
@@ -1004,7 +1004,7 @@ toile.jsを読み込む前、\<head>タグ内などに
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <script src="https://mubirou.github.io/ToileJS/toile.js"></script>
+        <script src="https://vvestvillage.github.io/ToileJS/toile.js"></script>
         <script src="main.js"></script>
     </head>
     <body>
