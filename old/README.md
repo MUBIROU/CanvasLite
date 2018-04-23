@@ -4,4 +4,4 @@
 * 動作保証・開発再開の予定なし
 * [ToileJS](https://github.com/TakashiNishimura/toile.js/blob/master/README.md) の利用を強く推奨
 
-© 2014 Takashi Nishimura
+© 2014 MUBIROU
