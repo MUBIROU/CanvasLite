@@ -1004,7 +1004,7 @@ toile.jsを読み込む前、\<head>タグ内などに
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <script src="https://TakashiNishimura.github.io/ToileJS/toile.js"></script>
+        <script src="https://mubirou.github.io/ToileJS/toile.js"></script>
         <script src="main.js"></script>
     </head>
     <body>
