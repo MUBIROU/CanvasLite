@@ -1,4 +1,4 @@
-本サイト（CanvasLiteJS examples）では以下の音を利用しています。
+本サイト（CanvasLite examples）では以下の音を利用しています。
 
 |ファイル名|ダウンロードサイト|
 |:--|:--|

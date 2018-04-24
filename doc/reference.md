@@ -1004,7 +1004,7 @@ canvaslite.jsを読み込む前、\<head>タグ内などに
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.js"></script>
+        <script src="https://vvestvillage.github.io/CanvasLite/canvaslite.js"></script>
         <script src="main.js"></script>
     </head>
     <body>
