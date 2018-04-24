@@ -1,5 +1,5 @@
 # Reference Manual （リファレンスマニュアル）
-Version 0.2 Build 145 対応  
+Version 0.2 Build 146 対応  
 © 2017-2018 vvestvillage
 
 ### <b>INDEX</b>（クラス一覧）
