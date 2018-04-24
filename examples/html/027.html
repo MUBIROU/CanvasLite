@@ -3,8 +3,8 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>027 正円と正円の接触 with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>027 正円と正円の接触 with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
@@ -12,7 +12,7 @@
                 _mouseX = _mouseY = -9e9;
                 
                 //Canvasクラス
-                var _canvas = new toile.Canvas("myCanvas");
+                var _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.enabledMouseMove(true);
@@ -21,20 +21,20 @@
                 _canvas.isBorder(true);
 
                 //Circle1
-                _circle1 = new toile.Circle(0,0,40);
+                _circle1 = new canvaslite.Circle(0,0,40);
                 _circle1.isFill(true);
 
                 //Circle2
-                _circle2 = new toile.Circle(466,200,100);
+                _circle2 = new canvaslite.Circle(466,200,100);
                 _circle2.isFill(true);
 
                 //Bitmap1
-                _bitmap1 = new toile.Bitmap("../png/circleSample.png");
+                _bitmap1 = new canvaslite.Bitmap("../png/circleSample.png");
                 _bitmap1.x = _bitmap1.y = 0;
                 _bitmap1.scaleX = _bitmap1.scaleY = 0.4;
 
                 //Bitmap2
-                _bitmap2 = new toile.Bitmap("../png/circleSample.png");
+                _bitmap2 = new canvaslite.Bitmap("../png/circleSample.png");
                 _bitmap2.x = 133;
                 _bitmap2.y = 200;
 

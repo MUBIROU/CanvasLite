@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>010 Breakout</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
@@ -14,7 +14,7 @@
 
                 _currentRacketX = undefined;
 
-                var _canvas = new toile.Canvas("myCanvas");
+                var _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.enabledMouseMove(true);
@@ -42,7 +42,7 @@
                     for (let j=0; j<7; j++) {
                         let _x = 0 + i * 80;
                         let _y = 30 + 30 * j;
-                        let _block = new toile.Rect(_x, _y, _x+80, _y+30);
+                        let _block = new canvaslite.Rect(_x, _y, _x+80, _y+30);
                         _block.isFill(true);
                         _block.fillColor = _colorArray[j];
                         _block.name = "x" + i + "y" + j;
@@ -53,13 +53,13 @@
 
                 //racket
                 _racketHight = 20;
-                _racket = new toile.Rect(0, _canvas.height-60, 80, _canvas.height-60+_racketHight);
+                _racket = new canvaslite.Rect(0, _canvas.height-60, 80, _canvas.height-60+_racketHight);
                 _racket.isFill(true);
                 _racket.fillColor = "66,66,66";
                 _canvas.addChild(_racket);
 
                 //ball
-                _ball = new toile.Rect(0,_canvas.height-60-30, 10, _canvas.height-80);
+                _ball = new canvaslite.Rect(0,_canvas.height-60-30, 10, _canvas.height-80);
                 _ball.isFill(true);
                 _ball.fillColor = "255,204,0";
                 _ball.lineColor = "0,0,0";

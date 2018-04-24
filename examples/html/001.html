@@ -2,20 +2,20 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>001 RECT時計 with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>001 RECT時計 with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
             function load_window() {
                 //canvas
-                _canvas = new toile.Canvas("myCanvas");
+                _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
 
                 //shortHand
-                _shortHand = new toile.Rect(0,0,24,112);
+                _shortHand = new canvaslite.Rect(0,0,24,112);
                 _shortHand.x = _canvas.width / 2 - 12;
                 _shortHand.y = _canvas.height / 2 - 100;
                 _shortHand.isFill(true);
@@ -27,7 +27,7 @@
                 _canvas.addChild(_shortHand);
 
                 //longHand
-                _longHand = new toile.Rect(0,0,16,178);
+                _longHand = new canvaslite.Rect(0,0,16,178);
                 _longHand.x = _canvas.width / 2 - 8;
                 _longHand.y = _canvas.height / 2 - 170;
                 _longHand.isFill(true);
@@ -39,7 +39,7 @@
                 _canvas.addChild(_longHand);
 
                 //secondHand
-                _secondHand = new toile.Rect(0,0,6,178);
+                _secondHand = new canvaslite.Rect(0,0,6,178);
                 _secondHand.x = _canvas.width / 2 - 3;
                 _secondHand.y = _canvas.height / 2 - 175;
                 _secondHand.isFill(true);

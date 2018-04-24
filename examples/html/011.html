@@ -2,8 +2,8 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>011 ブロック崩し2 with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>011 ブロック崩し2 with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
@@ -16,7 +16,7 @@
                 _currentRacketX = undefined;
 
                 //Canvasクラス
-                var _canvas = new toile.Canvas("myCanvas");
+                var _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.enabledMouseMove(true);
@@ -43,7 +43,7 @@
                     for (let j=0; j<4; j++) {
                         let _x = 40 + i * 60;
                         let _y = 70 + j * 60;
-                        let _block = new toile.Circle(_x-30, _y-30, 30);
+                        let _block = new canvaslite.Circle(_x-30, _y-30, 30);
                         _block.isFill(true);
                         _block.lineWidth = 3;
                         _block.lineColor = "0,0,0";
@@ -57,13 +57,13 @@
 
                 //racket
                 _racketHight = 20;
-                _racket = new toile.Rect(0, _canvas.height-60, 80, _canvas.height-60+_racketHight);
+                _racket = new canvaslite.Rect(0, _canvas.height-60, 80, _canvas.height-60+_racketHight);
                 _racket.isFill(true);
                 _racket.fillColor = "99,99,99";
                 _canvas.addChild(_racket);
 
                 //ball
-                _ball = new toile.Circle(0, _racket.y-20, 20);
+                _ball = new canvaslite.Circle(0, _racket.y-20, 20);
                 _ball.isFill(true);
                 _ball.fillColor = "255,255,255";
                 _ball.lineWidth = 3;

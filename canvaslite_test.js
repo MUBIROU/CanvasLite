@@ -1,11 +1,11 @@
 /***************************************************************************
- * toile.js (ver.0.2 build 146 RC1)
- * 2017-12-25T11:34
+ * canvaslite.js (ver.0.2 build 146 RC2)
+ * 2017-12-26T14:33
  * © 2017 vvestvillage
  ***************************************************************************/
 
-if (toile != window) { //名前空間を省略可能にするために
-    var toile = {}; //namescape(省略をしない前提であればconstにします)
+if (canvaslite != window) { //名前空間を省略可能にするために
+    var canvaslite = {}; //namescape(省略をしない前提であればconstにします)
 }
 
 /***************************************************************************
@@ -57,7 +57,7 @@ if (toile != window) { //名前空間を省略可能にするために
  *
  ***************************************************************************/
 
-toile.AbstractCanvas =
+canvaslite.AbstractCanvas =
     class AbstractCanvas { //for observer pattern
         addChild(_superDisplay) {
             throw new Error("must be implemented in the subclass");
@@ -70,8 +70,8 @@ toile.AbstractCanvas =
         }
     };
 
-toile.Canvas =
-    class Canvas extends toile.AbstractCanvas { //Contener（委譲）を利用
+canvaslite.Canvas =
+    class Canvas extends canvaslite.AbstractCanvas { //Contener（委譲）を利用
         //static constant
         static get ENTER_FRAME() { return "enterframe"; }
         static get KEY_DOWN() { return "keydown"; }
@@ -142,7 +142,7 @@ toile.Canvas =
                 this.__canvas.addEventListener("touchend", this.__mouseup_canvas, false);
             }
 
-            this.__container = new toile.Container(); //委譲
+            this.__container = new canvaslite.Container(); //委譲
             this.__container.__name = "root";
         }
 
@@ -150,7 +150,7 @@ toile.Canvas =
         // public method
         //===============
         addChild(_superDisplay) { //= addObserver()
-            if (_superDisplay instanceof toile.SpriteSheet) { //for SpriteSheet
+            if (_superDisplay instanceof canvaslite.SpriteSheet) { //for SpriteSheet
                 var _spriteSheet = _superDisplay;
                 if (_spriteSheet.fps == undefined) { //SpriteSheet.fpsが未設定の場合…
                     _spriteSheet.fps = this.fps; //SpriteSheet.fpsをCanvas.fpsと同じにする
@@ -379,7 +379,7 @@ toile.Canvas =
                 throw new Error('only "jpeg" or "png"');
             }
             var _dataURL = _canvas.__canvas.toDataURL("imgage/" + _type);
-            return new toile.Bitmap(_dataURL, _startX, _startY, _endX, _endY);
+            return new canvaslite.Bitmap(_dataURL, _startX, _startY, _endX, _endY);
         }
 
         setDepthIndex(_superDisplay, _depth) {
@@ -746,7 +746,7 @@ toile.Canvas =
  *
  ***************************************************************************/
 
-toile.SuperDisplay =
+canvaslite.SuperDisplay =
     class SuperDisplay { //super class
         constructor() {
             //private variables (There are defaults)
@@ -767,7 +767,7 @@ toile.SuperDisplay =
         //===============
         hitTest(_target) { //Bitmap,Line,Rect,SpriteSheet,Videoに対応
             //for this
-            if (!(this instanceof toile.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
+            if (!(this instanceof canvaslite.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
                 var _this_Top = this.__y;
                 var _this_Bottom = _this_Top + this.__height;
                 var _this_Left = this.__x;
@@ -780,10 +780,10 @@ toile.SuperDisplay =
             }
 
             //for target
-            if (!(_target instanceof toile.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
+            if (!(_target instanceof canvaslite.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
                 var _target_Top = _target.y;
                 var _target_Left = _target.x;
-                if (!(_target instanceof toile.Rect)) {
+                if (!(_target instanceof canvaslite.Rect)) {
                     var _target_Bottom = _target_Top + _target.height * _target.scaleY;
                     var _target_Right = _target_Left + _target.width * _target.scaleX;
                 } else { //when _target is Rect...
@@ -809,8 +809,8 @@ toile.SuperDisplay =
 
         hitTestCircle(_target) {
             //for this
-            if (!(this instanceof toile.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
-                if (!(_target instanceof toile.Rect)) {
+            if (!(this instanceof canvaslite.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
+                if (!(_target instanceof canvaslite.Rect)) {
                     var _thisRadius = this.width * this.scaleX / 2;
                 } else { //when _target is Rect...
                     var _thisRadius = this.width / 2;
@@ -824,7 +824,7 @@ toile.SuperDisplay =
             }
 
             //for _target
-            if (!(_target instanceof toile.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
+            if (!(_target instanceof canvaslite.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
                 var _targetRadius = _target.width / 2;
                 var _targetX = _target.x + _targetRadius;
                 var _targetY = _target.y + _targetRadius;
@@ -1001,8 +1001,8 @@ toile.SuperDisplay =
  *
  ***************************************************************************/
 
-toile.Container =
-    class Container extends toile.SuperDisplay { //observer pattern
+canvaslite.Container =
+    class Container extends canvaslite.SuperDisplay { //observer pattern
         constructor() {
             super();
             this.__observerArray = [];
@@ -1138,8 +1138,8 @@ toile.Container =
  *
  ***************************************************************************/
 
-toile.Bitmap =
-    class Bitmap extends toile.SuperDisplay { //observer pattern
+canvaslite.Bitmap =
+    class Bitmap extends canvaslite.SuperDisplay { //observer pattern
         // static constant
         static get LOAD() { return "load"; }
         static get MOUSE_DOWN() { return "mousedown"; }
@@ -1485,8 +1485,8 @@ toile.Bitmap =
  *
  ***************************************************************************/
 
-toile.Circle =
-    class Circle extends toile.SuperDisplay { //observer pattern
+canvaslite.Circle =
+    class Circle extends canvaslite.SuperDisplay { //observer pattern
         constructor(_x = 0, _y = 0, _radius = 100) {
             super();
 
@@ -1648,8 +1648,8 @@ toile.Circle =
  *
  ***************************************************************************/
 
-toile.Line =
-    class Line extends toile.SuperDisplay { //observer pattern
+canvaslite.Line =
+    class Line extends canvaslite.SuperDisplay { //observer pattern
         constructor(_startX = 0, _startY = 0, _endX = 100, _endY = 100) {
             super();
 
@@ -1829,8 +1829,8 @@ toile.Line =
  *
  ***************************************************************************/
 
-toile.Rect =
-    class Rect extends toile.Line { //observer pattern
+canvaslite.Rect =
+    class Rect extends canvaslite.Line { //observer pattern
         constructor(_startX = 0, _startY = 0, _endX = 100, _endY = 100) {
             super();
 
@@ -1943,8 +1943,8 @@ toile.Rect =
  *
  ***************************************************************************/
 
-toile.SpriteSheet =
-    class SpriteSheet extends toile.Bitmap { //observer pattern
+canvaslite.SpriteSheet =
+    class SpriteSheet extends canvaslite.Bitmap { //observer pattern
         constructor(_path, _jsonPath = "") {
             super(_path);
 
@@ -2164,8 +2164,8 @@ toile.SpriteSheet =
  *
  ***************************************************************************/
 
-toile.Text =
-    class Text extends toile.SuperDisplay { //observer pattern
+canvaslite.Text =
+    class Text extends canvaslite.SuperDisplay { //observer pattern
         constructor(_text) {
             super();
 
@@ -2296,8 +2296,8 @@ toile.Text =
  *
  ***************************************************************************/
 
-toile.Video =
-    class Video extends toile.SuperDisplay { //observer pattern
+canvaslite.Video =
+    class Video extends canvaslite.SuperDisplay { //observer pattern
         constructor(_path, _originWidth, _originHeight) {
             super();
 
@@ -2318,6 +2318,7 @@ toile.Video =
             this.__video.src = this.__url;
             this.__video.loop = false;
             this.__video.autoplay = true;
+            this.__video.onclick = "this.play();"; //return false;";
         }
 
         //===============
@@ -2419,7 +2420,7 @@ toile.Video =
  *
  ***************************************************************************/
 
-toile.Sound =
+canvaslite.Sound =
     class Sound {
         constructor(_path) {
             //private variables (There are defaults)

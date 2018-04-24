@@ -2,28 +2,28 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>021 SpriteSheet JPG with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>021 SpriteSheet JPG with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             window.addEventListener("load", load_window, false);
 
             function load_window() {
                 //Canvas Class
-                _canvas = new toile.Canvas("myCanvas");
+                _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
                 _canvas.fps = 30;
 
                 //SpriteSheet1
-                _spriteSheet1 = new toile.SpriteSheet("../jpg/run.jpg", "../json/run.json");
+                _spriteSheet1 = new canvaslite.SpriteSheet("../jpg/run.jpg", "../json/run.json");
                 _spriteSheet1.x = 25;
                 _spriteSheet1.y = 30;
                 _spriteSheet1.fps = 2;
                 _canvas.addChild(_spriteSheet1);
 
                 //SpriteSheet2
-                _spriteSheet2 = new toile.SpriteSheet("../jpg/run.jpg", "../json/run.json");
+                _spriteSheet2 = new canvaslite.SpriteSheet("../jpg/run.jpg", "../json/run.json");
                 _spriteSheet2.x = 305; 
                 _spriteSheet2.y = 20;
                 _spriteSheet2.scale = 1.2;
@@ -32,10 +32,10 @@
                 _canvas.addChild(_spriteSheet2);
 
                 //Button
-                _minusBtn = new toile.Bitmap("../png/minus.png");
-                _pauseBtn = new toile.Bitmap("../png/pause.png");
-                _playBtn = new toile.Bitmap("../png/play.png");
-                _plusBtn = new toile.Bitmap("../png/plus.png");
+                _minusBtn = new canvaslite.Bitmap("../png/minus.png");
+                _pauseBtn = new canvaslite.Bitmap("../png/pause.png");
+                _playBtn = new canvaslite.Bitmap("../png/play.png");
+                _plusBtn = new canvaslite.Bitmap("../png/plus.png");
 
                 _minusBtn.y = _pauseBtn.y = _playBtn.y = _plusBtn.y = 545;
                 _minusBtn.x = 305;

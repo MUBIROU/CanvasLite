@@ -2,8 +2,8 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>003 出前 with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>003 出前 with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
@@ -12,7 +12,7 @@
                 _saraNum = 45;
 
                 //Canvas Class
-                _canvas = new toile.Canvas("myCanvas");
+                _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas); 
                 _canvas.addEventListener("mousedown", mousedown_canvas);
                 _canvas.addEventListener("mousemove", mousemove_canvas);
@@ -21,14 +21,14 @@
                 _canvas.isBorder(true);
 
                 //demae
-                _demae = new toile.Bitmap("../png/demae.png");
+                _demae = new canvaslite.Bitmap("../png/demae.png");
                 _demae.x = 330;
                 _demae.y = _canvas.height - 200;
                 _canvas.addChild(_demae);
 
                 //soba1
                 _sobaArray = [];
-                _soba1 = new toile.Bitmap("../png/soba.png");
+                _soba1 = new canvaslite.Bitmap("../png/soba.png");
                 _soba1.x = 330;
                 _soba1.y = _canvas.height - 182;
                 _sobaArray.push(_soba1);
@@ -36,7 +36,7 @@
 
                 //soba2...
                 for (let i=1; i<_saraNum; i++) {
-                    let _theSoba = new toile.Bitmap("../png/soba.png");
+                    let _theSoba = new canvaslite.Bitmap("../png/soba.png");
                     _theSoba.x = 330;
                     _theSoba.y = _soba1.y - (10 * i);
                     _sobaArray.push(_theSoba);

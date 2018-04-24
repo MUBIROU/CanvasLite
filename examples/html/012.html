@@ -2,14 +2,14 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
-    <title>012 宇宙飛行 with ToileJS</title>
-    <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+    <title>012 宇宙飛行 with CanvasLiteJS</title>
+    <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
     <script>
         // main.js
         addEventListener("load", load_window, false);
 
         function load_window() {
-            var _canvas = new toile.Canvas("myCanvas");
+            var _canvas = new canvaslite.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
             _canvas.enabledContextMenu(false);
             _canvas.fps = 60;
@@ -52,7 +52,7 @@
             _canvas.drawScreen("#222222");
         }
 
-        class Star extends toile.Circle {
+        class Star extends canvaslite.Circle {
           constructor() {
             super();
         

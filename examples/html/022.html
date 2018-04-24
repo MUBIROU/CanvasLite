@@ -2,14 +2,14 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>022 KeyCode with ToileJS</title>
-    <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+    <title>022 KeyCode with CanvasLiteJS</title>
+    <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
     <script>
         addEventListener("load", load_window, false);
 
         function load_window() {
             //Canvas
-            _canvas = new toile.Canvas("myCanvas");
+            _canvas = new canvaslite.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
             _canvas.addEventListener("keydown", keydown_canvas);
             _canvas.addEventListener("keyup", keyup_canvas);
@@ -17,7 +17,7 @@
             _canvas.isBorder(true);
 
             //bitmap
-            _hhkb = new toile.Bitmap("../jpg/hhkb.jpg");
+            _hhkb = new canvaslite.Bitmap("../jpg/hhkb.jpg");
             _hhkb.x = 50;
             _hhkb.y = 400;
             _hhkb.rotate = -30;
@@ -26,7 +26,7 @@
 
             //Text
             _webfont = "../ttf/RictyDiminishedDiscord-Regular.ttf";
-            _text = new toile.Text("please key down");
+            _text = new canvaslite.Text("please key down");
             _text.addWebFont("font01", _webfont, "truetype");
             _text.font =  "font01";
             _text.align = "center"; //"center","right","start"

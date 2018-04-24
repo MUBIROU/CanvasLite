@@ -2,13 +2,13 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>023 ScreenShot with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>023 ScreenShot with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
             function load_window() {
-                _canvas = new toile.Canvas("myCanvas");
+                _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousedown", mousedown_canavas);
                 _canvas.enabledContextMenu(false);
@@ -17,11 +17,11 @@
                 _screenShot = undefined;
 
                 //Background
-                _background = new toile.Bitmap("../jpg/img063_01.jpg");
+                _background = new canvaslite.Bitmap("../jpg/img063_01.jpg");
                 _canvas.addChild(_background);
 
                 //Eye
-                _eye = new toile.Bitmap("../png/eye.png");
+                _eye = new canvaslite.Bitmap("../png/eye.png");
                 _canvas.addChild(_eye);
 
                 _blockArray = [];

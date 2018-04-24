@@ -1,11 +1,11 @@
 /***************************************************************************
- * toile.js (ver.0.2 build 141)
- * 2017-09-15T14:49
+ * canvaslite.js (ver.0.2 build 145)
+ * 2017-12-09T23:13
  * © 2017 vvestvillage
  ***************************************************************************/
 
-if (toile != window) { //名前空間を省略可能にするために
-    var toile = {}; //namescape(省略をしない前提であればconstにします)
+if (canvaslite != window) { //名前空間を省略可能にするために
+    var canvaslite = {}; //namescape(省略をしない前提であればconstにします)
 }
 
 /***************************************************************************
@@ -57,7 +57,7 @@ if (toile != window) { //名前空間を省略可能にするために
  *
  ***************************************************************************/
 
-toile.AbstractCanvas =
+canvaslite.AbstractCanvas =
     class AbstractCanvas { //for observer pattern
         addChild(_superDisplay) {
             throw new Error("must be implemented in the subclass");
@@ -70,8 +70,8 @@ toile.AbstractCanvas =
         }
     };
 
-toile.Canvas =
-    class Canvas extends toile.AbstractCanvas { //Contener（委譲）を利用
+canvaslite.Canvas =
+    class Canvas extends canvaslite.AbstractCanvas { //Contener（委譲）を利用
         //static constant
         static get ENTER_FRAME() { return "enterframe"; }
         static get KEY_DOWN() { return "keydown"; }
@@ -141,7 +141,7 @@ toile.Canvas =
                 this.__canvas.addEventListener("touchend", this.__mouseup_canvas, false);
             }
 
-            this.__container = new toile.Container(); //委譲
+            this.__container = new canvaslite.Container(); //委譲
             this.__container.__name = "root";
         }
 
@@ -149,7 +149,7 @@ toile.Canvas =
         // public method
         //===============
         addChild(_superDisplay) { //= addObserver()
-            if (_superDisplay instanceof toile.SpriteSheet) { //for SpriteSheet
+            if (_superDisplay instanceof canvaslite.SpriteSheet) { //for SpriteSheet
                 var _spriteSheet = _superDisplay;
                 if (_spriteSheet.fps == undefined) { //SpriteSheet.fpsが未設定の場合…
                     _spriteSheet.fps = this.fps; //SpriteSheet.fpsをCanvas.fpsと同じにする
@@ -378,7 +378,7 @@ toile.Canvas =
                 throw new Error('only "jpeg" or "png"');
             }
             var _dataURL = _canvas.__canvas.toDataURL("imgage/" + _type);
-            return new toile.Bitmap(_dataURL, _startX, _startY, _endX, _endY);
+            return new canvaslite.Bitmap(_dataURL, _startX, _startY, _endX, _endY);
         }
 
         setDepthIndex(_superDisplay, _depth) {
@@ -729,7 +729,7 @@ toile.Canvas =
  *
  ***************************************************************************/
 
-toile.SuperDisplay =
+canvaslite.SuperDisplay =
     class SuperDisplay { //super class
         constructor() {
             //private variables (There are defaults)
@@ -750,7 +750,7 @@ toile.SuperDisplay =
         //===============
         hitTest(_target) { //Bitmap,Line,Rect,SpriteSheet,Videoに対応
             //for this
-            if (!(this instanceof toile.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
+            if (!(this instanceof canvaslite.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
                 var _this_Top = this.__y;
                 var _this_Bottom = _this_Top + this.__height;
                 var _this_Left = this.__x;
@@ -763,11 +763,16 @@ toile.SuperDisplay =
             }
 
             //for target
-            if (!(_target instanceof toile.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
+            if (!(_target instanceof canvaslite.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
                 var _target_Top = _target.y;
-                var _target_Bottom = _target_Top + _target.height;
                 var _target_Left = _target.x;
-                var _target_Right = _target_Left + _target.width;
+                if (!(_target instanceof canvaslite.Rect)) {
+                    var _target_Bottom = _target_Top + _target.height * _target.scaleY;
+                    var _target_Right = _target_Left + _target.width * _target.scaleX;
+                } else { //when _target is Rect...
+                    var _target_Bottom = _target_Top + _target.height;
+                    var _target_Right = _target_Left + _target.width;
+                }
             } else { //when _target is Circle...
                 var _target_Top = _target.__centerY - _target.__radius;
                 _target_Bottom = _target.__centerY + _target.__radius;
@@ -787,8 +792,12 @@ toile.SuperDisplay =
 
         hitTestCircle(_target) {
             //for this
-            if (!(this instanceof toile.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
-                var _thisRadius = this.width * this.scaleX / 2;
+            if (!(this instanceof canvaslite.Circle)) { //thisがCircle以外（Bitmap,SpriteSheet）の場合…
+                if (!(_target instanceof canvaslite.Rect)) {
+                    var _thisRadius = this.width * this.scaleX / 2;
+                } else { //when _target is Rect...
+                    var _thisRadius = this.width / 2;
+                }
                 var _thisX = this.__x + _thisRadius;
                 var _thisY = this.__y + _thisRadius;
             } else { //when this is Circle...
@@ -798,7 +807,7 @@ toile.SuperDisplay =
             }
 
             //for _target
-            if (!(_target instanceof toile.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
+            if (!(_target instanceof canvaslite.Circle)) { //_targetがCircle以外（Bitmap,SpriteSheet）の場合…
                 var _targetRadius = _target.width / 2;
                 var _targetX = _target.x + _targetRadius;
                 var _targetY = _target.y + _targetRadius;
@@ -975,8 +984,8 @@ toile.SuperDisplay =
  *
  ***************************************************************************/
 
-toile.Container =
-    class Container extends toile.SuperDisplay { //observer pattern
+canvaslite.Container =
+    class Container extends canvaslite.SuperDisplay { //observer pattern
         constructor() {
             super();
             this.__observerArray = [];
@@ -1112,8 +1121,8 @@ toile.Container =
  *
  ***************************************************************************/
 
-toile.Bitmap =
-    class Bitmap extends toile.SuperDisplay { //observer pattern
+canvaslite.Bitmap =
+    class Bitmap extends canvaslite.SuperDisplay { //observer pattern
         // static constant
         static get LOAD() { return "load"; }
         static get MOUSE_DOWN() { return "mousedown"; }
@@ -1229,49 +1238,65 @@ toile.Bitmap =
             // ①マウスカーソルの位置がBitmap/SpriteSheetの矩形「内」の場合…
             //================================================================
             if ((_mouseX < _right) && (_left < _mouseX) && (_top < _mouseY) && (_mouseY < _bottom)) {
+                //Bitmap/SpriteSheetのうちCanvasの背景色と同じ領域はヒット領域から除外する為
+                var _imageData = _context2D.getImageData(_mouseX, _mouseY, 1, 1);
+                var _r = _imageData.data[0];
+                var _g = _imageData.data[1];
+                var _b = _imageData.data[2];
+                var _a = _imageData.data[3];
+                var _rColor = parseInt(_color.substr(1, 2), 16); //ex.255
+                var _gColor = parseInt(_color.substr(3, 2), 16); //ex.204
+                var _bColor = parseInt(_color.substr(5, 2), 16); //ex.0
+                var _theColor = [_rColor, _gColor, _bColor, 255];
 
                 //-----------------------------------
                 //（1）ヒット領域が「長方形」の場合…
                 //-----------------------------------
                 if (!this.__mouseHitTestIsCircle) {
-                    //Bitmap/SpriteSheetのうちCanvasの背景色と同じ領域はヒット領域から除外する為
-                    var _imageData = _context2D.getImageData(_mouseX, _mouseY, 1, 1);
-                    var _r = _imageData.data[0];
-                    var _g = _imageData.data[1];
-                    var _b = _imageData.data[2];
-                    var _a = _imageData.data[3];
-                    var _rColor = parseInt(_color.substr(1, 2), 16); //ex.255
-                    var _gColor = parseInt(_color.substr(3, 2), 16); //ex.204
-                    var _bColor = parseInt(_color.substr(5, 2), 16); //ex.0
-                    var _theColor = [_rColor, _gColor, _bColor, 255];
 
                     //Bitmap/SpriteSheetのうちTranceparent（透明）領域以外のところをヒットした場合…
                     if ((_r != _theColor[0]) || (_g != _theColor[1]) || (_b != _theColor[2]) || (_a != _theColor[3])) {
                         this.__commonHit(_event); //領域内でヒット（mousedown）
 
                     } else {
-                        if (this.__mouseUpOutsideHandler != undefined) { //2017-01-06
-                            this.__mouseUpOutsideHandler(this); //2016-12-26
+                        if (this.__isChoice) {
+                            if (this.__mouseUpOutsideHandler != undefined) {
+                                this.__mouseUpOutsideHandler(this);
+                                this.__isChoice = false;
+                            }
                         }
                     }
 
-                    //---------------------------------
-                    //（2）ヒット領域が「正円」の場合…
-                    //---------------------------------
+                //---------------------------------
+                //（2）ヒット領域が「正円」の場合…
+                //---------------------------------
                 } else { //if (this.__mouseHitTestIsCircle) {...
-                    var _radius = _obj.width * this.scaleX / 2;
-                    var _centerX = this.x + _radius;
-                    var _centerY = this.y + _radius;
-                    var _disX = _mouseX - _centerX;
-                    var _disY = _mouseY - _centerY;
 
-                    // Bitmap/SpriteSheetのうち、円形をヒットした場合…
-                    if (Math.sqrt((_disX * _disX) + (_disY * _disY)) <= _radius) { //ピタゴラス（三平方）の定理
-                        this.__commonHit(_event); //領域内でヒット（mousedown）
+                    if ((_r != _theColor[0]) || (_g != _theColor[1]) || (_b != _theColor[2]) || (_a != _theColor[3])) {
+                        var _radius = _obj.width * this.scaleX / 2;
+                        var _centerX = this.x + _radius;
+                        var _centerY = this.y + _radius;
+                        var _disX = _mouseX - _centerX;
+                        var _disY = _mouseY - _centerY;
+    
+                        // Bitmap/SpriteSheetのうち、円形をヒットした場合…
+                        if (Math.sqrt((_disX * _disX) + (_disY * _disY)) <= _radius) { //ピタゴラス（三平方）の定理
+                            this.__commonHit(_event); //領域内でヒット（mousedown）
+                        } else {
+                            if (this.__isChoice) {
+                                if (this.__mouseUpOutsideHandler != undefined) {
+                                    this.__mouseUpOutsideHandler(this);
+                                    this.__isChoice = false;
+                                }
+                            }
+                            this.__commonHitOutsideArea(); //領域外でヒット
+                        }
+
                     } else {
                         if (this.__isChoice) {
                             if (this.__mouseUpOutsideHandler != undefined) {
                                 this.__mouseUpOutsideHandler(this);
+                                this.__isChoice = false;
                             }
                         }
                         this.__commonHitOutsideArea(); //領域外でヒット
@@ -1293,8 +1318,8 @@ toile.Bitmap =
                             this.__isMouseDown = false;
                         }
                     } else {
-                        if (this.__mouseUpOutsideHandler != undefined) {
-                            if (this.__isChoice) {
+                        if (this.__isChoice) {
+                            if (this.__mouseUpOutsideHandler != undefined) {
                                 this.__mouseUpOutsideHandler(this);
                                 this.__isChoice = false;
                             }
@@ -1443,8 +1468,8 @@ toile.Bitmap =
  *
  ***************************************************************************/
 
-toile.Circle =
-    class Circle extends toile.SuperDisplay { //observer pattern
+canvaslite.Circle =
+    class Circle extends canvaslite.SuperDisplay { //observer pattern
         constructor(_x = 0, _y = 0, _radius = 100) {
             super();
 
@@ -1606,8 +1631,8 @@ toile.Circle =
  *
  ***************************************************************************/
 
-toile.Line =
-    class Line extends toile.SuperDisplay { //observer pattern
+canvaslite.Line =
+    class Line extends canvaslite.SuperDisplay { //observer pattern
         constructor(_startX = 0, _startY = 0, _endX = 100, _endY = 100) {
             super();
 
@@ -1787,8 +1812,8 @@ toile.Line =
  *
  ***************************************************************************/
 
-toile.Rect =
-    class Rect extends toile.Line { //observer pattern
+canvaslite.Rect =
+    class Rect extends canvaslite.Line { //observer pattern
         constructor(_startX = 0, _startY = 0, _endX = 100, _endY = 100) {
             super();
 
@@ -1901,8 +1926,8 @@ toile.Rect =
  *
  ***************************************************************************/
 
-toile.SpriteSheet =
-    class SpriteSheet extends toile.Bitmap { //observer pattern
+canvaslite.SpriteSheet =
+    class SpriteSheet extends canvaslite.Bitmap { //observer pattern
         constructor(_path, _jsonPath = "") {
             super(_path);
 
@@ -1914,7 +1939,7 @@ toile.SpriteSheet =
             this.__isLoaded = false; //__readystatechange_request_methodを1度だけにしたい為
 
             //private variables（初期値無）
-            this.__count = undefined;
+            this.__frameCount = undefined;
             this.__framesArray = undefined;
             this.__imageURL = undefined;
             this.__jsonURL = undefined;
@@ -1955,9 +1980,9 @@ toile.SpriteSheet =
             }
             this.__currentframe = _frame;
             if (_frame != 0) {
-                this.__count = _frame - 1;
+                this.__frameCount = _frame - 1;
             } else {
-                this.__count = 0;
+                this.__frameCount = 0;
             }
             this.play();
         }
@@ -1968,9 +1993,9 @@ toile.SpriteSheet =
             }
             this.__currentframe = _frame;
             if (_frame != 0) {
-                this.__count = _frame - 1;
+                this.__frameCount = _frame - 1;
             } else {
-                this.__count = 0;
+                this.__frameCount = 0;
             }
             this.stop();
         }
@@ -1994,9 +2019,9 @@ toile.SpriteSheet =
             //必ずCanvas.fpsの回数分実行される（SpriteSheet.fpsに依存しない）
             if (this.__isReloadPermitted) {
                 if (this.__state == "play") {
-                    this.__count = (++this.__count) % this.__totalframes;
-                    if (this.__count != 0) {
-                        this.__currentframe = this.__count + 1;
+                    this.__frameCount = (++this.__frameCount) % this.__totalframes;
+                    if (this.__frameCount != 0) {
+                        this.__currentframe = this.__frameCount + 1;
                     } else {
                         this.__currentframe = 1;
                     }
@@ -2011,7 +2036,7 @@ toile.SpriteSheet =
                 if (this.__framesArray == undefined) {
                     return;
                 }
-                var _theFrameObj = this.__framesArray[this.__count];
+                var _theFrameObj = this.__framesArray[this.__frameCount];
                 var _obj = {};
                 _obj.type = "SpriteSheet";
                 _obj.frameX = _theFrameObj.frame.x;
@@ -2057,7 +2082,7 @@ toile.SpriteSheet =
                         var _json = JSON.parse(this.__request.responseText);
                         this.__framesArray = _json.frames;
                         this.__totalframes = this.__framesArray.length;
-                        this.__count = 0; //Initialization!
+                        this.__frameCount = 0; //Initialization!
 
                         if (this.__loadHandler != undefined) {
                             this.getData(); //これが無いと"LOAD"時にwidth等の値が取得できない
@@ -2122,8 +2147,8 @@ toile.SpriteSheet =
  *
  ***************************************************************************/
 
-toile.Text =
-    class Text extends toile.SuperDisplay { //observer pattern
+canvaslite.Text =
+    class Text extends canvaslite.SuperDisplay { //observer pattern
         constructor(_text) {
             super();
 
@@ -2134,7 +2159,7 @@ toile.Text =
             this.__align = "left"; //"start","center","left","right"
             this.__baseline = "top"; //"top","middle","bottom"
             this.__color = "0,0,0";
-            this.__font = "san-serif"; //serif,san-serif,cursive,fantasy,monospace
+            this.__font = "san-serif"; //serif,san-serif,cursive,fantasy,monospace...
             this.__scale = 1;
             this.__size = 10;
         }
@@ -2196,7 +2221,7 @@ toile.Text =
             this.__color = _rColor + "," + _gColor + "," + _bColor;
         }
 
-        //serif,san-serif,cursive,fantasy,monospace
+        //serif,san-serif,cursive,fantasy,monospace...
         get font() { return this.__font; }
         set font(_newValue) { this.__font = _newValue; }
 
@@ -2254,8 +2279,8 @@ toile.Text =
  *
  ***************************************************************************/
 
-toile.Video =
-    class Video extends toile.SuperDisplay { //observer pattern
+canvaslite.Video =
+    class Video extends canvaslite.SuperDisplay { //observer pattern
         constructor(_path, _originWidth, _originHeight) {
             super();
 
@@ -2330,7 +2355,6 @@ toile.Video =
             throw new Error("duration can't be changed");
         }
 
-        //get height() { return this.__height; }
         get height() { return this.__height; }
         set height(_newValue) {
             this.__height = _newValue;
@@ -2378,7 +2402,7 @@ toile.Video =
  *
  ***************************************************************************/
 
-toile.Sound =
+canvaslite.Sound =
     class Sound {
         constructor(_path) {
             //private variables (There are defaults)
@@ -2422,16 +2446,6 @@ toile.Sound =
 
         play() {
             this.__audio.play();
-        }
-
-        removeEventListener(_event) {
-            switch (_event) {
-                case "ended":
-                    this.__endedHandler = undefined;
-                    break;
-                default:
-                    throw new Error("Sound.removeEventListener()");
-            }
         }
 
         stop() {

@@ -2,14 +2,14 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>018 Digital Clock with ToileJS</title>
-    <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+    <title>018 Digital Clock with CanvasLiteJS</title>
+    <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
     <script>
         addEventListener("load", load_window, false);
 
         function load_window() { // HTMLのロードが完了したら…
             //Canvasの生成
-            var _canvas = new toile.Canvas("myCanvas");
+            var _canvas = new canvaslite.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
             _canvas.enabledContextMenu(false);
             _canvas.fps = 1000;
@@ -17,8 +17,8 @@
             //Textの生成
             _webfont = "../ttf/LCDPHONE.TTF";
 
-            _text1 = new toile.Text("");
-            _text2 = new toile.Text("");
+            _text1 = new canvaslite.Text("");
+            _text2 = new canvaslite.Text("");
 
             _text1.addWebFont("font01", _webfont, "truetype");
             _text2.addWebFont("font01", _webfont, "truetype");

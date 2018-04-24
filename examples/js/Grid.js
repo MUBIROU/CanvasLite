@@ -108,7 +108,7 @@ class Grid {
         //Line Horizontal
         for (let i=1; i<this.__blockNumV; i++) {
             let _theObject = new Object();
-            let _theLine = new toile.Line(0, this.__blockHeight*i, this.__canvas.width, this.__blockHeight*i);
+            let _theLine = new canvaslite.Line(0, this.__blockHeight*i, this.__canvas.width, this.__blockHeight*i);
             _theLine.lineAlpha = this.__lineAlpha;
             _theLine.lineColor = this.__lineColor;
             _theLine.lineWidth = this.__lineWidth;
@@ -121,7 +121,7 @@ class Grid {
         //Line Vertical
         for (let i=this.__blockNumH-1; i>0; i--) {
             let _theObject = new Object();
-            let _theLine = new toile.Line(this.__blockWidth*i, 0, this.__blockWidth*i, this.__canvas.height);
+            let _theLine = new canvaslite.Line(this.__blockWidth*i, 0, this.__blockWidth*i, this.__canvas.height);
             _theLine.lineAlpha = this.__lineAlpha;
             _theLine.lineColor = this.__lineColor;
             _theLine.lineWidth = this.__lineWidth;

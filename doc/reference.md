@@ -57,7 +57,7 @@ Bitmap -> SuperDisplay
 * [Bitmap.MOUSE_UP_OUTSIDE](#BitmapMOUSE_UP_OUTSIDE): マウスダウン後に外でマウスボタンを離したら
 
 ### Constructor（コンストラクタ）
-new toile.Bitmap(arg1 [,arg2,arg3,arg4,arg5])
+new canvaslite.Bitmap(arg1 [,arg2,arg3,arg4,arg5])
 
 ### Arguments（引数）
 arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。  
@@ -70,9 +70,9 @@ arg5: 元画像中の表示させたい垂直座標の終了位置。省略可�
 HTML Canvas上に画像（PNG/JPEG）を表示するためのクラス。  
 指定したPNG/JPEGファイルを使った、Bitmapクラスを生成します。  
 第2～5引数を使って、クロップ（トリミング）することも可能。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Bitmap(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
@@ -83,10 +83,10 @@ toile.jsを読み込む前、\<head>タグ内などに
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("sample.jpg");
+	var _bitmap = new canvaslite.Bitmap("sample.jpg");
 	_canvas.addChild(_bitmap);
 }
 
@@ -125,10 +125,10 @@ arg3: オプション。衝突判定（ヒットテスト）を正円で行う�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("sample.jpg");
+	var _bitmap = new canvaslite.Bitmap("sample.jpg");
 	_bitmap.addEventListener("mousedown", mousedown_bitmap);
 	_canvas.addChild(_bitmap);
 }
@@ -158,7 +158,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.alpha = 0.5;
 ```
 
@@ -179,15 +179,15 @@ SuperDisplayクラスから継承するプロパティ（読取り専用）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //ビットマップを収めるコンテナ
+	var _container = new canvaslite.Container(); //ビットマップを収めるコンテナ
 	_container.x = 100;
 	_container.y = 100;
 	_canvas.addChild(_container);
 
-	var _bitmap = new toile.Bitmap("sample.png");
+	var _bitmap = new canvaslite.Bitmap("sample.png");
 	_bitmap.x = 50;
 	_bitmap.y = 50;
 	_container.addChild(_bitmap); //コンテナにビットマップを収める
@@ -233,10 +233,10 @@ Bitmap.heightの値を変更すると、Bitmap.scaleの値はnullになります
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("sample.png");
+	var _bitmap = new canvaslite.Bitmap("sample.png");
 	_bitmap.addEventListener("load", load_bitmap);
 	_canvas.addChild(_bitmap);
 	console.log(_bitmap.width, _bitmap.height);
@@ -278,15 +278,15 @@ arg: ビットマップとの衝突を調べる表示オブジェクト（矩形
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
 
-	_bitmap1 = new toile.Bitmap("sample.jpg");
+	_bitmap1 = new canvaslite.Bitmap("sample.jpg");
 	_canvas.addChild(this._bitmap1);
 
-	_bitmap2 = new toile.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
 	_canvas.addChild(this._bitmap2);
 
     _mouseX = _mouseY = 0;
@@ -333,15 +333,15 @@ arg: ビットマップとの衝突を調べる表示オブジェクト（正円
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
 
-	_bitmap1 = new toile.Bitmap("circle.png");
+	_bitmap1 = new canvaslite.Bitmap("circle.png");
 	_canvas.addChild(this._bitmap1);
 
-	_bitmap2 = new toile.Bitmap("circle.png");
+	_bitmap2 = new canvaslite.Bitmap("circle.png");
 	_canvas.addChild(this._bitmap2);
 
     _mouseX = _mouseY = 0;
@@ -379,7 +379,7 @@ HTML Canvas対応のJavaScriptとして予め用意されている、Imageオブ
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 console.log(_bitmap.image); //=> <img src="sample.jpg">
 console.log(_bitmap.image.src); //=> "http://xxx/sample.jpg"
 ```
@@ -394,7 +394,7 @@ Bitmap.LOAD
 クラス変数。  
 指定したPNG/JPEGファイルがロードされたら実行したい...という場合に使用します。  
 Bitmap.addEventListener()でイベントを指定する際に使用します。  
-toile.Bitmap.LOADの代わりに、文字列で"load"と指定しても同じ処理が行われます。  
+canvaslite.Bitmap.LOADの代わりに、文字列で"load"と指定しても同じ処理が行われます。  
 ロードが完了しないと取得できないwidth、heightの値を調べる際などに利用します。
 
 ### Example（例）
@@ -403,12 +403,12 @@ toile.Bitmap.LOADの代わりに、文字列で"load"と指定しても同じ処
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("sample.jpg");
+	var _bitmap = new canvaslite.Bitmap("sample.jpg");
 	console.log(_bitmap.width, _bitmap.height); //=> NaN NaN（ロード完了前なので取得不可）
-	_bitmap.addEventListener(toile.Bitmap.LOAD, load_bitmap);
+	_bitmap.addEventListener(canvaslite.Bitmap.LOAD, load_bitmap);
 	//_bitmap.addEventListener("load", load_bitmap); //上記と同じ処理をします
 	_canvas.addChild(_bitmap);
 }
@@ -434,7 +434,7 @@ Bitmap.MOUSE_DOWN
 
 ### Description（説明）
 クラス変数。  
-toile.Bitmap.MOUSE_DOWN の代わりに、文字列で "mousedown" と指定しても同じ処理が行われます。  
+canvaslite.Bitmap.MOUSE_DOWN の代わりに、文字列で "mousedown" と指定しても同じ処理が行われます。  
 Bitmapインスタンスをマウスダウンしたら実行したい...という場合に使用します。  
 Bitmap.addEventListener()でイベントを指定する際に使用します。  
 その場合、第3引数をtrueにすると、正円形で衝突判定を行い、falsae（省略可）にすると矩形で衝突判定を行います。  
@@ -447,11 +447,11 @@ Bitmap.addEventListener()でイベントを指定する際に使用します。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("circle.png"); //正円形のボタンが描かれた画像
-	_bitmap.addEventListener(toile.Bitmap.MOUSE_DOWN, mousedown_bitmap, true);
+	var _bitmap = new canvaslite.Bitmap("circle.png"); //正円形のボタンが描かれた画像
+	_bitmap.addEventListener(canvaslite.Bitmap.MOUSE_DOWN, mousedown_bitmap, true);
 	//_bitmap.addEventListener("mousedown", mousedown_bitmap, true); //上記と同じ処理
 	_canvas.addChild(_bitmap);
 }
@@ -477,7 +477,7 @@ Bitmap.MOUSE_UP
 
 ### Description（説明）
 クラス変数。  
-toile.Bitmap.MOUSE_UPの代わりに、文字列で"mouseup"と指定しても同じ処理が行われます。  
+canvaslite.Bitmap.MOUSE_UPの代わりに、文字列で"mouseup"と指定しても同じ処理が行われます。  
 Bitmapインスタンスをマウスダウン後、同じBitmapインスタンス上でマウスボタンを離した場合に実行したい...といった時に使用します。  
 マウスダウン後に、同じBitmapインスタンス「外」の上でマウスボタンを離した場合は、ボタンとして反応しません（Bitmap.MOUSE_UP_OUTSIDEを参照）。  
 Bitmap.addEventListener()でイベントを指定する際に使用します。  
@@ -491,11 +491,11 @@ Bitmap.addEventListener()でイベントを指定する際に使用します。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("circle.png"); //正円形のボタンが描かれた画像
-	_bitmap.addEventListener(toile.Bitmap.MOUSE_UP, mouseup_bitmap, true);
+	var _bitmap = new canvaslite.Bitmap("circle.png"); //正円形のボタンが描かれた画像
+	_bitmap.addEventListener(canvaslite.Bitmap.MOUSE_UP, mouseup_bitmap, true);
 	//_bitmap.addEventListener("mouseup", mouseup_bitmap, true); //上記と同じ処理
 	_canvas.addChild(_bitmap);
 }
@@ -521,7 +521,7 @@ Bitmap.MOUSE_UP_OUTSIDE
 
 ### Description（説明）
 クラス変数。  
-toile.Bitmap.MOUSE_UP_OUTSIDEの代わりに、文字列で"mouseupoutside"と指定しても同処理が行われます。  
+canvaslite.Bitmap.MOUSE_UP_OUTSIDEの代わりに、文字列で"mouseupoutside"と指定しても同処理が行われます。  
 Bitmapインスタンスをマウスダウン後、同じBitmapインスタンスの「外」でマウスボタンを離した場合に実行したい...といった時に使用します。  
 Bitmap.addEventListener()でイベントを指定する際に使用します。  
 その際、第3引数をfalseにした場合、canvasObject.drawScreen()の引数で指定する色と同じ色の箇所は、衝突判定でfalse扱いとなり、ボタンとして反応しませんので、少しでも異なる色にするなど工夫して下さい。  
@@ -537,15 +537,15 @@ function load_window() {
 	_isMove = false;
 	_disX = _disY = 0;
 
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
 
-	_bitmap = new toile.Bitmap("circle.png"); //正円形のボタンが描かれた画像
+	_bitmap = new canvaslite.Bitmap("circle.png"); //正円形のボタンが描かれた画像
 	_bitmap.addEventListener("mousedown", mousedown_bitmap);
 	_bitmap.addEventListener("mouseup", mouseup_bitmap);
-	_bitmap.addEventListener(toile.Bitmap.MOUSE_UP_OUTSIDE, mouseup_bitmap);
+	_bitmap.addEventListener(canvaslite.Bitmap.MOUSE_UP_OUTSIDE, mouseup_bitmap);
 	//_bitmap.addEventListener("mouseupoutside", mouseup_bitmap); //上記と同じ処理
 	_canvas.addChild(_bitmap);
 
@@ -592,7 +592,7 @@ Bitmapインスタンスのインスタンス名。初期値はundefined。
 
 ### Example（例）
 ```
-var _background = new toile.Bitmap("sample.jpg");
+var _background = new canvaslite.Bitmap("sample.jpg");
 _background.name = "background";
 console.log(_background.name); //->"background"
 ```
@@ -614,14 +614,14 @@ Bitmapが配置されているのコンテナを参照。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container01 = new toile.Container();
+	var _container01 = new canvaslite.Container();
 	_container01.name = "container01";
 	_canvas.addChild(_container01);
 
-	var _bitmap01 = new toile.Bitmap("sample.jpg");
+	var _bitmap01 = new canvaslite.Bitmap("sample.jpg");
 	_bitmap01.name = "bitmap01";
 	_container01.addChild(_bitmap01);
 
@@ -650,7 +650,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.regX = 25;
 _bitmap.regY = 25;
 _bitmap.rotate = 45;
@@ -673,7 +673,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.regX = 25;
 _bitmap.regY = 25;
 _bitmap.rotate = 45;
@@ -705,10 +705,10 @@ Bitmap.MOUSE_DOWN、Bitmap.MOUSE_UP、Bitmap.MOUSE_UP_OUTSIDE、Bitmap.LOADで�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("sample.jpg");
+	var _bitmap = new canvaslite.Bitmap("sample.jpg");
 	_bitmap.addEventListener("mousedown", mousedown_bitmap);
 	_canvas.addChild(_bitmap);
 }
@@ -740,7 +740,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.regX = 25;
 _bitmap.regY = 25;
 _bitmap.rotate = 45;
@@ -762,7 +762,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.rotateRadian = Math.PI/4;
 console.log(_bitmap.rotate); //=> 45（度）
 console.log(_bitmap.rotateRadian); //=> 0.7853981633974483（ラジアン）
@@ -787,7 +787,7 @@ Bitmap.scaleを変更するとBitmap.scaleXも同じ値になります。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.scale = 2; //水平垂直方向ともに2倍にする
 ```
 
@@ -810,7 +810,7 @@ Bitmap.scaleXの値を変更するとBitmap.scaleの値はnullになります。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.scaleX = 2; //水平方向のみ2倍に拡大
 ```
 
@@ -833,7 +833,7 @@ Bitmap.scaleYの値を変更するとBitmap.scaleの値はnullになります。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.scaleY = 2; //垂直方向のみ2倍に拡大。
 ```
 
@@ -858,10 +858,10 @@ Bitmap.widthの値を変更すると、Bitmap.scaleの値はnullになります�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _bitmap = new toile.Bitmap("sample.png");
+	var _bitmap = new canvaslite.Bitmap("sample.png");
 	_bitmap.addEventListener("load", load_bitmap);
 	_canvas.addChild(_bitmap);
 	console.log(_bitmap.width, _bitmap.height);
@@ -893,7 +893,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.x = 10;
 ```
 
@@ -913,7 +913,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _bitmap.y = 10;
 ```
 
@@ -975,9 +975,9 @@ Bitmap.x
 * [Canvas.MOUSE_UP](#CanvasMOUSE_UP): 押していたマウスボタンを離したら（touchend）
 
 ### Constructor（コンストラクタ）
-①new toile.Canvas(arg)  
+①new canvaslite.Canvas(arg)  
 または  
-②new toile.Canvas(arg1, arg2)
+②new canvaslite.Canvas(arg1, arg2)
 
 ### Arguments（引数）
 ①の場合...  
@@ -990,9 +990,9 @@ arg2: Canvasの高さ（ピクセル）
 ### Description（説明）
 HTML Canvasを利用するために必須のクラスです。  
 new Canvas(550, 400) のように指定する場合、HTMLドキュメントには\<canvas>要素が不要です。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Canvas(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
@@ -1004,7 +1004,7 @@ toile.jsを読み込む前、\<head>タグ内などに
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <script src="https://vvestvillage.github.io/ToileJS/toile.js"></script>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.js"></script>
         <script src="main.js"></script>
     </head>
     <body>
@@ -1018,7 +1018,7 @@ toile.jsを読み込む前、\<head>タグ内などに
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 }
 
@@ -1044,8 +1044,8 @@ arg: 表示オブジェクト（Bitmap/Circle/Container/Line/Rect/SpriteSheet/Te
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
-var _bitmap = new toile.Bitmap("sample.jpg");
+var _canvas = new canvaslite.Canvas("myCanvas");
+var _bitmap = new canvaslite.Bitmap("sample.jpg");
 _canvas.addChild(_bitmap);
 ```
 
@@ -1077,7 +1077,7 @@ arg2: イベントが発生した際に呼び出す関数。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
@@ -1110,7 +1110,7 @@ HTML Canvasの外枠（border）の色。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.isBorder(true);
 _canvas.borderWidth = 5; //線幅5pxの場合
 _canvas.borderColor = "#ff0000"; //赤の場合
@@ -1133,7 +1133,7 @@ HTML Canvasの外枠（border）の線の太さ。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.isBorder(true);
 _canvas.borderWidth = 5; //線幅5pxの場合
 _canvas.borderColor = "#ff0000"; //赤の場合
@@ -1160,7 +1160,7 @@ HTML Canvasの2Dコンテキスト（CanvasRenderingContext2Dオブジェクト�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-    _canvas = new toile.Canvas("myCanvas");
+    _canvas = new canvaslite.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.isBorder(true);
 }
@@ -1203,7 +1203,7 @@ Canvas.fpsで設定した値は、パフォーマンスを維持するために�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.fps = 60;
 	console.log(_canvas.fps); //=> 59
@@ -1237,7 +1237,7 @@ HTML Canvas上でのマウスカーソルの形状（初期設定は"default"）
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.cursor = "dummy.png";
 }
@@ -1274,10 +1274,10 @@ Videoオブジェクトは、Container.deleteChilde()およびundefinedの代入
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_bitmap = new toile.Bitmap("sample.jpg");
+	_bitmap = new canvaslite.Bitmap("sample.jpg");
 	_bitmap.addEventListener("mousedown", mousedown_bitmap);
 	_canvas.addChild(_bitmap);
 }
@@ -1318,7 +1318,7 @@ HTML Canvasを扱う上で必須のメソッドです。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 }
 
@@ -1353,7 +1353,7 @@ arg: Canvas上で右クリックの処理を有効にしたい場合true（初�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.enabledContextMenu(false);
 }
@@ -1387,7 +1387,7 @@ arg: mousemoveイベント（モバイルの場合touchmove）を有効にした
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
@@ -1416,7 +1416,7 @@ Canvas.ENTER_FRAME
 クラス変数。  
 フレームが更新された際に（フレームレートに依存）、任意の処理を実行したい場合に使用します。  
 Canvas.addEventListener() でイベントを指定する際に使用します。  
-toile.Canvas.ENTER_FRAMEの代わりに文字列で"enterframe"と指定しても同じ処理が行われます。
+canvaslite.Canvas.ENTER_FRAMEの代わりに文字列で"enterframe"と指定しても同じ処理が行われます。
 
 ### Example（例）
 ```
@@ -1424,8 +1424,8 @@ toile.Canvas.ENTER_FRAMEの代わりに文字列で"enterframe"と指定して�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
-	_canvas.addEventListener(toile.Canvas.ENTER_FRAME, enterframe_canvas);
+	_canvas = new canvaslite.Canvas("myCanvas");
+	_canvas.addEventListener(canvaslite.Canvas.ENTER_FRAME, enterframe_canvas);
 	//_canvas.addEventListener("enterframe", enterframe_canvas); //上記と同じ処理
 }
 
@@ -1482,7 +1482,7 @@ Canvas.addEventListener("enterframe",...で呼び出されるリスナー関数�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.fps = 60;
 	console.log(_canvas.fps); //=> 59
@@ -1520,11 +1520,11 @@ arg: 調べたい深度（数値）。最下位層は0。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_bitmap1 = new toile.Bitmap("sample.png");
-	_bitmap2 = new toile.Bitmap("sample.png");
-	_bitmap3 = new toile.Bitmap("sample.png");
+	_bitmap1 = new canvaslite.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
+	_bitmap3 = new canvaslite.Bitmap("sample.png");
 	_bitmap1.name = "sprite1";
 	_bitmap2.name = "sprite2";
 	_bitmap3.name = "sprite3";
@@ -1564,11 +1564,11 @@ arg: 深度を調べたい表示オブジェクト。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_bitmap1 = new toile.Bitmap("sample.png");
-	_bitmap2 = new toile.Bitmap("sample.png");
-	_bitmap3 = new toile.Bitmap("sample.png");
+	_bitmap1 = new canvaslite.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
+	_bitmap3 = new canvaslite.Bitmap("sample.png");
 	_canvas.addChild(_bitmap1);
 	_canvas.addChild(_bitmap2);
 	_canvas.addChild(_bitmap3);
@@ -1605,11 +1605,11 @@ canvasObject.getDepthMax()
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_bitmap1 = new toile.Bitmap("sample.png");
-	_bitmap2 = new toile.Bitmap("sample.png");
-	_bitmap3 = new toile.Bitmap("sample.png");
+	_bitmap1 = new canvaslite.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
+	_bitmap3 = new canvaslite.Bitmap("sample.png");
 	_canvas.addChild(_bitmap1);
 	_canvas.addChild(_bitmap2);
 	_canvas.addChild(_bitmap3);
@@ -1640,7 +1640,7 @@ canvasObject.height
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas(550,400);
+	_canvas = new canvaslite.Canvas(550,400);
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	console.log(_canvas.height); //=> 400
 }
@@ -1670,7 +1670,7 @@ trueの場合の初期値は、線幅1pxの黒（CSSで言えばcanvas.style.bor
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.isBorder(true);
 _canvas.borderWidth = 5; //線幅5pxの場合
 _canvas.borderColor = "#ff0000"; //赤の場合
@@ -1701,12 +1701,12 @@ arg: Canvasをブラウザ全面に表示するか否かのブール値。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.isBorder(true);
 	_isFullscreen = false;
 
-	_fitScreenBtn = new toile.Bitmap("fitScreen.png");
+	_fitScreenBtn = new canvaslite.Bitmap("fitScreen.png");
 	_fitScreenBtn.x = _canvas.width - 40;
 	_fitScreenBtn.y = _canvas.height - 40;
 	_fitScreenBtn.addEventListener("mousedown", mousedown_fullscreen);
@@ -1740,7 +1740,7 @@ Canvas.KEY_DOWN
 ### Description（説明）
 クラス変数。キーボードのキーを押した際に、任意の処理を実行したい場合に使用します。  
 Canvas.addEventListener() でイベントを指定する際に使用します。  
-toile.Canvas.KEY_DOWNの代わりに文字列で"keydown"と指定しても同じ処理が行われます。
+canvaslite.Canvas.KEY_DOWNの代わりに文字列で"keydown"と指定しても同じ処理が行われます。
 
 ### Example（例）
 ```
@@ -1748,9 +1748,9 @@ toile.Canvas.KEY_DOWNの代わりに文字列で"keydown"と指定しても同�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_canvas.addEventListener(toile.Canvas.KEY_DOWN, keydown_canvas);
+	_canvas.addEventListener(canvaslite.Canvas.KEY_DOWN, keydown_canvas);
 	//_canvas.addEventListener("keydown", keydown_canvas); //上記と同じ処理
 }
 
@@ -1777,7 +1777,7 @@ Canvas.KEY_UP
 クラス変数。  
 キーボードの押したキーを離した際に、任意の処理を実行したい場合に使用します。  
 Canvas.addEventListener() でイベントを指定する際に使用します。  
-toile.Canvas.KEY_UPの代わりに文字列で"keyup"と指定しても同じ処理が行われます。
+canvaslite.Canvas.KEY_UPの代わりに文字列で"keyup"と指定しても同じ処理が行われます。
 
 ### Example（例）
 ```
@@ -1785,9 +1785,9 @@ toile.Canvas.KEY_UPの代わりに文字列で"keyup"と指定しても同じ処
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_canvas.addEventListener(toile.Canvas.KEY_UP, keyup_canvas);
+	_canvas.addEventListener(canvaslite.Canvas.KEY_UP, keyup_canvas);
 	//_canvas.addEventListener("keyup", keyup_canvas); //上記と同じ処理
 }
 
@@ -1823,9 +1823,9 @@ Canvas.MOUSE_DOWNの代わりに文字列で"mousedown"と指定しても同じ�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_canvas.addEventListener(toile.Canvas.MOUSE_DOWN, mousedown_canvas);
+	_canvas.addEventListener(canvaslite.Canvas.MOUSE_DOWN, mousedown_canvas);
 	//_canvas.addEventListener("mousedown", mousedown_canvas); //上記と同じ処理
 }
 
@@ -1862,9 +1862,9 @@ Canvas.MOUSE_MOVEの代わりに文字列で"mousemove"と指定しても同じ�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_canvas.addEventListener(toile.Canvas.MOUSE_MOVE, mousemove_canvas);
+	_canvas.addEventListener(canvaslite.Canvas.MOUSE_MOVE, mousemove_canvas);
 	//_canvas.addEventListener("mousemove", mousemove_canvas); //上記と同じ処理
 	_canvas.enabledMouseMove(true);
 }
@@ -1901,9 +1901,9 @@ Canvas.MOUSE_UPの代わりに文字列で"mouseup"と指定しても同じ処�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_canvas.addEventListener(toile.Canvas.MOUSE_UP, mouseup_canvas);
+	_canvas.addEventListener(canvaslite.Canvas.MOUSE_UP, mouseup_canvas);
 	//_canvas.addEventListener("mouseup", mouseup_canvas); //上記と同じ処理
 }
 
@@ -1936,7 +1936,7 @@ canvasObject.mouseX
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
@@ -1971,7 +1971,7 @@ canvasObject.mouseY
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
@@ -2012,7 +2012,7 @@ Canvas.ENTER_FRAME、Canvas.KEY_DOWN、Canvas.KEY_UP、Canvas.MOUSE_DOWN、Canva
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousedown", mousedown_canvas);
 }
@@ -2083,7 +2083,7 @@ iOS、Androidには非対応。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousedown", mousedown_canvas);
 	_canvas.isBorder(true);
@@ -2138,16 +2138,16 @@ window.addEventListener("load", load_window, false);
 // HTMLのロードが完了したら…
 function load_window() {
 	//Canvasの生成
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousedown", mousedown_canavas);
 
 	//1つ目の画像
-	_image1 = new toile.Bitmap("image1.jpg");
+	_image1 = new canvaslite.Bitmap("image1.jpg");
 	_canvas.addChild(_image1);
 
 	//２つ目の画像
-	_image2 = new toile.Bitmap("image2.png");
+	_image2 = new canvaslite.Bitmap("image2.png");
 	_canvas.addChild(_image2);
 }
 
@@ -2230,11 +2230,11 @@ canvasObject.stopMouseDownEvent()
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_bitmap1 = new toile.Bitmap("sample.png");
-	_bitmap2 = new toile.Bitmap("sample.png");
-	_bitmap3 = new toile.Bitmap("sample.png");
+	_bitmap1 = new canvaslite.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
+	_bitmap3 = new canvaslite.Bitmap("sample.png");
 	_bitmap1.name = "sprite1";
 	_bitmap2.name = "sprite2";
 	_bitmap3.name = "sprite3";
@@ -2285,11 +2285,11 @@ canvasObject.stopMouseUpEvent()
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
-	_bitmap1 = new toile.Bitmap("sample.png");
-	_bitmap2 = new toile.Bitmap("sample.png");
-	_bitmap3 = new toile.Bitmap("sample.png");
+	_bitmap1 = new canvaslite.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
+	_bitmap3 = new canvaslite.Bitmap("sample.png");
 	_bitmap1.name = "sprite1";
 	_bitmap2.name = "sprite2";
 	_bitmap3.name = "sprite3";
@@ -2334,7 +2334,7 @@ Canvasの回転時のパースの度合い。初期値は5000。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-    _canvas = new toile.Canvas("myCanvas");
+    _canvas = new canvaslite.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.isBorder(true);
     _canvas.perspective = 1000;
@@ -2367,7 +2367,7 @@ X軸を中心にCanvas全体を回転。初期値は0（度）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-    _canvas = new toile.Canvas("myCanvas");
+    _canvas = new canvaslite.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.isBorder(true);
     _canvas.perspective = 1000;
@@ -2410,7 +2410,7 @@ Y軸を中心にCanvas全体を回転。初期値は0（度）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-    _canvas = new toile.Canvas("myCanvas");
+    _canvas = new canvaslite.Canvas("myCanvas");
     _canvas.addEventListener("enterframe", enterframe_canvas);
     _canvas.isBorder(true);
     _canvas.perspective = 1000;
@@ -2451,7 +2451,7 @@ canvasObject.width
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas(550,400);
+	_canvas = new canvaslite.Canvas(550,400);
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	console.log(_canvas.width); //=> 550
 }
@@ -2497,7 +2497,7 @@ Circle -> SuperDisplay
 * [Circle.y](#Circley): 左上の垂直座標位置
 
 ### Constructor（コンストラクタ）
-new toile.Circle(arg1, arg2, arg3)
+new canvaslite.Circle(arg1, arg2, arg3)
 
 ### Arguments（引数）
 arg1: 正円を囲む矩形の左上の水平座標（初期値0）  
@@ -2507,9 +2507,9 @@ arg3: 正円の半径（ピクセル／初期値100）
 ### Description（説明）
 HTML Canvas上に正円を描くためのクラス。  
 正円を囲む矩形の左上の位置、半径を指定して正円を生成します。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Circle(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
@@ -2520,10 +2520,10 @@ toile.jsを読み込む前、\<head>タグ内などに
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100, 100, 50);
+	_circle = new canvaslite.Circle(100, 100, 50);
 	_canvas.addChild(_circle);
 }
 
@@ -2554,10 +2554,10 @@ Circle.fillAlphaやCircle.fillAlphaの値に加えて適用されます。
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100,100,50);
+	_circle = new canvaslite.Circle(100,100,50);
 	_canvas.addChild(_circle);
 	_circle.isFill(true);
 	_circle.fillColor = "255,0,0";
@@ -2591,11 +2591,11 @@ Circle.x + Circle.radiusと同じ値です。初期値は100。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.isBorder(true);
 
-	_circle = new toile.Circle(100, 100, 20);
+	_circle = new canvaslite.Circle(100, 100, 20);
 	_canvas.addChild(_circle);
 
 	_speedX = 10;
@@ -2664,10 +2664,10 @@ SuperDisplayクラスから継承するプロパティ（読取り専用）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //Circleを収めるコンテナ
+	var _container = new canvaslite.Container(); //Circleを収めるコンテナ
 	_container.x = 50;
 	_container.y = 50;
 	_container.regX = 30;
@@ -2675,7 +2675,7 @@ function load_window() {
 	_container.rotate = 30;
 	_canvas.addChild(_container);
 
-	var _circle = new toile.Circle(40,40,30);
+	var _circle = new canvaslite.Circle(40,40,30);
 	_container.addChild(_circle); //コンテナにCircleを収める
 
 	console.log(_circle.globalX, _circle.globalY);
@@ -2721,10 +2721,10 @@ Circle.Alphaの値は、このCircle.fillAlphaの値に加えて適用されま�
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100,100,50);
+	_circle = new canvaslite.Circle(100,100,50);
 	_canvas.addChild(_circle);
 	_circle.isFill(true);
 	_circle.fillColor = "255,0,0";
@@ -2757,10 +2757,10 @@ RGB各色を0〜255で指定。例えば、赤の場合は"255,0,0"とします�
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100,100,50);
+	_circle = new canvaslite.Circle(100,100,50);
 	_canvas.addChild(_circle);
 	_circle.isFill(true);
 	_circle.fillColor = "255,0,0"; //赤
@@ -2808,21 +2808,21 @@ arg: Circleオブジェクトと重なっているかを調べる「正円形」
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
 
 	//動く円
-	_circleMove = new toile.Circle(0,0,30);
+	_circleMove = new canvaslite.Circle(0,0,30);
 	_canvas.addChild(_circleMove);
 
 	//静止した円（Circleオブジェクト）
-	_circleFix = new toile.Circle(400,100,50);
+	_circleFix = new canvaslite.Circle(400,100,50);
 	_canvas.addChild(_circleFix);
 
 	//静止した円（Bitmapオブジェクト）
-	_bitmapFix = new toile.Bitmap("circle.png");
+	_bitmapFix = new canvaslite.Bitmap("circle.png");
 	_bitmapFix.x = _bitmapFix.y = 50;
 	_canvas.addChild(_bitmapFix);
 
@@ -2873,10 +2873,10 @@ trueにした場合の初期値の色は、"255,255,255"（白）。
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100,100,50);
+	_circle = new canvaslite.Circle(100,100,50);
 	_canvas.addChild(_circle);
 	_circle.isFill(true);
 	_circle.fillColor = "255,0,0"; //赤
@@ -2909,10 +2909,10 @@ Circle.Alphaの値は、このCircle.lineAlphaの値に加えて適用されま�
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100,100,50);
+	_circle = new canvaslite.Circle(100,100,50);
 	_canvas.addChild(_circle);
 	_circle.isFill(true);
 	_circle.fillColor = "255,0,0";
@@ -2946,10 +2946,10 @@ RGB各色を0〜255で指定。例えば、赤の場合は"255,0,0"とします�
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100,100,50);
+	_circle = new canvaslite.Circle(100,100,50);
 	_canvas.addChild(_circle);
 	_circle.lineColor = "255,0,0"; //赤
 	_circle.lineWidth = 20;
@@ -2982,10 +2982,10 @@ Circleオブジェクトの線の太さ（1.0〜）。初期値は1。
 addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(100,100,50);
+	_circle = new canvaslite.Circle(100,100,50);
 	_canvas.addChild(_circle);
 	_circle.lineWidth = 20;
 }
@@ -3011,7 +3011,7 @@ Circleインスタンスのインスタンス名。初期値はundefined。
 
 ### Example（例）
 ```
-var _circle = new toile.Circle(100,100,50);
+var _circle = new canvaslite.Circle(100,100,50);
 _circle.name = "circle01";
 console.log(_circle.name); //=> "circle01"
 ```
@@ -3033,14 +3033,14 @@ Circleオブジェクトが配置されているのコンテナを参照。最�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container01 = new toile.Container();
+	var _container01 = new canvaslite.Container();
 	_container01.name = "container01";
 	_canvas.addChild(_container01);
 
-	var _circle01 = new toile.Circle(100,100,50);
+	var _circle01 = new canvaslite.Circle(100,100,50);
 	_circle01.name = "circle01";
 	_container01.addChild(_circle01);
 
@@ -3072,10 +3072,10 @@ circleObject.radius
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_circle = new toile.Circle(_canvas.width/2, _canvas.height/2, 0); //半径0
+	_circle = new canvaslite.Circle(_canvas.width/2, _canvas.height/2, 0); //半径0
 	_canvas.addChild(_circle);
 }
 
@@ -3099,7 +3099,7 @@ Circle.radiusを変更した場合、その時点でCircle.scaleは1にリセッ
 
 ### Example（例）
 ```
-var _circle = new toile.Circle(10,10,30);
+var _circle = new canvaslite.Circle(10,10,30);
 _circle.scale = 3; //水平垂直方向ともに3倍にする
 ```
 
@@ -3123,11 +3123,11 @@ circleObject.x
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.isBorder(true);
 
-	_circle = new toile.Circle(100, 100, 20);
+	_circle = new canvaslite.Circle(100, 100, 20);
 	_canvas.addChild(_circle);
 
 	_speedX = 10;
@@ -3210,7 +3210,7 @@ Container -> SuperDisplay
 * [Container.y](#Containery): 垂直座標位置（単位はピクセル）
 
 ### Constructor（コンストラクタ）
-new toile.Container()
+new canvaslite.Container()
 
 ### Arguments（引数）
 なし。
@@ -3218,9 +3218,9 @@ new toile.Container()
 ### Description（説明）
 HTML Canvas上に表示オブジェクト用のラッパを生成します。  
 このクラスを使うと表示オブジェクトの入れ子を実現することが可能です。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Container(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
@@ -3231,10 +3231,10 @@ toile.jsを読み込む前、\<head>タグ内などに
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //表示オブジェクトを収めるコンテナ
+	var _container = new canvaslite.Container(); //表示オブジェクトを収めるコンテナ
 	_canvas.addChild(_container);
 }
 
@@ -3265,20 +3265,20 @@ arg: 表示オブジェクト（Bitmap/Circle/Container/Line/Rect/SpriteSheet/Te
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //表示オブジェクトを収めるコンテナ
+	var _container = new canvaslite.Container(); //表示オブジェクトを収めるコンテナ
 	_canvas.addChild(_container);
 
-	var _bitmap = new toile.Bitmap("sample.jpg");
-	var _circle = new toile.Circle(100,100,30);
-	var _container2 = new toile.Container(); //コンテナの入れ子用
-	var _line = new toile.Line(100,100,200,300);
-	var _rect = new toile.Rect(50,50,100,300);
-	var _spriteSheet = new toile.SpriteSheet("run.png");
-	var _text = new toile.Text("テキスト");
-	var _video = new toile.Video("sample.mp4", 720, 1280);
+	var _bitmap = new canvaslite.Bitmap("sample.jpg");
+	var _circle = new canvaslite.Circle(100,100,30);
+	var _container2 = new canvaslite.Container(); //コンテナの入れ子用
+	var _line = new canvaslite.Line(100,100,200,300);
+	var _rect = new canvaslite.Rect(50,50,100,300);
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
+	var _text = new canvaslite.Text("テキスト");
+	var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 
 	_container.addChild(_bitmap);
 	_container.addChild(_circle);
@@ -3317,13 +3317,13 @@ Container内の全ての表示オブジェクトに影響します。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container();
+	var _container = new canvaslite.Container();
 	_canvas.addChild(_container);
 
-	_bitmap = new toile.Bitmap("sample.png");
+	_bitmap = new canvaslite.Bitmap("sample.png");
 	_bitmap.alpha = 0.5; //ここで50％の不透明度
 	_container.addChild(_bitmap);
 
@@ -3361,13 +3361,13 @@ Videoオブジェクトは、Container.deleteChilde()およびundefinedの代入
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_container = new toile.Container(); //表示オブジェクトを収めるコンテナ
+	_container = new canvaslite.Container(); //表示オブジェクトを収めるコンテナ
 	_canvas.addChild(_container);
 
-	_video = new toile.Video("sample.mp4", 720, 1280);
+	_video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_container.addChild(_video);
 }
 
@@ -3406,17 +3406,17 @@ arg: コンテナ内の表示オブジェクトの調べたい深度（数値）
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_bitmap1 = new toile.Bitmap("sample.png");
-	_bitmap2 = new toile.Bitmap("sample.png");
-	_bitmap3 = new toile.Bitmap("sample.png");
+	_bitmap1 = new canvaslite.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
+	_bitmap3 = new canvaslite.Bitmap("sample.png");
 	_bitmap1.name = "sprite1";
 	_bitmap2.name = "sprite2";
 	_bitmap3.name = "sprite3";
 
-	var _container = new toile.Container();
+	var _container = new canvaslite.Container();
 	_canvas.addChild(_container);
 
 	_container.addChild(_bitmap1);
@@ -3457,14 +3457,14 @@ arg: コンテナ内で、深度を調べたい表示オブジェクト。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	_canvas = new toile.Canvas("myCanvas");
+	_canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_bitmap1 = new toile.Bitmap("sample.png");
-	_bitmap2 = new toile.Bitmap("sample.png");
-	_bitmap3 = new toile.Bitmap("sample.png");
+	_bitmap1 = new canvaslite.Bitmap("sample.png");
+	_bitmap2 = new canvaslite.Bitmap("sample.png");
+	_bitmap3 = new canvaslite.Bitmap("sample.png");
 
-	var _container = new toile.Container();
+	var _container = new canvaslite.Container();
 	_canvas.addChild(_container);
 
 	_container.addChild(_bitmap1);
@@ -3500,14 +3500,14 @@ containerObject.getDepthMax()
 
 ### Example（例）
 ```
-_canvas = new toile.Canvas("myCanvas");
+_canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-_bitmap1 = new toile.Bitmap("sample.png");
-_bitmap2 = new toile.Bitmap("sample.png");
-_bitmap3 = new toile.Bitmap("sample.png");
+_bitmap1 = new canvaslite.Bitmap("sample.png");
+_bitmap2 = new canvaslite.Bitmap("sample.png");
+_bitmap3 = new canvaslite.Bitmap("sample.png");
 
-var _container = new toile.Container();
+var _container = new canvaslite.Container();
 _canvas.addChild(_container);
 
 _container.addChild(_bitmap1);
@@ -3534,15 +3534,15 @@ SuperDisplayクラスから継承するプロパティ（読取り専用）。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _container = new toile.Container();
+var _container = new canvaslite.Container();
 _container.x = 100;
 _container.y = 100;
 _canvas.addChild(_container);
 
-var _container2 = new toile.Container(); //入れ子用のContainer
+var _container2 = new canvaslite.Container(); //入れ子用のContainer
 _container.addChild(_container2);
 
 console.log(_container2.x, _container2.y); //=> 0 0
@@ -3577,7 +3577,7 @@ containerObjectインスタンスのインスタンス名。初期値はundefine
 
 ### Example（例）
 ```
-var _container = new toile.Container();
+var _container = new canvaslite.Container();
 _container.name = "container1";
 _canvas.addChild(_container);
 console.log(_container.name); //=> "container1"
@@ -3600,14 +3600,14 @@ Containerインスタンスが配置されているのコンテナを参照。�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container();
+	var _container = new canvaslite.Container();
 	_container.name = "container1";
 	_canvas.addChild(_container);
 
-	var _container2 = new toile.Container(); //入れ子用のContainer
+	var _container2 = new canvaslite.Container(); //入れ子用のContainer
 	_container2.name = "container2";
 	_container.addChild(_container2);
 
@@ -3638,13 +3638,13 @@ Containerを回転させる際の中心座標（水平座標）。初期値は0�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_container = new toile.Container();
+	_container = new canvaslite.Container();
 	_canvas.addChild(_container);
 
-	_bitmap = new toile.Bitmap("sample.jpg");
+	_bitmap = new canvaslite.Bitmap("sample.jpg");
 	_bitmap.addEventListener("load", load_bitmap);
 	_container.addChild(_bitmap);
 }
@@ -3689,13 +3689,13 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-_container = new toile.Container();
+_container = new canvaslite.Container();
 _canvas.addChild(_container);
 
-_bitmap = new toile.Bitmap("sample.jpg");
+_bitmap = new canvaslite.Bitmap("sample.jpg");
 _container.addChild(_bitmap);
 
 _container.rotate = -15;
@@ -3717,10 +3717,10 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-_container = new toile.Container();
+_container = new canvaslite.Container();
 _canvas.addChild(_container);
 
 _container.rotateRadian = Math.PI/4;
@@ -3777,10 +3777,10 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-_container = new toile.Container();
+_container = new canvaslite.Container();
 _container.x = 100;
 _container.y = 10;
 _canvas.addChild(_container);
@@ -3837,7 +3837,7 @@ Line -> SuperDisplay
 * [Line.y](#Liney): 垂直座標位置
 
 ### Constructor（コンストラクタ）
-new toile.Line(arg1, arg2, arg3, arg4)
+new canvaslite.Line(arg1, arg2, arg3, arg4)
 
 ### Arguments（引数）
 arg1: 線を描画する開始点（水平座標位置）。初期値は0。  
@@ -3847,19 +3847,19 @@ arg4: 線を描画する終了点（垂直座標位置）。初期値は100。
 
 ### Description（説明）
 HTML Canvas上に「線」を表示するためのクラス。始点、終点を指定して線を生成します。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Line(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _line = new toile.Line(5, 10, 100, 200);
+var _line = new canvaslite.Line(5, 10, 100, 200);
 _canvas.addChild(_line);
 ```
 
@@ -3884,10 +3884,10 @@ Lineオブジェクトの不透明度（0〜1.0）。初期値は1。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _line = new toile.Line(5, 5, 100, 100);
+	var _line = new canvaslite.Line(5, 5, 100, 100);
 	_line.lineWidth = 10;
 	_line.alpha = 0.5;
 	_canvas.addChild(_line);
@@ -3916,10 +3916,10 @@ HTML Canvas上に表示する線の、終点の「水平」座標（ピクセル
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _line = new toile.Line(5, 5);
+	var _line = new canvaslite.Line(5, 5);
 	_line.endX = 200;
 	_line.endY = 200;
 	_canvas.addChild(_line);
@@ -3964,10 +3964,10 @@ SuperDisplayクラスから継承するプロパティ（読取り専用）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //Lineを収めるコンテナ
+	var _container = new canvaslite.Container(); //Lineを収めるコンテナ
 	_container.x = 50;
 	_container.y = 50;
 	_container.regX = 10;
@@ -3975,7 +3975,7 @@ function load_window() {
 	_container.rotate = 30;
 	_canvas.addChild(_container);
 
-   	var _line = new toile.Line(50,50,200,50);
+   	var _line = new canvaslite.Line(50,50,200,50);
 	_container.addChild(_line);
 
 	console.log(_line.globalX, _line.globalY);
@@ -4035,10 +4035,10 @@ lineObject.lineAlpha
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _line = new toile.Line(10,10,100,10);
+var _line = new canvaslite.Line(10,10,100,10);
 _line.lineWidth = 10;
 _line.lineAlpha = 0.5;
 _canvas.addChild(_line);
@@ -4061,10 +4061,10 @@ lineObject.lineColor
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _line = new toile.Line(10,10,100,10);
+var _line = new canvaslite.Line(10,10,100,10);
 _line.lineWidth = 10;
 _line.lineColor = "255,0,0"; //赤の場合
 _canvas.addChild(_line);
@@ -4087,10 +4087,10 @@ lineObject.lineWidth
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _line = new toile.Line(10,10,100,10);
+var _line = new canvaslite.Line(10,10,100,10);
 _line.lineWidth = 10;
 _line.lineColor = "255,0,0";
 _canvas.addChild(_line);
@@ -4113,7 +4113,7 @@ Lineインスタンスのインスタンス名。
 
 ### Example（例）
 ```
-var _line = new toile.Line(10,10,100,10);
+var _line = new canvaslite.Line(10,10,100,10);
 _line.name = "line01";
 console.log(_line.name); //=> "line01"
 ```
@@ -4135,14 +4135,14 @@ Lineオブジェクトが配置されているのコンテナを参照。最下�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container01 = new toile.Container();
+	var _container01 = new canvaslite.Container();
 	_container01.name = "container01";
 	_canvas.addChild(_container01);
 
-	var _line01 = new toile.Line(10,10,100,10);
+	var _line01 = new canvaslite.Line(10,10,100,10);
 	_line01.name = "line01";
 	_container01.addChild(_line01);
 
@@ -4173,10 +4173,10 @@ SuperDisplayクラスから継承するプロパティ。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_line = new toile.Line(100,100,200,100);
+	_line = new canvaslite.Line(100,100,200,100);
 	_line.regX = 50; //回転の中心を線の中央にする
 	_canvas.addChild(_line);
 }
@@ -4208,10 +4208,10 @@ SuperDisplayクラスから継承するプロパティ。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_line = new toile.Line(100,100,100,200);
+	_line = new canvaslite.Line(100,100,100,200);
 	_line.regY = 50; //回転の中心を線の中央にする
 	_canvas.addChild(_line);
 }
@@ -4243,10 +4243,10 @@ SuperDisplayクラスから継承するプロパティ。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_line = new toile.Line(100,100,200,100);
+	_line = new canvaslite.Line(100,100,200,100);
 	_canvas.addChild(_line);
 }
 
@@ -4273,7 +4273,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _line = new toile.Line(100,100,200,100);
+var _line = new canvaslite.Line(100,100,200,100);
 _line.rotateRadian = Math.PI/4;
 console.log(_line.rotate); //=> 45（度）
 console.log(_line.rotateRadian); //=> 0.7853981633974483（ラジアン）
@@ -4298,7 +4298,7 @@ Line.startX、Line.startY、Line.endX、Line.endY、Line.width、Line.heightの�
 
 ### Example（例）
 ```
-_line = new toile.Line(10,10,100,100);
+_line = new canvaslite.Line(10,10,100,100);
 _canvas.addChild(_line);
 _line.scale = 3;
 ```
@@ -4323,10 +4323,10 @@ lineObject.startX
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_line = new toile.Line(_canvas.width, 5, _canvas.width ,5);
+	_line = new canvaslite.Line(_canvas.width, 5, _canvas.width ,5);
 	_line.lineWidth = 2;
 	console.log(_line.startX, _line.startY); //=> 550（Canvasの横幅） 50
 	_canvas.addChild(_line);
@@ -4383,7 +4383,7 @@ Line.startXの変更は線の「開始点のみ」移動するのに対し、Lin
 
 ### Example（例）
 ```
-var _line = new toile.Line(5, 10, 100, 200);
+var _line = new canvaslite.Line(5, 10, 100, 200);
 _line.x = 100;
 ```
 
@@ -4404,7 +4404,7 @@ Line.startYの変更は線の「開始点のみ」移動するのに対し、Lin
 
 ### Example（例）
 ```
-var _line = new toile.Line(5, 10, 100, 200);
+var _line = new canvaslite.Line(5, 10, 100, 200);
 _line.y = 100;
 ```
 
@@ -4450,7 +4450,7 @@ Rect -> Line -> SuperDisplay
 * [Rect.y](#Recty): 垂直座標位置（単位はピクセル）
 
 ### Constructor（コンストラクタ）
-new toile.Rect(arg1, arg2, arg3, arg4)
+new canvaslite.Rect(arg1, arg2, arg3, arg4)
 
 ### Arguments（引数）
 arg1: 矩形を描画する開始点（水平座標位置）。初期値は0。  
@@ -4461,19 +4461,19 @@ arg4: 矩形を描画する終了点（垂直座標位置）。初期値は100�
 ### Description（説明）
 HTML Canvas上に「矩形」を表示するためのクラス。  
 始点、終点を指定して矩形を生成します。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Rect(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _rect = new toile.Rect(5, 10, 100, 200);
+var _rect = new canvaslite.Rect(5, 10, 100, 200);
 _canvas.addChild(_rect);
 ```
 
@@ -4499,10 +4499,10 @@ Rectオブジェクト全体の不透明度（0〜1.0）。初期値は1。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _rect = new toile.Rect(5, 5, 100, 100);
+	var _rect = new canvaslite.Rect(5, 5, 100, 100);
 	_rect.isFill(true);
 	_rect.lineWidth = 10;
 	_rect.lineAlpha = 0.8;
@@ -4538,10 +4538,10 @@ HTML Canvas上に表示する「矩形」の、終点の水平座標（単位は
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _rect = new toile.Rect(5, 5); //第3、第4引数を省略すると共に100扱い
+	var _rect = new canvaslite.Rect(5, 5); //第3、第4引数を省略すると共に100扱い
 	_rect.endX = 200;
 	_rect.endY = 200;
 	_canvas.addChild(_rect);
@@ -4580,10 +4580,10 @@ HTML Canvas上に表示する矩形の「塗り」の部分のアルファ値（
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _rect = new toile.Rect(5, 5, 100, 100);
+var _rect = new canvaslite.Rect(5, 5, 100, 100);
 _rect.isFill(true);
 _rect.lineWidth = 10;
 _rect.lineAlpha = 0.8;
@@ -4610,10 +4610,10 @@ RGB各色を0～255で指定。例えば、赤の場合は "255,0,0" としま�
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _rect = new toile.Rect(5, 5, 100, 100);
+var _rect = new canvaslite.Rect(5, 5, 100, 100);
 _rect.isFill(true);
 _rect.fillColor = "255,0,0";
 _canvas.addChild(_rect);
@@ -4640,10 +4640,10 @@ SuperDisplayクラスから継承するプロパティ（読取り専用）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //Rectを収めるコンテナ
+	var _container = new canvaslite.Container(); //Rectを収めるコンテナ
 	_container.x = 50;
 	_container.y = 50;
 	_container.regX = 10;
@@ -4651,7 +4651,7 @@ function load_window() {
 	_container.rotate = 30;
 	_canvas.addChild(_container);
 
-   	var _rect = new toile.Rect(50,50,200,100);
+   	var _rect = new canvaslite.Rect(50,50,200,100);
 	_container.addChild(_rect);
 
 	console.log(_rect.globalX, _rect.globalY);
@@ -4695,10 +4695,10 @@ Rect.rotateや、Container.rotateなどの角度を変更しても値は変化�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-   	var _rect = new toile.Rect(50,50,200,100);
+   	var _rect = new canvaslite.Rect(50,50,200,100);
 	_canvas.addChild(_rect);
 
 	console.log(_rect.height, _rect.width); //=> 150 50
@@ -4736,19 +4736,19 @@ Rectインスタンスの他、BitmapやSpriteSheetインスタンスにも対�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
 
-	_rect = new toile.Rect(0,0,50,50);
+	_rect = new canvaslite.Rect(0,0,50,50);
 	_canvas.addChild(_rect);
 
-	_bitmap = new toile.Bitmap("box.png");
+	_bitmap = new canvaslite.Bitmap("box.png");
 	_bitmap.x = 300;
 	_canvas.addChild(_bitmap);
 
-	_spriteSheet = new toile.SpriteSheet("run.jpg");
+	_spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	_canvas.addChild(_spriteSheet);
     
     _mouseX = _mouseY = 0;
@@ -4792,10 +4792,10 @@ trueにした場合の初期値の色は、白（"255,255,255"）。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _rect = new toile.Rect(5, 5, 100, 100);
+var _rect = new canvaslite.Rect(5, 5, 100, 100);
 _rect.isFill(true);
 _rect.fillColor = "255,0,0";
 _canvas.addChild(_rect);
@@ -4818,10 +4818,10 @@ HTML Canvas上に表示する矩形の「線」の部分のアルファ値（0�
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _rect = new toile.Rect(5, 5, 100, 100);
+var _rect = new canvaslite.Rect(5, 5, 100, 100);
 _rect.isFill(true);
 _rect.lineWidth = 10;
 _rect.lineAlpha = 0.8;
@@ -4850,10 +4850,10 @@ RGB各色を0～255で指定。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _rect = new toile.Rect(5, 5, 100, 100);
+var _rect = new canvaslite.Rect(5, 5, 100, 100);
 _rect.lineWidth = 10;
 _rect.lineColor = "255,0,0"; //赤の場合
 _canvas.addChild(_rect);
@@ -4877,10 +4877,10 @@ HTML Canvas上に表示する矩形の線の太さ。
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-var _rect = new toile.Rect(5, 5, 100, 100);
+var _rect = new canvaslite.Rect(5, 5, 100, 100);
 _rect.lineWidth = 10;
 _rect.lineColor = "255,0,0";
 _canvas.addChild(_rect);
@@ -4903,7 +4903,7 @@ Rectインスタンスのインスタンス名。
 
 ### Example（例）
 ```
-var _rect = new toile.Rect(10,10,100,10);
+var _rect = new canvaslite.Rect(10,10,100,10);
 _rect.name = "rect01";
 console.log(_rect.name); //=> "rect01"
 ```
@@ -4925,14 +4925,14 @@ Rectオブジェクトが配置されているのコンテナを参照。最下�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container01 = new toile.Container();
+	var _container01 = new canvaslite.Container();
 	_container01.name = "container01";
 	_canvas.addChild(_container01);
 
-	var _rect01 = new toile.Rect(10,10,100,10);
+	var _rect01 = new canvaslite.Rect(10,10,100,10);
 	_rect01.name = "rect01";
 	_container01.addChild(_rect01);
 
@@ -4962,10 +4962,10 @@ SuperDisplayクラスから継承するプロパティ。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_rect = new toile.Rect(100,100,200,200);
+	_rect = new canvaslite.Rect(100,100,200,200);
  	//回転の中心を線の中央にする
 	_rect.regX = 50;
 	_rect.regY = 50;
@@ -5010,10 +5010,10 @@ SuperDisplayクラスから継承するプロパティ。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_rect = new toile.Rect(100,100,200,200);
+	_rect = new canvaslite.Rect(100,100,200,200);
 	_canvas.addChild(_rect);
 }
 
@@ -5039,7 +5039,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _rect = new toile.Rect(100,100,200,200);
+var _rect = new canvaslite.Rect(100,100,200,200);
 _rect.rotateRadian = Math.PI/4;
 console.log(_rect.rotate); //=> 45（度）
 console.log(_rect.rotateRadian); //=> 0.7853981633974483（ラジアン）
@@ -5061,7 +5061,7 @@ Rect.startX、Rect.startY、Rect.endX、Rect.endY、Rect.width、Rect.heightの�
 
 ### Example（例）
 ```
-_rect = new toile.Rect(10,10,100,100);
+_rect = new canvaslite.Rect(10,10,100,100);
 _canvas.addChild(_rect);
 _rect.scale = 3;
 ```
@@ -5086,10 +5086,10 @@ rectObject.startX
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_rect = new toile.Rect(_canvas.width, 5, _canvas.width ,25);
+	_rect = new canvaslite.Rect(_canvas.width, 5, _canvas.width ,25);
 	_rect.lineWidth = 2;
 	console.log(_rect.startX, _rect.startY); //=> 550（Canvasの横幅） 50
 	_canvas.addChild(_rect);
@@ -5146,7 +5146,7 @@ Rect.startXの変更は線の「開始点のみ」移動するのに対し、Rec
 
 ### Example（例）
 ```
-var _rect = new toile.Rect(5, 10, 100, 200);
+var _rect = new canvaslite.Rect(5, 10, 100, 200);
 _rect.x = 100;
 ```
 
@@ -5167,7 +5167,7 @@ Rect.startYの変更は線の「開始点のみ」移動するのに対し、Rec
 
 ### Example（例）
 ```
-var _rect = new toile.Rect(5, 10, 100, 200);
+var _rect = new canvaslite.Rect(5, 10, 100, 200);
 _rect.y = 100;
 ```
 
@@ -5199,23 +5199,23 @@ Rect.x
 * [Sound.volume](#Soundvolume): ボリュームを設定  
 
 ### Constructor（コンストラクタ）
-new toile.Sound(arg)
+new canvaslite.Sound(arg)
 
 ### Arguments（引数）
 arg: 再生するwav/mp3ファイルのパス（文字列）。
 
 ### Description（説明）
 HTML5のAudioオブジェクトを使ってサウンドを再生します。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Sound(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
 
 ### Example（例）
 ```
-var _se = new toile.Sound("me.wav");
+var _se = new canvaslite.Sound("me.wav");
 console.log(_se.isLoaded()); //=> false（インスタンス生成直後はロードされていない）
 _se.play(); //ロード終了次第、再生スタート
 ```
@@ -5236,10 +5236,10 @@ soundObject.currentTime
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_se = new toile.Sound("me.wav");
+	_se = new canvaslite.Sound("me.wav");
 	_se.play();
 }
 
@@ -5292,15 +5292,15 @@ arg: フェードアウトにかける時間（単位は秒）。初期値は1�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _stopBtn = new toile.Bitmap("box.png");
+	var _stopBtn = new canvaslite.Bitmap("box.png");
 	_stopBtn.addEventListener("mouseup", mouseup_stopBtn);
 	_stopBtn.x = _stopBtn.y = 10;
 	_canvas.addChild(_stopBtn);
 
-	_se = new toile.Sound("me.wav")
+	_se = new canvaslite.Sound("me.wav")
 	_se.play();
 }
 
@@ -5339,10 +5339,10 @@ Soundインスタンスの生成直後はfalseです。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_se = new toile.Sound("me.wav");
+	_se = new canvaslite.Sound("me.wav");
 	_se.play();
 }
 
@@ -5378,10 +5378,10 @@ Soundオブジェクト生成直後はtrue。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_se = new toile.Sound("me.wav");
+	_se = new canvaslite.Sound("me.wav");
 	console.log(_se.isPaused()); //=> true（注意）
 	_se.play();
 	console.log(_se.isPaused()); //=> false
@@ -5411,7 +5411,7 @@ soundObject.loop
 
 ### Example（例）
 ```
-var _se = new toile.Sound("me.wav");
+var _se = new canvaslite.Sound("me.wav");
 _se.loop = true;
 _se.play();
 ```
@@ -5432,7 +5432,7 @@ soundObject.name
 
 ### Example（例）
 ```
-var _se = new toile.Sound("me.wav");
+var _se = new canvaslite.Sound("me.wav");
 _se.name = "se01";
 console.log(_se.name); //=> "se01"
 ```
@@ -5479,7 +5479,7 @@ Sound.pause()で一時停止したサウンドの続きを再生する場合も�
 
 ### Example（例）
 ```
-var _se = new toile.Sound("me.wav");
+var _se = new canvaslite.Sound("me.wav");
 console.log(_se.isLoaded()); //=> false（インスタンス生成直後はロードされていない）
 _se.play(); //ロードし終えたら自動的に再生
 ```
@@ -5511,27 +5511,27 @@ Sound.pause()と異なり、再生ヘッドは最初に戻ります。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _playBtn = new toile.Bitmap("box.png");
+	var _playBtn = new canvaslite.Bitmap("box.png");
 	_playBtn.addEventListener("mouseup", mouseup_playBtn);
 	_playBtn.x = _playBtn.y = 10;
 	_canvas.addChild(_playBtn);
 
-	var _stopBtn = new toile.Bitmap("box.png");
+	var _stopBtn = new canvaslite.Bitmap("box.png");
 	_stopBtn.addEventListener("mouseup", mouseup_stopBtn);
 	_stopBtn.x = 70;
 	_stopBtn.y = 10;
 	_canvas.addChild(_stopBtn);
 
-	var _pauseBtn = new toile.Bitmap("box.png");
+	var _pauseBtn = new canvaslite.Bitmap("box.png");
 	_pauseBtn.addEventListener("mouseup", mouseup_pauseBtn);
 	_pauseBtn.x = 130;
 	_pauseBtn.y = 10;
 	_canvas.addChild(_pauseBtn);
 
-	_se = new toile.Sound("me.wav");
+	_se = new canvaslite.Sound("me.wav");
 }
 
 enterframe_canvas = (_canvas) => {
@@ -5571,10 +5571,10 @@ soundObject.volume
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_se = new toile.Sound("me.wav");
+	_se = new canvaslite.Sound("me.wav");
 	_se.volume = 0; //ボリュームを0にする
 	_se.play();
 }
@@ -5639,7 +5639,7 @@ SpriteSheet -> Bitmap -> SuperDisplay
 * [SpriteSheet.MOUSE_UP_OUTSIDE](#SpriteSheetMOUSE_UP_OUTSIDE): マウスダウン後に外でマウスボタンを離したら  
 
 ### Constructor（コンストラクタ）
-new toile.SpriteSheet(arg1[, arg2])
+new canvaslite.SpriteSheet(arg1[, arg2])
 
 ### Arguments（引数）
 arg1: PNG/JPEGファイルのパス（URL）を文字列で指定。  
@@ -5651,9 +5651,9 @@ HTML Canvas上にスプライトシート（アニメーション）を表示す
 その際、スプライトシートアニメの各フレーム情報（位置、サイズ）を収めたJSONデータが必須です。  
 JSONファイル（XX.json）をXX.pngと同階層に置く場合は、第2引数は省略できます。  
 JSONファイルを任意のフォルダに置く場合は、第2引数でそのパスを指定する必要があります。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new SpriteSheet(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
@@ -5676,10 +5676,10 @@ toile.jsを読み込む前、\<head>タグ内などに
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.png");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 	_canvas.addChild(_spriteSheet);
 }
 
@@ -5718,10 +5718,10 @@ arg3: オプション。衝突判定（ヒットテスト）を正円で行う�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.png");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 	_spriteSheet.addEventListener("mousedown", mousedown_spriteSheet);
 	_canvas.addChild(_spriteSheet);
 }
@@ -5753,7 +5753,7 @@ Bitmapクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.jpg");
+var _spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 _spriteSheet.alpha = 0.5;
 ```
 
@@ -5774,10 +5774,10 @@ spriteSheetObject.currentframe
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_spriteSheet = new toile.SpriteSheet("run.jpg");
+	_spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	_spriteSheet.addEventListener("mousedown", mousedown_spriteSheet);
 	_canvas.addChild(_spriteSheet);
 }
@@ -5814,11 +5814,11 @@ Canvas.addChild()を使ってSpriteSheetをHTML Canvas上に配置する前はNa
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.fps = 60;
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.png");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 	_canvas.addChild(_spriteSheet);
 	_spriteSheet.fps = 10;
 	console.log(_spriteSheet.fps, _canvas.fps); //=> 10 59
@@ -5850,15 +5850,15 @@ Bitmapクラスから継承するプロパティ（読取り専用）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //ビットマップを収めるコンテナ
+	var _container = new canvaslite.Container(); //ビットマップを収めるコンテナ
 	_container.x = 100;
 	_container.y = 100;
 	_canvas.addChild(_container);
 
-	var _spriteSheet = new toile.SpriteSheet("run.png");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 	_spriteSheet.x = 50;
 	_spriteSheet.y = 50;
 	_container.addChild(_spriteSheet); //コンテナにスプライトシートを収める
@@ -5905,11 +5905,11 @@ arg: スプライトシートの、フレームに移動＆再生したいフレ
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.fps = 60;
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.png");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 	_spriteSheet.addEventListener("mousedown", mousedown_spriteSheet);
 
 	_canvas.addChild(_spriteSheet);
@@ -5950,11 +5950,11 @@ SpriteSheetインスタンスの生成直後は、ファイルのロードが完
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.fps = 60;
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.png");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 	_spriteSheet.addEventListener("load", load_spriteSheet);
 	_canvas.addChild(_spriteSheet);
 	//_spriteSheet.gotoAndStop(2); //ここではロードし終えていなのでフレーム2を表示できない
@@ -5990,10 +5990,10 @@ spriteSheetObject.height
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.png");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 	console.log(_spriteSheet.height, _spriteSheet.width); //=> NaN NaN
 	_spriteSheet.addEventListener("load", load_spriteSheet);
 	_canvas.addChild(_spriteSheet);
@@ -6033,15 +6033,15 @@ arg: スプライトシートとの衝突を調べる表示オブジェクト（
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
 
-	_spriteSheet = new toile.SpriteSheet("run.jpg");
+	_spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	_canvas.addChild(_spriteSheet);
 
-	_bitmap = new toile.Bitmap("circle.png");
+	_bitmap = new canvaslite.Bitmap("circle.png");
 	_canvas.addChild(this._bitmap);
 
     _mouseX = _mouseY = 0;
@@ -6093,7 +6093,7 @@ HTML CanvasのImageオブジェクト \<img src=​"run.png"> が返ります。
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.png");
+var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 console.log(_spriteSheet.image); //=> <img src=​"run.png">​
 console.log(_spriteSheet.image.src); //=> http: //localhost/run.png
 ```
@@ -6120,10 +6120,10 @@ spriteSheetObject.isPlay()
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_spriteSheet = new toile.SpriteSheet("run.jpg");
+	_spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	_spriteSheet.addEventListener("mousedown", mousedown_spriteSheet);
 	_canvas.addChild(_spriteSheet);
 }
@@ -6156,7 +6156,7 @@ SpriteSheet.LOAD
 Bitmapクラスから継承するクラス変数。  
 コンストラクタの呼び出し時に指定したスプライトシート（PNG/JPEG）ファイルがロードされたら...実行したい場合に使用します。  
 SpriteSheet.addEventListener()でイベントを指定する際に使用します。  
-toile.SpriteSheet.LOADの代わりに文字列で"load"と指定しても同じ処理が行われます。
+canvaslite.SpriteSheet.LOADの代わりに文字列で"load"と指定しても同じ処理が行われます。
 
 ### Example（例）
 ```
@@ -6164,15 +6164,15 @@ toile.SpriteSheet.LOADの代わりに文字列で"load"と指定しても同じ�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.jpg");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	//ロード完了前は取得できないプロパティ
 	console.log(_spriteSheet.totalframes); //=> undefined
 	console.log(_spriteSheet.height); //-=> NaN
 	console.log(_spriteSheet.width); //-=> NaN
-	_spriteSheet.addEventListener(toile.SpriteSheet.LOAD, load_spriteSheet);
+	_spriteSheet.addEventListener(canvaslite.SpriteSheet.LOAD, load_spriteSheet);
 	_canvas.addChild(_spriteSheet);
 }
 
@@ -6201,7 +6201,7 @@ SpriteSheet.MOUSE_DOWN
 ### Description（説明）
 Bitmapクラスから継承するクラス変数。  
 SpriteSheetインスタンスをマウスダウンした際に何かの処理を実行したい場合に使用します。  
-toile.SpriteSheet.MOUSE_DOWNの代わりに"mousedown"と指定しても同じ処理が行われます。  
+canvaslite.SpriteSheet.MOUSE_DOWNの代わりに"mousedown"と指定しても同じ処理が行われます。  
 複雑な形状の矩形領域が重なると予期せぬ動作をしますので工夫が必要です。
 
 ### Example（例）
@@ -6210,13 +6210,13 @@ toile.SpriteSheet.MOUSE_DOWNの代わりに"mousedown"と指定しても同じ�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _ss = new toile.SpriteSheet("run.jpg");
-	_ss.addEventListener(toile.SpriteSheet.MOUSE_DOWN, mousedown_ss);
-	_ss.addEventListener(toile.SpriteSheet.MOUSE_UP, mouseup_ss);
-	_ss.addEventListener(toile.SpriteSheet.MOUSE_UP_OUTSIDE, mouseupoutside_ss);
+	var _ss = new canvaslite.SpriteSheet("run.jpg");
+	_ss.addEventListener(canvaslite.SpriteSheet.MOUSE_DOWN, mousedown_ss);
+	_ss.addEventListener(canvaslite.SpriteSheet.MOUSE_UP, mouseup_ss);
+	_ss.addEventListener(canvaslite.SpriteSheet.MOUSE_UP_OUTSIDE, mouseupoutside_ss);
 
 	_canvas.addChild(_ss);
 }
@@ -6251,7 +6251,7 @@ SpriteSheet.MOUSE_UP
 ### Description（説明）
 Bitmapクラスから継承するクラス変数。  
 SpriteSheetインスタンスをマウスダウン後に、同じSpriteSheet上でマウスアップした際に、何かの処理を実行したい場合に使用します。  
-toile.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。  
+canvaslite.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。  
 複雑な形状の矩形領域が重なると予期せぬ動作をしますので工夫が必要です。
 
 ### Example（例）
@@ -6270,7 +6270,7 @@ SpriteSheet.MOUSE_UP_OUTSIDE
 ### Description（説明）
 Bitmapクラスから継承するクラス変数。  
 SpriteSheetインスタンスをマウスダウン後に、同じSpriteSheetの外でマウスアップした際に、何かの処理を実行したい場合に使用します。  
-toile.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。  
+canvaslite.SpriteSheet.MOUSE_UPの代わりに"mouseup"と指定しても同じ処理が行われます。  
 複雑な形状の矩形領域が重なると予期せぬ動作をしますので工夫が必要です。
 
 ### Example（例）
@@ -6293,7 +6293,7 @@ SpriteSheetインスタンスのインスタンス名。
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.png");
+var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 _spriteSheet.name = "spriteSheet01";
 console.log(_spriteSheet.name); //=> "spriteSheet01"
 ```
@@ -6316,14 +6316,14 @@ SpriteSheetが配置されているのコンテナを参照。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container01 = new toile.Container();
+	var _container01 = new canvaslite.Container();
 	_container01.name = "container01";
 	_canvas.addChild(_container01);
 
-	var _spriteSeet01 = new toile.SpriteSheet("run.jpg");
+	var _spriteSeet01 = new canvaslite.SpriteSheet("run.jpg");
 	_spriteSeet01.name = "spriteSheet01";
 	_container01.addChild(_spriteSeet01);
 
@@ -6359,10 +6359,10 @@ SpriteSheet.gotoAndStop() または SpriteSheet.stop() で停止しているス�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_spriteSheet = new toile.SpriteSheet("run.jpg");
+	_spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	_spriteSheet.addEventListener("mousedown", mousedown_spriteSheet);
 	_spriteSheet.stop();
 	_canvas.addChild(_spriteSheet);
@@ -6398,10 +6398,10 @@ Bitmapクラスから継承するプロパティ。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_spriteSheet = new toile.SpriteSheet("run.jpg");
+	_spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	_spriteSheet.addEventListener("load", load_spriteSheet);
 	_canvas.addChild(_spriteSheet);
 }
@@ -6457,10 +6457,10 @@ arg: ①"mousedown" ②"mouseup" ③"mouseupoutside" ④"load" の何れか。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_spriteSheet = new toile.SpriteSheet("run.png");
+	_spriteSheet = new canvaslite.SpriteSheet("run.png");
 	_spriteSheet.addEventListener("mousedown", mousedown_spriteSheet);
 	_spriteSheet.stop();
 	_canvas.addChild(_spriteSheet);
@@ -6496,7 +6496,7 @@ Bitmapクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.png");
+var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 _spriteSheet.regX = 25;
 _spriteSheet.regY = 25;
 _spriteSheet.rotate = 45;
@@ -6520,7 +6520,7 @@ Bitmapクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.png");
+var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 _spriteSheet.regX = 25;
 _spriteSheet.regY = 25;
 _spriteSheet.rotateRadian = - Math.PI/4;
@@ -6547,7 +6547,7 @@ SpriteSheet.scaleを変更するとSpriteSheet.scaleXも同じ値になります
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("sample.png");
+var _spriteSheet = new canvaslite.SpriteSheet("sample.png");
 _spriteSheet.scale = 2; //水平垂直方向ともに2倍にする
 ```
 
@@ -6570,7 +6570,7 @@ SpriteSheet.scaleXの値を変更するとSpriteSheet.scaleの値はnullにな�
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.png");
+var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 _spriteSheet.scaleX = 2; //水平方向のみ2倍に拡大
 ```
 
@@ -6593,7 +6593,7 @@ SpriteSheet.scaleYの値を変更するとSpriteSheet.scaleの値はnullにな�
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.png");
+var _spriteSheet = new canvaslite.SpriteSheet("run.png");
 _spriteSheet.scaleY = 2; //垂直方向のみ2倍に拡大。
 ```
 
@@ -6615,10 +6615,10 @@ spriteSheetObject.stop()
 
 ### Example（例）
 ```
-var _canvas = new toile.Canvas("myCanvas");
+var _canvas = new canvaslite.Canvas("myCanvas");
 _canvas.addEventListener("enterframe", enterframe_canvas);
 
-_spriteSheet = new toile.SpriteSheet("run.png");
+_spriteSheet = new canvaslite.SpriteSheet("run.png");
 _spriteSheet.stop();
 _canvas.addChild(_spriteSheet);
 ```
@@ -6645,10 +6645,10 @@ SpriteSheet関連のファイル（○.json）がロード終了後に利用し�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _spriteSheet = new toile.SpriteSheet("run.jpg");
+	var _spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 	_spriteSheet.stop();
 	_spriteSheet.addEventListener("mousedown", mousedown_spriteSheet);
 	_canvas.addChild(_spriteSheet);
@@ -6704,7 +6704,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.jpg");
+var _spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 _spriteSheet.x = 10;
 ```
 
@@ -6724,7 +6724,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _spriteSheet = new toile.SpriteSheet("run.jpg");
+var _spriteSheet = new canvaslite.SpriteSheet("run.jpg");
 _spriteSheet.y = 10;
 ```
 
@@ -6764,7 +6764,7 @@ Text -> SuperDisplay
 * [Text.y](#Texty): 垂直座標位置（単位はピクセル）
 
 ### Constructor（コンストラクタ）
-new toile.Text(arg)
+new canvaslite.Text(arg)
 
 ### Arguments（引数）
 arg: 表示したいテキスト。
@@ -6772,9 +6772,9 @@ arg: 表示したいテキスト。
 ### Description（説明）
 HTML Canvas上に「テキスト」を表示するためのクラス。  
 日本語も利用可能です。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Text(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
@@ -6785,10 +6785,10 @@ toile.jsを読み込む前、\<head>タグ内などに
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _text = new toile.Text("SAMPLE");
+	var _text = new canvaslite.Text("SAMPLE");
 	_canvas.addChild(_text);
 
 }
@@ -6825,9 +6825,9 @@ Webフォント（サーバ上のフォント）を利用するためのメソ�
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 
-	var _text = new toile.Text("toile.js by ECMAScript 6");
+	var _text = new canvaslite.Text("canvaslite.js by ECMAScript 6");
 	//http://jp.ffonts.net/CabinSketch-Bold.font
 	_text.addWebFont("CabinSketch-Bold", "CabinSketch-Bold.ttf", "truetype");
 	_text.font = "CabinSketch-Bold";
@@ -6859,7 +6859,7 @@ textObject.align
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.align = "center";
 ```
 
@@ -6880,7 +6880,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.alpha = 0.5;
 ```
 
@@ -6897,7 +6897,7 @@ textObject.baseline
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.baseline = "middle";
 ```
 
@@ -6920,7 +6920,7 @@ RGBを16進数で設定します。
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.color = "#ff0000"; //赤の場合
 ```
 
@@ -6943,7 +6943,7 @@ textObject.font
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.size = 100;
 _text.font = "serif";
 ```
@@ -6966,15 +6966,15 @@ SuperDisplayクラスから継承するプロパティ（読取り専用）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //テキストを収めるコンテナ
+	var _container = new canvaslite.Container(); //テキストを収めるコンテナ
 	_container.x = 100;
 	_container.y = 100;
 	_canvas.addChild(_container);
 
-	var _text = new toile.Text("SAMPLE");
+	var _text = new canvaslite.Text("SAMPLE");
 	_text.x = 50;
 	_text.y = 50;
 	_container.addChild(_text); //コンテナにテキストを収める
@@ -7016,7 +7016,7 @@ Textインスタンスのインスタンス名。
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.name = "text01";
 console.log(_text.name); //=> "text01"
 ```
@@ -7039,14 +7039,14 @@ Textが配置されているのコンテナを参照。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container01 = new toile.Container();
+	var _container01 = new canvaslite.Container();
 	_container01.name = "container01";
 	_canvas.addChild(_container01);
 
-	var _text01 = new toile.Text("SAMPLE");
+	var _text01 = new canvaslite.Text("SAMPLE");
 	_text01.name = "bitmap01";
 	_container01.addChild(_text01);
 
@@ -7073,7 +7073,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.regX = 100;
 _text.regY = 25;
 _text.rotate = -45;
@@ -7107,7 +7107,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.regX = 25;
 _text.regY = 25;
 _text.rotate = -45;
@@ -7130,7 +7130,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.rotateRadian = Math.PI/4;
 console.log(_text.rotate); //=> 45（度）
 console.log(_text.rotateRadian); //=> 0.7853981633974483（ラジアン）
@@ -7154,7 +7154,7 @@ Text.sizeを変更した場合、その時点でText.scaleは1にリセットさ
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 console.log(_text.size); //=> 10（初期値）
 _text.scale = 5; //縦横共に5倍にする場合
 console.log(_text.size); //=> 50（Text.sizeも変動）
@@ -7176,7 +7176,7 @@ Text.scaleを変更すると、それに比例してText.sizeも変動します�
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.size = 50;
 ```
 
@@ -7195,7 +7195,7 @@ textObject.text
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 console.log(_text.text); //=> "SAMPLE"
 _text.text = "てきすと";
 ```
@@ -7212,7 +7212,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _text = new toile.Text("SAMPLE");
+var _text = new canvaslite.Text("SAMPLE");
 _text.x = 10;
 _text.y = 10;
 ```
@@ -7267,7 +7267,7 @@ Video -> SuperDisplay
 * [Video.y](#Videoy): 垂直座標位置（単位はピクセル）
 
 ### Constructor（コンストラクタ）
-new toile.Video(arg1, arg2, arg3)
+new canvaslite.Video(arg1, arg2, arg3)
 
 ### Arguments（引数）
 arg1: 読み込むビデオ（○.mp4）のパス（文字列）。  
@@ -7277,9 +7277,9 @@ arg3: 読み込むビデオの元サイズ（縦、単位はピクセル）。
 ### Description（説明）
 HTML Canvas上に動画（MPEG4）を表示するためのクラス。  
 指定したMPEG4ファイルを使った、Videoクラスを生成します。  
-toile.jsを読み込む前、\<head>タグ内などに
+canvaslite.jsを読み込む前、\<head>タグ内などに
 ```
-<script>var toile = window;</script>
+<script>var canvaslite = window;</script>
 ```
 と記述すると「名前空間」を省いた参照方法、new Video(... といった記述が可能です。  
 但しその場合、同じクラス名が他にも存在する場合、コンフリクトを起こしますので注意が必要です。
@@ -7290,10 +7290,10 @@ toile.jsを読み込む前、\<head>タグ内などに
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _video = new toile.Video("sample.mp4", 720, 1280);
+	var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_canvas.addChild(_video);
 }
 
@@ -7316,7 +7316,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.alpha = 0.5;
 ```
 
@@ -7336,10 +7336,10 @@ videoObject.currentTime
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_video = new toile.Video("sample.mp4", 720, 1280);
+	_video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_canvas.addChild(_video);
 	_video.play();
 }
@@ -7389,15 +7389,15 @@ SuperDisplayクラスから継承するプロパティ（読取り専用）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container(); //ビデオを収めるコンテナ
+	var _container = new canvaslite.Container(); //ビデオを収めるコンテナ
 	_container.x = 100;
 	_container.y = 100;
 	_canvas.addChild(_container);
 
-	var _video = new toile.Video("sample.mp4", 720, 1280);
+	var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_video.x = 50;
 	_video.y = 50;
 	_container.addChild(_video); //コンテナにビデオを収める
@@ -7439,7 +7439,7 @@ Video.scaleによって値が変化します。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.height = 256;
 _video.width = 148;
 ```
@@ -7470,15 +7470,15 @@ arg: ビデオとの衝突を調べる表示オブジェクト（矩形）。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 	_canvas.addEventListener("mousemove", mousemove_canvas);
 	_canvas.enabledMouseMove(true);
 
-	_bitmap = new toile.Bitmap("sample.jpg");
+	_bitmap = new canvaslite.Bitmap("sample.jpg");
 	_canvas.addChild(this._bitmap);
 
-	_video = new toile.Video("sample.mp4", 720, 1280);
+	_video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_video.scale = 0.25;
 	_canvas.addChild(_video);
 
@@ -7522,10 +7522,10 @@ Videoインスタンスの生成直後はfalseです。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	_video = new toile.Video("sample.mp4", 720, 1280);
+	_video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_canvas.addChild(_video);
 }
 
@@ -7556,7 +7556,7 @@ arg: ビデオの再生を繰返す場合はtrue、繰り返さない場合はfa
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.isLoop(true);
 ```
 
@@ -7573,7 +7573,7 @@ Videoインスタンスのインスタンス名。初期値はundefined。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.name = "video01";
 console.log(_video.name); //=> "video01"
 ```
@@ -7595,14 +7595,14 @@ Videoが配置されているのコンテナを参照。最下層は"root"。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container();
+	var _container = new canvaslite.Container();
 	_container.name = "container01";
 	_canvas.addChild(_container);
 
-	var _video = new toile.Video("sample.mp4", 720, 1280);
+	var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_video.name = "bitmap";
 	_container.addChild(_video);
 
@@ -7634,7 +7634,7 @@ videoObject.pause()
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.pause(); //再生ヘッドは1フレーム目で停止
 ```
 ※Video.stop()参照。
@@ -7678,14 +7678,14 @@ SuperDisplayクラスから継承するプロパティ。
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _container = new toile.Container();
+	var _container = new canvaslite.Container();
 	_container.name = "container01";
 	_canvas.addChild(_container);
 
-	_video = new toile.Video("sample.mp4", 720, 1280);
+	_video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_video.width = 148;
 	_video.height = 256;
 	//ビデオの中心を基準に回転させる場合
@@ -7728,7 +7728,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.regX = 25;
 _video.regY = 25;
 _video.rotate = 45;
@@ -7751,7 +7751,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.rotateRadian = Math.PI/4;
 console.log(_video.rotate); //=> 45（度）
 console.log(_video.rotateRadian); //=> 0.7853981633974483（ラジアン）
@@ -7774,7 +7774,7 @@ Video.widthまたはVideo.heightを変更するとnullになります。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.scale = 2; //水平垂直方向ともに2倍にする
 ```
 
@@ -7804,28 +7804,28 @@ videoObject.stop()
 window.addEventListener("load", load_window, false);
 
 function load_window() {
-	var _canvas = new toile.Canvas("myCanvas");
+	var _canvas = new canvaslite.Canvas("myCanvas");
 	_canvas.addEventListener("enterframe", enterframe_canvas);
 
-	var _stopBtn = new toile.Bitmap("box.png");
+	var _stopBtn = new canvaslite.Bitmap("box.png");
 	_stopBtn.addEventListener("mouseup", mouseup_stopBtn);
 	_stopBtn.x = 5;
 	_stopBtn.y = 10;
 	_canvas.addChild(_stopBtn);
 
-	var _pauseBtn = new toile.Bitmap("box.png");
+	var _pauseBtn = new canvaslite.Bitmap("box.png");
 	_pauseBtn.addEventListener("mouseup", mouseup_pauseBtn);
 	_pauseBtn.x = 65;
 	_pauseBtn.y = 10;
 	_canvas.addChild(_pauseBtn);
 
-	var _playBtn = new toile.Bitmap("box.png");
+	var _playBtn = new canvaslite.Bitmap("box.png");
 	_playBtn.addEventListener("mouseup", mouseup_playBtn);
 	_playBtn.x = 125;
 	_playBtn.y = 10;
 	_canvas.addChild(_playBtn);
 
-	_video = new toile.Video("sample.mp4", 720, 1280);
+	_video = new canvaslite.Video("sample.mp4", 720, 1280);
 	_video.stop();
 	_video.y = 100;
 	_video.scale = 0.25;
@@ -7869,7 +7869,7 @@ Video.scaleによって値が変化します。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.height = 256;
 _video.width = 148;
 ```
@@ -7890,7 +7890,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.x = 10;
 ```
 
@@ -7910,7 +7910,7 @@ SuperDisplayクラスから継承するプロパティ。
 
 ### Example（例）
 ```
-var _video = new toile.Video("sample.mp4", 720, 1280);
+var _video = new canvaslite.Video("sample.mp4", 720, 1280);
 _video.y = 10;
 ```
 

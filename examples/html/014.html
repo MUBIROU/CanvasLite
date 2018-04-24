@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>014 トランプ with ToileJS</title>
-    <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+    <title>014 トランプ with CanvasLiteJS</title>
+    <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
     <script>
         addEventListener("load", load_window, false);
 
@@ -15,7 +15,7 @@
             _webfont = "../ttf/LCDPHONE.TTF";
 
             //Canvas
-            _canvas = new toile.Canvas("myCanvas");
+            _canvas = new canvaslite.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas);
             _canvas.addEventListener("mousemove", mousemove_canvas);
             _canvas.enabledMouseMove(true);
@@ -25,7 +25,7 @@
 
             //Bitmap
             for (let i = 0; i < 52; i++) { //52枚
-                var _bitmap = new toile.Bitmap("../png/card.png");
+                var _bitmap = new canvaslite.Bitmap("../png/card.png");
                 _canvas.addChild(_bitmap);
 
                 _bitmap.name = "bitmap" + i;

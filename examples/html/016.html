@@ -2,8 +2,8 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>016 パーティクル with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>016 パーティクル with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
@@ -12,7 +12,7 @@
                 _circleArray = [];
 
                 //Canvas Class
-                _canvas = new toile.Canvas("canvas");
+                _canvas = new canvaslite.Canvas("canvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.addEventListener("mousedown", mousedown_canvas);
@@ -25,7 +25,7 @@
                 _isFullscreen = false;
 
                 //Fullscale Buttom
-                _fullscaleBtn = new toile.Bitmap("../png/fullscreen.png");
+                _fullscaleBtn = new canvaslite.Bitmap("../png/fullscreen.png");
                 _fullscaleBtn.x = _canvas.width - 38;
                 _fullscaleBtn.y = _canvas.height - 38;
                 _fullscaleBtn.addEventListener("mouseup", mouseup_fullscreen);
@@ -85,7 +85,7 @@
                 _isStart = false;
             }
 
-            class Circle2 extends toile.Circle {
+            class Circle2 extends canvaslite.Circle {
                 constructor() {
                     super();
                     this.__speedY = -5 - Math.random()*10;

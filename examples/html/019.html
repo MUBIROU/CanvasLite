@@ -2,15 +2,15 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>019 捕縛 with ToileJS</title>
-    <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+    <title>019 捕縛 with CanvasLiteJS</title>
+    <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
     <script>
         addEventListener("load", load_window, false);
         function load_window() {
             _mouseX = _mouseY = -9e9;
 
             //Canvasクラス
-            _canvas = new toile.Canvas("myCanvas");
+            _canvas = new canvaslite.Canvas("myCanvas");
             _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
             _canvas.addEventListener("mousemove", mousemove_canvas);
             _canvas.enabledMouseMove(true);
@@ -22,10 +22,10 @@
             //Lineクラス
             _w = _canvas.width;
             _h = _canvas.height;
-            _line1 = new toile.Line(0,0,0,0);
-            _line2 = new toile.Line(_w,0,_w,0);
-            _line3 = new toile.Line(_w,_h,_w,_h);
-            _line4 = new toile.Line(0,_h,0,_h);
+            _line1 = new canvaslite.Line(0,0,0,0);
+            _line2 = new canvaslite.Line(_w,0,_w,0);
+            _line3 = new canvaslite.Line(_w,_h,_w,_h);
+            _line4 = new canvaslite.Line(0,_h,0,_h);
             _line1.lineWidth = 2;
             _line2.lineWidth = 2;
             _line3.lineWidth = 2;
@@ -36,7 +36,7 @@
             _canvas.addChild(_line4);
 
             //Bitmapクラス
-            _bitmap = new toile.Bitmap("../png/flash.png");
+            _bitmap = new canvaslite.Bitmap("../png/flash.png");
             _canvas.addChild(_bitmap);
         }
 

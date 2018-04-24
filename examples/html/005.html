@@ -2,8 +2,8 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>005 Canvas Color H with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>005 Canvas Color H with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
@@ -18,7 +18,7 @@
                 //=====================
                 // Canvas
                 //=====================
-                _canvas = new toile.Canvas("myCanvas");
+                _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.enabledContextMenu(false);
@@ -27,9 +27,9 @@
                 //=====================
                 // bar(Rect class)
                 //=====================
-                var _barR = new toile.Rect(0,0,_barWidth, 10);
-                var _barG = new toile.Rect(0,0,_barWidth, 10);
-                var _barB = new toile.Rect(0,0,_barWidth, 10);
+                var _barR = new canvaslite.Rect(0,0,_barWidth, 10);
+                var _barG = new canvaslite.Rect(0,0,_barWidth, 10);
+                var _barB = new canvaslite.Rect(0,0,_barWidth, 10);
                 _canvas.addChild(_barR);
                 _canvas.addChild(_barG);
                 _canvas.addChild(_barB);
@@ -45,9 +45,9 @@
                 //=====================
                 // handle(Bitmap class)
                 //=====================
-                _handleR = new toile.Bitmap("../png/handleR.png");
-                _handleG = new toile.Bitmap("../png/handleG.png");
-                _handleB = new toile.Bitmap("../png/handleB.png");
+                _handleR = new canvaslite.Bitmap("../png/handleR.png");
+                _handleG = new canvaslite.Bitmap("../png/handleG.png");
+                _handleB = new canvaslite.Bitmap("../png/handleB.png");
 
                 _canvas.addChild(_handleR);
                 _canvas.addChild(_handleG);
@@ -82,14 +82,14 @@
                 //=====================
                 // backgound of text
                 //=====================
-                var _bg1 = new toile.Rect(0,0,55,_canvas.height);
+                var _bg1 = new canvaslite.Rect(0,0,55,_canvas.height);
                 _bg1.isFill(true);
                 _bg1.lineAlpha = 0;
                 _bg1.alpha = 0.3;
                 _bg1.x = 0; //_barR.x - 63;
                 _canvas.addChild(_bg1);
 
-                var _bg2 = new toile.Rect(0,0,55,_canvas.height);
+                var _bg2 = new canvaslite.Rect(0,0,55,_canvas.height);
                 _bg2.isFill(true);
                 _bg2.lineAlpha = 0;
                 _bg2.alpha = 0.3;
@@ -99,9 +99,9 @@
                 //=====================
                 // 0-255(Text class)
                 //=====================
-                _textR = new toile.Text("255");
-                _textG = new toile.Text("255");
-                _textB = new toile.Text("255");
+                _textR = new canvaslite.Text("255");
+                _textG = new canvaslite.Text("255");
+                _textB = new canvaslite.Text("255");
 
                 _textR.y = _barR.y + 14;
                 _textG.y = _barG.y + 14;
@@ -127,9 +127,9 @@
                 //=====================
                 // 00-FF(Text class)
                 //=====================
-                _textR16 = new toile.Text("ff");
-                _textG16 = new toile.Text("ff");
-                _textB16 = new toile.Text("ff");
+                _textR16 = new canvaslite.Text("ff");
+                _textG16 = new canvaslite.Text("ff");
+                _textB16 = new canvaslite.Text("ff");
 
                 _textR16.y = _barR.y + 14;
                 _textG16.y = _barG.y + 14;

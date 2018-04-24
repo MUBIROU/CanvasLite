@@ -2,19 +2,19 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>009 3D Cards with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>009 3D Cards with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             window.addEventListener("load", load_window, false);
 
             function load_window() {
-                var _canvas = new toile.Canvas("myCanvas");
+                var _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas); 	_canvas.enabledContextMenu(false);
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
                 
                 //Shadow
-                var _shadow = new toile.Bitmap("../png/shadow.png");
+                var _shadow = new canvaslite.Bitmap("../png/shadow.png");
                 _shadow.x = 60;
                 _shadow.y = 270;
                 _shadow.scaleX = 0.8;
@@ -88,7 +88,7 @@
                 }
             }
 
-            class Card extends toile.Bitmap {
+            class Card extends canvaslite.Bitmap {
                 constructor(_path) {
                     super(_path);
 

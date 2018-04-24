@@ -2,19 +2,19 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>002 キョロキョロ with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>002 キョロキョロ with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
             function load_window() {
-                _eyeR = new toile.Bitmap("../png/eye.png");
+                _eyeR = new canvaslite.Bitmap("../png/eye.png");
                 _eyeR.addEventListener("load", load_eyeR, false);
 
-                _eyeL = new toile.Bitmap("../png/eye.png");
+                _eyeL = new canvaslite.Bitmap("../png/eye.png");
                 _eyeL.addEventListener("load", load_eyeL, false);
 
-                _canvas = new toile.Canvas("myCanvas");
+                _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas); 	
                 _canvas.addEventListener("mousemove", mousemove_canvas);
                 _canvas.enabledMouseMove(true);

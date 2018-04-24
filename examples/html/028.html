@@ -3,21 +3,21 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>028 グリッド with ToileJS</title>
-        <script src="https://vvestvillage.github.io/ToileJS/toile_test.js"></script>
+        <title>028 グリッド with CanvasLiteJS</title>
+        <script src="https://vvestvillage.github.io/CanvasLiteJS/canvaslite.min.js"></script>
         <script src="../js/Grid.js"></script>
         <script>
             addEventListener("load", load_window, false);
 
             function load_window() {
-                _canvas = new toile.Canvas("myCanvas");
+                _canvas = new canvaslite.Canvas("myCanvas");
                 _canvas.addEventListener("enterframe", enterframe_canvas);
                 _canvas.addEventListener("mousedown", mousedown_canvas);
                 _canvas.fps = 60;
                 _canvas.enabledContextMenu(false);
                 _canvas.isBorder(true);
 
-                _bitmap = new toile.Bitmap("../png/yubi.png");
+                _bitmap = new canvaslite.Bitmap("../png/yubi.png");
                 _bitmap.alpha = 0.2;
                 _bitmap.x = _canvas.width/2 - 50;
                 _bitmap.y = _canvas.height/2 - 80;
