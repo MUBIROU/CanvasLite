@@ -1,7 +1,7 @@
 /***************************************************************************
- * canvaslite.js (ver.0.2 build 147 RC1)
- * 2018-04-24T12:58
- * © 2017 vvestvillage
+ * canvaslite.js (ver.0.3 build 148 RC1)
+ * 2018-05-18T12:08
+ * © 2017-2018 vvestvillage
  ***************************************************************************/
 
 if (canvaslite != window) { //名前空間を省略可能にするために
@@ -990,7 +990,7 @@ canvaslite.SuperDisplay =
  * 		alpha
  * 		globalX
  * 		globalY
- *		name
+ * 		name
  * 		parent
  * 		regX
  * 		regY
@@ -1469,7 +1469,7 @@ canvaslite.Bitmap =
  * 		alpha
  * 		centerX
  * 		centerY
- *		globalX
+ * 		globalX
  * 		globalY
  * 		fillAlpha
  * 		fillColor
@@ -1800,11 +1800,11 @@ canvaslite.Line =
  *
  *	<Public Method>
  * 		hitTest(_target)
- *		isFill(_boolean)
+ * 		isFill(_boolean)
  *
  * 	<Public Property>
  * 		alpha
- *		endX
+ * 		endX
  * 		endY
  * 		fillAlpha
  * 		fillColor
