@@ -8,4 +8,4 @@
 * [jsdo.it](http://jsdo.it/vvestvillage/codes)（JavaScript等のコードコミュニティ）
 * Linux / Windows / macOS / iOS / Android 対応
 
-© 2017-2018 vvestvillage
+© 2017-2018 夢寐郎

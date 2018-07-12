@@ -1,6 +1,6 @@
 # Reference Manual （リファレンスマニュアル）
 Version 0.2 Build 147 対応  
-© 2017-2018 vvestvillage
+© 2017-2018 夢寐郎
 
 ### <b>INDEX</b>（クラス一覧）
 * [Bitmap class](#Bitmap): 画像を表示するためのクラス
