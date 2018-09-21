@@ -5603,10 +5603,10 @@ SpriteSheet -> Bitmap -> SuperDisplay
 * [SpriteSheet.gotoAndStop()](#SpriteSheetgotoAndStop): 再生ヘッドを指定したフレームに移動して停止
 * [SpriteSheet.hitTest()](#SpriteSheethitTest): 指定したオブジェクトと重なっているか（矩形）
 * [SpriteSheet.hitTestCircle()](#SpriteSheethitTestCircle): 指定したオブジェクトと重なっているか（正円）
-* [SpriteSheet.isPlay()](#SpriteSheetisPlay): スタイルシートが再生中か否かを調べる
+* [SpriteSheet.isPlay()](#SpriteSheetisPlay): スプライトシートが再生中か否かを調べる
 * [SpriteSheet.play()](#SpriteSheetplay): 停止しているフレームから再生
 * [SpriteSheet.removeEventListener()](#SpriteSheetremoveEventListener): 指定したイベントのイベントリスナーを解除
-* [SpriteSheet.stop()](#SpriteSheetstop): 再生中のスタイルシートを停止する
+* [SpriteSheet.stop()](#SpriteSheetstop): 再生中のスプライトシートを停止する
 
 ### Properties（プロパティ）
 
@@ -6351,7 +6351,7 @@ spriteSheetObject.Play()
 
 ### Description（説明）
 メソッド。  
-SpriteSheet.gotoAndStop() または SpriteSheet.stop() で停止しているスタイルシートを停止しているフレームから再生します。
+SpriteSheet.gotoAndStop() または SpriteSheet.stop() で停止しているスプライトシートを停止しているフレームから再生します。
 
 ### Example（例）
 ```
@@ -6611,7 +6611,7 @@ spriteSheetObject.stop()
 なし。
 
 ### Description（説明）
-メソッド。再生中のスタイルシートを停止します。
+メソッド。再生中のスプライトシートを停止します。
 
 ### Example（例）
 ```
