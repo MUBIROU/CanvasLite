@@ -30,6 +30,7 @@ CanvasLite の開発（アップデート）時に動作確認をするための
 |025|[Button](https://mubirou.github.io/CanvasLite/examples/html/025.html)|ボタンを使ったマウスイベントの検証（Consoleに出力）|
 |026|[RectとBitmap等の接触](https://mubirou.github.io/CanvasLite/examples/html/026.html)|RectとBitmap/SpriteSheet/Rectの接触の検証（Consoleに出力）|
 |027|[正円と正円の接触](https://mubirou.github.io/CanvasLite/examples/html/027.html)|正円（Bitmap/Circle）と正円の接触の検証（Consoleに出力）|
-|028|[レシポンシブデザイン](https://mubirou.github.io/CanvasLite/examples/html/028/028.html)|レシポンシブデザイン内で実行|
+|028|[グリッド](https://mubirou.github.io/CanvasLite/examples/html/028/028.html)|キャンバスをクリックするとグリッドが表示非表示|
+|029|[レシポンシブデザイン](https://mubirou.github.io/CanvasLite/examples/html/029/029.html)|レシポンシブデザイン内で実行|
 
 © 2017-2024 夢寐郎
