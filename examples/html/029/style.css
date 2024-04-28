@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* style.css */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, h1, p {
+  margin: 0;
+}
+
+body {
+  padding-top: 40px; /* ヘッダーの高さに合わせて調整する */
+  font-family: "Noto Sans JP", "Roboto", "Arial", sans-serif;
+  background-color: #fff;
+}
+
+header, footer, nav {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+}
+
+header {
+  position: fixed; /* ヘッダーを固定する */
+  top: 0; /* 上部から0pxの位置に固定する */
+  left: 0; /* 左端から0pxの位置に固定する */
+  width: 100%; /* 幅を100%にする */
+  z-index: 1000; /* ヘッダーを最前面に表示する */
+}
+
+footer {
+  text-align: center;
+}
+
+nav {
+  background-color: #ddf;
+  margin-bottom: 10px;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+section {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  flex: 1 0 auto;
+  max-width: calc(50% - 15px);
+}
+
+section img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+section canvas {
+  width: 100%; /* canvasの幅をセクションの幅に合わせる */
+  height: auto; /* 高さを自動調整 */
+}
+
+.image-text p {
+  text-align: left; /* 左寄せに変更 */
+  padding: 3px;
+  font-size: 0.9em;
+  line-height: 1; /* 行間をなくす */
+}
+
+/* Responsive adjustments */
+@media (min-width: 601px) {
+  section {
+    max-width: calc(50% - 15px);
+  }
+}
+
+@media (min-width: 816px) {
+  section {
+    max-width: calc(33.333% - 15px);
+  }
+}
+
+@media (min-width: 1111px) {
+  section {
+    max-width: calc(25% - 15px);
+  }
+}
+
+@media (min-width: 1501px) {
+  section {
+    max-width: calc(20% - 15px);
+  }
+}
+
+@media (min-width: 1801px) {
+  section {
+    max-width: calc(16.666% - 15px);
+  }
+}
