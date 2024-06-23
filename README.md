@@ -6,4 +6,4 @@
 * [Examples（動作確認）](https://github.com/mubirou/CanvasLite/tree/master/examples)
 * Linux / Windows / macOS / iOS / Android 対応
 
-© 2017-2024 夢寐郎
+© 2017-PRESENT 夢寐郎

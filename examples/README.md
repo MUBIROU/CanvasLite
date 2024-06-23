@@ -33,4 +33,4 @@ CanvasLite の開発（アップデート）時に動作確認をするための
 |028|[グリッド](https://mubirou.github.io/CanvasLite/examples/html/028.html)|キャンバスをクリックするとグリッドが表示非表示|
 |029|[レシポンシブデザイン](https://mubirou.github.io/CanvasLite/examples/html/029/029.html)|レシポンシブデザイン内で実行|
 
-© 2017-2024 夢寐郎
+© 2017-PRESENT 夢寐郎
